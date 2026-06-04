@@ -15,6 +15,15 @@
   - [模板引用](#模板引用)
   - [组件基础](#组件基础)
   - [生命周期](#生命周期)
+- [深入组件](#深入组件)
+  - [注册](#注册)
+  - [Props](#props)
+  - [事件](#事件)
+  - [组件 v-model](#组件-v-model)
+  - [透传 Attributes](#透传-attributes)
+  - [插槽](#插槽)
+  - [依赖注入](#依赖注入)
+  - [异步组件](#异步组件)
 
 ---
 
@@ -1701,6 +1710,1012 @@ onBeforeUnmount(() => {
 | `onActivated` | keep-alive 激活 | 缓存组件激活时刷新数据 |
 | `onDeactivated` | keep-alive 失活 | 缓存组件失活时保存状态 |
 | `onErrorCaptured` | 捕获后代错误 | 全局错误处理 |
+
+---
+
+## 深入组件
+
+### 注册
+
+#### 1. 全局注册
+
+使用 `app.component()` 在应用层面全局注册组件，注册后可以在任何组件中使用：
+
+```js
+import { createApp } from 'vue'
+import App from './App.vue'
+
+const app = createApp(App)
+
+// 全局注册
+app.component('GlobalButton', {
+  template: `<button class="global-btn"><slot /></button>`
+})
+
+// 也可以注册单文件组件
+import GlobalCard from './components/GlobalCard.vue'
+app.component('GlobalCard', GlobalCard)
+
+app.mount('#app')
+```
+
+**全局注册的优缺点：**
+
+| 优点 | 缺点 |
+|------|------|
+| 在任何组件中直接使用，无需导入 | 打包时无法 tree-shaking |
+| 适合通用基础组件 | 组件依赖关系不清晰 |
+| 减少重复导入 | 可能造成命名冲突 |
+
+#### 2. 局部注册
+
+使用 `<script setup>` 时，导入的组件会自动局部注册：
+
+```html
+<template>
+  <div>
+    <LocalButton />
+    <LocalInput />
+  </div>
+</template>
+
+<script setup>
+// 导入即注册，无需手动注册
+import LocalButton from './LocalButton.vue'
+import LocalInput from './LocalInput.vue'
+</script>
+```
+
+不使用 `<script setup>` 时，需要在 `components` 选项中显式注册：
+
+```html
+<script>
+import LocalButton from './LocalButton.vue'
+
+export default {
+  components: {
+    LocalButton
+  }
+}
+</script>
+```
+
+#### 3. 组件命名规范
+
+推荐使用 PascalCase（大驼峰）命名：
+
+```html
+<template>
+  <!-- PascalCase 和 kebab-case 都可以使用 -->
+  <MyComponent />
+  <my-component />
+</template>
+
+<script setup>
+import MyComponent from './MyComponent.vue'
+</script>
+```
+
+---
+
+### Props
+
+#### 1. Props 声明
+
+```html
+<script setup>
+// 方式一：字符串数组（最简单）
+defineProps(['title', 'likes'])
+
+// 方式二：对象（指定类型）
+defineProps({
+  title: String,
+  likes: Number
+})
+
+// 方式三：完整对象（类型 + 默认值 + 校验）
+defineProps({
+  title: {
+    type: String,
+    required: true
+  },
+  likes: {
+    type: Number,
+    default: 0
+  },
+  tags: {
+    type: Array,
+    default: () => []  // 对象/数组默认值必须用工厂函数
+  },
+  status: {
+    type: String,
+    validator: (value) => ['active', 'inactive'].includes(value)
+  }
+})
+
+// TypeScript 泛型方式
+// defineProps<{
+//   title: string
+//   likes?: number
+//   tags?: string[]
+// }>()
+</script>
+```
+
+#### 2. Props 类型
+
+```html
+<script setup>
+defineProps({
+  // 基本类型
+  propA: String,     // null 和 undefined 会跳过类型检查
+  propB: Number,
+  propC: Boolean,
+  propD: Array,
+  propE: Object,
+  propF: Function,
+  propG: Date,
+  propH: Symbol,
+
+  // 多种类型
+  propI: [String, Number],
+
+  // 自定义类
+  propJ: Person
+})
+</script>
+```
+
+#### 3. Boolean 类型转换
+
+```html
+<template>
+  <!-- 仅写属性名，等价于 :disabled="true" -->
+  <MyButton disabled />
+  <!-- 等价 -->
+  <MyButton :disabled="true" />
+</template>
+
+<script setup>
+// 声明 Boolean 类型 prop
+defineProps({
+  disabled: Boolean
+})
+</script>
+```
+
+#### 4. 单向数据流
+
+Props 遵循**单向数据流**，父组件更新会传递给子组件，但子组件不应直接修改 props：
+
+```html
+<script setup>
+import { ref, computed } from 'vue'
+
+const props = defineProps({
+  initialCount: Number
+})
+
+// ✅ 正确：使用 computed 派生
+const derivedCount = computed(() => props.initialCount + 1)
+
+// ✅ 正确：复制到本地状态
+const localCount = ref(props.initialCount)
+
+// ❌ 错误：直接修改 prop
+// props.initialCount++ // 会触发警告
+</script>
+```
+
+#### 5. Props 解构保持响应性
+
+```html
+<script setup>
+// Vue 3.5+ 支持直接解构保持响应性
+const { title, likes } = defineProps({
+  title: String,
+  likes: Number
+})
+
+// 在模板和计算属性中直接使用
+import { computed } from 'vue'
+const doubleLikes = computed(() => likes * 2)
+</script>
+```
+
+---
+
+### 事件
+
+#### 1. 声明与触发
+
+```html
+<script setup>
+// 方式一：数组
+const emit = defineEmits(['submit', 'cancel'])
+
+// 方式二：对象（运行时校验）
+const emit = defineEmits({
+  // 无校验
+  cancel: null,
+  // 带校验：返回 true 通过，false 不通过（会警告）
+  submit: ({ email, password }) => {
+    return email && password
+  }
+})
+
+// TypeScript 方式
+// const emit = defineEmits<{
+//   submit: [email: string, password: string]
+//   cancel: []
+// }>()
+
+function handleSubmit() {
+  emit('submit', 'test@example.com', '123456')
+}
+
+function handleCancel() {
+  emit('cancel')
+}
+</script>
+```
+
+#### 2. 事件参数
+
+```html
+<!-- Parent.vue -->
+<template>
+  <ChildComponent
+    @submit="handleSubmit"
+    @update="count = $event"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const count = ref(0)
+
+// 接收子组件传递的多个参数
+function handleSubmit(email, password) {
+  console.log(email, password)
+}
+</script>
+
+<!-- Child.vue -->
+<template>
+  <button @click="emit('submit', 'a@b.com', 'pass')">提交</button>
+  <button @click="emit('update', 42)">更新</button>
+</template>
+
+<script setup>
+const emit = defineEmits(['submit', 'update'])
+</script>
+```
+
+#### 3. 与原生事件区别
+
+组件上也可以监听原生事件，Vue 3 会自动区分：
+
+```html
+<template>
+  <!-- 监听子组件的自定义事件 -->
+  <Child @submit="handleSubmit" />
+
+  <!-- 监听子组件根元素的原生 click 事件 -->
+  <Child @click="handleNativeClick" />
+</template>
+```
+
+---
+
+### 组件 v-model
+
+#### 1. 基本用法
+
+`v-model` 在组件上使用时，等价于 `modelValue` prop + `update:modelValue` 事件：
+
+```html
+<!-- Parent.vue -->
+<template>
+  <CustomInput v-model="text" />
+  <!-- 等价于 -->
+  <CustomInput
+    :modelValue="text"
+    @update:modelValue="text = $event"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const text = ref('')
+</script>
+
+<!-- CustomInput.vue -->
+<template>
+  <input
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
+  />
+</template>
+
+<script setup>
+defineProps(['modelValue'])
+defineEmits(['update:modelValue'])
+</script>
+```
+
+#### 2. v-model 参数
+
+可以更改默认的 `modelValue` 名称：
+
+```html
+<!-- Parent.vue -->
+<template>
+  <!-- 使用 title 作为 prop 名 -->
+  <CustomInput v-model:title="title" />
+</template>
+
+<!-- CustomInput.vue -->
+<template>
+  <input
+    :value="title"
+    @input="$emit('update:title', $event.target.value)"
+  />
+</template>
+
+<script setup>
+defineProps(['title'])
+defineEmits(['update:title'])
+</script>
+```
+
+#### 3. 多个 v-model
+
+一个组件可以绑定多个 `v-model`：
+
+```html
+<!-- Parent.vue -->
+<template>
+  <UserForm
+    v-model:first-name="first"
+    v-model:last-name="last"
+  />
+  <p>{{ first }} {{ last }}</p>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const first = ref('张')
+const last = ref('三')
+</script>
+
+<!-- UserForm.vue -->
+<template>
+  <div>
+    <input
+      :value="firstName"
+      @input="$emit('update:firstName', $event.target.value)"
+      placeholder="姓"
+    />
+    <input
+      :value="lastName"
+      @input="$emit('update:lastName', $event.target.value)"
+      placeholder="名"
+    />
+  </div>
+</template>
+
+<script setup>
+defineProps(['firstName', 'lastName'])
+defineEmits(['update:firstName', 'update:lastName'])
+</script>
+```
+
+#### 4. v-model 修饰符
+
+可以创建自定义修饰符：
+
+```html
+<!-- Parent.vue -->
+<template>
+  <CustomInput v-model.capitalize="text" />
+  <p>{{ text }}</p>
+</template>
+
+<!-- CustomInput.vue -->
+<template>
+  <input :value="modelValue" @input="onInput" />
+</template>
+
+<script setup>
+const props = defineProps({
+  modelValue: String,
+  modelModifiers: {
+    type: Object,
+    default: () => ({})
+  }
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+function onInput(e) {
+  let value = e.target.value
+  // 根据修饰符处理
+  if (props.modelModifiers.capitalize) {
+    value = value.charAt(0).toUpperCase() + value.slice(1)
+  }
+  emit('update:modelValue', value)
+}
+</script>
+```
+
+**带参数的修饰符：**
+
+```html
+<!-- Parent.vue -->
+<template>
+  <CustomInput v-model:title.capitalize="title" />
+</template>
+
+<!-- Child.vue -->
+<script setup>
+const props = defineProps({
+  title: String,
+  titleModifiers: {  // 参数 + Modifiers
+    type: Object,
+    default: () => ({})
+  }
+})
+</script>
+```
+
+---
+
+### 透传 Attributes
+
+#### 1. 概念
+
+"透传 Attributes" 是指传递给组件但未被声明为 prop 或 emit 的属性，如 `class`、`style`、`id` 等。
+
+#### 2. 基本行为
+
+单个根元素组件会自动将透传属性应用到根元素：
+
+```html
+<!-- Parent.vue -->
+<template>
+  <!-- class、id、data-* 等会透传到子组件根元素 -->
+  <MyButton class="large" id="btn-1" data-type="primary" />
+</template>
+
+<!-- MyButton.vue -->
+<template>
+  <!-- 根元素 button 会继承 class="large" id="btn-1" data-type="primary" -->
+  <button>按钮</button>
+</template>
+```
+
+最终渲染结果：
+
+```html
+<button class="large" id="btn-1" data-type="primary">按钮</button>
+```
+
+#### 3. 禁用透传
+
+```html
+<script setup>
+// 禁用属性透传
+defineOptions({
+  inheritAttrs: false
+})
+</script>
+
+<template>
+  <!-- 需要手动绑定 -->
+  <button v-bind="$attrs">按钮</button>
+</template>
+```
+
+#### 4. 多根节点
+
+多根节点组件不会自动透传，需要手动绑定：
+
+```html
+<template>
+  <!-- 多根节点，需要明确指定绑定到哪个元素 -->
+  <header v-bind="$attrs">标题</header>
+  <main>内容</main>
+  <footer>页脚</footer>
+</template>
+```
+
+#### 5. 在 JS 中访问 $attrs
+
+```html
+<script setup>
+import { useAttrs } from 'vue'
+
+// 获取所有透传属性
+const attrs = useAttrs()
+console.log(attrs.class)    // 传入的 class
+console.log(attrs.id)       // 传入的 id
+console.log(attrs.onClick)  // 传入的事件
+</script>
+```
+
+#### 6. 穿透事件
+
+透传属性也包含事件监听器：
+
+```html
+<!-- Parent.vue -->
+<template>
+  <!-- click 事件会透传到子组件根元素 -->
+  <MyButton @click="handleClick" />
+</template>
+
+<!-- MyButton.vue -->
+<template>
+  <!-- 根元素 button 会继承 @click 事件 -->
+  <button>按钮</button>
+</template>
+```
+
+---
+
+### 插槽
+
+#### 1. 默认插槽
+
+```html
+<!-- Child: FancyButton.vue -->
+<template>
+  <button class="fancy-btn">
+    <slot>默认文字</slot>
+  </button>
+</template>
+
+<!-- Parent -->
+<FancyButton>点击我</FancyButton>
+<!-- 渲染：<button>点击我</button> -->
+
+<FancyButton />
+<!-- 渲染：<button>默认文字</button> -->
+```
+
+#### 2. 具名插槽
+
+```html
+<!-- Child: Layout.vue -->
+<template>
+  <div class="layout">
+    <header>
+      <slot name="header"></slot>
+    </header>
+    <main>
+      <slot></slot>
+    </main>
+    <footer>
+      <slot name="footer"></slot>
+    </footer>
+  </div>
+</template>
+
+<!-- Parent -->
+<Layout>
+  <template #header>
+    <h1>页面标题</h1>
+  </template>
+
+  <p>主要内容</p>
+
+  <template #footer>
+    <p>© 2024</p>
+  </template>
+</Layout>
+```
+
+#### 3. 条件插槽
+
+通过 `$slots` 判断插槽是否存在，实现条件渲染：
+
+```html
+<template>
+  <div class="card">
+    <!-- 只有传入 header 插槽时才渲染 -->
+    <div v-if="$slots.header" class="card-header">
+      <slot name="header" />
+    </div>
+
+    <div class="card-body">
+      <slot />
+    </div>
+  </div>
+</template>
+```
+
+#### 4. 动态插槽名
+
+```html
+<template>
+  <BaseLayout>
+    <template v-slot:[dynamicSlotName]>
+      动态插槽内容
+    </template>
+  </BaseLayout>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const dynamicSlotName = ref('header')
+</script>
+```
+
+#### 5. 作用域插槽
+
+让父组件访问子组件内部数据：
+
+```html
+<!-- Child: TodoList.vue -->
+<template>
+  <ul>
+    <li v-for="item in items" :key="item.id">
+      <slot name="todo" :todo="item" :index="index" />
+    </li>
+  </ul>
+</template>
+
+<script setup>
+defineProps({
+  items: { type: Array, required: true }
+})
+</script>
+
+<!-- Parent -->
+<TodoList :items="todos">
+  <template #todo="{ todo, index }">
+    <span>{{ index + 1 }}.</span>
+    <span :class="{ done: todo.completed }">{{ todo.text }}</span>
+  </template>
+</TodoList>
+```
+
+#### 6. 具名作用域插槽的简写
+
+```html
+<!-- 以下三种写法等价 -->
+<TodoList>
+  <template v-slot:todo="{ todo }">{{ todo.text }}</template>
+  <template #todo="{ todo }">{{ todo.text }}</template>
+</TodoList>
+```
+
+#### 7. 插槽传递
+
+可以将插槽内容传递给更深层的子组件：
+
+```html
+<!-- GrandChild.vue -->
+<template>
+  <div class="grand-child">
+    <slot />
+  </div>
+</template>
+
+<!-- Child.vue -->
+<template>
+  <div class="child">
+    <GrandChild>
+      <!-- 将父级传入的内容传递给 GrandChild -->
+      <slot />
+    </GrandChild>
+  </div>
+</template>
+```
+
+---
+
+### 依赖注入
+
+#### 1. provide()
+
+在祖先组件中提供数据：
+
+```html
+<script setup>
+import { provide, ref, readonly } from 'vue'
+
+const count = ref(0)
+const message = ref('Hello')
+
+// 提供响应式数据
+provide('count', count)
+
+// 提供只读数据（推荐）
+provide('message', readonly(message))
+
+// 提供更新方法
+provide('increment', () => {
+  count.value++
+})
+
+// 提供静态数据
+provide('appName', 'My Vue App')
+
+// 使用 Symbol 作为 key（推荐，避免命名冲突）
+// import { InjectionKey } from 'vue'
+// const countKey = Symbol('count') as InjectionKey<number>
+// provide(countKey, count)
+</script>
+```
+
+#### 2. inject()
+
+在后代组件中注入数据：
+
+```html
+<script setup>
+import { inject } from 'vue'
+
+// 注入数据，第二个参数是默认值
+const count = inject('count', 0)
+const message = inject('message', 'default message')
+const appName = inject('appName', '')
+const increment = inject('increment', () => {})
+
+// 使用注入的数据
+console.log(count.value)
+increment()
+</script>
+```
+
+#### 3. 在 setup() 中使用（非 script setup）
+
+```js
+import { provide, inject } from 'vue'
+
+export default {
+  setup() {
+    provide('key', 'value')
+
+    const value = inject('key', 'default')
+    return { value }
+  }
+}
+```
+
+#### 4. 应用层 provide
+
+在应用层面提供数据，所有组件都能注入：
+
+```js
+import { createApp } from 'vue'
+
+const app = createApp(App)
+
+// 全局提供
+app.provide('globalConfig', {
+  theme: 'light',
+  locale: 'zh-CN'
+})
+
+app.mount('#app')
+```
+
+#### 5. 响应式注入实战
+
+```html
+<!-- 祖先：ThemeProvider.vue -->
+<script setup>
+import { provide, ref } from 'vue'
+
+const theme = ref('light')
+const themes = ['light', 'dark', 'blue']
+
+provide('theme', theme)
+
+function toggleTheme() {
+  const index = themes.indexOf(theme.value)
+  theme.value = themes[(index + 1) % themes.length]
+}
+</script>
+
+<template>
+  <div :class="`theme-${theme}`">
+    <button @click="toggleTheme">切换主题 ({{ theme }})</button>
+    <slot />
+  </div>
+</template>
+
+<!-- 后代：ThemeConsumer.vue -->
+<script setup>
+import { inject } from 'vue'
+
+const theme = inject('theme', 'light')
+
+const themeColors = {
+  light: { bg: '#fff', color: '#333' },
+  dark: { bg: '#1a1a1a', color: '#eee' },
+  blue: { bg: '#e6f7ff', color: '#1890ff' }
+}
+</script>
+
+<template>
+  <div :style="themeColors[theme]">
+    当前主题：{{ theme }}
+  </div>
+</template>
+```
+
+#### 6. 使用 Symbol 避免冲突
+
+```js
+// keys.ts
+import type { InjectionKey, Ref } from 'vue'
+
+export const themeKey = Symbol('theme') as InjectionKey<Ref<string>>
+export const countKey = Symbol('count') as InjectionKey<Ref<number>>
+
+// Provider.vue
+import { provide } from 'vue'
+import { themeKey } from './keys'
+provide(themeKey, ref('light'))
+
+// Consumer.vue
+import { inject } from 'vue'
+import { themeKey } from './keys'
+const theme = inject(themeKey, ref('light'))
+```
+
+---
+
+### 异步组件
+
+#### 1. 基本用法
+
+使用 `defineAsyncComponent` 定义异步组件：
+
+```js
+import { defineAsyncComponent } from 'vue'
+
+const AsyncComp = defineAsyncComponent(() =>
+  import('./components/HeavyComponent.vue')
+)
+
+// 在模板中使用
+// <AsyncComp />
+```
+
+在 `<script setup>` 中直接 `import()` 也可以：
+
+```html
+<script setup>
+import { defineAsyncComponent } from 'vue'
+
+const AdminPanel = defineAsyncComponent(() =>
+  import('./AdminPanel.vue')
+)
+</script>
+
+<template>
+  <AdminPanel />
+</template>
+```
+
+#### 2. 加载与错误状态
+
+```js
+import { defineAsyncComponent } from 'vue'
+import LoadingSpinner from './LoadingSpinner.vue'
+import ErrorComponent from './ErrorComponent.vue'
+
+const AsyncComp = defineAsyncComponent({
+  // 加载函数
+  loader: () => import('./HeavyComponent.vue'),
+
+  // 加载中显示的组件
+  loadingComponent: LoadingSpinner,
+
+  // 加载失败显示的组件
+  errorComponent: ErrorComponent,
+
+  // 显示 loading 前的延迟时间（ms），默认 200ms
+  delay: 200,
+
+  // 超时时间（ms），超时后显示 errorComponent
+  timeout: 3000,
+
+  // 错误重试
+  onError(error, retry, fail, attempts) {
+    // 自动重试最多 3 次
+    if (attempts <= 3) {
+      retry()
+    } else {
+      fail()
+    }
+  }
+})
+```
+
+#### 3. 配合 Suspense 使用
+
+```html
+<template>
+  <Suspense>
+    <!-- 异步组件加载完成后显示 -->
+    <template #default>
+      <AsyncComponent />
+    </template>
+
+    <!-- 加载中显示 -->
+    <template #fallback>
+      <div class="loading">
+        <p>加载中...</p>
+      </div>
+    </template>
+  </Suspense>
+</template>
+
+<script setup>
+import { defineAsyncComponent } from 'vue'
+
+const AsyncComponent = defineAsyncComponent(() =>
+  import('./Dashboard.vue')
+)
+</script>
+```
+
+#### 4. Suspense 错误处理
+
+```html
+<template>
+  <Suspense @pending="onPending" @resolve="onResolve" @fallback="onFallback">
+    <template #default>
+      <AsyncDashboard />
+    </template>
+    <template #fallback>
+      <Loading />
+    </template>
+  </Suspense>
+</template>
+
+<script setup>
+function onPending() {
+  console.log('异步组件正在加载...')
+}
+
+function onResolve() {
+  console.log('异步组件加载完成')
+}
+
+function onFallback() {
+  console.log('显示 fallback 内容')
+}
+</script>
+```
+
+#### 5. 路由懒加载
+
+```js
+import { createRouter, createWebHistory } from 'vue-router'
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '/dashboard',
+      // 路由级别的异步加载
+      component: () => import('./views/Dashboard.vue')
+    },
+    {
+      path: '/settings',
+      // 分组打包（webpackChunkName 魔法注释）
+      component: () => import(/* webpackChunkName: "settings" */ './views/Settings.vue')
+    }
+  ]
+})
+```
 
 ---
 

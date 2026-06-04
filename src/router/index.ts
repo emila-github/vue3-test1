@@ -75,6 +75,12 @@ const router = createRouter({
       name: 'components-demo',
       component: () => import('../views/ComponentsDemo.vue'),
     },
+    // ====== 深入组件 ======
+    {
+      path: '/deep-components',
+      name: 'deep-components',
+      component: () => import('../views/DeepComponents.vue'),
+    },
   ],
 })
 

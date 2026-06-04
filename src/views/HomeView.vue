@@ -14,6 +14,7 @@ const demos = [
   { path: '/template-refs', title: '模板引用', desc: 'ref DOM 元素、组件实例、defineExpose', color: '#f5222d' },
   { path: '/components-demo', title: '组件基础', desc: 'Props、Emits、Slots、作用域插槽', color: '#1890ff' },
   { path: '/lifecycle', title: '生命周期', desc: 'onMounted、onUpdated、onBeforeUnmount...', color: '#597ef7' },
+  { path: '/deep-components', title: '深入组件 ★', desc: '注册、Props、事件、v-model、透传、插槽、依赖注入、异步组件', color: '#cf1322' },
 ]
 </script>
 

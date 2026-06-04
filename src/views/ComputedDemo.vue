@@ -26,11 +26,13 @@ let computedCallCount = 0
 let methodCallCount = 0
 
 const computedMsg = computed(() => {
+  console.log('computed 调用')
   computedCallCount++
   return `当前计数：${counter.value}`
 })
 
 function getMsg() {
+  console.log('方法调用')
   methodCallCount++
   return `当前计数：${counter.value}`
 }
@@ -53,9 +55,7 @@ const totalPrice = computed(() =>
 
 // ====== 表单验证 ======
 const password = ref('')
-const isPasswordValid = computed(
-  () => password.value.length >= 6 && password.value.length <= 20,
-)
+const isPasswordValid = computed(() => password.value.length >= 6 && password.value.length <= 20)
 </script>
 
 <template>
@@ -67,7 +67,9 @@ const isPasswordValid = computed(
       <h2>1. 基本计算属性</h2>
       <p>姓：<input v-model="firstName" /></p>
       <p>名：<input v-model="lastName" /></p>
-      <p>全名：<strong>{{ fullName }}</strong></p>
+      <p>
+        全名：<strong>{{ fullName }}</strong>
+      </p>
     </section>
 
     <!-- 可写计算属性 -->
@@ -109,7 +111,9 @@ const isPasswordValid = computed(
           {{ item.name }} - ¥{{ item.price }} × {{ item.count }}
         </li>
       </ul>
-      <p>总价：<strong>¥{{ totalPrice }}</strong></p>
+      <p>
+        总价：<strong>¥{{ totalPrice }}</strong>
+      </p>
     </section>
 
     <!-- 表单验证 -->
