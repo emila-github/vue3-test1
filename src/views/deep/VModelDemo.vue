@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import VModelInput from './VModelInput.vue'
+import VModelInput1 from './VModelInput1.vue'
 import VModelUserForm from './VModelUserForm.vue'
 import VModelCapitalize from './VModelCapitalize.vue'
 
 // 基本 v-model
 const text = ref('')
+const text1 = ref('')
 
 // 多个 v-model
 const firstName = ref('张')
@@ -23,24 +25,28 @@ const capitalizedText = ref('')
     <div class="panel">
       <h4>1. 基本 v-model（modelValue）</h4>
       <VModelInput v-model="text" />
-      <p class="output">输出：<strong>{{ text }}</strong></p>
+      <VModelInput1 v-model:modelValue="text1" />
+      <p class="output">
+        输出：<strong>{{ text }}</strong> 输出：<strong>{{ text1 }}</strong>
+      </p>
     </div>
 
     <!-- 2. 多个 v-model -->
     <div class="panel">
       <h4>2. 多个 v-model（v-model:firstName / v-model:lastName）</h4>
-      <VModelUserForm
-        v-model:first-name="firstName"
-        v-model:last-name="lastName"
-      />
-      <p class="output">全名：<strong>{{ firstName }} {{ lastName }}</strong></p>
+      <VModelUserForm v-model:first-name="firstName" v-model:last-name="lastName" />
+      <p class="output">
+        全名：<strong>{{ firstName }} {{ lastName }}</strong>
+      </p>
     </div>
 
     <!-- 3. 修饰符 -->
     <div class="panel">
       <h4>3. v-model 修饰符（v-model.capitalize）</h4>
       <VModelCapitalize v-model.capitalize="capitalizedText" />
-      <p class="output">输出：<strong>"{{ capitalizedText }}"</strong></p>
+      <p class="output">
+        输出：<strong>"{{ capitalizedText }}"</strong>
+      </p>
       <p class="hint">输入内容后，首字母自动大写</p>
     </div>
 
@@ -72,8 +78,14 @@ const capitalizedText = ref('')
   border-left: 4px solid #52c41a;
 }
 
-h2 { margin: 0 0 16px 0; color: #333; }
-h4 { margin: 0 0 8px 0; color: #555; }
+h2 {
+  margin: 0 0 16px 0;
+  color: #333;
+}
+h4 {
+  margin: 0 0 8px 0;
+  color: #555;
+}
 
 .panel {
   background: #fff;
@@ -88,7 +100,11 @@ h4 { margin: 0 0 8px 0; color: #555; }
   color: #52c41a;
 }
 
-.hint { color: #999; font-size: 13px; margin-top: 4px; }
+.hint {
+  color: #999;
+  font-size: 13px;
+  margin-top: 4px;
+}
 
 .info {
   background: #f6ffed;
@@ -108,5 +124,7 @@ h4 { margin: 0 0 8px 0; color: #555; }
   margin: 8px 0;
 }
 
-.info code { font-family: monospace; }
+.info code {
+  font-family: monospace;
+}
 </style>
