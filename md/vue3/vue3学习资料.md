@@ -24,6 +24,16 @@
   - [插槽](#插槽)
   - [依赖注入](#依赖注入)
   - [异步组件](#异步组件)
+- [逻辑复用](#逻辑复用)
+  - [组合式函数](#组合式函数)
+  - [自定义指令](#自定义指令)
+  - [插件](#插件)
+- [内置组件](#内置组件)
+  - [Transition](#transition)
+  - [TransitionGroup](#transitiongroup)
+  - [KeepAlive](#keepalive)
+  - [Teleport](#teleport)
+  - [Suspense](#suspense)
 
 ---
 
@@ -2715,6 +2725,1097 @@ const router = createRouter({
     }
   ]
 })
+```
+
+---
+
+## 逻辑复用
+
+### 组合式函数
+
+#### 1. 概念
+
+组合式函数（Composables）是利用 Vue 组合式 API 来封装和复用**有状态逻辑**的函数。命名约定以 `use` 开头。
+
+#### 2. 鼠标追踪示例
+
+```js
+// composables/useMouse.js
+import { ref, onMounted, onUnmounted } from 'vue'
+
+export function useMouse() {
+  const x = ref(0)
+  const y = ref(0)
+
+  function update(event) {
+    x.value = event.pageX
+    y.value = event.pageY
+  }
+
+  onMounted(() => window.addEventListener('mousemove', update))
+  onUnmounted(() => window.removeEventListener('mousemove', update))
+
+  return { x, y }
+}
+```
+
+```html
+<script setup>
+import { useMouse } from './composables/useMouse'
+
+const { x, y } = useMouse()
+</script>
+
+<template>
+  <p>鼠标位置: {{ x }}, {{ y }}</p>
+</template>
+```
+
+#### 3. 接收参数的组合式函数
+
+```js
+// composables/useFetch.js
+import { ref, watchEffect, toValue } from 'vue'
+
+export function useFetch(url) {
+  const data = ref(null)
+  const error = ref(null)
+  const loading = ref(false)
+
+  watchEffect(async () => {
+    loading.value = true
+    data.value = null
+    error.value = null
+
+    try {
+      // toValue 支持 ref、getter 和普通值
+      const res = await fetch(toValue(url))
+      data.value = await res.json()
+    } catch (e) {
+      error.value = e
+    } finally {
+      loading.value = false
+    }
+  })
+
+  return { data, error, loading }
+}
+```
+
+```html
+<script setup>
+import { ref } from 'vue'
+import { useFetch } from './composables/useFetch'
+
+const postId = ref(1)
+
+// 可以传入 ref，自动响应变化
+const { data, error, loading } = useFetch(
+  () => `https://jsonplaceholder.typicode.com/posts/${postId.value}`
+)
+</script>
+
+<template>
+  <button @click="postId++">下一篇</button>
+  <div v-if="loading">加载中...</div>
+  <div v-else-if="error">错误: {{ error.message }}</div>
+  <div v-else>{{ data?.title }}</div>
+</template>
+```
+
+#### 4. 组合式函数之间互相调用
+
+```js
+// composables/useEventLogger.js
+import { ref } from 'vue'
+
+export function useEventLogger() {
+  const logs = ref([])
+
+  function log(event) {
+    logs.value.push(`[${new Date().toLocaleTimeString()}] ${event}`)
+  }
+
+  return { logs, log }
+}
+
+// composables/useCounter.js
+import { ref, computed } from 'vue'
+import { useEventLogger } from './useEventLogger'
+
+export function useCounter(initialValue = 0) {
+  const count = ref(initialValue)
+  const double = computed(() => count.value * 2)
+
+  // 复用另一个组合式函数
+  const { logs, log } = useEventLogger()
+
+  function increment() {
+    count.value++
+    log(`increment → ${count.value}`)
+  }
+
+  function decrement() {
+    count.value--
+    log(`decrement → ${count.value}`)
+  }
+
+  return { count, double, increment, decrement, logs }
+}
+```
+
+#### 5. 与 Mixin 的对比
+
+| 特性 | 组合式函数 | Mixins |
+|------|-----------|--------|
+| 数据来源 | 显式，清楚知道来自哪个函数 | 隐式，多个 mixin 可能导致命名冲突 |
+| 命名冲突 | 解构时可重命名 | 易冲突，后混入覆盖先混入 |
+| 类型推断 | 完整的 TypeScript 支持 | 类型推断困难 |
+| 逻辑关系 | 清晰，每个函数独立 | 多个 mixin 互相耦合 |
+
+#### 6. 实战：防抖搜索
+
+```js
+// composables/useDebouncedSearch.js
+import { ref, watch } from 'vue'
+
+export function useDebouncedSearch(searchFn, delay = 300) {
+  const keyword = ref('')
+  const results = ref([])
+  const loading = ref(false)
+
+  let timer = null
+
+  watch(keyword, (val) => {
+    if (timer) clearTimeout(timer)
+
+    if (!val.trim()) {
+      results.value = []
+      return
+    }
+
+    loading.value = true
+    timer = setTimeout(async () => {
+      results.value = await searchFn(val)
+      loading.value = false
+    }, delay)
+  })
+
+  return { keyword, results, loading }
+}
+```
+
+```html
+<script setup>
+import { useDebouncedSearch } from './composables/useDebouncedSearch'
+
+// 模拟搜索 API
+async function searchApi(keyword) {
+  const items = ['Apple', 'Banana', 'Cherry', 'Date', 'Grape', 'Orange', 'Peach']
+  return items.filter(i => i.toLowerCase().includes(keyword.toLowerCase()))
+}
+
+const { keyword, results, loading } = useDebouncedSearch(searchApi)
+</script>
+
+<template>
+  <input v-model="keyword" placeholder="搜索水果..." />
+  <span v-if="loading">搜索中...</span>
+  <ul>
+    <li v-for="item in results" :key="item">{{ item }}</li>
+  </ul>
+</template>
+```
+
+---
+
+### 自定义指令
+
+#### 1. 基本用法
+
+自定义指令主要是为了对普通 DOM 元素进行底层操作。
+
+```js
+// 局部注册（推荐在 <script setup> 中）
+// 指令名必须以 v 开头，使用驼峰命名
+const vFocus = {
+  mounted: (el) => {
+    el.focus()
+  }
+}
+```
+
+```html
+<template>
+  <input v-focus placeholder="自动聚焦" />
+</template>
+```
+
+#### 2. 指令钩子
+
+```js
+const vTooltip = {
+  // 元素挂载时
+  mounted(el, binding) {
+    const tooltip = document.createElement('span')
+    tooltip.className = 'tooltip-text'
+    tooltip.textContent = binding.value
+    el.appendChild(tooltip)
+    el.classList.add('tooltip-container')
+  },
+  // 绑定值更新时
+  updated(el, binding) {
+    const tooltip = el.querySelector('.tooltip-text')
+    if (tooltip) {
+      tooltip.textContent = binding.value
+    }
+  },
+  // 元素卸载时
+  unmounted(el) {
+    const tooltip = el.querySelector('.tooltip-text')
+    if (tooltip) tooltip.remove()
+  }
+}
+```
+
+#### 3. 钩子参数详解
+
+```js
+const vExample = {
+  mounted(el, binding, vnode, prevVnode) {
+    // el: 指令绑定的 DOM 元素
+    // binding 对象包含:
+    //   value: 传递给指令的值，如 v-example="'hello'"
+    //   oldValue: 之前的值
+    //   arg: 参数，如 v-example:foo 中的 'foo'
+    //   modifiers: 修饰符对象，如 v-example.foo.bar → { foo: true, bar: true }
+    //   instance: 组件实例
+    //   dir: 指令定义对象
+    // vnode: 虚拟节点
+    // prevVnode: 上一个虚拟节点（仅在 updated 中可用）
+  }
+}
+```
+
+#### 4. 简化形式
+
+对于只需要在 `mounted` 和 `updated` 执行相同逻辑的场景：
+
+```js
+// 函数简写：等价于 mounted + updated 使用同一函数
+const vHighlight = (el, binding) => {
+  el.style.backgroundColor = binding.value || '#ffff00'
+}
+```
+
+```html
+<p v-highlight="'#e6f7ff'">高亮文本</p>
+<p v-highlight="color">动态高亮</p>
+```
+
+#### 5. 实战：权限指令
+
+```js
+// directives/vPermission.js
+export const vPermission = {
+  mounted(el, binding) {
+    // 假设从某处获取用户权限列表
+    const permissions = ['read', 'write', 'admin']
+
+    const requiredPermission = binding.value
+
+    if (!permissions.includes(requiredPermission)) {
+      // 无权限：移除元素
+      el.parentNode?.removeChild(el)
+    }
+  }
+}
+```
+
+```html
+<template>
+  <!-- 只有拥有 admin 权限才显示 -->
+  <button v-permission="'admin'">删除用户</button>
+</template>
+
+<script setup>
+import { vPermission } from './directives/vPermission'
+</script>
+```
+
+#### 6. 实战：防抖点击指令
+
+```js
+const vDebounceClick = {
+  mounted(el, binding) {
+    let timer = null
+    const delay = binding.arg ? Number(binding.arg) : 500
+
+    el.addEventListener('click', (e) => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+      timer = setTimeout(() => {
+        binding.value(e)
+      }, delay)
+    })
+  }
+}
+```
+
+```html
+<template>
+  <button v-debounce-click:1000="handleClick">
+    防抖按钮（1秒内重复点击只触发一次）
+  </button>
+</template>
+```
+
+#### 7. 全局注册
+
+```js
+// main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+
+const app = createApp(App)
+
+// 全局注册指令
+app.directive('focus', {
+  mounted(el) {
+    el.focus()
+  }
+})
+
+app.mount('#app')
+```
+
+---
+
+### 插件
+
+#### 1. 插件概念
+
+插件（Plugin）是能为 Vue 应用添加全局功能的工具代码。一个插件可以是一个带有 `install()` 方法的对象，或者直接是一个函数。
+
+#### 2. 编写插件
+
+```js
+// plugins/i18n.js
+export default {
+  install(app, options) {
+    // 1. 注册全局组件
+    app.component('TranslatedText', {
+      template: `<span>{{ translated }}</span>`,
+      props: ['key'],
+      setup(props) {
+        const translated = options.messages[options.locale]?.[props.key] || props.key
+        return { translated }
+      }
+    })
+
+    // 2. 提供全局属性
+    app.config.globalProperties.$t = (key) => {
+      return options.messages[options.locale]?.[key] || key
+    }
+
+    // 3. 提供依赖注入
+    app.provide('i18n', options)
+
+    // 4. 注册全局指令
+    app.directive('translate', {
+      mounted(el, binding) {
+        el.textContent = options.messages[options.locale]?.[binding.value] || binding.value
+      }
+    })
+  }
+}
+```
+
+#### 3. 使用插件
+
+```js
+// main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+import i18n from './plugins/i18n'
+
+const app = createApp(App)
+
+app.use(i18n, {
+  locale: 'zh',
+  messages: {
+    zh: { hello: '你好', goodbye: '再见' },
+    en: { hello: 'Hello', goodbye: 'Goodbye' }
+  }
+})
+
+app.mount('#app')
+```
+
+#### 4. 实战：全局 Loading 插件
+
+```js
+// plugins/loading.js
+import { createApp, ref } from 'vue'
+import LoadingOverlay from './LoadingOverlay.vue'
+
+export default {
+  install(app) {
+    const loading = ref(false)
+
+    // 挂载全局 loading 组件
+    const mountPoint = document.createElement('div')
+    document.body.appendChild(mountPoint)
+
+    const loadingApp = createApp(LoadingOverlay, { visible: loading })
+    loadingApp.mount(mountPoint)
+
+    // 暴露方法
+    app.config.globalProperties.$loading = {
+      show() { loading.value = true },
+      hide() { loading.value = false }
+    }
+
+    // 也可以通过 provide 暴露
+    app.provide('loading', loading)
+  }
+}
+```
+
+```html
+<!-- 在组件中使用 -->
+<script setup>
+import { getCurrentInstance } from 'vue'
+
+const { proxy } = getCurrentInstance()
+
+async function fetchData() {
+  proxy.$loading.show()
+  try {
+    await someAsyncOperation()
+  } finally {
+    proxy.$loading.hide()
+  }
+}
+</script>
+```
+
+---
+
+## 内置组件
+
+### Transition
+
+#### 1. 基本用法
+
+`<Transition>` 用于为**单个**元素或组件添加进入/离开动画：
+
+```html
+<template>
+  <button @click="show = !show">Toggle</button>
+
+  <Transition>
+    <p v-if="show">Hello Vue 3</p>
+  </Transition>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const show = ref(true)
+</script>
+
+<style>
+/* 这些 class 会被自动添加 */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
+```
+
+#### 2. 过渡类名
+
+Vue 会自动在合适的时机添加以下 6 个 CSS class：
+
+| Class | 时机 |
+|-------|------|
+| `v-enter-from` | 进入开始状态，下一帧移除 |
+| `v-enter-active` | 进入过程，整个进入动画期间 |
+| `v-enter-to` | 进入结束状态，动画结束后移除 |
+| `v-leave-from` | 离开开始状态，下一帧移除 |
+| `v-leave-active` | 离开过程，整个离开动画期间 |
+| `v-leave-to` | 离开结束状态，动画结束后移除 |
+
+```
+进入动画: v-enter-from → v-enter-active → v-enter-to
+离开动画: v-leave-from → v-leave-active → v-leave-to
+```
+
+#### 3. 自定义过渡名称
+
+```html
+<Transition name="fade">
+  <p v-if="show">带名称的过渡</p>
+</Transition>
+
+<style>
+/* 使用 fade 替代默认的 v 前缀 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
+```
+
+#### 4. CSS Animation
+
+```html
+<Transition name="bounce">
+  <p v-if="show" class="bounce-text">弹跳动画</p>
+</Transition>
+
+<style>
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+</style>
+```
+
+#### 5. JavaScript 钩子
+
+```html
+<Transition
+  @before-enter="onBeforeEnter"
+  @enter="onEnter"
+  @after-enter="onAfterEnter"
+  @enter-cancelled="onEnterCancelled"
+  @before-leave="onBeforeLeave"
+  @leave="onLeave"
+  @after-leave="onAfterLeave"
+  @leave-cancelled="onLeaveCancelled"
+>
+  <p v-if="show">JS 动画</p>
+</Transition>
+
+<script setup>
+// 配合 GSAP 或其他动画库
+function onEnter(el, done) {
+  // el: DOM 元素
+  // done: 必须调用，告诉 Vue 动画完成
+  // 可以在这里使用 GSAP、anime.js 等
+  done()
+}
+
+function onLeave(el, done) {
+  done()
+}
+</script>
+```
+
+#### 6. 过渡模式
+
+```html
+<!-- 默认：进入和离开同时发生 -->
+<Transition>
+  <p :key="view">默认模式</p>
+</Transition>
+
+<!-- out-in：先离开再进入 -->
+<Transition mode="out-in">
+  <p :key="view">先出后进</p>
+</Transition>
+
+<!-- in-out：先进入再离开（较少使用） -->
+<Transition mode="in-out">
+  <p :key="view">先进后出</p>
+</Transition>
+```
+
+#### 7. 组件间过渡
+
+```html
+<Transition name="slide" mode="out-in">
+  <component :is="currentTab" />
+</Transition>
+
+<script setup>
+import { shallowRef } from 'vue'
+import TabA from './TabA.vue'
+import TabB from './TabB.vue'
+
+const currentTab = shallowRef(TabA)
+</script>
+```
+
+---
+
+### TransitionGroup
+
+#### 1. 基本用法
+
+`<TransitionGroup>` 用于为**列表中的多个**元素或组件添加动画：
+
+```html
+<template>
+  <button @click="addItem">添加</button>
+  <button @click="removeItem">移除</button>
+
+  <TransitionGroup name="list" tag="ul">
+    <li v-for="item in items" :key="item.id">
+      {{ item.text }}
+      <button @click="removeItem(item.id)">×</button>
+    </li>
+  </TransitionGroup>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+let nextId = 1
+const items = ref([
+  { id: nextId++, text: '项目 A' },
+  { id: nextId++, text: '项目 B' },
+  { id: nextId++, text: '项目 C' },
+])
+
+function addItem() {
+  items.value.splice(randomIndex(), 0, { id: nextId++, text: `项目 ${String.fromCharCode(64 + nextId)}` })
+}
+
+function removeItem(id) {
+  items.value = items.value.filter(i => i.id !== id)
+}
+
+function randomIndex() {
+  return Math.floor(Math.random() * items.value.length)
+}
+</script>
+
+<style>
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+/* 关键：离开时保留布局空间，实现平滑过渡 */
+.list-leave-active {
+  position: absolute;
+}
+
+.list-move {
+  transition: transform 0.5s ease;
+}
+</style>
+```
+
+#### 2. FLIP 动画（列表移动）
+
+`TransitionGroup` 内置了 FLIP（First, Last, Invert, Play）动画支持，通过 `.list-move` class 控制元素移动时的过渡：
+
+```css
+/* 元素移动时的过渡动画 */
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+/* 确保离开元素脱离文档流，不影响其他元素位置 */
+.list-leave-active {
+  position: absolute;
+}
+```
+
+#### 3. 与普通 Transition 的区别
+
+| 特性 | Transition | TransitionGroup |
+|------|-----------|-----------------|
+| 适用场景 | 单个元素/组件 | 列表中的多个元素 |
+| 渲染方式 | 不渲染额外 DOM | 默认渲染 `<span>`，可通过 `tag` 指定 |
+| 必需属性 | 无 | 每个子元素必须唯一 `key` |
+| CSS 过渡类 | `v-enter/leave` | 相同，额外支持 `v-move` |
+| 过渡模式 | 支持 `mode` | 不支持 `mode` |
+
+---
+
+### KeepAlive
+
+#### 1. 基本用法
+
+`<KeepAlive>` 缓存组件实例，避免重复创建和销毁：
+
+```html
+<template>
+  <div>
+    <button
+      v-for="tab in tabs"
+      :key="tab"
+      @click="currentTab = tab"
+      :class="{ active: currentTab === tab }"
+    >
+      {{ tab }}
+    </button>
+
+    <KeepAlive>
+      <component :is="tabComponents[currentTab]" />
+    </KeepAlive>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import TabA from './TabA.vue'
+import TabB from './TabB.vue'
+import TabC from './TabC.vue'
+
+const tabs = ['A', 'B', 'C']
+const currentTab = ref('A')
+const tabComponents = { A: TabA, B: TabB, C: TabC }
+</script>
+```
+
+#### 2. 包含/排除
+
+```html
+<!-- 只缓存 TabA 和 TabB，以组件名匹配 -->
+<KeepAlive include="TabA,TabB">
+  <component :is="currentComponent" />
+</KeepAlive>
+
+<!-- 使用正则 -->
+<KeepAlive :include="/Tab[AB]/">
+  <component :is="currentComponent" />
+</KeepAlive>
+
+<!-- 排除 TabC -->
+<KeepAlive :exclude="['TabC']">
+  <component :is="currentComponent" />
+</KeepAlive>
+```
+
+#### 3. 最大缓存数
+
+```html
+<KeepAlive :max="5">
+  <component :is="currentComponent" />
+</KeepAlive>
+```
+
+当缓存数量超过 `max` 时，最早且未被访问的实例会被销毁。
+
+#### 4. 缓存生命周期
+
+被 KeepAlive 缓存的组件有两个特有生命周期钩子：
+
+```html
+<script setup>
+import { onActivated, onDeactivated } from 'vue'
+
+// 组件被激活（从缓存中恢复显示）
+onActivated(() => {
+  console.log('组件被激活')
+  // 可以在这里刷新数据
+})
+
+// 组件被失活（进入缓存，即将被隐藏）
+onDeactivated(() => {
+  console.log('组件被失活')
+  // 清理定时器、取消订阅等
+})
+</script>
+```
+
+#### 5. 路由配合 KeepAlive
+
+```html
+<template>
+  <router-view v-slot="{ Component, route }">
+    <KeepAlive :include="cachedViews">
+      <component :is="Component" :key="route.path" />
+    </KeepAlive>
+  </router-view>
+</template>
+
+<script setup>
+// 在路由 meta 中标记需要缓存的页面
+const cachedViews = ['HomeView', 'UserList']
+</script>
+```
+
+---
+
+### Teleport
+
+#### 1. 概念
+
+`<Teleport>` 将组件内的内容"传送"到 DOM 中指定的位置，突破组件层级限制。
+
+#### 2. 基本用法
+
+```html
+<template>
+  <div class="page">
+    <h1>页面内容</h1>
+
+    <!-- Modal 渲染到 body 末尾，脱离当前组件层级 -->
+    <Teleport to="body">
+      <div v-if="showModal" class="modal-overlay" @click.self="showModal = false">
+        <div class="modal-content">
+          <h2>模态框标题</h2>
+          <p>模态框内容...</p>
+          <button @click="showModal = false">关闭</button>
+        </div>
+      </div>
+    </Teleport>
+
+    <button @click="showModal = true">打开模态框</button>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const showModal = ref(false)
+</script>
+
+<style>
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  min-width: 300px;
+}
+</style>
+```
+
+#### 3. 禁用 Teleport
+
+```html
+<Teleport to="body" :disabled="isMobile">
+  <Modal v-if="show" />
+</Teleport>
+```
+
+#### 4. 多个 Teleport 到同一目标
+
+```html
+<Teleport to="#modals">
+  <ModalA v-if="showA" />
+</Teleport>
+<Teleport to="#modals">
+  <ModalB v-if="showB" />
+</Teleport>
+```
+
+多个 Teleport 到同一目标时，按挂载顺序追加。
+
+#### 5. 常见使用场景
+
+| 场景 | 说明 |
+|------|------|
+| 模态框 / 对话框 | 需要覆盖整个页面，不受父组件 overflow/clip 限制 |
+| Toast 通知 | 固定在页面某个位置，独立于组件树 |
+| 全局 Loading | 覆盖全屏 |
+| Dropdown / Tooltip | 避免被父组件 overflow: hidden 裁剪 |
+
+---
+
+### Suspense
+
+#### 1. 概念
+
+`<Suspense>` 用于协调异步组件（或带有 `async setup()` 的组件），在加载期间显示 fallback 内容。
+
+#### 2. 基本用法
+
+```html
+<template>
+  <Suspense>
+    <!-- 默认插槽：异步组件加载完成后显示 -->
+    <template #default>
+      <AsyncDashboard />
+    </template>
+
+    <!-- fallback 插槽：加载中显示 -->
+    <template #fallback>
+      <div class="loading-container">
+        <div class="spinner"></div>
+        <p>加载中...</p>
+      </div>
+    </template>
+  </Suspense>
+</template>
+
+<script setup>
+import { defineAsyncComponent } from 'vue'
+
+const AsyncDashboard = defineAsyncComponent(() =>
+  import('./Dashboard.vue')
+)
+</script>
+```
+
+#### 3. 配合 async setup()
+
+```html
+<!-- AsyncData.vue -->
+<script setup>
+// async setup() 会让组件变为异步组件
+const data = await fetch('/api/users').then(r => r.json())
+</script>
+
+<template>
+  <ul>
+    <li v-for="user in data" :key="user.id">{{ user.name }}</li>
+  </ul>
+</template>
+```
+
+```html
+<!-- 父组件 -->
+<template>
+  <Suspense>
+    <template #default>
+      <AsyncData />
+    </template>
+    <template #fallback>
+      <p>正在加载用户数据...</p>
+    </template>
+  </Suspense>
+</template>
+```
+
+#### 4. 事件
+
+```html
+<template>
+  <Suspense
+    @pending="onPending"
+    @resolve="onResolve"
+    @fallback="onFallback"
+  >
+    <template #default>
+      <AsyncComponent />
+    </template>
+    <template #fallback>
+      <Loading />
+    </template>
+  </Suspense>
+</template>
+
+<script setup>
+function onPending() {
+  console.log('开始加载异步组件')
+}
+
+function onResolve() {
+  console.log('异步组件加载完成')
+}
+
+function onFallback() {
+  console.log('显示 fallback')
+}
+</script>
+```
+
+#### 5. 错误处理
+
+`<Suspense>` 本身不处理错误，需要配合 `onErrorCaptured` 或 `<ErrorBoundary>` 组件：
+
+```html
+<template>
+  <div v-if="error">
+    <p>加载失败: {{ error.message }}</p>
+    <button @click="retry">重试</button>
+  </div>
+  <Suspense v-else @pending="error = null">
+    <template #default>
+      <AsyncComponent />
+    </template>
+    <template #fallback>
+      <Loading />
+    </template>
+  </Suspense>
+</template>
+
+<script setup>
+import { ref, onErrorCaptured } from 'vue'
+
+const error = ref(null)
+
+onErrorCaptured((err) => {
+  error.value = err
+  return false // 阻止错误继续向上传播
+})
+
+function retry() {
+  error.value = null
+}
+</script>
+```
+
+#### 6. 嵌套 Suspense
+
+```html
+<template>
+  <Suspense>
+    <template #default>
+      <div>
+        <Header />
+        <Suspense>
+          <template #default>
+            <SlowContent />
+          </template>
+          <template #fallback>
+            <ContentSkeleton />
+          </template>
+        </Suspense>
+        <Footer />
+      </div>
+    </template>
+    <template #fallback>
+      <FullPageLoading />
+    </template>
+  </Suspense>
+</template>
 ```
 
 ---

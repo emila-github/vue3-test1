@@ -81,6 +81,18 @@ const router = createRouter({
       name: 'deep-components',
       component: () => import('../views/DeepComponents.vue'),
     },
+    // ====== 逻辑复用 ======
+    {
+      path: '/logic-reuse',
+      name: 'logic-reuse',
+      component: () => import('../views/LogicReuse.vue'),
+    },
+    // ====== 内置组件 ======
+    {
+      path: '/builtin-components',
+      name: 'builtin-components',
+      component: () => import('../views/BuiltinComponents.vue'),
+    },
   ],
 })
 

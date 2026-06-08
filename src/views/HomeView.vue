@@ -15,6 +15,8 @@ const demos = [
   { path: '/components-demo', title: '组件基础', desc: 'Props、Emits、Slots、作用域插槽', color: '#1890ff' },
   { path: '/lifecycle', title: '生命周期', desc: 'onMounted、onUpdated、onBeforeUnmount...', color: '#597ef7' },
   { path: '/deep-components', title: '深入组件 ★', desc: '注册、Props、事件、v-model、透传、插槽、依赖注入、异步组件', color: '#cf1322' },
+  { path: '/logic-reuse', title: '逻辑复用', desc: '组合式函数、自定义指令、插件', color: '#597ef7' },
+  { path: '/builtin-components', title: '内置组件 ★', desc: 'Transition、TransitionGroup、KeepAlive、Teleport、Suspense', color: '#13c2c2' },
 ]
 </script>
 
