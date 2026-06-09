@@ -93,6 +93,12 @@ const router = createRouter({
       name: 'builtin-components',
       component: () => import('../views/BuiltinComponents.vue'),
     },
+    // ====== TypeScript 学习 ======
+    {
+      path: '/typescript-demo',
+      name: 'typescript-demo',
+      component: () => import('../views/TypeScriptDemo.vue'),
+    },
   ],
 })
 

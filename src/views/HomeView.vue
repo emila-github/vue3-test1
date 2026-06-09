@@ -2,21 +2,92 @@
 import { RouterLink } from 'vue-router'
 
 const demos = [
-  { path: '/template-syntax', title: '模板语法', desc: '文本插值、v-html、v-bind、表达式', color: '#1890ff' },
-  { path: '/reactivity', title: '响应式基础', desc: 'ref()、reactive()、toRefs、shallowRef', color: '#52c41a' },
-  { path: '/computed', title: '计算属性', desc: 'computed、可写计算属性、搜索过滤', color: '#fa8c16' },
-  { path: '/class-style', title: '类与样式绑定', desc: ':class 对象/数组语法、:style 绑定', color: '#722ed1' },
-  { path: '/conditional', title: '条件渲染', desc: 'v-if/v-else-if/v-else、v-show', color: '#13c2c2' },
+  {
+    path: '/typescript-demo',
+    title: 'TypeScript 学习',
+    desc: '基础类型、接口、泛型、类、枚举、工具类型、类型守卫',
+    color: '#3178c6',
+  },
+  {
+    path: '/template-syntax',
+    title: '模板语法',
+    desc: '文本插值、v-html、v-bind、表达式',
+    color: '#1890ff',
+  },
+  {
+    path: '/reactivity',
+    title: '响应式基础',
+    desc: 'ref()、reactive()、toRefs、shallowRef',
+    color: '#52c41a',
+  },
+  {
+    path: '/computed',
+    title: '计算属性',
+    desc: 'computed、可写计算属性、搜索过滤',
+    color: '#fa8c16',
+  },
+  {
+    path: '/class-style',
+    title: '类与样式绑定',
+    desc: ':class 对象/数组语法、:style 绑定',
+    color: '#722ed1',
+  },
+  {
+    path: '/conditional',
+    title: '条件渲染',
+    desc: 'v-if/v-else-if/v-else、v-show',
+    color: '#13c2c2',
+  },
   { path: '/list', title: '列表渲染', desc: 'v-for、key、数组变更、过滤排序', color: '#eb2f96' },
   { path: '/events', title: '事件处理', desc: 'v-on、事件修饰符、按键修饰符', color: '#2f54eb' },
-  { path: '/form', title: '表单输入绑定', desc: 'v-model、修饰符 .lazy .number .trim', color: '#faad14' },
-  { path: '/watchers', title: '侦听器', desc: 'watch、watchEffect、监听多个数据源', color: '#a0d911' },
-  { path: '/template-refs', title: '模板引用', desc: 'ref DOM 元素、组件实例、defineExpose', color: '#f5222d' },
-  { path: '/components-demo', title: '组件基础', desc: 'Props、Emits、Slots、作用域插槽', color: '#1890ff' },
-  { path: '/lifecycle', title: '生命周期', desc: 'onMounted、onUpdated、onBeforeUnmount...', color: '#597ef7' },
-  { path: '/deep-components', title: '深入组件 ★', desc: '注册、Props、事件、v-model、透传、插槽、依赖注入、异步组件', color: '#cf1322' },
-  { path: '/logic-reuse', title: '逻辑复用', desc: '组合式函数、自定义指令、插件', color: '#597ef7' },
-  { path: '/builtin-components', title: '内置组件 ★', desc: 'Transition、TransitionGroup、KeepAlive、Teleport、Suspense', color: '#13c2c2' },
+  {
+    path: '/form',
+    title: '表单输入绑定',
+    desc: 'v-model、修饰符 .lazy .number .trim',
+    color: '#faad14',
+  },
+  {
+    path: '/watchers',
+    title: '侦听器',
+    desc: 'watch、watchEffect、监听多个数据源',
+    color: '#a0d911',
+  },
+  {
+    path: '/template-refs',
+    title: '模板引用',
+    desc: 'ref DOM 元素、组件实例、defineExpose',
+    color: '#f5222d',
+  },
+  {
+    path: '/components-demo',
+    title: '组件基础',
+    desc: 'Props、Emits、Slots、作用域插槽',
+    color: '#1890ff',
+  },
+  {
+    path: '/lifecycle',
+    title: '生命周期',
+    desc: 'onMounted、onUpdated、onBeforeUnmount...',
+    color: '#597ef7',
+  },
+  {
+    path: '/deep-components',
+    title: '深入组件 ★',
+    desc: '注册、Props、事件、v-model、透传、插槽、依赖注入、异步组件',
+    color: '#cf1322',
+  },
+  {
+    path: '/logic-reuse',
+    title: '逻辑复用',
+    desc: '组合式函数、自定义指令、插件',
+    color: '#597ef7',
+  },
+  {
+    path: '/builtin-components',
+    title: '内置组件 ★',
+    desc: 'Transition、TransitionGroup、KeepAlive、Teleport、Suspense',
+    color: '#13c2c2',
+  },
 ]
 </script>
 
