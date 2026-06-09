@@ -178,16 +178,22 @@ stringStack.push('A')
 stringStack.push('B')
 stringStack.push('C')
 
-const stackItems = computed(() => stringStack.getAll())
+// 用 ref 保存栈状态，每次操作后手动触发更新
+const stackItems = ref<string[]>(stringStack.getAll())
 
 function stackPush() {
   const chars = 'DEFGHIJK'
   const c = chars[stringStack.size % chars.length]
   stringStack.push(c)
+  // 手动同步 ref，触发模板重新渲染
+  stackItems.value = stringStack.getAll()
 }
 
 function stackPop() {
-  return stringStack.pop()
+  const popped = stringStack.pop()
+  // 手动同步 ref，触发模板重新渲染
+  stackItems.value = stringStack.getAll()
+  return popped
 }
 
 const genericClassCode = `// <T> 让 Stack 成为通用数据结构
