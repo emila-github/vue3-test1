@@ -99,6 +99,12 @@ const router = createRouter({
       name: 'typescript-demo',
       component: () => import('../views/TypeScriptDemo.vue'),
     },
+    // ====== 综合实战 ======
+    {
+      path: '/user-crud',
+      name: 'user-crud',
+      component: () => import('../views/user/UserCrud.vue'),
+    },
   ],
 })
 

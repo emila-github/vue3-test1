@@ -88,6 +88,12 @@ const demos = [
     desc: 'Transition、TransitionGroup、KeepAlive、Teleport、Suspense',
     color: '#13c2c2',
   },
+  {
+    path: '/user-crud',
+    title: '用户管理 CRUD',
+    desc: 'Pinia Store、Composable、表单校验、搜索排序、批量操作、导出',
+    color: '#4096ff',
+  },
 ]
 </script>
 
