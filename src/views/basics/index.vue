@@ -35,39 +35,41 @@ const tabs = [
   <div class="demo-page">
     <h1>Vue 3 基础</h1>
 
-    <div class="tabs">
-      <button
-        v-for="tab in tabs"
-        :key="tab.key"
-        :class="['tab-btn', { active: activeTab === tab.key }]"
-        @click="activeTab = tab.key"
-      >
-        {{ tab.label }}
-      </button>
-    </div>
+    <div class="layout">
+      <div class="content-area">
+        <TemplateSyntax v-if="activeTab === 'template-syntax'" />
+        <Reactivity v-if="activeTab === 'reactivity'" />
+        <ComputedDemo v-if="activeTab === 'computed'" />
+        <ClassStyleBinding v-if="activeTab === 'class-style'" />
+        <ConditionalRendering v-if="activeTab === 'conditional'" />
+        <ListRendering v-if="activeTab === 'list'" />
+        <EventHandling v-if="activeTab === 'events'" />
+        <FormBinding v-if="activeTab === 'form'" />
+        <Watchers v-if="activeTab === 'watchers'" />
+        <TemplateRefs v-if="activeTab === 'template-refs'" />
+        <ComponentsDemo v-if="activeTab === 'components-demo'" />
+        <Lifecycle v-if="activeTab === 'lifecycle'" />
+      </div>
 
-    <div class="tab-content">
-      <TemplateSyntax v-if="activeTab === 'template-syntax'" />
-      <Reactivity v-if="activeTab === 'reactivity'" />
-      <ComputedDemo v-if="activeTab === 'computed'" />
-      <ClassStyleBinding v-if="activeTab === 'class-style'" />
-      <ConditionalRendering v-if="activeTab === 'conditional'" />
-      <ListRendering v-if="activeTab === 'list'" />
-      <EventHandling v-if="activeTab === 'events'" />
-      <FormBinding v-if="activeTab === 'form'" />
-      <Watchers v-if="activeTab === 'watchers'" />
-      <TemplateRefs v-if="activeTab === 'template-refs'" />
-      <ComponentsDemo v-if="activeTab === 'components-demo'" />
-      <Lifecycle v-if="activeTab === 'lifecycle'" />
+      <aside class="tabs">
+        <button
+          v-for="tab in tabs"
+          :key="tab.key"
+          :class="['tab-btn', { active: activeTab === tab.key }]"
+          @click="activeTab = tab.key"
+        >
+          {{ tab.label }}
+        </button>
+      </aside>
     </div>
   </div>
 </template>
 
 <style scoped>
 .demo-page {
-  max-width: 900px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 20px 24px;
 }
 
 h1 {
@@ -76,30 +78,47 @@ h1 {
   margin-bottom: 24px;
 }
 
+/* ===== 左右布局 ===== */
+.layout {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.content-area {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ===== 右侧 tab 导航 ===== */
 .tabs {
   position: sticky;
-  top: 52px;
+  top: 72px;
   z-index: 50;
+  flex-shrink: 0;
+  width: 150px;
   display: flex;
+  flex-direction: column;
   gap: 4px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  background: rgba(245, 245, 245, 0.92);
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  padding: 6px;
+  border: 1px solid #f0f0f0;
   border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .tab-btn {
-  padding: 7px 16px;
+  width: 100%;
+  padding: 8px 12px;
   border: none;
   background: transparent;
   border-radius: 6px;
   cursor: pointer;
   font-size: 13px;
-  color: #666;
+  text-align: left;
+  color: #555;
   transition: all 0.2s;
   white-space: nowrap;
 }
@@ -114,7 +133,25 @@ h1 {
   color: #fff;
 }
 
-.tab-content {
-  min-height: 400px;
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .tabs {
+    position: sticky;
+    top: 52px;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 6px;
+    gap: 4px;
+  }
+
+  .tab-btn {
+    width: auto;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
 }
 </style>
