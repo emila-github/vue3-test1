@@ -44,9 +44,7 @@ const animalState = reactive({
   feedback: '',
 })
 
-const selectedAnimal = computed(() =>
-  animalState.selectedAnimal === 'cat' ? cat : dog,
-)
+const selectedAnimal = computed(() => (animalState.selectedAnimal === 'cat' ? cat : dog))
 
 function updateAge() {
   try {
@@ -158,7 +156,10 @@ class Circle extends Shape {
 }
 
 class Rectangle extends Shape {
-  constructor(private width: number, private height: number) {
+  constructor(
+    private width: number,
+    private height: number,
+  ) {
     super()
   }
 
@@ -168,7 +169,10 @@ class Rectangle extends Shape {
 }
 
 class Triangle extends Shape {
-  constructor(private base: number, private height: number) {
+  constructor(
+    private base: number,
+    private height: number,
+  ) {
     super()
   }
 
@@ -283,10 +287,10 @@ startFly(new Eagle())  // ✅
 // 5. 访问修饰符 — 控制谁能看到/修改属性
 // ================================================================
 class BankAccount {
-  public accountName: string       // 任何人都能看
-  private _balance: number         // 只有本类能改
-  protected _accountType: string   // 本类 + 子类能看
-  readonly accountId: string       // 一旦赋值就不能改
+  public accountName: string // 任何人都能看
+  private _balance: number // 只有本类能改
+  protected _accountType: string // 本类 + 子类能看
+  readonly accountId: string // 一旦赋值就不能改
 
   constructor(name: string, id: string, balance: number) {
     this.accountName = name
@@ -332,6 +336,7 @@ const myAccount = reactive(new BankAccount('张三', '6222-0001', 1000))
 const vipAccount = new VipAccount('李四', '6222-8888', 5000)
 
 const accountFeedback = shallowRef('')
+const accountFeedbackVip = shallowRef('')
 
 function depositAction(account: BankAccount, amount: number) {
   accountFeedback.value = account.deposit(amount)
@@ -340,6 +345,12 @@ function withdrawAction(account: BankAccount, amount: number) {
   accountFeedback.value = account.withdraw(amount)
 }
 
+function depositActionVip(account: VipAccount, amount: number) {
+  accountFeedbackVip.value = account.deposit(amount)
+}
+function withdrawActionVip(account: VipAccount, amount: number) {
+  accountFeedbackVip.value = account.withdraw(amount)
+}
 const modifierCode = `// 访问修饰符：控制属性的可见范围
 class BankAccount {
   public accountName: string    // 🌍 任何地方都能访问（默认）
@@ -439,7 +450,8 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
     <header class="page-header">
       <h1>TypeScript 类 (Class)</h1>
       <p class="page-subtitle">
-        类是面向对象编程的核心。把它想象成 <strong>创建对象的蓝图</strong>——你定义一次，就能创建无数个相似的实例。
+        类是面向对象编程的核心。把它想象成
+        <strong>创建对象的蓝图</strong>——你定义一次，就能创建无数个相似的实例。
       </p>
     </header>
 
@@ -448,7 +460,8 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
       <h2 class="section-title">1. 基本类 <span class="badge">class</span></h2>
       <p class="section-desc">
         一个类包含 <strong>属性</strong>（数据）和 <strong>方法</strong>（行为）。
-        <code class="inline-code">constructor</code> 在 <code class="inline-code">new</code> 时自动执行，
+        <code class="inline-code">constructor</code> 在
+        <code class="inline-code">new</code> 时自动执行，
         <code class="inline-code">get/set</code> 让你像访问属性一样触发逻辑。
       </p>
       <pre class="code-block">{{ basicClassCode }}</pre>
@@ -483,7 +496,9 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
             <option value="cat">小花 (cat)</option>
             <option value="dog">旺财 (dog)</option>
           </select>
-          <span class="info-label" style="display: flex; align-items: center; padding: 0 4px;">当前年龄: {{ selectedAnimal.age }}</span>
+          <span class="info-label" style="display: flex; align-items: center; padding: 0 4px"
+            >当前年龄: {{ selectedAnimal.age }}</span
+          >
           <input
             v-model.number="animalState.newAge"
             class="text-input"
@@ -503,7 +518,8 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
       <p class="section-desc">
         <code class="inline-code">extends</code> 让子类获得父类的所有属性和方法，
         还可以<strong>重写（override）</strong>父类方法实现多态。
-        <code class="inline-code">super()</code> 必须先调用，才能使用 <code class="inline-code">this</code>。
+        <code class="inline-code">super()</code> 必须先调用，才能使用
+        <code class="inline-code">this</code>。
       </p>
       <pre class="code-block">{{ extendsCode }}</pre>
 
@@ -535,7 +551,8 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
       <h2 class="section-title">3. 抽象类 <span class="badge">abstract</span></h2>
       <p class="section-desc">
         抽象类不能直接 <code class="inline-code">new</code>，它的作用是
-        <strong>定义子类必须遵守的模板</strong>。<code class="inline-code">abstract</code> 方法没有函数体，子类<strong>必须实现</strong>。
+        <strong>定义子类必须遵守的模板</strong>。<code class="inline-code">abstract</code>
+        方法没有函数体，子类<strong>必须实现</strong>。
       </p>
       <pre class="code-block">{{ abstractCode }}</pre>
 
@@ -565,8 +582,9 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
     <section class="demo-section">
       <h2 class="section-title">4. implements 实现接口 <span class="badge">implements</span></h2>
       <p class="section-desc">
-        <code class="inline-code">implements</code> 让类承诺"我有这些能力"。一个类可以实现<strong>多个接口</strong>，
-        弥补了 TypeScript 只能单继承的限制。把接口理解成<strong>"能做什么"的契约</strong>。
+        <code class="inline-code">implements</code>
+        让类承诺"我有这些能力"。一个类可以实现<strong>多个接口</strong>， 弥补了 TypeScript
+        只能单继承的限制。把接口理解成<strong>"能做什么"的契约</strong>。
       </p>
       <pre class="code-block">{{ implementsCode }}</pre>
 
@@ -599,10 +617,12 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
 
     <!-- ==================== 5. 访问修饰符 ==================== -->
     <section class="demo-section">
-      <h2 class="section-title">5. 访问修饰符 <span class="badge">public/private/protected</span></h2>
+      <h2 class="section-title">
+        5. 访问修饰符 <span class="badge">public/private/protected</span>
+      </h2>
       <p class="section-desc">
-        用<strong>真实的银行账户</strong>例子理解修饰符：余额不能让外界直接改（private），
-        必须通过 deposit/withdraw 方法操作（封装）。这叫做<strong>"数据保护"</strong>。
+        用<strong>真实的银行账户</strong>例子理解修饰符：余额不能让外界直接改（private）， 必须通过
+        deposit/withdraw 方法操作（封装）。这叫做<strong>"数据保护"</strong>。
       </p>
       <pre class="code-block">{{ modifierCode }}</pre>
 
@@ -622,19 +642,25 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
           <tr>
             <td class="mod-name">public</td>
             <td>公开（默认）</td>
-            <td>✅</td><td>✅</td><td>✅</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>✅</td>
             <td>🌍 所有人都能看到</td>
           </tr>
           <tr>
             <td class="mod-name">protected</td>
             <td>受保护</td>
-            <td>✅</td><td>✅</td><td>❌</td>
+            <td>✅</td>
+            <td>✅</td>
+            <td>❌</td>
             <td>🔑 家庭成员可见</td>
           </tr>
           <tr>
             <td class="mod-name">private</td>
             <td>私有</td>
-            <td>✅</td><td>❌</td><td>❌</td>
+            <td>✅</td>
+            <td>❌</td>
+            <td>❌</td>
             <td>🔒 只有自己知道</td>
           </tr>
           <tr>
@@ -665,9 +691,36 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
         <div class="btn-group" style="margin-top: 12px">
           <button class="demo-btn" @click="depositAction(myAccount, 500)">存入 ¥500</button>
           <button class="demo-btn" @click="withdrawAction(myAccount, 200)">取出 ¥200</button>
-          <button class="demo-btn demo-btn-danger" @click="withdrawAction(myAccount, 9999)">尝试取出 ¥9999（余额不足）</button>
+          <button class="demo-btn demo-btn-danger" @click="withdrawAction(myAccount, 9999)">
+            尝试取出 ¥9999（余额不足）
+          </button>
         </div>
         <p class="result-text feedback" v-if="accountFeedback">{{ accountFeedback }}</p>
+      </div>
+      <div class="result-box interactive">
+        <p class="result-title">🏦 交互：银行账户操作-VIP</p>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">账户名 (public)</span>
+            <span class="info-value">{{ vipAccount.accountName }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">账号 (readonly)</span>
+            <span class="info-value">{{ vipAccount.accountId }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">余额 (private，通过 getter)</span>
+            <span class="info-value">¥{{ vipAccount.balance }}</span>
+          </div>
+        </div>
+        <div class="btn-group" style="margin-top: 12px">
+          <button class="demo-btn" @click="depositActionVip(vipAccount, 500)">存入 ¥500</button>
+          <button class="demo-btn" @click="withdrawActionVip(vipAccount, 200)">取出 ¥200</button>
+          <button class="demo-btn demo-btn-danger" @click="withdrawActionVip(vipAccount, 9999)">
+            尝试取出 ¥9999（余额不足）
+          </button>
+        </div>
+        <p class="result-text feedback" v-if="accountFeedbackVip">{{ accountFeedbackVip }}</p>
       </div>
     </section>
 
@@ -675,7 +728,8 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
     <section class="demo-section">
       <h2 class="section-title">6. 静态成员 <span class="badge">static</span></h2>
       <p class="section-desc">
-        <code class="inline-code">static</code> 成员<strong>属于类本身</strong>，不属于实例。不需要 <code class="inline-code">new</code> 就能调用。
+        <code class="inline-code">static</code> 成员<strong>属于类本身</strong>，不属于实例。不需要
+        <code class="inline-code">new</code> 就能调用。
         适合放工具函数、常量、全局计数器等"和具体对象无关"的东西。
       </p>
       <pre class="code-block">{{ staticCode }}</pre>
