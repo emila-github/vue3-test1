@@ -77,13 +77,19 @@ h1 {
 }
 
 .tabs {
+  position: sticky;
+  top: 52px;
+  z-index: 50;
   display: flex;
   gap: 4px;
   margin-bottom: 20px;
   flex-wrap: wrap;
-  background: #f5f5f5;
+  background: rgba(245, 245, 245, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 6px;
   border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 .tab-btn {
