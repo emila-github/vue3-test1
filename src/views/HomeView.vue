@@ -4,108 +4,12 @@ import { shallowRef, computed } from 'vue'
 
 const demos = [
   {
-    path: '/typescript-demo',
-    title: 'TypeScript 学习',
-    desc: '基础类型、接口、泛型、类、枚举、工具类型、类型守卫',
-    color: '#3178c6',
-    icon: 'TS',
-    tags: ['基础', '进阶'],
-  },
-  {
-    path: '/template-syntax',
-    title: '模板语法',
-    desc: '文本插值、v-html、v-bind、表达式',
+    path: '/vue-basics',
+    title: 'Vue 3 基础',
+    desc: '模板语法、响应式、计算属性、类与样式、条件/列表渲染、事件处理、表单绑定、侦听器、模板引用、组件基础、生命周期',
     color: '#1890ff',
-    icon: '{}',
+    icon: 'V',
     tags: ['基础'],
-  },
-  {
-    path: '/reactivity',
-    title: '响应式基础',
-    desc: 'ref()、reactive()、toRefs、shallowRef',
-    color: '#52c41a',
-    icon: '⟳',
-    tags: ['核心'],
-  },
-  {
-    path: '/computed',
-    title: '计算属性',
-    desc: 'computed、可写计算属性、搜索过滤',
-    color: '#fa8c16',
-    icon: '∑',
-    tags: ['核心'],
-  },
-  {
-    path: '/class-style',
-    title: '类与样式绑定',
-    desc: ':class 对象/数组语法、:style 绑定',
-    color: '#722ed1',
-    icon: '#',
-    tags: ['基础'],
-  },
-  {
-    path: '/conditional',
-    title: '条件渲染',
-    desc: 'v-if / v-else-if / v-else、v-show',
-    color: '#13c2c2',
-    icon: '?',
-    tags: ['基础'],
-  },
-  {
-    path: '/list',
-    title: '列表渲染',
-    desc: 'v-for、key、数组变更、过滤排序',
-    color: '#eb2f96',
-    icon: '≡',
-    tags: ['基础'],
-  },
-  {
-    path: '/events',
-    title: '事件处理',
-    desc: 'v-on、事件修饰符、按键修饰符',
-    color: '#2f54eb',
-    icon: '⚡',
-    tags: ['基础'],
-  },
-  {
-    path: '/form',
-    title: '表单输入绑定',
-    desc: 'v-model、修饰符 .lazy .number .trim',
-    color: '#faad14',
-    icon: '✎',
-    tags: ['基础'],
-  },
-  {
-    path: '/watchers',
-    title: '侦听器',
-    desc: 'watch、watchEffect、监听多个数据源',
-    color: '#a0d911',
-    icon: '👁',
-    tags: ['核心'],
-  },
-  {
-    path: '/template-refs',
-    title: '模板引用',
-    desc: 'ref DOM 元素、组件实例、defineExpose',
-    color: '#f5222d',
-    icon: '↗',
-    tags: ['核心'],
-  },
-  {
-    path: '/components-demo',
-    title: '组件基础',
-    desc: 'Props、Emits、Slots、作用域插槽',
-    color: '#1890ff',
-    icon: '◈',
-    tags: ['核心'],
-  },
-  {
-    path: '/lifecycle',
-    title: '生命周期',
-    desc: 'onMounted、onUpdated、onBeforeUnmount...',
-    color: '#597ef7',
-    icon: '◉',
-    tags: ['核心'],
   },
   {
     path: '/deep-components',
@@ -113,7 +17,7 @@ const demos = [
     desc: '注册、Props、事件、v-model、透传、插槽、依赖注入、异步组件',
     color: '#cf1322',
     icon: '◆',
-    tags: ['进阶', '核心'],
+    tags: ['进阶'],
   },
   {
     path: '/logic-reuse',
@@ -129,7 +33,15 @@ const demos = [
     desc: 'Transition、TransitionGroup、KeepAlive、Teleport、Suspense',
     color: '#13c2c2',
     icon: '⊞',
-    tags: ['进阶', '核心'],
+    tags: ['进阶'],
+  },
+  {
+    path: '/typescript-demo',
+    title: 'TypeScript 学习',
+    desc: '基础类型、接口、泛型、类、枚举、工具类型、类型守卫',
+    color: '#3178c6',
+    icon: 'TS',
+    tags: ['进阶'],
   },
   {
     path: '/user-crud',
@@ -167,11 +79,15 @@ const filteredDemos = computed(() => {
       </p>
       <div class="hero-stats">
         <span class="stat-item">
-          <strong>{{ demos.length }}</strong> 个示例
+          <strong>{{ demos.length }}</strong> 个模块
         </span>
         <span class="stat-divider">·</span>
         <span class="stat-item">
           <strong>3</strong> 个难度等级
+        </span>
+        <span class="stat-divider">·</span>
+        <span class="stat-item">
+          涵盖 <strong>Vue 3 + TS</strong>
         </span>
       </div>
     </section>

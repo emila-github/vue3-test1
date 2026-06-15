@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import MyButton from '../components/MyButton.vue'
-import UserCard from '../components/UserCard.vue'
-import CounterButton from '../components/CounterButton.vue'
-import Card from '../components/Card.vue'
-import ListComponent from '../components/ListComponent.vue'
+import MyButton from '../../components/MyButton.vue'
+import UserCard from '../../components/UserCard.vue'
+import CounterButton from '../../components/CounterButton.vue'
+import Card from '../../components/Card.vue'
+import ListComponent from '../../components/ListComponent.vue'
 
 // Props 演示
 const userName = ref('李四')

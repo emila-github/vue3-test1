@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import ChildComponent from '../components/ChildComponent.vue'
+import ChildComponent from '../../components/ChildComponent.vue'
 
 // ====== 获取 DOM 元素 ======
 const inputRef = ref<HTMLInputElement | null>(null)
