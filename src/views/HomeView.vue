@@ -41,7 +41,7 @@ const demos = [
     desc: '基础类型、接口、泛型、类、枚举、工具类型、类型守卫',
     color: '#3178c6',
     icon: 'TS',
-    tags: ['进阶'],
+    tags: ['基础', '进阶'],
   },
   {
     path: '/user-crud',
@@ -82,22 +82,15 @@ const filteredDemos = computed(() => {
           <strong>{{ demos.length }}</strong> 个模块
         </span>
         <span class="stat-divider">·</span>
-        <span class="stat-item">
-          <strong>3</strong> 个难度等级
-        </span>
+        <span class="stat-item"> <strong>3</strong> 个难度等级 </span>
         <span class="stat-divider">·</span>
-        <span class="stat-item">
-          涵盖 <strong>Vue 3 + TS</strong>
-        </span>
+        <span class="stat-item"> 涵盖 <strong>Vue 3 + TS</strong> </span>
       </div>
     </section>
 
     <!-- 标签筛选 -->
     <div class="filter-bar">
-      <button
-        :class="['filter-btn', { active: tagFilter === null }]"
-        @click="tagFilter = null"
-      >
+      <button :class="['filter-btn', { active: tagFilter === null }]" @click="tagFilter = null">
         全部
       </button>
       <button
@@ -124,12 +117,9 @@ const filteredDemos = computed(() => {
             {{ demo.icon }}
           </span>
           <div class="card-tags">
-            <span
-              v-for="tag in demo.tags"
-              :key="tag"
-              class="card-tag"
-              :class="`tag-${tag}`"
-            >{{ tag }}</span>
+            <span v-for="tag in demo.tags" :key="tag" class="card-tag" :class="`tag-${tag}`">{{
+              tag
+            }}</span>
           </div>
         </div>
         <h2 class="card-title">{{ demo.title }}</h2>
