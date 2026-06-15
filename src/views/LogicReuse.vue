@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import ComposablesDemo from './logic/ComposablesDemo.vue'
 import DirectivesDemo from './logic/DirectivesDemo.vue'
 import PluginsDemo from './logic/PluginsDemo.vue'
@@ -11,6 +11,8 @@ const tabs = [
 ] as const
 
 const currentTab = ref<(typeof tabs)[number]['key']>('composables')
+
+watch(currentTab, () => window.scrollTo(0, 0))
 </script>
 
 <template>

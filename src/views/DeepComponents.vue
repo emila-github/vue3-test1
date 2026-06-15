@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import PropsDemo from './deep/PropsDemo.vue'
 import EventsDemo from './deep/EventsDemo.vue'
 import VModelDemo from './deep/VModelDemo.vue'
@@ -19,6 +19,8 @@ const tabs = [
   { key: 'provide', label: '依赖注入' },
   { key: 'async', label: '异步组件' },
 ]
+
+watch(activeTab, () => window.scrollTo(0, 0))
 </script>
 
 <template>

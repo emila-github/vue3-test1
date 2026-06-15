@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue'
+import { shallowRef, watch } from 'vue'
 import TemplateSyntax from './TemplateSyntax.vue'
 import Reactivity from './Reactivity.vue'
 import ComputedDemo from './ComputedDemo.vue'
@@ -29,6 +29,8 @@ const tabs = [
   { key: 'components-demo', label: '组件基础' },
   { key: 'lifecycle', label: '生命周期' },
 ]
+
+watch(activeTab, () => window.scrollTo(0, 0))
 </script>
 
 <template>

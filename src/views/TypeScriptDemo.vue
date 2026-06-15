@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import BasicTypes from './ts/BasicTypes.vue'
 import InterfaceType from './ts/InterfaceType.vue'
 import FunctionType from './ts/FunctionType.vue'
@@ -23,6 +23,8 @@ const tabs = [
 ] as const
 
 const currentTab = ref<(typeof tabs)[number]['key']>('basic')
+
+watch(currentTab, () => window.scrollTo(0, 0))
 </script>
 
 <template>

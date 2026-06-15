@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import TransitionDemo from './builtin/TransitionDemo.vue'
 import TransitionGroupDemo from './builtin/TransitionGroupDemo.vue'
 import KeepAliveDemo from './builtin/KeepAliveDemo.vue'
@@ -15,6 +15,8 @@ const tabs = [
 ] as const
 
 const currentTab = ref<(typeof tabs)[number]['key']>('transition')
+
+watch(currentTab, () => window.scrollTo(0, 0))
 </script>
 
 <template>
