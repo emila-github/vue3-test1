@@ -455,6 +455,75 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
       </p>
     </header>
 
+    <!-- ==================== 引言：什么是类 ==================== -->
+    <section class="demo-section intro-section">
+      <h2 class="section-title">📖 什么是类？为什么需要它？</h2>
+      <div class="explain-box">
+        <p>
+          <strong>一句话解释：</strong>类是<em>创建对象的蓝图</em>，它把数据（属性）和行为（方法）打包在一起。
+          有了类，你不需要为每个相似对象重复写相同的代码。
+        </p>
+
+        <h3>没有类的痛苦 😫</h3>
+        <pre class="code-block">
+// 面向过程：每个对象都要手动创建，代码散落各处
+const cat1 = { name: '小花', age: 3, species: '猫' }
+const cat2 = { name: '小黑', age: 2, species: '猫' }
+const dog1 = { name: '旺财', age: 4, breed: '金毛' }
+
+// 操作函数散落各处，和数据结构没有关联
+function moveAnimal(animal: any, distance: number) {
+  console.log(animal.name + ' 移动了 ' + distance + ' 米')
+  // 万一 animal 没有 name 属性？运行时才发现！
+}
+
+// 年龄校验要到处写，容易遗漏
+function setAge(animal: any, age: number) {
+  if (age &lt; 0) throw new Error('年龄不能为负')  // 每次都要写
+  animal.age = age
+}</pre>
+
+        <h3>有了类之后 😎</h3>
+        <pre class="code-block">
+// 面向对象：用 class 定义蓝图，一次定义，到处复用
+class Animal {
+  name: string
+  private _age: number          // 私有属性，外部无法直接修改
+
+  constructor(name: string, age: number) {
+    this.name = name
+    this._age = age
+  }
+
+  get age(): number { return this._age }
+  set age(value: number) {     // 校验逻辑集中在类内部
+    if (value &lt; 0) throw new Error('年龄不能为负')
+    this._age = value
+  }
+
+  move(distance: number): string {
+    return \`\${this.name} 移动了 \${distance} 米\`
+  }
+}
+
+// 创建实例：一行代码，数据 + 行为都就绪
+const cat = new Animal('小花', 3)
+cat.move(10)  // "小花 移动了 10 米" ✅ 类型安全</pre>
+
+        <div class="key-points">
+          <p>🔑 <strong>核心要点：</strong></p>
+          <ul>
+            <li><code>class</code> = 创建对象的蓝图，封装数据（属性）+ 行为（方法）</li>
+            <li><code>extends</code> = 继承，子类复用父类代码 + 重写（多态）</li>
+            <li><code>abstract</code> = 只定义"该做什么"，不实现"怎么做"，强制子类实现</li>
+            <li><code>implements</code> = 承诺"我能做什么"，可同时实现多个接口</li>
+            <li><code>public/private/protected/readonly</code> 控制属性可见范围，保护数据安全</li>
+            <li><code>static</code> = 属于类本身而非实例，适合工具函数和全局状态</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- ==================== 1. 基本类 ==================== -->
     <section class="demo-section">
       <h2 class="section-title">1. 基本类 <span class="badge">class</span></h2>
@@ -753,57 +822,109 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
       </div>
     </section>
 
-    <!-- ==================== 总结对比 ==================== -->
+    <!-- ==================== 总结速查表 ==================== -->
     <section class="demo-section summary-section">
-      <h2 class="section-title">📋 核心概念对比</h2>
-      <table class="modifier-table">
+      <h2 class="section-title">📋 类知识速查表</h2>
+      <table class="summary-table">
         <thead>
           <tr>
-            <th>关键字</th>
-            <th>作用</th>
+            <th>语法</th>
+            <th>含义</th>
             <th>通俗理解</th>
-            <th>使用场景</th>
+            <th>典型场景</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="mod-name">class</td>
-            <td>定义类</td>
-            <td>创建对象的蓝图</td>
+            <td><code>class X { }</code></td>
+            <td>定义一个类</td>
+            <td>"创建对象的蓝图/模具"</td>
             <td>封装数据 + 行为</td>
           </tr>
           <tr>
-            <td class="mod-name">extends</td>
-            <td>继承</td>
-            <td>子承父业，还能创新</td>
-            <td>复用代码 + 多态</td>
+            <td><code>constructor()</code></td>
+            <td>构造函数，new 时自动执行</td>
+            <td>"出厂设置，初始化数据"</td>
+            <td>给属性赋初始值</td>
           </tr>
           <tr>
-            <td class="mod-name">abstract</td>
-            <td>抽象类/方法</td>
-            <td>定规矩，不干活</td>
-            <td>强制子类实现</td>
+            <td><code>extends Parent</code></td>
+            <td>继承父类所有成员</td>
+            <td>"子承父业，还能创新"</td>
+            <td>代码复用 + 多态</td>
           </tr>
           <tr>
-            <td class="mod-name">implements</td>
-            <td>实现接口</td>
-            <td>签合同，保证会做</td>
-            <td>多能力组合</td>
-          </tr>
-          <tr>
-            <td class="mod-name">super()</td>
-            <td>调用父类</td>
-            <td>先有父亲，才有孩子</td>
+            <td><code>super()</code></td>
+            <td>调用父类的 constructor</td>
+            <td>"先有父亲，才有孩子"</td>
             <td>子类 constructor 首行</td>
           </tr>
           <tr>
-            <td class="mod-name">static</td>
-            <td>静态成员</td>
-            <td>属于类，不属对象</td>
-            <td>工具函数、常量</td>
+            <td><code>abstract class</code></td>
+            <td>抽象类，不能直接 new</td>
+            <td>"定规矩，不干活"</td>
+            <td>模板方法模式、强制子类实现</td>
+          </tr>
+          <tr>
+            <td><code>abstract method()</code></td>
+            <td>抽象方法，没有函数体</td>
+            <td>"子类必须补上这段代码"</td>
+            <td>定义统一接口，各自实现</td>
+          </tr>
+          <tr>
+            <td><code>implements I</code></td>
+            <td>实现接口（能力契约）</td>
+            <td>"签合同，保证会做这些事"</td>
+            <td>多能力组合（弥补单继承）</td>
+          </tr>
+          <tr>
+            <td><code>public</code></td>
+            <td>公开（默认），任意访问</td>
+            <td>"🌍 所有人都能看到"</td>
+            <td>对外暴露的 API</td>
+          </tr>
+          <tr>
+            <td><code>protected</code></td>
+            <td>受保护，类内部+子类可见</td>
+            <td>"🔑 家庭成员可见"</td>
+            <td>子类需要使用的内部属性</td>
+          </tr>
+          <tr>
+            <td><code>private</code></td>
+            <td>私有，仅类内部可访问</td>
+            <td>"🔒 只有自己知道"</td>
+            <td>封装内部实现细节</td>
+          </tr>
+          <tr>
+            <td><code>readonly</code></td>
+            <td>只读，初始化后不可改</td>
+            <td>"📌 刻在石头上的字"</td>
+            <td>ID、创建时间等不可变数据</td>
+          </tr>
+          <tr>
+            <td><code>static</code></td>
+            <td>静态成员，属于类本身</td>
+            <td>"属于工厂，不属于产品"</td>
+            <td>工具函数、常量、全局计数器</td>
+          </tr>
+          <tr>
+            <td><code>get / set</code></td>
+            <td>访问器（属性包装）</td>
+            <td>"像属性一样用，背后有逻辑"</td>
+            <td>数据校验、计算属性</td>
           </tr>
         </tbody>
       </table>
+
+      <div class="hint-box" style="margin-top: 14px;">
+        <p>💡 <strong>记忆技巧：</strong></p>
+        <ul style="margin: 6px 0 0; padding-left: 20px; color: #555; font-size: 14px;">
+          <li><strong>extends vs implements：</strong>extends 是"是一个..."（继承身份），implements 是"能做什么..."（具备能力）</li>
+          <li><strong>abstract vs interface：</strong>abstract 可以有实现代码，interface 只能定义结构</li>
+          <li><strong>private vs #：</strong>private 是 TS 编译时检查，# 是 JS 原生硬私有</li>
+          <li><strong>static vs 实例：</strong>实例属性每个对象一份，静态属性整个类共享一份</li>
+        </ul>
+      </div>
     </section>
   </div>
 </template>
@@ -1144,16 +1265,117 @@ Demo.sharedValue = 10        // 所有实例都看到 10`
 
 /* ===== 总结区 ===== */
 .summary-section {
-  border-left-color: #10b981;
-  background: #f0fdf4;
+  border-left-color: #52c41a;
+  background: #f6ffed;
 }
 
 .summary-section .section-title {
-  color: #065f46;
+  color: #2e7d32;
 }
 
 .summary-section .badge {
-  background: #d1fae5;
-  color: #065f46;
+  background: #d4edda;
+  color: #2e7d32;
+}
+
+/* ===== 速查表 ===== */
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.summary-table th {
+  background: #e8f5e9;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: #2e7d32;
+  border-bottom: 2px solid #c8e6c9;
+}
+
+.summary-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e8e8e8;
+  color: #444;
+}
+
+.summary-table code {
+  background: #e8e8e8;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+  color: #cf1322;
+  white-space: nowrap;
+}
+
+.summary-table tbody tr:hover {
+  background: #f5f5f5;
+}
+
+/* ===== 介绍区域 ===== */
+.intro-section {
+  border-left-color: #fa8c16;
+  background: #fffbe6;
+}
+
+.explain-box {
+  line-height: 1.8;
+}
+
+.explain-box h3 {
+  font-size: 15px;
+  margin: 16px 0 8px;
+  color: #333;
+}
+
+.explain-box p {
+  margin: 6px 0;
+  color: #444;
+}
+
+.key-points {
+  background: #fff;
+  border: 1px solid #ffd591;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-top: 12px;
+}
+
+.key-points p {
+  margin: 0 0 6px;
+  color: #d46b08;
+}
+
+.key-points ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.key-points li {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.key-points code {
+  background: #fff3e0;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #d46b08;
+}
+
+/* ===== 提示框 ===== */
+.hint-box {
+  background: #fff;
+  border: 1px solid #b7eb8f;
+  border-radius: 6px;
+  padding: 12px 16px;
+}
+
+.hint-box p {
+  margin: 0;
+  color: #2e7d32;
 }
 </style>

@@ -241,6 +241,47 @@ const enum LogLevel {
       <p class="page-subtitle">掌握 TypeScript 的类型系统是写出健壮代码的第一步。每个类型都配有代码示例和可交互演示。</p>
     </header>
 
+    <!-- ==================== 引言：什么是基础类型 ==================== -->
+    <section class="demo-section intro-section">
+      <h2 class="section-title">📖 什么是基础类型？为什么需要它？</h2>
+      <div class="explain-box">
+        <p>
+          <strong>一句话解释：</strong>TypeScript 为 JavaScript 的<em>每个值</em>添加了类型标注，让编译器能在<strong>写代码时就发现错误</strong>，而不是等到运行时才崩溃。
+        </p>
+        <h3>没有类型的痛苦 😫</h3>
+        <pre class="code-block">
+// JavaScript：一切皆 any，没有任何约束
+let price = '100'
+let quantity = 5
+let total = price * quantity  // → 500，隐式类型转换，难以发现错误
+
+function getUser(id) {
+  return fetch('/api/user/' + id)  // id 可能传错类型
+}
+getUser({ id: 1 })  // → /api/user/[object Object]，完全不会报错！</pre>
+        <h3>有了类型之后 😎</h3>
+        <pre class="code-block">
+// TypeScript：类型错误在编译时就会暴露
+let price: number = '100'  // ❌ 编译错误：string 不能赋值给 number
+let price: number = 100     // ✅
+
+function getUser(id: number): Promise&lt;User&gt; {
+  return fetch('/api/user/' + id)
+}
+getUser({ id: 1 })  // ❌ 编译错误：object 不能赋值给 number
+getUser(1)          // ✅</pre>
+        <div class="key-points">
+          <p>🔑 <strong>核心要点：</strong></p>
+          <ul>
+            <li><code>string</code> / <code>number</code> / <code>boolean</code> 是最基本的三种类型</li>
+            <li><code>any</code> 关闭类型检查，<code>unknown</code> 是类型安全的 any</li>
+            <li>联合 <code>|</code> = "或"，交叉 <code>&amp;</code> = "且"</li>
+            <li><code>void</code> = "没有返回值"，<code>never</code> = "永远不会到终点"</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- 1. 原始类型 -->
     <section class="demo-section">
       <h2 class="section-title">1. 原始类型 <span class="badge">Primitive Types</span></h2>
@@ -362,6 +403,113 @@ const enum LogLevel {
       <h2 class="section-title">7. 枚举 <span class="badge">Enum</span></h2>
       <p class="section-desc">为一组命名常量提供更友好的写法。字符串枚举更推荐（调试时能看到有意义的值）。</p>
       <pre class="code-block">{{ enumCode }}</pre>
+    </section>
+
+    <!-- ==================== 速查表 ==================== -->
+    <section class="demo-section summary-section">
+      <h2 class="section-title">📋 基础类型速查表</h2>
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>类型</th>
+            <th>含义</th>
+            <th>示例</th>
+            <th>通俗理解</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>string</code></td>
+            <td>字符串</td>
+            <td><code>"hello"</code></td>
+            <td>"一段文本"</td>
+          </tr>
+          <tr>
+            <td><code>number</code></td>
+            <td>数字（不区分 int/float）</td>
+            <td><code>42</code> / <code>3.14</code></td>
+            <td>"任意数值"</td>
+          </tr>
+          <tr>
+            <td><code>boolean</code></td>
+            <td>布尔值</td>
+            <td><code>true</code> / <code>false</code></td>
+            <td>"是或否"</td>
+          </tr>
+          <tr>
+            <td><code>null</code></td>
+            <td>空值</td>
+            <td><code>null</code></td>
+            <td>"什么都没有"</td>
+          </tr>
+          <tr>
+            <td><code>undefined</code></td>
+            <td>未定义</td>
+            <td><code>undefined</code></td>
+            <td>"还没定义"</td>
+          </tr>
+          <tr>
+            <td><code>symbol</code></td>
+            <td>唯一标识</td>
+            <td><code>Symbol('key')</code></td>
+            <td>"独一无二的钥匙"</td>
+          </tr>
+          <tr>
+            <td><code>bigint</code></td>
+            <td>大整数</td>
+            <td><code>100n</code></td>
+            <td>"超大的整数"</td>
+          </tr>
+          <tr>
+            <td><code>T[]</code> / <code>Array&lt;T&gt;</code></td>
+            <td>数组</td>
+            <td><code>number[]</code></td>
+            <td>"同类元素的列表"</td>
+          </tr>
+          <tr>
+            <td><code>[T, U]</code></td>
+            <td>元组</td>
+            <td><code>[string, number]</code></td>
+            <td>"固定长度+类型的数组"</td>
+          </tr>
+          <tr>
+            <td><code>any</code></td>
+            <td>任意类型（关闭检查）</td>
+            <td><code>let x: any</code></td>
+            <td>"回到 JS 的万能钥匙"</td>
+          </tr>
+          <tr>
+            <td><code>unknown</code></td>
+            <td>安全的 any</td>
+            <td><code>let x: unknown</code></td>
+            <td>"必须先检查再使用"</td>
+          </tr>
+          <tr>
+            <td><code>T | U</code></td>
+            <td>联合类型</td>
+            <td><code>string | number</code></td>
+            <td>"可以是 T 或 U"</td>
+          </tr>
+          <tr>
+            <td><code>T &amp; U</code></td>
+            <td>交叉类型</td>
+            <td><code>A &amp; B</code></td>
+            <td>"同时是 T 和 U"</td>
+          </tr>
+          <tr>
+            <td><code>void</code></td>
+            <td>无返回值</td>
+            <td><code>() =&gt; void</code></td>
+            <td>"执行完就行，不管返回"</td>
+          </tr>
+          <tr>
+            <td><code>never</code></td>
+            <td>永不返回</td>
+            <td><code>() =&gt; never</code></td>
+            <td>"永远到不了终点"</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   </div>
 </template>
@@ -575,5 +723,102 @@ const enum LogLevel {
 
 .demo-btn-active:hover {
   background: #2563aa;
+}
+
+/* ===== 介绍区域 ===== */
+.intro-section {
+  border-left-color: #fa8c16;
+  background: #fffbe6;
+}
+
+.explain-box {
+  line-height: 1.8;
+}
+
+.explain-box h3 {
+  font-size: 15px;
+  margin: 16px 0 8px;
+  color: #333;
+}
+
+.explain-box p {
+  margin: 6px 0;
+  color: #444;
+}
+
+.key-points {
+  background: #fff;
+  border: 1px solid #ffd591;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-top: 12px;
+}
+
+.key-points p {
+  margin: 0 0 6px;
+  color: #d46b08;
+}
+
+.key-points ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.key-points li {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.key-points code {
+  background: #fff3e0;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #d46b08;
+}
+
+/* ===== 总结区 ===== */
+.summary-section {
+  border-left-color: #52c41a;
+  background: #f6ffed;
+}
+
+.summary-section .section-title {
+  color: #065f46;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.summary-table th {
+  background: #e8f5e9;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: #2e7d32;
+  border-bottom: 2px solid #c8e6c9;
+}
+
+.summary-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e8e8e8;
+  color: #444;
+}
+
+.summary-table code {
+  background: #e8e8e8;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+  color: #cf1322;
+  white-space: nowrap;
+}
+
+.summary-table tbody tr:hover {
+  background: #f5f5f5;
 }
 </style>
