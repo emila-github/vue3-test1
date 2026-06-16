@@ -1,4 +1,9 @@
-import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
+import axios, {
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
+} from 'axios'
 
 /** 统一响应格式 */
 export interface ApiResponse<T = unknown> {
@@ -35,7 +40,13 @@ instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 // ==================== 响应拦截器 ====================
 instance.interceptors.response.use(
   (res: AxiosResponse<ApiResponse>) => {
-    console.log('[axios] ← %s %s | status=%d | body=', res.config.method?.toUpperCase(), res.config.url, res.status, res.data)
+    console.log(
+      '[axios] ← %s %s | status=%d | body=',
+      res.config.method?.toUpperCase(),
+      res.config.url,
+      res.status,
+      res.data,
+    )
     const { code, data, message } = res.data
 
     // 业务成功
@@ -44,6 +55,7 @@ instance.interceptors.response.use(
     // 业务异常
     switch (code) {
       case 401:
+        console.warn('[401] 未登录')
         break
       case 403:
         console.warn('[403] 无权限')
@@ -60,15 +72,27 @@ instance.interceptors.response.use(
 )
 
 // ==================== 便捷方法 ====================
-export function get<T = any>(url: string, params?: Record<string, any>, config?: AxiosRequestConfig): Promise<T> {
+export function get<T = any>(
+  url: string,
+  params?: Record<string, any>,
+  config?: AxiosRequestConfig,
+): Promise<T> {
   return instance.get(url, { params, ...config }) as any
 }
 
-export function post<T = any>(url: string, data?: Record<string, any>, config?: AxiosRequestConfig): Promise<T> {
+export function post<T = any>(
+  url: string,
+  data?: Record<string, any>,
+  config?: AxiosRequestConfig,
+): Promise<T> {
   return instance.post(url, data, config) as any
 }
 
-export function put<T = any>(url: string, data?: Record<string, any>, config?: AxiosRequestConfig): Promise<T> {
+export function put<T = any>(
+  url: string,
+  data?: Record<string, any>,
+  config?: AxiosRequestConfig,
+): Promise<T> {
   return instance.put(url, data, config) as any
 }
 
