@@ -16,7 +16,7 @@ const types = ['A', 'B', 'C', 'D']
 
 function changeType() {
   const index = types.indexOf(type.value)
-  type.value = types[(index + 1) % types.length]
+  type.value = types[(index + 1) % types.length]!
 }
 
 const vIfCode = `// v-if 系列：真正的条件渲染（创建/销毁 DOM）

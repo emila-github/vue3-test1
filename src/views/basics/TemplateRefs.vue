@@ -53,7 +53,7 @@ const list = ref([
 
 const itemRefs = ref<HTMLElement[]>([])
 
-function setItemRef(el: Element | null) {
+function setItemRef(el: any) {
   if (el) {
     itemRefs.value.push(el as HTMLElement)
   }
@@ -71,7 +71,7 @@ function highlightItems() {
 const vforRefCode = `// v-for 中的 ref：使用函数形式
 const itemRefs = ref<HTMLElement[]>([])
 
-function setItemRef(el: Element | null) {
+function setItemRef(el: any) {
   if (el) {
     itemRefs.value.push(el as HTMLElement)
   }
@@ -129,7 +129,8 @@ childRef.value?.exposedData         // 访问子组件数据
       <h2>📖 什么是模板引用？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong><code>ref</code> 属性让你<em>在 JS 中直接拿到模板中 DOM 元素或组件实例的引用</em>。
+          <strong>一句话解释：</strong><code>ref</code> 属性让你<em>在 JS 中直接拿到模板中 DOM 元素或组件实例的引用</em
+          >。
         </p>
 
         <div class="key-points">
@@ -147,9 +148,7 @@ childRef.value?.exposedData         // 访问子组件数据
     <!-- 1. 获取 DOM 元素 -->
     <section class="demo-section">
       <h2>1. 获取 DOM 元素 — ref 属性</h2>
-      <p class="section-desc">
-        模板中用 <code>ref="xxx"</code> 标记元素，脚本中用同名 <code>ref</code> 变量接收。
-      </p>
+      <p class="section-desc">模板中用 <code>ref="xxx"</code> 标记元素，脚本中用同名 <code>ref</code> 变量接收。</p>
       <pre class="code-block">{{ domRefCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
@@ -165,9 +164,7 @@ childRef.value?.exposedData         // 访问子组件数据
     <!-- 2. v-for 中的模板引用 -->
     <section class="demo-section">
       <h2>2. v-for 中的模板引用 — 函数形式</h2>
-      <p class="section-desc">
-        v-for 中需要用函数形式的 <code>:ref</code> 来收集多个元素。
-      </p>
+      <p class="section-desc">v-for 中需要用函数形式的 <code>:ref</code> 来收集多个元素。</p>
       <pre class="code-block">{{ vforRefCode }}</pre>
       <ul class="ref-list">
         <li v-for="item in list" :key="item.id" :ref="setItemRef">
@@ -181,13 +178,13 @@ childRef.value?.exposedData         // 访问子组件数据
     <!-- 3. 获取组件实例 -->
     <section class="demo-section">
       <h2>3. 获取组件实例 — defineExpose</h2>
-      <p class="section-desc">
-        子组件通过 <code>defineExpose</code> 决定哪些内容可以被父组件访问。
-      </p>
+      <p class="section-desc">子组件通过 <code>defineExpose</code> 决定哪些内容可以被父组件访问。</p>
       <pre class="code-block">{{ componentRefCode }}</pre>
       <ChildComponent ref="childRef" />
-      <button @click="callChildMethod" class="demo-btn" style="margin-top: 12px;">调用子组件方法</button>
-      <p class="hint">💡 子组件通过 <code>defineExpose</code> 暴露了 <code>publicMethod</code> 和 <code>exposedData</code>。</p>
+      <button @click="callChildMethod" class="demo-btn" style="margin-top: 12px">调用子组件方法</button>
+      <p class="hint">
+        💡 子组件通过 <code>defineExpose</code> 暴露了 <code>publicMethod</code> 和 <code>exposedData</code>。
+      </p>
     </section>
   </div>
 </template>

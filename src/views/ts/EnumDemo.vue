@@ -48,13 +48,13 @@ const selectedColor = ref<Color>(Color.Red)
 function nextDirection() {
   const values = [Direction.Up, Direction.Down, Direction.Left, Direction.Right]
   const idx = values.indexOf(selectedDirection.value)
-  selectedDirection.value = values[(idx + 1) % values.length]
+  selectedDirection.value = values[(idx + 1) % values.length]!
 }
 
 function nextColor() {
   const values = [Color.Red, Color.Green, Color.Blue]
   const idx = values.indexOf(selectedColor.value)
-  selectedColor.value = values[(idx + 1) % values.length]
+  selectedColor.value = values[(idx + 1) % values.length]!
 }
 
 const dirMap: Record<Direction, string> = {

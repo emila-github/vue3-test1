@@ -17,7 +17,7 @@ const mockI18n = {
 
 // 模拟全局 $t 方法
 function $t(key: string) {
-  return mockI18n.messages[mockI18n.locale.value][key] || key
+  return (mockI18n.messages[mockI18n.locale.value] as Record<string, string>)[key] || key
 }
 
 function toggleLocale() {

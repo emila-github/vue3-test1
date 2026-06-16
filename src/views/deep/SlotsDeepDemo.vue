@@ -15,7 +15,7 @@ const todos = ref([
 const themes = ['header', 'default', 'footer']
 function toggleDynamicSlot() {
   const idx = themes.indexOf(dynamicSlot.value)
-  dynamicSlot.value = themes[(idx + 1) % themes.length]
+  dynamicSlot.value = themes[(idx + 1) % themes.length]!
 }
 </script>
 

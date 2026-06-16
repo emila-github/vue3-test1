@@ -13,7 +13,7 @@ const themeColors: Record<string, { bg: string; color: string; border: string }>
   blue: { bg: '#e6f7ff', color: '#003a8c', border: '#91d5ff' },
 }
 
-const currentStyle = themeColors[theme?.value || 'light'] || themeColors.light
+const currentStyle = themeColors[theme?.value || 'light'] ?? themeColors.light!
 </script>
 
 <template>

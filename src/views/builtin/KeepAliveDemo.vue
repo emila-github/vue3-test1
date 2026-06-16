@@ -11,7 +11,7 @@ const tabs = [
 ]
 
 const currentTabKey = ref('a')
-const currentTab = shallowRef(tabs[0].component)
+const currentTab = shallowRef(tabs[0]!.component)
 
 function switchTab(key: string) {
   currentTabKey.value = key

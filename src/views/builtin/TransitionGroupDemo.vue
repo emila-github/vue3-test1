@@ -15,7 +15,7 @@ function addItem() {
   const newItem = {
     id: nextId++,
     text: `项目 ${String.fromCharCode(64 + nextId)}`,
-    color: colors[(nextId - 1) % colors.length],
+    color: colors[(nextId - 1) % colors.length]!,
   }
   items.value.splice(index, 0, newItem)
 }
@@ -28,7 +28,7 @@ function shuffle() {
   const shuffled = [...items.value]
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    ;[shuffled[i], shuffled[j]] = [shuffled[j]!, shuffled[i]!]
   }
   items.value = shuffled
 }

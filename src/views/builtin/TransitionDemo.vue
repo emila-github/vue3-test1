@@ -17,8 +17,8 @@ const tabs = [
   { key: 'bounce', component: TransitionBounceChild, label: '弹跳' },
   { key: 'slide', component: TransitionSlideChild, label: '滑动' },
 ]
-const currentTab = shallowRef(tabs[0])
-const currentTabKey = ref(tabs[0].key)
+const currentTab = shallowRef(tabs[0]!)
+const currentTabKey = ref(tabs[0]!.key)
 
 function switchTab(key: string) {
   const tab = tabs.find((t) => t.key === key)
@@ -101,7 +101,7 @@ function switchTab(key: string) {
         </button>
       </div>
       <Transition name="component-fade" mode="out-in">
-        <component :is="currentTab.component" :key="currentTab.key" />
+        <component :is="currentTab!.component" :key="currentTab!.key" />
       </Transition>
     </section>
   </div>

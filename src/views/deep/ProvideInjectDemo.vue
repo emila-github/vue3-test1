@@ -14,14 +14,15 @@ provide('config', config)
 
 function toggleTheme() {
   const idx = themes.indexOf(theme.value)
-  theme.value = themes[(idx + 1) % themes.length]
+  theme.value = themes[(idx + 1) % themes.length]!
 }
 
 // 提供更新方法
-provide('toggleTheme', toggleTheme)
-provide('setTheme', (name: string) => {
+function setTheme(name: string) {
   theme.value = name
-})
+}
+provide('toggleTheme', toggleTheme)
+provide('setTheme', setTheme)
 </script>
 
 <template>

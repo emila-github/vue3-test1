@@ -12,7 +12,7 @@ const themeColors: Record<string, { bg: string; color: string }> = {
   blue: { bg: '#bae7ff', color: '#003a8c' },
 }
 
-const style = themeColors[theme?.value || 'light'] || themeColors.light
+const style = themeColors[theme?.value || 'light'] ?? themeColors.light!
 </script>
 
 <template>

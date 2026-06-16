@@ -183,7 +183,7 @@ const stackItems = ref<string[]>(stringStack.getAll())
 
 function stackPush() {
   const chars = 'DEFGHIJK'
-  const c = chars[stringStack.size % chars.length]
+  const c = chars[stringStack.size % chars.length]!
   stringStack.push(c)
   // 手动同步 ref，触发模板重新渲染
   stackItems.value = stringStack.getAll()

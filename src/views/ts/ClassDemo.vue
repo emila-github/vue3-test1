@@ -332,7 +332,7 @@ class VipAccount extends BankAccount {
   }
 }
 
-const myAccount = reactive(new BankAccount('张三', '6222-0001', 1000))
+const myAccount = reactive(new BankAccount('张三', '6222-0001', 1000)) as BankAccount
 const vipAccount = new VipAccount('李四', '6222-8888', 5000)
 
 const accountFeedback = shallowRef('')

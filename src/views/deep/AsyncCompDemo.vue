@@ -9,7 +9,7 @@ const AsyncCard = defineAsyncComponent({
     // 模拟加载延迟
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(import('./AsyncCard.vue'))
+        resolve(import('./AsyncCard.vue') as any)
       }, 1500)
     })
   },
