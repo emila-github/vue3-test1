@@ -129,8 +129,8 @@ childRef.value?.exposedData         // 访问子组件数据
       <h2>📖 什么是模板引用？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong><code>ref</code> 属性让你<em>在 JS 中直接拿到模板中 DOM 元素或组件实例的引用</em
-          >。
+          <strong>一句话解释：</strong><code>ref</code> 属性让你
+          <em>在 JS 中直接拿到模板中 DOM 元素或组件实例的引用</em>。
         </p>
 
         <div class="key-points">
