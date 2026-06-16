@@ -22,10 +22,10 @@ export default defineConfig({
   // ===== 有后端时启用：删掉上方 mockPlugin()，取消下面注释 =====
   // server: {
   //   proxy: {
-  //     '/api': {
+  //     // 正则 ^/api(/|$) 只匹配 /api 或 /api/xxx，不会误匹配 /api-demo
+  //     '^/api(/|$)': {
   //       target: 'http://localhost:8080',
   //       changeOrigin: true,
-  //       // 注意：rewrite 会去掉 /api 前缀，确保 target 用 ^ 锚定避免误匹配 /api-demo
   //       rewrite: (path) => path.replace(/^\/api/, ''),
   //     },
   //   },
