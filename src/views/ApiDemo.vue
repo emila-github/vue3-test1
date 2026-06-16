@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { get, post, put, del, BizError } from '@/api/request'
+import type { AxiosRequestConfig } from 'axios'
 
 const env = import.meta.env
 
@@ -88,6 +89,91 @@ async function demoModuleGet() {
     loading.value = false
   }
 }
+
+// ==================== 带 config 的便捷方法示例 ====================
+
+// ---- GET + 自定义 headers ----
+async function demoGetWithHeaders() {
+  loading.value = true
+  error.value = ''
+  result.value = ''
+  try {
+    const config: AxiosRequestConfig = {
+      headers: { 'X-Custom-Header': 'demo-value', Authorization: 'Bearer mock-token' },
+    }
+    const data = await get('/users', { page: 1, pageSize: 5 }, config)
+    result.value = JSON.stringify(data, null, 2)
+  } catch (e: any) {
+    error.value = e instanceof BizError ? `业务错误 [${e.code}]: ${e.message}` : e.message
+  } finally {
+    loading.value = false
+  }
+}
+
+// ---- POST + timeout 配置 ----
+async function demoPostWithTimeout() {
+  loading.value = true
+  error.value = ''
+  result.value = ''
+  try {
+    const config: AxiosRequestConfig = {
+      timeout: 5000,
+    }
+    const data = await post('/users', { name: '王五', email: 'wangwu@example.com', role: 'viewer' }, config)
+    result.value = JSON.stringify(data, null, 2)
+  } catch (e: any) {
+    error.value = e instanceof BizError ? `业务错误 [${e.code}]: ${e.message}` : e.message
+  } finally {
+    loading.value = false
+  }
+}
+
+// ---- GET + 取消请求（AbortController） ----
+const abortController = ref<AbortController | null>(null)
+
+async function demoCancelRequest() {
+  loading.value = true
+  error.value = ''
+  result.value = ''
+  try {
+    abortController.value = new AbortController()
+    setTimeout(() => {
+      abortController.value?.abort()
+    }, 100) // 100ms 后取消
+    const config: AxiosRequestConfig = {
+      signal: abortController.value.signal,
+    }
+    await get('/users', { page: 1 }, config)
+  } catch (e: any) {
+    if (e?.code === 'ERR_CANCELED' || e?.message === 'canceled') {
+      error.value = '请求已被取消 (AbortController)'
+    } else {
+      error.value = e instanceof BizError ? `业务错误 [${e.code}]: ${e.message}` : e.message
+    }
+  } finally {
+    loading.value = false
+    abortController.value = null
+  }
+}
+
+// ---- GET + responseType ----
+async function demoResponseType() {
+  loading.value = true
+  error.value = ''
+  result.value = ''
+  try {
+    const config: AxiosRequestConfig = {
+      responseType: 'json',
+      validateStatus: (status) => status < 500,
+    }
+    const data = await get('/users', { page: 1, pageSize: 3 }, config)
+    result.value = 'responseType=json | validateStatus<500\n' + JSON.stringify(data, null, 2)
+  } catch (e: any) {
+    error.value = e instanceof BizError ? `业务错误 [${e.code}]: ${e.message}` : e.message
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>
@@ -121,6 +207,18 @@ async function demoModuleGet() {
       </div>
     </section>
 
+    <!-- 带 config 调用 -->
+    <section class="demo-section">
+      <h2>3. 带 config 的便捷方法</h2>
+      <p class="desc">第三个参数传入 <code>AxiosRequestConfig</code>，支持自定义 headers、timeout、signal、responseType 等。</p>
+      <div class="btn-group">
+        <button class="demo-btn config" @click="demoGetWithHeaders">GET + 自定义 Headers</button>
+        <button class="demo-btn config" @click="demoPostWithTimeout">POST + timeout=5s</button>
+        <button class="demo-btn config" @click="demoCancelRequest">GET + Abort 取消</button>
+        <button class="demo-btn config" @click="demoResponseType">GET + responseType</button>
+      </div>
+    </section>
+
     <!-- 结果展示 -->
     <section class="demo-section" v-if="loading || result || error">
       <h2>📋 响应结果</h2>
@@ -145,7 +243,30 @@ import { getUsers, createUser } from '@/api/modules/user'
 const { list, total } = await getUsers({ page: 1, pageSize: 10 })
 await createUser({ name: '张三', email: 'a@b.com', role: 'editor' })
 
-// 3. 错误处理
+// 3. 带 config 的调用 — 第三个参数传入 AxiosRequestConfig
+import type { AxiosRequestConfig } from 'axios'
+
+// 自定义 headers
+const config: AxiosRequestConfig = {
+  headers: { Authorization: 'Bearer xxx', 'X-Trace-Id': 'trace-001' },
+}
+const data = await get('/users', { page: 1 }, config)
+
+// 自定义 timeout（实例默认 15s，这里覆盖为 5s）
+await post('/users', { name: '王五' }, { timeout: 5000 })
+
+// 请求取消（AbortController）
+const controller = new AbortController()
+setTimeout(() => controller.abort(), 100)
+await get('/users', { page: 1 }, { signal: controller.signal })
+
+// 自定义响应类型 / 状态校验
+await get('/users', {}, {
+  responseType: 'json',
+  validateStatus: (status) => status &lt; 500,
+})
+
+// 4. 错误处理
 import { BizError } from '@/api/request'
 
 try {
@@ -153,12 +274,14 @@ try {
 } catch (e) {
   if (e instanceof BizError) {
     console.log('业务异常:', e.code, e.message)
+  } else if (e?.code === 'ERR_CANCELED') {
+    console.log('请求已取消')
   } else {
     console.log('网络错误:', e.message)
   }
 }
 
-// 4. 每个请求自动带上 t=时间戳
+// 5. 每个请求自动带上 t=时间戳
 // GET /api/users?page=1&t=1686912345678</pre>
       </div>
     </section>
@@ -271,6 +394,7 @@ h1 {
 .demo-btn.post    { background: #1890ff; }
 .demo-btn.put     { background: #fa8c16; }
 .demo-btn.delete  { background: #ff4d4f; }
+.demo-btn.config  { background: #722ed1; }
 
 .loading {
   color: #1890ff;
