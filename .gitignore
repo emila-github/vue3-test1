@@ -13,7 +13,8 @@ dist
 dist-ssr
 coverage
 *.local
-
+.agents/*
+.codebuddy/*
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
