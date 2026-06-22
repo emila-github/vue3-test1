@@ -1,16 +1,5 @@
 <script setup lang="ts">
-import {
-  ref,
-  reactive,
-  toRefs,
-  toRef,
-  shallowRef,
-  triggerRef,
-  readonly,
-  computed,
-  watch,
-  watchEffect,
-} from 'vue'
+import { ref, reactive, toRefs, toRef, shallowRef, triggerRef, readonly, computed, watch, watchEffect } from 'vue'
 
 // ====================================================================
 // 1. ref() - 基本类型响应式
@@ -34,7 +23,7 @@ count.value++              // 0 → 1
 msg.value = '你好 Vue 3'    // 'Hello' → '你好 Vue 3'
 
 // 在 <template> 中自动解包，不需要 .value
-// <p>&#123;&#123; count &#125;&#125;</p>   ← 直接写 count 即可
+// <p>{{ count }}</p>   ← 直接写 count 即可
 
 // ref 也可以接收对象类型
 const obj = ref({ a: 1 })  // 内部自动调用 reactive() 处理对象
@@ -177,9 +166,7 @@ watch(count, (newVal, oldVal) => {
 
 // watch 多个源
 watch([count, msg], ([newCount, newMsg], [oldCount, oldMsg]) => {
-  watchLog.value.push(
-    `watch 多源: count [${oldCount}→${newCount}], msg [${oldMsg}→${newMsg}]`,
-  )
+  watchLog.value.push(`watch 多源: count [${oldCount}→${newCount}], msg [${oldMsg}→${newMsg}]`)
 })
 
 // watch 侦听 reactive 对象属性（必须用 getter 函数）
@@ -335,7 +322,8 @@ let count = 0
 function increment() {
   count++
   document.getElementById('display').textContent = count  // 每次都要手动写这行！
-}</pre>
+}</pre
+        >
 
         <h3>有了响应式之后 😎</h3>
         <pre class="code-block">
@@ -343,7 +331,8 @@ function increment() {
 const count = ref(0)
 function increment() {
   count.value++  // 就这一行！视图自动刷新
-}</pre>
+}</pre
+        >
 
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
@@ -364,23 +353,22 @@ function increment() {
     <section class="demo-section">
       <h2>1. ref() — 基本类型的响应式引用</h2>
       <p class="section-desc">
-        将基本类型值包装成响应式对象。在 <code>&lt;script&gt;</code> 中用 <code>.value</code> 读写，
-        在 <code>&lt;template&gt;</code> 中自动解包，直接使用即可。
+        将基本类型值包装成响应式对象。在 <code>&lt;script&gt;</code> 中用 <code>.value</code> 读写， 在
+        <code>&lt;template&gt;</code> 中自动解包，直接使用即可。
       </p>
       <pre class="code-block">{{ refCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">计数 count</span> = <code>{{ count }}</code></p>
-          <p><span class="label">消息 msg</span> = <code>"{{ msg }}"</code></p>
+          <p>
+            <span class="label">计数 count</span> = <code>{{ count }}</code>
+          </p>
+          <p>
+            <span class="label">消息 msg</span> = <code>"{{ msg }}"</code>
+          </p>
         </div>
         <div class="action-box">
           <button @click="count++" class="demo-btn">count++</button>
-          <button
-            @click="msg = msg === 'Hello' ? '你好 Vue 3' : 'Hello'"
-            class="demo-btn"
-          >
-            切换消息
-          </button>
+          <button @click="msg = msg === 'Hello' ? '你好 Vue 3' : 'Hello'" class="demo-btn">切换消息</button>
         </div>
       </div>
       <p class="hint">
@@ -392,26 +380,26 @@ function increment() {
     <section class="demo-section">
       <h2>2. reactive() — 对象的深层响应式</h2>
       <p class="section-desc">
-        <code>reactive()</code> 将整个对象变成响应式代理，<strong>所有嵌套属性</strong>都会自动追踪。
-        不需要 <code>.value</code>，直接读写属性即可。
+        <code>reactive()</code> 将整个对象变成响应式代理，<strong>所有嵌套属性</strong>都会自动追踪。 不需要
+        <code>.value</code>，直接读写属性即可。
       </p>
       <pre class="code-block">{{ reactiveCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">姓名</span> = <code>{{ state.name }}</code></p>
-          <p><span class="label">年龄</span> = <code>{{ state.age }}</code></p>
-          <p><span class="label">爱好</span> = <code>{{ state.hobbies.join('、') }}</code></p>
+          <p>
+            <span class="label">姓名</span> = <code>{{ state.name }}</code>
+          </p>
+          <p>
+            <span class="label">年龄</span> = <code>{{ state.age }}</code>
+          </p>
+          <p>
+            <span class="label">爱好</span> = <code>{{ state.hobbies.join('、') }}</code>
+          </p>
         </div>
         <div class="action-box">
           <button @click="state.age++" class="demo-btn">年龄 +1</button>
           <button @click="state.hobbies.push('编程')" class="demo-btn">添加爱好</button>
-          <button
-            @click="state.hobbies.pop()"
-            class="demo-btn"
-            :disabled="state.hobbies.length <= 2"
-          >
-            移除爱好
-          </button>
+          <button @click="state.hobbies.pop()" class="demo-btn" :disabled="state.hobbies.length <= 2">移除爱好</button>
         </div>
       </div>
       <p class="hint">
@@ -423,22 +411,27 @@ function increment() {
     <section class="demo-section">
       <h2>3. toRefs / toRef — 安全地拆解 reactive 对象</h2>
       <p class="section-desc">
-        直接从 <code>reactive</code> 对象解构会<strong>丢失响应式</strong>。
-        <code>toRefs</code> 把每个属性变成独立的 <code>ref</code>，保持与原对象的连接。
+        直接从 <code>reactive</code> 对象解构会<strong>丢失响应式</strong>。 <code>toRefs</code> 把每个属性变成独立的
+        <code>ref</code>，保持与原对象的连接。
       </p>
       <pre class="code-block">{{ destructureCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">toRefs 解构 name</span> = <code>{{ stateName }}</code></p>
-          <p><span class="label">toRefs 解构 age</span> = <code>{{ stateAge }}</code></p>
-          <p><span class="label">toRef 单个属性</span> = <code>{{ nameRef }}</code></p>
-          <p><span class="label">原始 state.name</span> = <code>{{ state.name }}</code></p>
+          <p>
+            <span class="label">toRefs 解构 name</span> = <code>{{ stateName }}</code>
+          </p>
+          <p>
+            <span class="label">toRefs 解构 age</span> = <code>{{ stateAge }}</code>
+          </p>
+          <p>
+            <span class="label">toRef 单个属性</span> = <code>{{ nameRef }}</code>
+          </p>
+          <p>
+            <span class="label">原始 state.name</span> = <code>{{ state.name }}</code>
+          </p>
         </div>
         <div class="action-box">
-          <button
-            @click="state.name = state.name === '张三' ? '李四' : '张三'"
-            class="demo-btn"
-          >
+          <button @click="state.name = state.name === '张三' ? '李四' : '张三'" class="demo-btn">
             修改 state.name
           </button>
         </div>
@@ -459,9 +452,15 @@ function increment() {
       <pre class="code-block">{{ computedCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">单价</span> = <code>{{ price }}</code></p>
-          <p><span class="label">数量</span> = <code>{{ quantity }}</code></p>
-          <p><span class="label">折扣</span> = <code>{{ discount }}</code></p>
+          <p>
+            <span class="label">单价</span> = <code>{{ price }}</code>
+          </p>
+          <p>
+            <span class="label">数量</span> = <code>{{ quantity }}</code>
+          </p>
+          <p>
+            <span class="label">折扣</span> = <code>{{ discount }}</code>
+          </p>
           <p class="highlight-result">
             <span class="label">总价</span> = <code>{{ totalLabel }}</code>
             <span class="type-hint">// = price × quantity × discount</span>
@@ -470,9 +469,7 @@ function increment() {
         <div class="action-box">
           <button @click="price += 10" class="demo-btn">单价 +10</button>
           <button @click="quantity++" class="demo-btn">数量 +1</button>
-          <button @click="discount = Math.round((discount - 0.1) * 10) / 10 || 0.1" class="demo-btn">
-            折扣 -0.1
-          </button>
+          <button @click="discount = Math.round((discount - 0.1) * 10) / 10 || 0.1" class="demo-btn">折扣 -0.1</button>
         </div>
       </div>
       <p class="hint">
@@ -491,17 +488,19 @@ function increment() {
       <pre class="code-block">{{ watchCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">count</span> = <code>{{ count }}</code></p>
-          <p><span class="label">state.age</span> = <code>{{ state.age }}</code></p>
+          <p>
+            <span class="label">count</span> = <code>{{ count }}</code>
+          </p>
+          <p>
+            <span class="label">state.age</span> = <code>{{ state.age }}</code>
+          </p>
           <p class="highlight-result">
             <span class="label">watchEffect: count × 2</span> = <code>{{ watchedCount }}</code>
           </p>
         </div>
         <div class="action-box">
           <button @click="count++" class="demo-btn">count++</button>
-          <button @click="msg = msg === 'Hello' ? '你好' : 'Hello'" class="demo-btn">
-            切换 msg
-          </button>
+          <button @click="msg = msg === 'Hello' ? '你好' : 'Hello'" class="demo-btn">切换 msg</button>
           <button @click="state.age++" class="demo-btn">state.age++</button>
         </div>
       </div>
@@ -512,8 +511,8 @@ function increment() {
         </p>
       </div>
       <p class="hint">
-        💡 试试：点 count++ 会触发 watch count、watch 多源、watchEffect 三处响应。
-        点切换 msg 只触发 watch 多源（因为 msg 也是多源侦听的目标）。
+        💡 试试：点 count++ 会触发 watch count、watch 多源、watchEffect 三处响应。 点切换 msg 只触发 watch 多源（因为
+        msg 也是多源侦听的目标）。
       </p>
     </section>
 
@@ -521,8 +520,7 @@ function increment() {
     <section class="demo-section">
       <h2>6. shallowRef — 浅层响应式（性能优化用）</h2>
       <p class="section-desc">
-        只有 <code>.value</code> 整体替换才触发更新，嵌套属性变化不触发。
-        适合大型数据或与不可变数据结合的场景。
+        只有 <code>.value</code> 整体替换才触发更新，嵌套属性变化不触发。 适合大型数据或与不可变数据结合的场景。
       </p>
       <pre class="code-block">{{ shallowRefCode }}</pre>
       <div class="demo-row">
@@ -536,12 +534,8 @@ function increment() {
           <button @click="updateShallowValue" class="demo-btn">
             修改 .value.count<br /><small>（不触发更新）</small>
           </button>
-          <button @click="updateShallowRef" class="demo-btn">
-            替换 .value<br /><small>（触发更新）</small>
-          </button>
-          <button @click="forceUpdate" class="demo-btn">
-            triggerRef<br /><small>（强制更新）</small>
-          </button>
+          <button @click="updateShallowRef" class="demo-btn">替换 .value<br /><small>（触发更新）</small></button>
+          <button @click="forceUpdate" class="demo-btn">triggerRef<br /><small>（强制更新）</small></button>
         </div>
       </div>
     </section>
@@ -549,14 +543,16 @@ function increment() {
     <!-- ==================== 7. readonly ==================== -->
     <section class="demo-section">
       <h2>7. readonly — 创建只读保护层</h2>
-      <p class="section-desc">
-        防止意外修改数据。常用于向子组件暴露数据时，确保数据只由特定位置修改。
-      </p>
+      <p class="section-desc">防止意外修改数据。常用于向子组件暴露数据时，确保数据只由特定位置修改。</p>
       <pre class="code-block">{{ readonlyCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">original.count</span> = <code>{{ original.count }}</code></p>
-          <p><span class="label">copy.count（只读）</span> = <code>{{ copy.count }}</code></p>
+          <p>
+            <span class="label">original.count</span> = <code>{{ original.count }}</code>
+          </p>
+          <p>
+            <span class="label">copy.count（只读）</span> = <code>{{ copy.count }}</code>
+          </p>
           <p class="hint">✅ original 可修改 → copy 自动同步</p>
         </div>
         <div class="action-box">
