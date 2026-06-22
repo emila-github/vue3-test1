@@ -50,6 +50,37 @@ const router = createRouter({
       name: 'user-crud',
       component: () => import('../views/user/UserCrud.vue'),
     },
+    // ====== Ant Design Vue 学习 ======
+    {
+      path: '/antd',
+      name: 'antd',
+      component: () => import('../views/antd/AntdIndex.vue'),
+    },
+    {
+      path: '/antd/stage1',
+      name: 'antd-stage1',
+      component: () => import('../views/antd/Stage1GettingStarted.vue'),
+    },
+    {
+      path: '/antd/stage2',
+      name: 'antd-stage2',
+      component: () => import('../views/antd/Stage2CoreComponents.vue'),
+    },
+    {
+      path: '/antd/stage3',
+      name: 'antd-stage3',
+      component: () => import('../views/antd/Stage3Encapsulation.vue'),
+    },
+    {
+      path: '/antd/stage4',
+      name: 'antd-stage4',
+      component: () => import('../views/antd/Stage4Theme.vue'),
+    },
+    {
+      path: '/antd/stage5',
+      name: 'antd-stage5',
+      component: () => import('../views/antd/Stage5Optimization.vue'),
+    },
   ],
 })
 

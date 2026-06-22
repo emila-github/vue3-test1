@@ -33,6 +33,7 @@ onUnmounted(() => {
         <nav class="header-nav">
           <RouterLink to="/">首页</RouterLink>
           <RouterLink to="/about">关于</RouterLink>
+          <RouterLink to="/antd">Antd</RouterLink>
         </nav>
       </div>
     </header>

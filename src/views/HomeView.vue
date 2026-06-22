@@ -51,6 +51,14 @@ const demos = [
     icon: '▦',
     tags: ['实战'],
   },
+  {
+    path: '/antd',
+    title: 'Ant Design Vue 4.2.6 学习',
+    desc: '五阶段：快速上手 → 核心组件 → 二次封装 → 主题定制 → 性能优化',
+    color: '#1677ff',
+    icon: '🐜',
+    tags: ['Antd'],
+  },
 ]
 
 const tagFilter = shallowRef<string | null>(null)
@@ -321,6 +329,11 @@ const filteredDemos = computed(() => {
 .tag-实战 {
   background: #f9f0ff;
   color: #722ed1;
+}
+
+.tag-Antd {
+  background: #e6f4ff;
+  color: #1677ff;
 }
 
 .card-title {
