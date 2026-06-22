@@ -75,7 +75,10 @@ const tasks = ref<TaskItem[]>([
 function toggleDone(task: TaskItem) {
   task.done = !task.done
 }
-
+// 推荐：直接导入组件
+import { Tag, Space } from 'ant-design-vue'
+// 如果你不想每次都手动 import 组件，也可以使用 Vue 提供的 resolveComponent API：
+import { resolveComponent } from 'vue'
 import type { TableColumnsType } from 'ant-design-vue'
 const taskColumns: TableColumnsType = [
   { title: 'ID', dataIndex: 'id', key: 'id', width: 80 },
@@ -86,17 +89,24 @@ const taskColumns: TableColumnsType = [
     key: 'done',
     width: 100,
     customRender: ({ text }: { text: boolean }) =>
-      h('a-tag', { color: text ? '#52c41a' : '#fa8c16' }, () => text ? '已完成' : '进行中'),
+      h(Tag, { color: text ? '#52c41a' : '#fa8c16' }, () => (text ? '已完成' : '进行中')),
   },
   {
     title: '操作',
     key: 'action',
     width: 120,
-    customRender: ({ record }: { record: TaskItem }) =>
-      h('a-space', {}, () => [
-        h('a-button', { size: 'small', type: 'link', onClick: () => openEditTask(record) }, () => '编辑'),
-        h('a-button', { size: 'small', type: 'link', onClick: () => toggleDone(record) }, () => record.done ? '标为未完成' : '标为完成'),
-      ]),
+    customRender: ({ record }: { record: TaskItem }) => {
+      // resolveComponent API 获取组件
+      const AButton = resolveComponent('a-button')
+      const ASpace = resolveComponent('a-space')
+
+      return h(ASpace, {}, () => [
+        h(AButton, { size: 'small', type: 'link', onClick: () => openEditTask(record) }, () => '编辑'),
+        h(AButton, { size: 'small', type: 'link', onClick: () => toggleDone(record) }, () =>
+          record.done ? '标为未完成' : '标为完成',
+        ),
+      ])
+    },
   },
 ]
 </script>
@@ -105,8 +115,8 @@ const taskColumns: TableColumnsType = [
   <div class="stage-page">
     <h1>阶段三：组件二次封装与原子设计</h1>
     <p class="subtitle">
-      按原子设计原则封装基础组件，遵循 <code>value</code> / <code>@change</code> 双向绑定协议，
-      Modal 务必加 <code>destroyOnClose</code>。
+      按原子设计原则封装基础组件，遵循 <code>value</code> / <code>@change</code> 双向绑定协议， Modal 务必加
+      <code>destroyOnClose</code>。
     </p>
 
     <!-- 原子设计：封装的 AddButton -->
@@ -114,13 +124,15 @@ const taskColumns: TableColumnsType = [
       <h2>3.1 原子设计 — AddButton</h2>
       <p>将「按钮 + 图标」封装为语义化组件，统一行为与样式。</p>
       <div class="code-preview">
-        <pre class="code-sm">// components/AddButton.vue
+        <pre class="code-sm">
+// components/AddButton.vue
 &lt;template&gt;
   &lt;a-button type="primary"&gt;
     &lt;template #icon&gt;&lt;PlusOutlined /&gt;&lt;/template&gt;
     &lt;slot&gt;新建&lt;/slot&gt;
   &lt;/a-button&gt;
-&lt;/template&gt;</pre>
+&lt;/template&gt;</pre
+        >
       </div>
       <div class="demo-row">
         <a-button type="primary">
@@ -140,7 +152,8 @@ const taskColumns: TableColumnsType = [
       <p>接收 <code>value</code> prop，通过 <code>emit('update:value')</code> 回传新值。</p>
 
       <div class="code-preview">
-        <pre class="code-sm">// components/SearchInput.vue
+        <pre class="code-sm">
+// components/SearchInput.vue
 &lt;script setup lang="ts"&gt;
 const props = defineProps&lt;{ value: string; placeholder?: string }&gt;()
 const emit = defineEmits&lt;{ 'update:value': [val: string] }&gt;()
@@ -152,15 +165,12 @@ const emit = defineEmits&lt;{ 'update:value': [val: string] }&gt;()
     :placeholder="placeholder"
     @change="e =&gt; emit('update:value', (e.target as HTMLInputElement).value)"
   /&gt;
-&lt;/template&gt;</pre>
+&lt;/template&gt;</pre
+        >
       </div>
 
       <div class="demo-row">
-        <a-input-search
-          v-model:value="searchVal"
-          placeholder="搜索（v-model 绑定）"
-          style="width: 300px"
-        />
+        <a-input-search v-model:value="searchVal" placeholder="搜索（v-model 绑定）" style="width: 300px" />
         <span class="result-text">当前输入：{{ searchVal || '(空)' }}</span>
       </div>
     </section>
@@ -168,17 +178,10 @@ const emit = defineEmits&lt;{ 'update:value': [val: string] }&gt;()
     <!-- ConfirmModal：destroyOnClose 避坑 -->
     <section class="card">
       <h2>3.3 避坑：destroyOnClose</h2>
-      <p>
-        ⚠️ 封装 Modal 时必须加 <code>destroyOnClose</code>，否则第二次打开会残留上次的校验状态和数据。
-      </p>
+      <p>⚠️ 封装 Modal 时必须加 <code>destroyOnClose</code>，否则第二次打开会残留上次的校验状态和数据。</p>
       <a-button danger @click="confirmOpen = true">删除确认弹框</a-button>
 
-      <a-modal
-        v-model:open="confirmOpen"
-        title="确认删除"
-        destroy-on-close
-        @ok="handleConfirm"
-      >
+      <a-modal v-model:open="confirmOpen" title="确认删除" destroy-on-close @ok="handleConfirm">
         <p>此操作不可逆，确定删除？Modal 关闭后组件状态会被销毁（destroyOnClose）。</p>
       </a-modal>
     </section>
@@ -195,12 +198,7 @@ const emit = defineEmits&lt;{ 'update:value': [val: string] }&gt;()
         </a-button>
       </div>
 
-      <a-table
-        :columns="taskColumns"
-        :data-source="tasks"
-        :pagination="false"
-        bordered
-      />
+      <a-table :columns="taskColumns" :data-source="tasks" :pagination="false" bordered />
 
       <!-- 新增/编辑弹框 -->
       <a-modal
