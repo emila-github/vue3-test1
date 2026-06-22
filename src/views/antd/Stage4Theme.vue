@@ -5,9 +5,10 @@
  */
 import { ref, computed } from 'vue'
 import { message } from 'ant-design-vue'
-import { BgColorsOutlined, CheckOutlined } from '@ant-design/icons-vue'
+import { CheckOutlined } from '@ant-design/icons-vue'
 
 // ===== 动态主题色 =====
+const isChecked = ref(true)
 const themeColors = [
   { name: '拂晓蓝（默认）', color: '#1677ff' },
   { name: '极客蓝', color: '#2f54eb' },
@@ -20,22 +21,22 @@ const themeColors = [
 
 const currentColor = ref('#1677ff')
 
-function setThemeColor(color: string) {
-  currentColor.value = color
-  message.success(`主题色已切换为 ${color}`)
-}
-
-// 注入全局 CSS 变量模拟主题切换（4.x CSS-in-JS 运行时方案）
-const rootStyle = computed(() => ({
-  '--ant-primary-color': currentColor.value,
-  '--ant-primary-color-hover': currentColor.value + 'cc',
+// antdv 4.x 通过 ConfigProvider 的 theme.token.colorPrimary 运行时切换主题色
+const themeConfig = computed(() => ({
+  token: {
+    colorPrimary: currentColor.value,
+  },
 }))
 
-// ===== 自定义 CSS-in-JS 示例 =====
-// 4.x 通过 createTheme 或 AppConfigProvider 注入 token
+function setThemeColor(color: string, name: string) {
+  currentColor.value = color
+  message.success(`主题色已切换为 ${name}`)
+}
+
 </script>
 
 <template>
+  <a-config-provider :theme="themeConfig">
   <div class="stage-page">
     <h1>阶段四：主题定制与样式隔离</h1>
     <p class="subtitle">
@@ -58,7 +59,7 @@ const rootStyle = computed(() => ({
           class="theme-item"
           :class="{ active: currentColor === item.color }"
           :style="{ borderColor: currentColor === item.color ? item.color : '#e0e0e0' }"
-          @click="setThemeColor(item.color)"
+          @click="setThemeColor(item.color, item.name)"
         >
           <div class="theme-swatch" :style="{ background: item.color }">
             <CheckOutlined v-if="currentColor === item.color" style="color: #fff; font-size: 16px" />
@@ -74,7 +75,8 @@ const rootStyle = computed(() => ({
       <h2>4.2 ConfigProvider 全局配置</h2>
 
       <div class="code-preview">
-        <pre class="code-sm">// main.ts — 全局主题配置
+        <pre class="code-sm">
+// main.ts — 全局主题配置
 import { createApp } from 'vue'
 import Antd from 'ant-design-vue'
 
@@ -96,7 +98,8 @@ app.use(Antd)
 
 // 方式二：使用 @ant-design/colors 生成色板
 // import { generate } from '@ant-design/colors'
-// const palette = generate('#52c41a')</pre>
+// const palette = generate('#52c41a')</pre
+        >
       </div>
     </section>
 
@@ -108,8 +111,8 @@ app.use(Antd)
         <div class="info-item">
           <span class="info-badge">1</span>
           <div>
-            <strong>引入 reset.css</strong>
-            <p>全局注册时同步引入 <code>ant-design-vue/dist/reset.css</code>，防止浏览器默认样式干扰。</p>
+            <strong>CSS-in-JS 自动注入</strong>
+            <p>antdv 4.x 使用 <code>@ant-design/cssinjs</code>，样式自动注入到 <code>&lt;style&gt;</code> 标签，无需引入 CSS 文件。</p>
           </div>
         </div>
         <div class="info-item">
@@ -132,7 +135,9 @@ app.use(Antd)
     <!-- 主题预览 -->
     <section class="card">
       <h2>4.4 主题效果预览</h2>
-      <p>当前主题色：<code>{{ currentColor }}</code></p>
+      <p>
+        当前主题色：<code>{{ currentColor }}</code>
+      </p>
 
       <div class="preview-grid">
         <div class="preview-item">
@@ -142,7 +147,7 @@ app.use(Antd)
           <a-tag color="processing">进行中</a-tag>
         </div>
         <div class="preview-item">
-          <a-switch v-model:checked="true" />
+          <a-switch v-model:checked="isChecked" />
         </div>
         <div class="preview-item">
           <a-progress :percent="72" style="width: 200px" />
@@ -150,6 +155,7 @@ app.use(Antd)
       </div>
     </section>
   </div>
+  </a-config-provider>
 </template>
 
 <style scoped>
