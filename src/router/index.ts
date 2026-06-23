@@ -86,6 +86,11 @@ const router = createRouter({
       name: 'antd-stage5',
       component: () => import('../views/antd/Stage5Optimization.vue'),
     },
+    {
+      path: '/antd/stage6',
+      name: 'antd-stage6',
+      component: () => import('../views/antd/Stage6TableDemo.vue'),
+    },
   ],
 })
 

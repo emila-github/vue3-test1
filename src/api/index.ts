@@ -13,3 +13,4 @@
 export type { ApiResponse, BizError } from './request'
 export { get, post, put, del } from './request'
 export * from './modules/user'
+export * from './modules/employee'

@@ -9,6 +9,7 @@ import {
   ToolOutlined,
   BgColorsOutlined,
   ThunderboltOutlined,
+  TableOutlined,
 } from '@ant-design/icons-vue'
 
 const stages = [
@@ -46,6 +47,13 @@ const stages = [
     icon: ThunderboltOutlined,
     route: '/antd/stage5',
     color: '#13c2c2',
+  },
+  {
+    title: '阶段六：全控件 Table CRUD 实战',
+    description: '覆盖全部数据录入控件、查询展开/收起、表单校验联动、批量操作、服务端分页',
+    icon: TableOutlined,
+    route: '/antd/stage6',
+    color: '#eb2f96',
   },
 ]
 </script>
