@@ -9,7 +9,7 @@
  *
  * 特性：查询展开/收起、表单联动、防抖搜索、批量删除、服务端分页排序
  */
-import { ref, reactive, computed, watch, onMounted } from 'vue'
+import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue'
 import { message, Modal } from 'ant-design-vue'
 import type { TableProps, FormInstance } from 'ant-design-vue'
 import {
@@ -32,12 +32,7 @@ import {
   getOrgTree,
   getDepartmentOptions,
 } from '@/api/modules/employee'
-import type {
-  Employee,
-  EmployeeQueryParams,
-  CreateEmployeeParams,
-  DictOption,
-} from '@/api/modules/employee'
+import type { Employee, EmployeeQueryParams, CreateEmployeeParams, DictOption } from '@/api/modules/employee'
 
 // ===== 字典数据 =====
 const skillOptions = ref<DictOption[]>([])
@@ -100,7 +95,7 @@ function buildQueryParams(): EmployeeQueryParams {
   if (queryForm.keyword) params.keyword = queryForm.keyword
   if (queryForm.status?.length) params.status = queryForm.status.join(',')
   if (queryForm.hireDateRange?.length === 2) {
-    (params as any).hireStart = queryForm.hireDateRange[0]
+    ;(params as any).hireStart = queryForm.hireDateRange[0]
     ;(params as any).hireEnd = queryForm.hireDateRange[1]
   }
   if (queryForm.ageMin != null) params.ageMin = queryForm.ageMin
@@ -325,15 +320,26 @@ function handleBatchDelete() {
 // ===== 表格列定义 =====
 // 辅助映射函数（供 bodyCell 插槽使用）
 const deptNameMap: Record<string, string> = {
-  'tech-frontend': '技术中心/前端研发部', 'tech-backend': '技术中心/后端研发部',
-  'tech-qa': '技术中心/测试部', 'tech-ops': '技术中心/运维部',
-  'product-design': '产品中心/产品设计部', 'product-ux': '产品中心/用户体验部',
-  'market-promotion': '市场中心/市场推广部', 'market-sales': '市场中心/销售部',
-  hr: '人力资源部', finance: '财务部',
+  'tech-frontend': '技术中心/前端研发部',
+  'tech-backend': '技术中心/后端研发部',
+  'tech-qa': '技术中心/测试部',
+  'tech-ops': '技术中心/运维部',
+  'product-design': '产品中心/产品设计部',
+  'product-ux': '产品中心/用户体验部',
+  'market-promotion': '市场中心/市场推广部',
+  'market-sales': '市场中心/销售部',
+  hr: '人力资源部',
+  finance: '财务部',
 }
 const skillNameMap: Record<string, string> = {
-  vue: 'Vue', react: 'React', angular: 'Angular', nodejs: 'Node.js',
-  typescript: 'TS', java: 'Java', python: 'Python', go: 'Go',
+  vue: 'Vue',
+  react: 'React',
+  angular: 'Angular',
+  nodejs: 'Node.js',
+  typescript: 'TS',
+  java: 'Java',
+  python: 'Python',
+  go: 'Go',
 }
 
 const columns: TableProps['columns'] = [
@@ -343,7 +349,14 @@ const columns: TableProps['columns'] = [
   { title: '年龄', dataIndex: 'age', key: 'age', width: 70, sorter: (a: Employee, b: Employee) => a.age - b.age },
   { title: '部门', dataIndex: 'orgPath', key: 'orgPath', width: 150, ellipsis: true },
   { title: '技能', dataIndex: 'positions', key: 'positions', width: 160 },
-  { title: '薪资', dataIndex: 'salary', key: 'salary', width: 110, align: 'right', sorter: (a: Employee, b: Employee) => a.salary - b.salary },
+  {
+    title: '薪资',
+    dataIndex: 'salary',
+    key: 'salary',
+    width: 110,
+    align: 'right',
+    sorter: (a: Employee, b: Employee) => a.salary - b.salary,
+  },
   { title: '入职日期', dataIndex: 'hireDate', key: 'hireDate', width: 110 },
   { title: '状态', dataIndex: 'status', key: 'status', width: 90 },
   { title: '类型', dataIndex: 'isFullTime', key: 'isFullTime', width: 80 },
@@ -353,8 +366,23 @@ const columns: TableProps['columns'] = [
 
 const hasSelected = computed(() => selectedRowKeys.value.length > 0)
 
+// ===== 移动端适配 =====
+const MOBILE_BREAKPOINT = 768
+const isMobile = ref(window.innerWidth < MOBILE_BREAKPOINT)
+
+function onResize() {
+  isMobile.value = window.innerWidth < MOBILE_BREAKPOINT
+}
+
+const drawerWidth = computed(() => (isMobile.value ? '100%' : 640))
+const formLayout = computed(() => (isMobile.value ? 'vertical' : 'horizontal'))
+const formLabelCol = computed(() => (isMobile.value ? { span: 24 } : { span: 5 }))
+const formWrapperCol = computed(() => (isMobile.value ? { span: 24 } : { span: 17 }))
+
 // ===== 初始化 =====
 onMounted(async () => {
+  window.addEventListener('resize', onResize)
+
   const [skills, cities, orgs, depts] = await Promise.all([
     getSkillOptions(),
     getCityTree(),
@@ -367,14 +395,21 @@ onMounted(async () => {
   departOptions.value = depts
   fetchData()
 })
+
+onUnmounted(() => {
+  window.removeEventListener('resize', onResize)
+})
 </script>
 
 <template>
   <div class="stage-page">
     <h1>阶段六：全控件 Table CRUD 实战</h1>
     <p class="subtitle">
-      覆盖 <code>a-input / a-select / a-radio-group / a-cascader / a-tree-select
-      / a-date-picker / a-range-picker / a-input-number / a-switch / a-textarea</code>
+      覆盖
+      <code
+        >a-input / a-select / a-radio-group / a-cascader / a-tree-select / a-date-picker / a-range-picker /
+        a-input-number / a-switch / a-textarea</code
+      >
       等全部数据录入控件，支持查询展开/收起、防抖搜索、表单联动、批量删除、服务端分页。
     </p>
 
@@ -412,11 +447,7 @@ onMounted(async () => {
         </a-form-item>
 
         <a-form-item label="入职日期">
-          <a-range-picker
-            v-model:value="queryForm.hireDateRange"
-            value-format="YYYY-MM-DD"
-            style="width: 260px"
-          />
+          <a-range-picker v-model:value="queryForm.hireDateRange" value-format="YYYY-MM-DD" style="width: 260px" />
         </a-form-item>
 
         <a-form-item>
@@ -467,17 +498,8 @@ onMounted(async () => {
           </a-form-item>
 
           <a-form-item label="部门">
-            <a-select
-              v-model:value="queryForm.department"
-              placeholder="全部"
-              allow-clear
-              style="width: 200px"
-            >
-              <a-select-option
-                v-for="d in departOptions"
-                :key="d.value"
-                :value="d.value"
-              >
+            <a-select v-model:value="queryForm.department" placeholder="全部" allow-clear style="width: 200px">
+              <a-select-option v-for="d in departOptions" :key="d.value" :value="d.value">
                 {{ d.label }}
               </a-select-option>
             </a-select>
@@ -504,7 +526,8 @@ onMounted(async () => {
                 type="link"
                 size="small"
                 @click="queryForm.isFullTime = undefined"
-              >清除</a-button>
+                >清除</a-button
+              >
             </a-space>
           </a-form-item>
         </template>
@@ -518,11 +541,7 @@ onMounted(async () => {
           <template #icon><PlusOutlined /></template>
           新增员工
         </a-button>
-        <a-button
-          danger
-          :disabled="!hasSelected"
-          @click="handleBatchDelete"
-        >
+        <a-button danger :disabled="!hasSelected" @click="handleBatchDelete">
           <template #icon><DeleteOutlined /></template>
           批量删除
           <template v-if="hasSelected">({{ selectedRowKeys.length }})</template>
@@ -568,9 +587,7 @@ onMounted(async () => {
             <span v-else>—</span>
           </template>
           <!-- 薪资 -->
-          <template v-else-if="column.key === 'salary'">
-            ¥{{ Number(record.salary).toLocaleString() }}
-          </template>
+          <template v-else-if="column.key === 'salary'"> ¥{{ Number(record.salary).toLocaleString() }} </template>
           <!-- 状态 -->
           <template v-else-if="column.key === 'status'">
             <a-tag v-if="record.status === 'active'" color="green">在职</a-tag>
@@ -598,9 +615,7 @@ onMounted(async () => {
                 cancel-text="取消"
                 @confirm="handleDelete(record as Employee)"
               >
-                <a-button type="link" size="small" danger>
-                  <DeleteOutlined /> 删除
-                </a-button>
+                <a-button type="link" size="small" danger> <DeleteOutlined /> 删除 </a-button>
               </a-popconfirm>
             </a-space>
           </template>
@@ -612,16 +627,20 @@ onMounted(async () => {
     <a-drawer
       v-model:open="drawerOpen"
       :title="drawerTitle"
-      :width="640"
+      :width="drawerWidth"
       :closable="true"
       destroy-on-close
+      :class="{ 'drawer-mobile': isMobile }"
     >
       <template #extra>
-        <a-space>
-          <a-button @click="closeDrawer">取消</a-button>
-          <a-button type="primary" :loading="drawerLoading" @click="handleSubmit">
+        <a-space
+          :direction="isMobile ? 'vertical' : 'horizontal'"
+          :class="{ 'drawer-extra-mobile': isMobile }"
+        >
+          <a-button type="primary" :loading="drawerLoading" :block="isMobile" @click="handleSubmit">
             {{ isEdit ? '保存修改' : '确认创建' }}
           </a-button>
+          <a-button :block="isMobile" @click="closeDrawer">取消</a-button>
         </a-space>
       </template>
 
@@ -629,9 +648,9 @@ onMounted(async () => {
         ref="formRef"
         :model="formState"
         :rules="formRules"
-        :label-col="{ span: 5 }"
-        :wrapper-col="{ span: 17 }"
-        layout="horizontal"
+        :label-col="formLabelCol"
+        :wrapper-col="formWrapperCol"
+        :layout="formLayout"
       >
         <!-- 基本信息 -->
         <a-divider orientation="left">基本信息</a-divider>
@@ -652,13 +671,7 @@ onMounted(async () => {
         </a-form-item>
 
         <a-form-item label="年龄" name="age">
-          <a-input-number
-            v-model:value="formState.age"
-            :min="18"
-            :max="70"
-            placeholder="18-70"
-            style="width: 100%"
-          />
+          <a-input-number v-model:value="formState.age" :min="18" :max="70" placeholder="18-70" style="width: 100%" />
         </a-form-item>
 
         <a-form-item label="手机号" name="phone">
@@ -679,20 +692,13 @@ onMounted(async () => {
             show-search
             option-filter-prop="label"
           >
-            <a-select-option
-              v-for="d in departOptions"
-              :key="d.value"
-              :value="d.value"
-              :label="d.label"
-            >
+            <a-select-option v-for="d in departOptions" :key="d.value" :value="d.value" :label="d.label">
               {{ d.label }}
             </a-select-option>
           </a-select>
         </a-form-item>
 
-        <a-form-item label="组织路径" name="orgPath"
-          help="树形选择，模拟组织架构"
-        >
+        <a-form-item label="组织路径" name="orgPath" help="树形选择，模拟组织架构">
           <a-tree-select
             v-model:value="formState.orgPath"
             :tree-data="orgTree"
@@ -723,11 +729,7 @@ onMounted(async () => {
             placeholder="请选择技能（可多选）"
             style="width: 100%"
           >
-            <a-select-option
-              v-for="s in skillOptions"
-              :key="s.value"
-              :value="s.value"
-            >
+            <a-select-option v-for="s in skillOptions" :key="s.value" :value="s.value">
               {{ s.label }}
             </a-select-option>
           </a-select>
@@ -867,5 +869,21 @@ h1 {
   .query-form :deep(.ant-form-item) {
     width: 100%;
   }
+
+  /* 抽屉移动端 */
+  .drawer-mobile :deep(.ant-drawer-body) {
+    padding: 12px;
+  }
+  .drawer-mobile :deep(.ant-drawer-header) {
+    padding: 12px 16px;
+  }
+  .drawer-mobile :deep(.ant-drawer-header-title) {
+    font-size: 16px;
+  }
+}
+
+/* 移动端 drawer header extra 按钮撑满 */
+.drawer-extra-mobile {
+  width: 100%;
 }
 </style>
