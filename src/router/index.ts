@@ -50,6 +50,11 @@ const router = createRouter({
       name: 'user-crud',
       component: () => import('../views/user/UserCrud.vue'),
     },
+    {
+      path: '/api-demo',
+      name: 'api-demo',
+      component: () => import('../views/ApiDemo.vue'),
+    },
   ],
 })
 

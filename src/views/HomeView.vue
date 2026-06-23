@@ -51,6 +51,14 @@ const demos = [
     icon: '▦',
     tags: ['实战'],
   },
+  {
+    path: '/api-demo',
+    title: '📡 API Demo（接口示例）',
+    desc: '获取数据、请求拦截、响应拦截、取消请求、错误处理、封装工具函数',
+    color: '#4096ff',
+    icon: '▦',
+    tags: ['实战'],
+  },
 ]
 
 const tagFilter = shallowRef<string | null>(null)
@@ -74,9 +82,7 @@ const filteredDemos = computed(() => {
         <span class="hero-icon">☰</span>
         Vue 3 学习示例
       </h1>
-      <p class="hero-desc">
-        涵盖 Vue 3 Composition API、TypeScript、组件深入、状态管理等核心知识点
-      </p>
+      <p class="hero-desc">涵盖 Vue 3 Composition API、TypeScript、组件深入、状态管理等核心知识点</p>
       <div class="hero-stats">
         <span class="stat-item">
           <strong>{{ demos.length }}</strong> 个模块
@@ -90,9 +96,7 @@ const filteredDemos = computed(() => {
 
     <!-- 标签筛选 -->
     <div class="filter-bar">
-      <button :class="['filter-btn', { active: tagFilter === null }]" @click="tagFilter = null">
-        全部
-      </button>
+      <button :class="['filter-btn', { active: tagFilter === null }]" @click="tagFilter = null">全部</button>
       <button
         v-for="tag in allTags"
         :key="tag"
@@ -117,9 +121,7 @@ const filteredDemos = computed(() => {
             {{ demo.icon }}
           </span>
           <div class="card-tags">
-            <span v-for="tag in demo.tags" :key="tag" class="card-tag" :class="`tag-${tag}`">{{
-              tag
-            }}</span>
+            <span v-for="tag in demo.tags" :key="tag" class="card-tag" :class="`tag-${tag}`">{{ tag }}</span>
           </div>
         </div>
         <h2 class="card-title">{{ demo.title }}</h2>
