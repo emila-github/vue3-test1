@@ -33,13 +33,13 @@ instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   // 自动追加时间戳（防缓存）
   config.params = { ...config.params, t: Date.now() }
 
-  console.log('[axios] → %s %s', config.method?.toUpperCase(), config.baseURL + config.url)
+  console.log('[axios] → %s %s', config.method?.toUpperCase(), (config.baseURL ?? '') + (config.url ?? ''))
   return config
 })
 
 // ==================== 响应拦截器 ====================
 instance.interceptors.response.use(
-  (res: AxiosResponse<ApiResponse>) => {
+  (res: AxiosResponse<ApiResponse>): any => {
     console.log(
       '[axios] ← %s %s | status=%d | body=',
       res.config.method?.toUpperCase(),
