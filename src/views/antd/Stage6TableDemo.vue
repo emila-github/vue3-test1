@@ -567,6 +567,7 @@ onUnmounted(() => {
     <!-- ==================== 数据表格 ==================== -->
     <section class="card" style="padding: 0">
       <a-table
+        :sticky="{ offsetHeader: 53 }"
         :columns="columns"
         :data-source="dataSource"
         :loading="loading"
