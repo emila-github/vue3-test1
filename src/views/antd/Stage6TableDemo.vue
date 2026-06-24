@@ -342,9 +342,10 @@ const skillNameMap: Record<string, string> = {
   go: 'Go',
 }
 
-const columns: TableProps['columns'] = [
-  { title: '工号', dataIndex: 'employeeNo', key: 'employeeNo', width: 100, fixed: 'left' },
-  { title: '姓名', dataIndex: 'name', key: 'name', width: 100, fixed: 'left' },
+// 列基础定义（不含 fixed，避免移动端遮挡）
+const _columnDefs: TableProps['columns'] = [
+  { title: '工号', dataIndex: 'employeeNo', key: 'employeeNo', width: 100 },
+  { title: '姓名', dataIndex: 'name', key: 'name', width: 100 },
   { title: '性别', dataIndex: 'gender', key: 'gender', width: 70 },
   { title: '年龄', dataIndex: 'age', key: 'age', width: 70, sorter: (a: Employee, b: Employee) => a.age - b.age },
   { title: '部门', dataIndex: 'orgPath', key: 'orgPath', width: 150, ellipsis: true },
@@ -361,8 +362,21 @@ const columns: TableProps['columns'] = [
   { title: '状态', dataIndex: 'status', key: 'status', width: 90 },
   { title: '类型', dataIndex: 'isFullTime', key: 'isFullTime', width: 80 },
   { title: '手机号', dataIndex: 'phone', key: 'phone', width: 120 },
-  { title: '操作', key: 'action', width: 140, fixed: 'right' },
+  { title: '操作', key: 'action', width: 140 },
 ]
+
+// 桌面端给首尾列加 fixed，移动端不加（避免遮挡数据）
+const columns = computed<TableProps['columns']>(() => {
+  if (isMobile.value) return _columnDefs
+  return _columnDefs.map((col, i) => {
+    if (i === 0) return { ...col, fixed: 'left' as const }
+    if (i === _columnDefs.length - 1) return { ...col, fixed: 'right' as const }
+    return col
+  })
+})
+
+// 表格横向滚动宽度
+const scrollX = computed(() => (isMobile.value ? 1000 : 1400))
 
 const hasSelected = computed(() => selectedRowKeys.value.length > 0)
 
@@ -557,7 +571,7 @@ onUnmounted(() => {
         :data-source="dataSource"
         :loading="loading"
         :pagination="pagination"
-        :scroll="{ x: 1400 }"
+        :scroll="{ x: scrollX }"
         :row-selection="{
           selectedRowKeys,
           onChange: (keys: number[]) => (selectedRowKeys = keys),
@@ -633,10 +647,7 @@ onUnmounted(() => {
       :class="{ 'drawer-mobile': isMobile }"
     >
       <template #extra>
-        <a-space
-          :direction="isMobile ? 'vertical' : 'horizontal'"
-          :class="{ 'drawer-extra-mobile': isMobile }"
-        >
+        <a-space :direction="isMobile ? 'vertical' : 'horizontal'" :class="{ 'drawer-extra-mobile': isMobile }">
           <a-button type="primary" :loading="drawerLoading" :block="isMobile" @click="handleSubmit">
             {{ isEdit ? '保存修改' : '确认创建' }}
           </a-button>
@@ -868,6 +879,23 @@ h1 {
   }
   .query-form :deep(.ant-form-item) {
     width: 100%;
+  }
+
+  /* 表格移动端：取消卡片内边距 */
+  .card {
+    padding: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  .toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .toolbar-count {
+    width: 100%;
+    text-align: left;
+    margin-left: 0;
   }
 
   /* 抽屉移动端 */
