@@ -75,9 +75,7 @@ const tasks = ref<TaskItem[]>([
 function toggleDone(task: TaskItem) {
   task.done = !task.done
 }
-// 推荐：直接导入组件
-import { Tag, Space } from 'ant-design-vue'
-// 如果你不想每次都手动 import 组件，也可以使用 Vue 提供的 resolveComponent API：
+// 组件通过 unplugin-vue-components 自动按需导入，无需手动 import
 import { resolveComponent } from 'vue'
 import type { TableColumnsType } from 'ant-design-vue'
 const taskColumns: TableColumnsType = [
@@ -88,8 +86,10 @@ const taskColumns: TableColumnsType = [
     dataIndex: 'done',
     key: 'done',
     width: 100,
-    customRender: ({ text }: { text: boolean }) =>
-      h(Tag, { color: text ? '#52c41a' : '#fa8c16' }, () => (text ? '已完成' : '进行中')),
+    customRender: ({ text }: { text: boolean }) => {
+      const ATag = resolveComponent('a-tag')
+      return h(ATag, { color: text ? '#52c41a' : '#fa8c16' }, () => (text ? '已完成' : '进行中'))
+    },
   },
   {
     title: '操作',
