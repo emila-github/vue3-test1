@@ -4,8 +4,10 @@
  * 演示 CSS-in-JS 动态主题切换、主题色修改
  */
 import { ref, computed } from 'vue'
-import { message } from 'ant-design-vue'
+import { message, theme } from 'ant-design-vue'
 import { CheckOutlined } from '@ant-design/icons-vue'
+
+const { darkAlgorithm, compactAlgorithm } = theme
 
 // ===== 动态主题色 =====
 const isChecked = ref(true)
@@ -21,17 +23,49 @@ const themeColors = [
 
 const currentColor = ref('#1677ff')
 
+// ===== 预设算法 =====
+const isDark = ref(false)
+const isCompact = ref(false)
+
 // antdv 4.x 通过 ConfigProvider 的 theme.token.colorPrimary 运行时切换主题色
-const themeConfig = computed(() => ({
-  token: {
-    colorPrimary: currentColor.value,
-  },
-}))
+const themeConfig = computed(() => {
+  const algorithms: any[] = []
+  if (isDark.value) algorithms.push(darkAlgorithm)
+  if (isCompact.value) algorithms.push(compactAlgorithm)
+
+  return {
+    algorithm: algorithms.length > 0 ? algorithms : undefined,
+    token: {
+      colorPrimary: currentColor.value,
+    },
+  }
+})
 
 function setThemeColor(color: string, name: string) {
   currentColor.value = color
   message.success(`主题色已切换为 ${name}`)
 }
+
+function toggleDark(checked: boolean) {
+  isDark.value = checked
+  message.info(checked ? '已切换到暗色模式' : '已切换到亮色模式')
+}
+
+function toggleCompact(checked: boolean) {
+  isCompact.value = checked
+  message.info(checked ? '已切换到紧凑模式' : '已切换到默认尺寸')
+}
+
+// 算法预览表格数据
+const algoPreviewColumns = [
+  { title: '名称', dataIndex: 'name', key: 'name' },
+  { title: '年龄', dataIndex: 'age', key: 'age' },
+  { title: '地址', dataIndex: 'address', key: 'address' },
+]
+const algoPreviewData = [
+  { name: '张三', age: 28, address: '北京市朝阳区' },
+  { name: '李四', age: 32, address: '上海市浦东新区' },
+]
 
 </script>
 
@@ -151,6 +185,96 @@ app.use(Antd)
         </div>
         <div class="preview-item">
           <a-progress :percent="72" style="width: 200px" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 预设算法 -->
+    <section class="card">
+      <h2>4.5 预设算法（algorithm）</h2>
+      <p>
+        antdv 4.x 内置 <code>darkAlgorithm</code>（暗色模式）和
+        <code>compactAlgorithm</code>（紧凑模式），通过 <code>theme.algorithm</code>
+        即可组合启用，无需额外 CSS。
+      </p>
+
+      <div class="algorithm-controls">
+        <div class="algo-item">
+          <span class="algo-label">
+            <strong>暗色模式</strong>
+            <code>darkAlgorithm</code>
+          </span>
+          <a-switch
+            :checked="isDark"
+            checked-children="🌙"
+            un-checked-children="☀️"
+            @change="toggleDark"
+          />
+        </div>
+        <div class="algo-item">
+          <span class="algo-label">
+            <strong>紧凑模式</strong>
+            <code>compactAlgorithm</code>
+          </span>
+          <a-switch
+            :checked="isCompact"
+            checked-children="密"
+            un-checked-children="疏"
+            @change="toggleCompact"
+          />
+        </div>
+      </div>
+
+      <div class="code-preview" style="margin-top: 16px">
+        <pre class="code-sm">
+import {{ '{' }} theme {{ '}' }} from 'ant-design-vue'
+const {{ '{' }} darkAlgorithm, compactAlgorithm {{ '}' }} = theme
+
+// 响应式组合
+const themeConfig = computed(() => ({
+  algorithm: [
+    isDark.value ? darkAlgorithm : undefined,
+    isCompact.value ? compactAlgorithm : undefined,
+  ].filter(Boolean),
+  token: {{ '{' }} colorPrimary: '#1677ff' {{ '}' }},
+}))</pre>
+      </div>
+
+      <!-- 算法效果预览 -->
+      <div class="algo-preview">
+        <h3>效果对比</h3>
+        <div class="algo-preview-grid">
+          <div class="algo-preview-item">
+            <span class="algo-preview-label">按钮</span>
+            <a-space>
+              <a-button type="primary">Primary</a-button>
+              <a-button>Default</a-button>
+              <a-button type="dashed">Dashed</a-button>
+              <a-button type="text">Text</a-button>
+            </a-space>
+          </div>
+          <div class="algo-preview-item">
+            <span class="algo-preview-label">输入框</span>
+            <a-input placeholder="请输入内容" style="width: 200px" />
+          </div>
+          <div class="algo-preview-item">
+            <span class="algo-preview-label">选择器</span>
+            <a-select default-value="option1" style="width: 160px">
+              <a-select-option value="option1">选项一</a-select-option>
+              <a-select-option value="option2">选项二</a-select-option>
+              <a-select-option value="option3">选项三</a-select-option>
+            </a-select>
+          </div>
+          <div class="algo-preview-item">
+            <span class="algo-preview-label">表格</span>
+            <a-table
+              :columns="algoPreviewColumns"
+              :data-source="algoPreviewData"
+              :pagination="false"
+              size="small"
+              style="width: 100%"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -335,5 +459,66 @@ h1 {
 .preview-item {
   display: flex;
   align-items: center;
+}
+
+/* 预设算法控制 */
+.algorithm-controls {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.algo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.algo-label {
+  font-size: 13px;
+  color: #666;
+}
+
+.algo-label code {
+  background: #f0f0f0;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+.algo-preview {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.algo-preview h3 {
+  font-size: 14px;
+  color: #333;
+  margin: 0 0 12px 0;
+}
+
+.algo-preview-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.algo-preview-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.algo-preview-label {
+  flex-shrink: 0;
+  width: 60px;
+  font-size: 12px;
+  color: #999;
+  text-align: right;
 }
 </style>
