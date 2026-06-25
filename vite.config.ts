@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import VueRouter from 'vue-router/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import { visualizer } from 'rollup-plugin-visualizer'
@@ -60,6 +61,11 @@ export default defineConfig(({ mode, command }) => {
 
   return {
     plugins: [
+      VueRouter({
+        // ⚠️ Vue 插件必须放在 VueRouter() 之后
+        routesFolder: 'src/views/test', // 指定 src/views/test 目录为自动路由目录
+        dts: 'typed-router.d.ts', // 生成类型提示文件（可选但推荐）
+      }),
       vue(),
       vueJsx(),
       vueDevTools(),

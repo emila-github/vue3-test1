@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { routes, handleHotUpdate } from 'vue-router/auto-routes'
 import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
@@ -117,7 +118,13 @@ const router = createRouter({
       name: 'antd-stage6',
       component: () => import('../views/antd/Stage6TableDemo.vue'),
     },
+    ...routes,
   ],
 })
+
+// 支持开发环境下的热更新（无需刷新页面即可更新路由）
+if (import.meta.hot) {
+  handleHotUpdate(router)
+}
 
 export default router
