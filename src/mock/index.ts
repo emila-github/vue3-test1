@@ -23,7 +23,14 @@ const allRoutes: MockRoute[] = [
 
 // ===== 匹配并返回响应 =====
 function matchRoute(url: string, method: string | undefined) {
-  return allRoutes.find((r) => url.startsWith(r.url) && r.method === method)
+  // 去除 query 参数
+  const path = url.split('?')[0]!
+  // 选出所有方法一致且路径以 route.url 开头的候选
+  const candidates = allRoutes.filter((r) => r.method === method && path.startsWith(r.url))
+  if (candidates.length === 0) return undefined
+  // 按 URL 长度降序：最长（最具体）的优先 → 子路由不会被父路由吞掉
+  candidates.sort((a, b) => b.url.length - a.url.length)
+  return candidates[0]
 }
 
 async function handleMock(req: IncomingMessage, res: ServerResponse): Promise<boolean> {
