@@ -32,10 +32,10 @@ const {
   changePageSize,
   refresh,
 } = usePagination<PageResult>(
-  () =>
+  ({ current, pageSize }) =>
     get('/vr/demo/user-list', {
-      page: current.value,
-      pageSize: pageSize.value,
+      page: current,
+      pageSize,
       keyword: searchForm.keyword,
     }),
   {
