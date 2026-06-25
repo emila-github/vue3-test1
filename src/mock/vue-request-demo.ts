@@ -47,9 +47,7 @@ const routes: MockRoute[] = [
 
       let filtered = users
       if (keyword) {
-        filtered = users.filter(
-          (u) => u.name.includes(keyword) || u.email.includes(keyword),
-        )
+        filtered = users.filter((u) => u.name.includes(keyword) || u.email.includes(keyword))
       }
 
       const start = (page - 1) * pageSize
@@ -136,9 +134,7 @@ const routes: MockRoute[] = [
       const q = (url.searchParams.get('q') || '').trim()
       if (!q) return { code: 200, data: [], message: 'ok' }
 
-      const results = users
-        .filter((u) => u.name.includes(q) || u.email.includes(q))
-        .slice(0, 10)
+      const results = users.filter((u) => u.name.includes(q) || u.email.includes(q)).slice(0, 10)
 
       // 模拟搜索延迟
       return new Promise((resolve) => {
@@ -154,7 +150,7 @@ const routes: MockRoute[] = [
     url: '/vr/demo/retry',
     method: 'GET',
     response: () =>
-      new Promise((resolve, _reject) => {
+      new Promise((resolve, reject) => {
         // 50% 概率失败
         if (Math.random() > 0.5) {
           resolve({ code: 200, data: { result: '请求成功！' }, message: 'ok' })
