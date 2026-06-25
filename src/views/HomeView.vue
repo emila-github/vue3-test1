@@ -67,6 +67,14 @@ const demos = [
     icon: '🐜',
     tags: ['实战'],
   },
+  {
+    path: '/vue-request',
+    title: 'VueRequest 请求库 v2',
+    desc: 'useRequest 基础/分页/加载更多/高级特性 — 基于真实 Mock + Axios 完整示例',
+    color: '#52c41a',
+    icon: '⚡',
+    tags: ['实战', '库'],
+  },
 ]
 
 const tagFilter = shallowRef<string | null>(null)

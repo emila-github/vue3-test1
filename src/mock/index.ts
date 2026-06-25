@@ -12,11 +12,13 @@ import type { Plugin } from 'vite'
 
 import usersRoutes from './users'
 import employeesRoutes from './employees'
+import vueRequestDemoRoutes from './vue-request-demo'
 
 // ===== 合并所有 mock 路由（新增文件后在这里加 import 并展开） =====
 const allRoutes: MockRoute[] = [
   ...usersRoutes,
   ...employeesRoutes,
+  ...vueRequestDemoRoutes,
 ]
 
 // ===== 匹配并返回响应 =====

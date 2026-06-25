@@ -55,6 +55,32 @@ const router = createRouter({
       name: 'api-demo',
       component: () => import('../views/ApiDemo.vue'),
     },
+    // ====== VueRequest 示例 ======
+    {
+      path: '/vue-request',
+      name: 'vue-request',
+      component: () => import('../views/vue-request/VueRequestIndex.vue'),
+    },
+    {
+      path: '/vue-request/basic',
+      name: 'vue-request-basic',
+      component: () => import('../views/vue-request/BasicDemo.vue'),
+    },
+    {
+      path: '/vue-request/pagination',
+      name: 'vue-request-pagination',
+      component: () => import('../views/vue-request/PaginationDemo.vue'),
+    },
+    {
+      path: '/vue-request/load-more',
+      name: 'vue-request-load-more',
+      component: () => import('../views/vue-request/LoadMoreDemo.vue'),
+    },
+    {
+      path: '/vue-request/advanced',
+      name: 'vue-request-advanced',
+      component: () => import('../views/vue-request/AdvancedDemo.vue'),
+    },
     // ====== Ant Design Vue 学习 ======
     {
       path: '/antd',
