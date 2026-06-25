@@ -127,6 +127,23 @@ function handleTableChange(pag: { current: number; pageSize: number }) {
   fetchData()
 }
 
+// ✅ TableProps['onChange'] 推导出的完整签名：
+// (pagination: TablePaginationConfig, filters: Record<string, FilterValue[] | null>, sorter: SorterResult | SorterResult[], extra: TableCurrentDataSource) => void
+
+// 使用 TableProps<DataType>['onChange'] 为事件回调添加类型，自动推断 pagination、filters、sorter 参数类型
+
+// const handleTableChange: TableProps['onChange'] = (
+//   pag: { pageSize: number; current: number },
+//   filters: any,
+//   sorter: any,
+//   extra: any,
+// ) => {
+//   console.log('handleTableChange')
+//   pagination.current = pag.current
+//   pagination.pageSize = pag.pageSize
+//   fetchData()
+// }
+
 // 防抖搜索
 let searchTimer: ReturnType<typeof setTimeout> | null = null
 watch(
