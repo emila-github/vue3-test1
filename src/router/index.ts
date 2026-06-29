@@ -106,6 +106,37 @@ const router = createRouter({
       name: 'vite-stage5',
       component: () => import('../views/vite/Stage5Advanced.vue'),
     },
+    // ====== Prettier 学习 ======
+    {
+      path: '/prettier',
+      name: 'prettier',
+      component: () => import('../views/prettier/PrettierIndex.vue'),
+    },
+    {
+      path: '/prettier/stage1',
+      name: 'prettier-stage1',
+      component: () => import('../views/prettier/Stage1QuickStart.vue'),
+    },
+    {
+      path: '/prettier/stage2',
+      name: 'prettier-stage2',
+      component: () => import('../views/prettier/Stage2Config.vue'),
+    },
+    {
+      path: '/prettier/stage3',
+      name: 'prettier-stage3',
+      component: () => import('../views/prettier/Stage3IgnoreOverride.vue'),
+    },
+    {
+      path: '/prettier/stage4',
+      name: 'prettier-stage4',
+      component: () => import('../views/prettier/Stage4ESLint.vue'),
+    },
+    {
+      path: '/prettier/stage5',
+      name: 'prettier-stage5',
+      component: () => import('../views/prettier/Stage5Advanced.vue'),
+    },
     // ====== ESLint 学习 ======
     {
       path: '/eslint',

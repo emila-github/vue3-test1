@@ -60,6 +60,14 @@ const demos = [
     tags: ['核心', '进阶'],
   },
   {
+    path: '/prettier',
+    title: '✨ Prettier 学习教程',
+    desc: '快速上手、核心配置、忽略与覆盖、ESLint 集成、进阶生态 — 5 阶段系统学习',
+    color: '#1a2b5a',
+    icon: 'PR',
+    tags: ['核心', '进阶'],
+  },
+  {
     path: '/typescript-demo',
     title: 'TypeScript 学习',
     desc: '基础类型、接口、泛型、类、枚举、工具类型、类型守卫',
