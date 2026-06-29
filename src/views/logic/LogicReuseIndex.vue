@@ -1,35 +1,29 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import TransitionDemo from './builtin/TransitionDemo.vue'
-import TransitionGroupDemo from './builtin/TransitionGroupDemo.vue'
-import KeepAliveDemo from './builtin/KeepAliveDemo.vue'
-import TeleportDemo from './builtin/TeleportDemo.vue'
-import SuspenseDemo from './builtin/SuspenseDemo.vue'
+import ComposablesDemo from './ComposablesDemo.vue'
+import DirectivesDemo from './DirectivesDemo.vue'
+import PluginsDemo from './PluginsDemo.vue'
 
 const tabs = [
-  { key: 'transition', label: 'Transition' },
-  { key: 'transition-group', label: 'TransitionGroup' },
-  { key: 'keep-alive', label: 'KeepAlive' },
-  { key: 'teleport', label: 'Teleport' },
-  { key: 'suspense', label: 'Suspense' },
+  { key: 'composables', label: '组合式函数' },
+  { key: 'directives', label: '自定义指令' },
+  { key: 'plugins', label: '插件' },
 ] as const
 
-const currentTab = ref<(typeof tabs)[number]['key']>('transition')
+const currentTab = ref<(typeof tabs)[number]['key']>('composables')
 
 watch(currentTab, () => window.scrollTo(0, 0))
 </script>
 
 <template>
   <div class="demo-page">
-    <h1>内置组件</h1>
+    <h1>逻辑复用</h1>
 
     <div class="layout">
       <div class="content-area">
-        <TransitionDemo v-if="currentTab === 'transition'" />
-        <TransitionGroupDemo v-if="currentTab === 'transition-group'" />
-        <KeepAliveDemo v-if="currentTab === 'keep-alive'" />
-        <TeleportDemo v-if="currentTab === 'teleport'" />
-        <SuspenseDemo v-if="currentTab === 'suspense'" />
+        <ComposablesDemo v-if="currentTab === 'composables'" />
+        <DirectivesDemo v-if="currentTab === 'directives'" />
+        <PluginsDemo v-if="currentTab === 'plugins'" />
       </div>
 
       <aside class="tab-bar">
@@ -77,7 +71,7 @@ h1 {
   top: 72px;
   z-index: 50;
   flex-shrink: 0;
-  width: 150px;
+  width: 130px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -104,12 +98,12 @@ h1 {
 }
 
 .tab-bar button:hover {
-  color: #13c2c2;
-  background: #e6fffb;
+  color: #597ef7;
+  background: #f0f5ff;
 }
 
 .tab-bar button.active {
-  background: #13c2c2;
+  background: #597ef7;
   color: #fff;
 }
 

@@ -25,19 +25,19 @@ const router = createRouter({
     {
       path: '/deep-components',
       name: 'deep-components',
-      component: () => import('../views/DeepComponents.vue'),
+      component: () => import('../views/deep/DeepComponentsIndex.vue'),
     },
     // ====== 逻辑复用 ======
     {
       path: '/logic-reuse',
       name: 'logic-reuse',
-      component: () => import('../views/LogicReuse.vue'),
+      component: () => import('../views/logic/LogicReuseIndex.vue'),
     },
     // ====== 内置组件 ======
     {
       path: '/builtin-components',
       name: 'builtin-components',
-      component: () => import('../views/BuiltinComponents.vue'),
+      component: () => import('../views/builtin/BuiltinComponentsIndex.vue'),
     },
     // ====== 应用规模化 ======
     {
@@ -79,7 +79,7 @@ const router = createRouter({
     {
       path: '/typescript-demo',
       name: 'typescript-demo',
-      component: () => import('../views/TypeScriptDemo.vue'),
+      component: () => import('../views/ts/TypeScriptDemoIndex.vue'),
     },
     // ====== 综合实战 ======
     {

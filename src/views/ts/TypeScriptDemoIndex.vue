@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import BasicTypes from './ts/BasicTypes.vue'
-import InterfaceType from './ts/InterfaceType.vue'
-import FunctionType from './ts/FunctionType.vue'
-import Generics from './ts/Generics.vue'
-import ClassDemo from './ts/ClassDemo.vue'
-import EnumDemo from './ts/EnumDemo.vue'
-import TypeManipulation from './ts/TypeManipulation.vue'
-import UtilityTypes from './ts/UtilityTypes.vue'
-import TypeGuards from './ts/TypeGuards.vue'
+import BasicTypes from './BasicTypes.vue'
+import InterfaceType from './InterfaceType.vue'
+import FunctionType from './FunctionType.vue'
+import Generics from './Generics.vue'
+import ClassDemo from './ClassDemo.vue'
+import EnumDemo from './EnumDemo.vue'
+import TypeManipulation from './TypeManipulation.vue'
+import UtilityTypes from './UtilityTypes.vue'
+import TypeGuards from './TypeGuards.vue'
 
 const tabs = [
   { key: 'basic', label: '基础类型' },

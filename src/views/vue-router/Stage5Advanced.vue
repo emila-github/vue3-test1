@@ -39,10 +39,10 @@ const scrollCode = `const router = createRouter({
 
 // ===== 懒加载 =====
 const lazyCode = `// ❌ 同步导入：所有页面打包在一起
-import Home from '../views/Home.vue'
+import HomeView from '../views/HomeView.vue'
 
 // ✅ 懒加载：按路由拆包，访问时才下载
-const Home = () => import('../views/Home.vue')
+const HomeView = () => import('../views/HomeView.vue')
 
 // 命名 chunk（方便调试）
 const Admin = () => import(

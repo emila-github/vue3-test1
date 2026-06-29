@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import PropsDemo from './deep/PropsDemo.vue'
-import EventsDemo from './deep/EventsDemo.vue'
-import VModelDemo from './deep/VModelDemo.vue'
-import AttrsDemo from './deep/AttrsDemo.vue'
-import SlotsDeepDemo from './deep/SlotsDeepDemo.vue'
-import ProvideInjectDemo from './deep/ProvideInjectDemo.vue'
-import AsyncCompDemo from './deep/AsyncCompDemo.vue'
+import PropsDemo from './PropsDemo.vue'
+import EventsDemo from './EventsDemo.vue'
+import VModelDemo from './VModelDemo.vue'
+import AttrsDemo from './AttrsDemo.vue'
+import SlotsDeepDemo from './SlotsDeepDemo.vue'
+import ProvideInjectDemo from './ProvideInjectDemo.vue'
+import AsyncCompDemo from './AsyncCompDemo.vue'
 
 const activeTab = ref('props')
 
