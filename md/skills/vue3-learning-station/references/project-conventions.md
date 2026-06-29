@@ -1,25 +1,25 @@
-# Project Conventions — Detailed Reference
+# 项目约定 — 详细参考
 
-> This reference is loaded on-demand when deeper context is needed.
-> It contains concrete code patterns extracted from the actual project files.
+> 此参考在需要更深入的上下文时按需加载。
+> 它包含从实际项目文件中提取的具体代码模式。
 
 ---
 
-## Directory Layout
+## 目录结构
 
 ```
-E:\picc-pdfc\vue3-test1\
+<project-root>/
 ├── src/
-│   ├── views/                    ← all learning demo pages
-│   │   ├── HomeView.vue          ← main entry that lists all demos
+│   ├── views/                    ← 所有学习演示页面
+│   │   ├── HomeView.vue          ← 列出所有演示的主入口
 │   │   ├── AboutView.vue
-│   │   ├── ApiDemo.vue           ← single-page demos (PascalCase)
+│   │   ├── ApiDemo.vue           ← 单页演示 (PascalCase)
 │   │   ├── DeepComponents.vue
 │   │   ├── LogicReuse.vue
 │   │   ├── BuiltinComponents.vue
 │   │   ├── TypeScriptDemo.vue
-│   │   ├── basics/               ← multi-stage demos (kebab-case dir)
-│   │   │   └── index.vue         ← index page with sub-navigation
+│   │   ├── basics/               ← 多阶段演示 (kebab-case 目录)
+│   │   │   └── index.vue         ← 带有子导航的索引页
 │   │   ├── antd/
 │   │   │   ├── AntdIndex.vue
 │   │   │   ├── Stage1GettingStarted.vue
@@ -32,17 +32,17 @@ E:\picc-pdfc\vue3-test1\
 │   │   └── user/
 │   │       └── UserCrud.vue
 │   ├── router/
-│   │   └── index.ts              ← all route definitions
+│   │   └── index.ts              ← 所有路由定义
 │   ├── api/
-│   │   ├── request.ts            ← axios instance with interceptors
+│   │   ├── request.ts            ← 带拦截器的 axios 实例
 │   │   ├── types.ts              ← PageParams, PageResult<T>
-│   │   ├── index.ts              ← barrel re-exports
+│   │   ├── index.ts              ← barrel 重新导出
 │   │   └── modules/
 │   │       ├── user.ts
 │   │       └── employee.ts
 │   └── mock/
-│       ├── index.ts              ← Vite plugin entry + route registry
-│       ├── types.ts              ← MockRoute interface
+│       ├── index.ts              ← Vite 插件入口 + 路由注册表
+│       ├── types.ts              ← MockRoute 接口
 │       ├── users.ts
 │       ├── employees.ts
 │       └── vue-request-demo.ts
@@ -54,16 +54,16 @@ E:\picc-pdfc\vue3-test1\
 │   ├── vue3/
 │   ├── ts/
 │   └── skills/
-└── vite.config.ts                ← mockPlugin() registered here
+└── vite.config.ts                ← mockPlugin() 注册位置
 ```
 
 ---
 
-## Pattern A: HomeView Card Registration
+## 模式 A: HomeView 卡片注册
 
-File: `src/views/HomeView.vue`
+文件: `src/views/HomeView.vue`
 
-The `demos` array in `<script setup>` defines every card on the home page:
+`<script setup>` 中的 `demos` 数组定义了主页上的每个卡片：
 
 ```ts
 const demos = [
@@ -75,17 +75,17 @@ const demos = [
     icon: 'V',
     tags: ['基础'],
   },
-  // … more entries
+  // … 更多条目
 ]
 ```
 
-Each object requires exactly these five fields. The `tags` array drives the filter bar.
+每个对象需要恰好这五个字段。`tags` 数组驱动筛选栏。
 
 ---
 
-## Pattern B: Router Registration
+## 模式 B: 路由注册
 
-File: `src/router/index.ts`
+文件: `src/router/index.ts`
 
 ```ts
 import { createRouter, createWebHistory } from 'vue-router'
@@ -101,8 +101,8 @@ const router = createRouter({
       name: 'topic-name',
       component: () => import('../views/TopicName.vue'),
     },
-    // … more routes
-    ...routes,   // auto-routes must be LAST
+    // … 更多路由
+    ...routes, // 自动路由必须在最后
   ],
 })
 
@@ -113,42 +113,52 @@ if (import.meta.hot) {
 export default router
 ```
 
-Key rules:
-- Always lazy-import with `() => import('...')` for code splitting.
-- The `...routes` spread (from `unplugin-vue-router`) must be the **last** element.
-- For multi-page modules, define each child route explicitly — do NOT rely on auto-routes
-  for demo pages because they need friendly names.
+关键规则：
+
+- 始终使用 `() => import('...')` 懒加载以实现代码分割。
+- `...routes` 展开（来自 `unplugin-vue-router`）必须是**最后**一个元素。
+- 对于多页模块，显式定义每个子路由 — 不要依赖自动路由
+  用于演示页面，因为它们需要友好的名称。
 
 ---
 
-## Pattern C: Mock File Template
+## 模式 C: Mock 文件模板
 
-File: `src/mock/<topic>.ts`
+文件: `src/mock/<topic>.ts`
 
 ```ts
 import type { MockRoute } from './types'
 
-// Static data is fine at module level
+// 静态数据可以在模块级别定义
 let nextId = 1
 const store: any[] = []
 
-// Helper to parse POST body
+// 辅助函数：解析 POST 请求体
 function parseBody(req: any): Promise<any> {
   return new Promise((resolve) => {
     let body = ''
-    req.on('data', (chunk: string) => { body += chunk })
+    req.on('data', (chunk: string) => {
+      body += chunk
+    })
     req.on('end', () => {
-      try { resolve(JSON.parse(body)) } catch { resolve({}) }
+      try {
+        resolve(JSON.parse(body))
+      } catch {
+        resolve({})
+      }
     })
   })
 }
 
 const routes: MockRoute[] = [
-  // Static JSON response
-  { url: '/topic-name/options', method: 'GET',
-    response: { code: 200, data: [{ label: 'A', value: 'a' }], message: 'ok' } },
+  // 静态 JSON 响应
+  {
+    url: '/topic-name/options',
+    method: 'GET',
+    response: { code: 200, data: [{ label: 'A', value: 'a' }], message: 'ok' },
+  },
 
-  // Dynamic response with query params
+  // 带查询参数的动态响应
   {
     url: '/topic-name',
     method: 'GET',
@@ -160,7 +170,7 @@ const routes: MockRoute[] = [
     },
   },
 
-  // POST with body parsing
+  // POST 请求（带请求体解析）
   {
     url: '/topic-name',
     method: 'POST',
@@ -176,35 +186,35 @@ const routes: MockRoute[] = [
 export default routes
 ```
 
-### Register in `src/mock/index.ts`
+### 在 `src/mock/index.ts` 中注册
 
 ```ts
-// Add import at top
+// 在顶部添加导入
 import topicRoutes from './topic-name'
 
-// Spread into allRoutes
+// 展开到 allRoutes
 const allRoutes: MockRoute[] = [
   ...usersRoutes,
   ...employeesRoutes,
-  ...topicRoutes,        // ← ADD HERE
+  ...topicRoutes, // ← 在此添加
 ]
 ```
 
-The `matchRoute` function uses **longest-prefix-first** matching (`candidates.sort` by URL
-length descending). This means `/topic-name/list` (length 16) is matched before
-`/topic-name` (length 11), so sub-routes work correctly.
+`matchRoute` 函数使用**最长前缀优先**匹配（按 URL 长度降序排序）。
+这意味着 `/topic-name/list`（长度 16）会在 `/topic-name`（长度 11）之前匹配，
+因此子路由可以正确工作。
 
 ---
 
-## Pattern D: API Module Template
+## 模式 D: API 模块模板
 
-File: `src/api/modules/<topic>.ts`
+文件: `src/api/modules/<topic>.ts`
 
 ```ts
 import { get, post, put, del } from '../request'
 import type { PageResult } from '../types'
 
-// === Type definitions ===
+// === 类型定义 ===
 export interface Item {
   id: number
   name: string
@@ -220,7 +230,7 @@ export interface ItemQuery {
   pageSize?: number
 }
 
-// === API functions ===
+// === API 函数 ===
 export function getItems(params: ItemQuery = {}) {
   return get<PageResult<Item>>('/topic-name', params as Record<string, any>)
 }
@@ -238,39 +248,39 @@ export function deleteItem(id: number) {
 }
 ```
 
-### Re-export in `src/api/index.ts`
+### 在 `src/api/index.ts` 中重新导出
 
 ```ts
 export * from './modules/topic-name'
 ```
 
-### Axios interceptor expectation
+### Axios 拦截器期望
 
-The `request.ts` interceptor expects `{ code: 0 | 200, data: …, message: 'ok' }`.
-On `code === 0 || code === 200`, it returns `data` directly (unwrapped).
-On any other code, it throws `BizError(code, message)`.
+`request.ts` 拦截器期望响应格式为 `{ code: 0 | 200, data: …, message: 'ok' }`。
+当 `code === 0 || code === 200` 时，它直接返回 `data`（解包）。
+对于其他任何 code，它抛出 `BizError(code, message)`。
 
 ---
 
-## Pattern E: Markdown Documentation
+## 模式 E: Markdown 文档
 
-File: `md/<topic>/<document>.md`
+文件: `md/<topic>/<document>.md`
 
-```markdown
-# Title
+`````markdown
+# 标题
 
 ## 学习目标
 
-- Target 1
-- Target 2
+- 目标 1
+- 目标 2
 
 ## 核心概念
 
-Explanation in Chinese, with inline code like `const x = ref(0)`.
+用中文解释，内联代码如 `const x = ref(0)`。
 
-### Code Example
+### 代码示例
 
-```vue
+````vue
 <script setup lang="ts">
 import { ref } from 'vue'
 const count = ref(0)
@@ -279,47 +289,41 @@ const count = ref(0)
 <template>
   <a-button @click="count++">{{ count }}</a-button>
 </template>
-\```
+\``` ## API 参考 | API | 说明 | 默认值 | |-----|------|--------| | `param1` | … | `'default'` | ## 常见问题 1.
+**问题描述**: 解决方案 ## 示例页面 打开 `/topic-name` 查看交互式演示。
+````
+`````
 
-## API 参考
+````
 
-| API | 说明 | 默认值 |
-|-----|------|--------|
-| `param1` | … | `'default'` |
-
-## 常见问题
-
-1. **问题描述**: 解决方案
-
-## 示例页面
-
-打开 `/topic-name` 查看交互式演示。
-```
-
-Use Chinese for explanations, English for code identifiers.
+解释用中文，代码标识符用英文。
 
 ---
 
-## Pattern F: Common Imports to Know
+## 模式 F: 需要了解的常见导入
 
-### In Vue files (auto-imported, do NOT write)
+### Vue 文件中（自动导入，禁止手动写）
+
 ```
-a-* components → auto-injected by unplugin-vue-components
+a-* 组件 → 由 unplugin-vue-components 自动注入
 ```
 
-### Must import manually
+### 必须手动导入
+
 ```ts
-import { message, Modal, notification } from 'ant-design-vue'   // command-style APIs
-import type { TableColumnsType, FormInstance, TableProps } from 'ant-design-vue'  // types
-import { SearchOutlined, PlusOutlined, ... } from '@ant-design/icons-vue'  // icons
-import { get, post, put, del } from '@/api'                              // HTTP helpers
+import { message, Modal, notification } from 'ant-design-vue'   // 命令式 API
+import type { TableColumnsType, FormInstance, TableProps } from 'ant-design-vue'  // 类型
+import { SearchOutlined, PlusOutlined, ... } from '@ant-design/icons-vue'  // 图标
+import { get, post, put, del } from '@/api'                              // HTTP 辅助函数
 ```
 
-### Using components in h() / customRender
+### 在 h() / customRender 中使用组件
+
 ```ts
-// ❌ WRONG — unplugin-vue-components only scans <template>
+// ❌ 错误 — unplugin-vue-components 只扫描 <template>
 h(Tag, { color: 'red' })
-// ✅ CORRECT
+// ✅ 正确
 const ATag = resolveComponent('a-tag')
 h(ATag, { color: 'red' })
 ```
+````
