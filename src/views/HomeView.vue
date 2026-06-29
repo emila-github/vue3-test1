@@ -75,6 +75,14 @@ const demos = [
     icon: '⚡',
     tags: ['实战', '库'],
   },
+  {
+    path: '/vue-router',
+    title: 'Vue Router 5.x 学习',
+    desc: '快速上手、动态路由、嵌套路由、导航守卫、进阶特性 — Composition API 风格',
+    color: '#e74c3c',
+    icon: '🗺',
+    tags: ['核心', '实战'],
+  },
 ]
 
 const tagFilter = shallowRef<string | null>(null)

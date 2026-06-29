@@ -82,6 +82,61 @@ const router = createRouter({
       name: 'vue-request-advanced',
       component: () => import('../views/vue-request/AdvancedDemo.vue'),
     },
+    // ====== Vue Router 5.x 学习 ======
+    {
+      path: '/vue-router',
+      name: 'vue-router',
+      component: () => import('../views/vue-router/VueRouterIndex.vue'),
+    },
+    {
+      path: '/vue-router/stage1',
+      name: 'vue-router-stage1',
+      component: () => import('../views/vue-router/Stage1Basic.vue'),
+    },
+    {
+      path: '/vue-router/stage2',
+      name: 'vue-router-stage2',
+      component: () => import('../views/vue-router/Stage2Dynamic.vue'),
+    },
+    {
+      path: '/vue-router/stage2/:id',
+      name: 'vue-router-stage2-product',
+      component: () => import('../views/vue-router/ProductDetail.vue'),
+    },
+    {
+      path: '/vue-router/stage3',
+      name: 'vue-router-stage3',
+      component: () => import('../views/vue-router/Stage3Nested.vue'),
+      children: [
+        {
+          path: 'profile',
+          component: () => import('../views/vue-router/NestedProfile.vue'),
+        },
+        {
+          path: 'orders',
+          component: () => import('../views/vue-router/NestedOrders.vue'),
+        },
+        {
+          path: 'settings',
+          component: () => import('../views/vue-router/NestedSettings.vue'),
+        },
+      ],
+    },
+    {
+      path: '/vue-router/stage4',
+      name: 'vue-router-stage4',
+      component: () => import('../views/vue-router/Stage4Guards.vue'),
+    },
+    {
+      path: '/vue-router/stage4/admin',
+      name: 'vue-router-stage4-admin',
+      component: () => import('../views/vue-router/NestedAdmin.vue'),
+    },
+    {
+      path: '/vue-router/stage5',
+      name: 'vue-router-stage5',
+      component: () => import('../views/vue-router/Stage5Advanced.vue'),
+    },
     // ====== Ant Design Vue 学习 ======
     {
       path: '/antd',
