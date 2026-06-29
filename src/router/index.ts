@@ -106,6 +106,37 @@ const router = createRouter({
       name: 'vite-stage5',
       component: () => import('../views/vite/Stage5Advanced.vue'),
     },
+    // ====== ESLint 学习 ======
+    {
+      path: '/eslint',
+      name: 'eslint',
+      component: () => import('../views/eslint/ESLintIndex.vue'),
+    },
+    {
+      path: '/eslint/stage1',
+      name: 'eslint-stage1',
+      component: () => import('../views/eslint/Stage1QuickStart.vue'),
+    },
+    {
+      path: '/eslint/stage2',
+      name: 'eslint-stage2',
+      component: () => import('../views/eslint/Stage2Config.vue'),
+    },
+    {
+      path: '/eslint/stage3',
+      name: 'eslint-stage3',
+      component: () => import('../views/eslint/Stage3Plugins.vue'),
+    },
+    {
+      path: '/eslint/stage4',
+      name: 'eslint-stage4',
+      component: () => import('../views/eslint/Stage4VueTs.vue'),
+    },
+    {
+      path: '/eslint/stage5',
+      name: 'eslint-stage5',
+      component: () => import('../views/eslint/Stage5Advanced.vue'),
+    },
     // ====== TypeScript 学习 ======
     {
       path: '/typescript-demo',

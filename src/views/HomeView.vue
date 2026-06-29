@@ -52,6 +52,14 @@ const demos = [
     tags: ['核心', '进阶'],
   },
   {
+    path: '/eslint',
+    title: '🔍 ESLint 学习教程',
+    desc: '快速上手、Flat Config、插件系统、Vue/TS 实战、进阶生态 — 5 阶段系统学习',
+    color: '#4b32c3',
+    icon: 'ES',
+    tags: ['核心', '进阶'],
+  },
+  {
     path: '/typescript-demo',
     title: 'TypeScript 学习',
     desc: '基础类型、接口、泛型、类、枚举、工具类型、类型守卫',
