@@ -137,6 +137,37 @@ const router = createRouter({
       name: 'vue-router-stage5',
       component: () => import('../views/vue-router/Stage5Advanced.vue'),
     },
+    // ====== Pinia 状态管理 ======
+    {
+      path: '/pinia',
+      name: 'pinia',
+      component: () => import('../views/pinia/PiniaIndex.vue'),
+    },
+    {
+      path: '/pinia/stage1',
+      name: 'pinia-stage1',
+      component: () => import('../views/pinia/Stage1Setup.vue'),
+    },
+    {
+      path: '/pinia/stage2',
+      name: 'pinia-stage2',
+      component: () => import('../views/pinia/Stage2State.vue'),
+    },
+    {
+      path: '/pinia/stage3',
+      name: 'pinia-stage3',
+      component: () => import('../views/pinia/Stage3Actions.vue'),
+    },
+    {
+      path: '/pinia/stage4',
+      name: 'pinia-stage4',
+      component: () => import('../views/pinia/Stage4Multiple.vue'),
+    },
+    {
+      path: '/pinia/stage5',
+      name: 'pinia-stage5',
+      component: () => import('../views/pinia/Stage5Advanced.vue'),
+    },
     // ====== Ant Design Vue 学习 ======
     {
       path: '/antd',

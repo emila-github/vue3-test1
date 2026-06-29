@@ -83,6 +83,14 @@ const demos = [
     icon: '🗺',
     tags: ['核心', '实战'],
   },
+  {
+    path: '/pinia',
+    title: 'Pinia 状态管理 v3',
+    desc: 'Setup Store、State/Getter/Action、多 Store 协作、持久化、DevTools — 5 阶段完整学习',
+    color: '#ffd700',
+    icon: '🍍',
+    tags: ['核心', '实战'],
+  },
 ]
 
 const tagFilter = shallowRef<string | null>(null)
