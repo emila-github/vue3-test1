@@ -75,6 +75,37 @@ const router = createRouter({
       name: 'app-scale-ssr',
       component: () => import('../views/app-scale/SsrDemo.vue'),
     },
+    // ====== Vite 学习 ======
+    {
+      path: '/vite',
+      name: 'vite',
+      component: () => import('../views/vite/ViteIndex.vue'),
+    },
+    {
+      path: '/vite/stage1',
+      name: 'vite-stage1',
+      component: () => import('../views/vite/Stage1QuickStart.vue'),
+    },
+    {
+      path: '/vite/stage2',
+      name: 'vite-stage2',
+      component: () => import('../views/vite/Stage2Config.vue'),
+    },
+    {
+      path: '/vite/stage3',
+      name: 'vite-stage3',
+      component: () => import('../views/vite/Stage3Plugins.vue'),
+    },
+    {
+      path: '/vite/stage4',
+      name: 'vite-stage4',
+      component: () => import('../views/vite/Stage4Build.vue'),
+    },
+    {
+      path: '/vite/stage5',
+      name: 'vite-stage5',
+      component: () => import('../views/vite/Stage5Advanced.vue'),
+    },
     // ====== TypeScript 学习 ======
     {
       path: '/typescript-demo',

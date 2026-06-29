@@ -44,6 +44,14 @@ const demos = [
     tags: ['核心', '进阶'],
   },
   {
+    path: '/vite',
+    title: '⚡ Vite 学习教程',
+    desc: '快速上手、配置环境、插件系统、构建优化、进阶特性 — 5 阶段系统学习',
+    color: '#646cff',
+    icon: 'V',
+    tags: ['核心', '进阶'],
+  },
+  {
     path: '/typescript-demo',
     title: 'TypeScript 学习',
     desc: '基础类型、接口、泛型、类、枚举、工具类型、类型守卫',
