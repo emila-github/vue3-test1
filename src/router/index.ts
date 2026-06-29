@@ -39,6 +39,42 @@ const router = createRouter({
       name: 'builtin-components',
       component: () => import('../views/BuiltinComponents.vue'),
     },
+    // ====== 应用规模化 ======
+    {
+      path: '/app-scale',
+      name: 'app-scale',
+      component: () => import('../views/app-scale/AppScaleIndex.vue'),
+    },
+    {
+      path: '/app-scale/sfc',
+      name: 'app-scale-sfc',
+      component: () => import('../views/app-scale/SfcDemo.vue'),
+    },
+    {
+      path: '/app-scale/toolchain',
+      name: 'app-scale-toolchain',
+      component: () => import('../views/app-scale/ToolchainDemo.vue'),
+    },
+    {
+      path: '/app-scale/routing',
+      name: 'app-scale-routing',
+      component: () => import('../views/app-scale/RoutingOverview.vue'),
+    },
+    {
+      path: '/app-scale/state',
+      name: 'app-scale-state',
+      component: () => import('../views/app-scale/StateOverview.vue'),
+    },
+    {
+      path: '/app-scale/testing',
+      name: 'app-scale-testing',
+      component: () => import('../views/app-scale/TestingDemo.vue'),
+    },
+    {
+      path: '/app-scale/ssr',
+      name: 'app-scale-ssr',
+      component: () => import('../views/app-scale/SsrDemo.vue'),
+    },
     // ====== TypeScript 学习 ======
     {
       path: '/typescript-demo',

@@ -36,6 +36,14 @@ const demos = [
     tags: ['进阶'],
   },
   {
+    path: '/app-scale',
+    title: '应用规模化',
+    desc: 'SFC 编写、工具链、路由、状态管理、测试、SSR — 6 大主题完整覆盖',
+    color: '#4ecdc4',
+    icon: '📐',
+    tags: ['核心', '进阶'],
+  },
+  {
     path: '/typescript-demo',
     title: 'TypeScript 学习',
     desc: '基础类型、接口、泛型、类、枚举、工具类型、类型守卫',
