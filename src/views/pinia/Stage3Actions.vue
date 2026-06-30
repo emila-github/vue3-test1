@@ -40,7 +40,7 @@ const useTodoStore = defineStore('todo-demo', () => {
   }
 
   return { list, nextId, doneCount, totalCount, addTodo, addTodoAsync, toggleDone, removeTodo }
-})()
+})
 
 const todoStore = useTodoStore()
 const { list, doneCount, totalCount } = storeToRefs(todoStore)

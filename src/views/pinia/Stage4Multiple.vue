@@ -54,7 +54,7 @@ const useOrderStore = defineStore('multi-order', () => {
   }
 
   return { orders, nextId, canView, canManage, userName, addOrder, cancelOrder, clearOrders }
-})()
+})
 
 const userStore = useUserStore()
 const orderStore = useOrderStore()

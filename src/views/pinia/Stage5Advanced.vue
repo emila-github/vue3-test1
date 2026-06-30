@@ -28,7 +28,7 @@ const useSettingsStore = defineStore('settings-demo', () => {
   }
 
   return { theme, lang, setTheme, setLang, resetSettings }
-})()
+})
 
 const settingsStore = useSettingsStore()
 const { theme, lang } = storeToRefs(settingsStore)
