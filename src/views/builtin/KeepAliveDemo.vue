@@ -68,25 +68,13 @@ function setInclude(mode: 'all' | 'ab' | 'none') {
     <section class="demo-section">
       <h2>2. include / exclude 控制缓存</h2>
       <div class="strategy-btns">
-        <button
-          @click="setInclude('all')"
-          :class="{ 'strategy-active': includeMode === 'all' }"
-          class="strategy-btn"
-        >
+        <button @click="setInclude('all')" :class="{ 'strategy-active': includeMode === 'all' }" class="strategy-btn">
           缓存全部 (TabA,TabB,TabC)
         </button>
-        <button
-          @click="setInclude('ab')"
-          :class="{ 'strategy-active': includeMode === 'ab' }"
-          class="strategy-btn"
-        >
+        <button @click="setInclude('ab')" :class="{ 'strategy-active': includeMode === 'ab' }" class="strategy-btn">
           只缓存 TabA,TabB
         </button>
-        <button
-          @click="setInclude('none')"
-          :class="{ 'strategy-active': includeMode === 'none' }"
-          class="strategy-btn"
-        >
+        <button @click="setInclude('none')" :class="{ 'strategy-active': includeMode === 'none' }" class="strategy-btn">
           不缓存
         </button>
       </div>
@@ -99,16 +87,19 @@ function setInclude(mode: 'all' | 'ab' | 'none') {
     <!-- max 最大缓存数 -->
     <section class="demo-section">
       <h2>3. max 最大缓存数</h2>
-      <pre class="code-hint">&lt;KeepAlive :max="5"&gt;
+      <pre class="code-hint">
+&lt;KeepAlive :max="5"&gt;
   &lt;component :is="currentComponent" /&gt;
-&lt;/KeepAlive&gt;</pre>
+&lt;/KeepAlive&gt;</pre
+      >
       <p class="hint">当缓存数量超过 max 时，最早且未被访问的实例会被销毁</p>
     </section>
 
     <!-- 缓存生命周期 -->
     <section class="demo-section">
       <h2>4. 缓存生命周期钩子</h2>
-      <pre class="code-hint">// 组件被激活（从缓存中恢复显示）
+      <pre class="code-hint">
+// 组件被激活（从缓存中恢复显示）
 onActivated(() => {
   console.log('组件被激活')
   // 可以在这里刷新数据
@@ -118,7 +109,8 @@ onActivated(() => {
 onDeactivated(() => {
   console.log('组件被失活')
   // 清理定时器、取消订阅等
-})</pre>
+})</pre
+      >
       <p class="hint">打开控制台，切换 Tab 查看 onActivated / onDeactivated 日志</p>
     </section>
   </div>

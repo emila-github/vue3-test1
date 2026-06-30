@@ -114,7 +114,8 @@ const jsExprCode = `// {{ }} 中可用的表达式类型：
 document.getElementById('msg').textContent = message
 
 // Vue 模板：声明式绑定
-&lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;  ← 就这一行！数据变化自动更新</pre>
+&lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;  ← 就这一行！数据变化自动更新</pre
+        >
 
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
@@ -131,15 +132,21 @@ document.getElementById('msg').textContent = message
     <!-- 1. 文本插值 -->
     <section class="demo-section">
       <h2>1. 文本插值 — &#123;&#123; &#125;&#125; Mustache</h2>
-      <p class="section-desc">
-        双花括号将数据渲染为纯文本，数据变化时自动更新。支持任意 JS 表达式。
-      </p>
+      <p class="section-desc">双花括号将数据渲染为纯文本，数据变化时自动更新。支持任意 JS 表达式。</p>
       <pre class="code-block">{{ mustacheCode }}</pre>
       <div class="result-box">
-        <p><span class="label">message</span> = <code>"{{ message }}"</code></p>
-        <p><span class="label">number + 1</span> = <code>{{ number + 1 }}</code></p>
-        <p><span class="label">三元表达式</span> = <code>{{ isActive ? '激活' : '未激活' }}</code></p>
-        <p><span class="label">方法调用</span> = <code>{{ message.split('').reverse().join('') }}</code></p>
+        <p>
+          <span class="label">message</span> = <code>"{{ message }}"</code>
+        </p>
+        <p>
+          <span class="label">number + 1</span> = <code>{{ number + 1 }}</code>
+        </p>
+        <p>
+          <span class="label">三元表达式</span> = <code>{{ isActive ? '激活' : '未激活' }}</code>
+        </p>
+        <p>
+          <span class="label">方法调用</span> = <code>{{ message.split('').reverse().join('') }}</code>
+        </p>
       </div>
     </section>
 
@@ -151,27 +158,27 @@ document.getElementById('msg').textContent = message
       </p>
       <pre class="code-block">{{ vHtmlCode }}</pre>
       <div class="result-box">
-        <p><span class="label">文本插值</span> → <code>{{ rawHtml }}</code></p>
+        <p>
+          <span class="label">文本插值</span> → <code>{{ rawHtml }}</code>
+        </p>
         <p><span class="label">v-html 输出</span> → <span v-html="rawHtml"></span></p>
       </div>
-      <p class="hint">
-        ⚠️ <code>v-html</code> 仅在内容可信时使用，用户输入绝不应用 v-html！
-      </p>
+      <p class="hint">⚠️ <code>v-html</code> 仅在内容可信时使用，用户输入绝不应用 v-html！</p>
     </section>
 
     <!-- 3. 属性绑定 -->
     <section class="demo-section">
       <h2>3. 属性绑定 — v-bind / :attr</h2>
-      <p class="section-desc">
-        将 JS 数据绑定到 HTML 属性。最常用简写 <code>:attr</code>。
-      </p>
+      <p class="section-desc">将 JS 数据绑定到 HTML 属性。最常用简写 <code>:attr</code>。</p>
       <pre class="code-block">{{ vBindCode }}</pre>
       <div class="result-box">
-        <p><span class="label">:id="dynamicId"</span> → <code class="demo-attr">[id="{{ dynamicId }}"]</code></p>
+        <p>
+          <span class="label">:id="dynamicId"</span> → <code class="demo-attr">[id="{{ dynamicId }}"]</code>
+        </p>
         <p>
           <span class="label">:disabled="isDisabled"</span> →
           <button :disabled="isDisabled" class="demo-btn">{{ isDisabled ? '禁用中' : '可用' }}</button>
-          <button @click="isDisabled = !isDisabled" class="demo-btn" style="margin-left:8px">切换</button>
+          <button @click="isDisabled = !isDisabled" class="demo-btn" style="margin-left: 8px">切换</button>
         </p>
         <p>
           <span class="label">v-bind="attrsObj"</span> →
@@ -183,14 +190,18 @@ document.getElementById('msg').textContent = message
     <!-- 4. JS 表达式 -->
     <section class="demo-section">
       <h2>4. JavaScript 表达式</h2>
-      <p class="section-desc">
-        模板中只能写<strong>单条表达式</strong>，不能写语句（if/for/let 等）。
-      </p>
+      <p class="section-desc">模板中只能写<strong>单条表达式</strong>，不能写语句（if/for/let 等）。</p>
       <pre class="code-block">{{ jsExprCode }}</pre>
       <div class="result-box">
-        <p><span class="label">✅ number + 1</span> = <code>{{ number + 1 }}</code></p>
-        <p><span class="label">✅ ok ? 'YES' : 'NO'</span> = <code>{{ ok ? 'YES' : 'NO' }}</code></p>
-        <p><span class="label">✅ 反转字符串</span> = <code>{{ message.split('').reverse().join('') }}</code></p>
+        <p>
+          <span class="label">✅ number + 1</span> = <code>{{ number + 1 }}</code>
+        </p>
+        <p>
+          <span class="label">✅ ok ? 'YES' : 'NO'</span> = <code>{{ ok ? 'YES' : 'NO' }}</code>
+        </p>
+        <p>
+          <span class="label">✅ 反转字符串</span> = <code>{{ message.split('').reverse().join('') }}</code>
+        </p>
         <p class="hint">❌ if 语句、for 循环、变量声明都不能在模板中直接使用</p>
       </div>
     </section>

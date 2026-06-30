@@ -18,7 +18,9 @@ const adminData = [
 
     <div class="admin-info">
       <h4>✅ 已通过导航守卫校验</h4>
-      <p>当前路由：<code>{{ route.path }}</code></p>
+      <p>
+        当前路由：<code>{{ route.path }}</code>
+      </p>
     </div>
 
     <a-table
@@ -34,9 +36,7 @@ const adminData = [
       style="margin-top: 16px"
     />
 
-    <RouterLink to="/vue-router/stage4" class="back-link">
-      ← 返回导航守卫演示
-    </RouterLink>
+    <RouterLink to="/vue-router/stage4" class="back-link"> ← 返回导航守卫演示 </RouterLink>
   </div>
 </template>
 

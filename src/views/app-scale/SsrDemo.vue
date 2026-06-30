@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="stage-page">
@@ -44,7 +43,7 @@
         <span class="flow-arrow">→</span>
         <div class="flow-box">
           <span class="flow-label">2. 服务端渲染</span>
-          <p>Node.js 执行 Vue 组件<br/>生成 HTML 字符串</p>
+          <p>Node.js 执行 Vue 组件<br />生成 HTML 字符串</p>
         </div>
         <span class="flow-arrow">→</span>
         <div class="flow-box">
@@ -54,7 +53,7 @@
         <span class="flow-arrow">→</span>
         <div class="flow-box">
           <span class="flow-label">4. 水合 Hydration</span>
-          <p>客户端 JS 接管<br/>变成交互式 SPA</p>
+          <p>客户端 JS 接管<br />变成交互式 SPA</p>
         </div>
       </div>
       <div class="tip-box" style="margin-top: 16px">
@@ -67,7 +66,8 @@
     <!-- Vue SSR API -->
     <section class="card">
       <h2>Vue 3 SSR 核心 API</h2>
-      <pre class="code-block">// server.js — 服务端入口
+      <pre class="code-block">
+// server.js — 服务端入口
 import { createSSRApp } from 'vue'
 import { renderToString } from 'vue/server-renderer'
 import App from './App.vue'
@@ -77,26 +77,31 @@ async function render(url) {
   // 设置路由、Pinia 等
   const html = await renderToString(app)
   return html
-}</pre>
+}</pre
+      >
       <div class="two-col">
         <div>
           <h4>服务端 API</h4>
-          <pre class="code-block" style="font-size: 12px">import { renderToString } from 'vue/server-renderer'
+          <pre class="code-block" style="font-size: 12px">
+import { renderToString } from 'vue/server-renderer'
 import { renderToWebStream } from 'vue/server-renderer'
 
 // 完整 HTML 字符串
 const html = await renderToString(app)
 
 // 流式渲染（更快首字节）
-const stream = renderToWebStream(app)</pre>
+const stream = renderToWebStream(app)</pre
+          >
         </div>
         <div>
           <h4>客户端 API</h4>
-          <pre class="code-block" style="font-size: 12px">import { createSSRApp } from 'vue'
+          <pre class="code-block" style="font-size: 12px">
+import { createSSRApp } from 'vue'
 
 // 客户端水合
 const app = createSSRApp(App)
-app.mount('#app') // 激活已有 DOM</pre>
+app.mount('#app') // 激活已有 DOM</pre
+          >
         </div>
       </div>
     </section>
@@ -105,8 +110,8 @@ app.mount('#app') // 激活已有 DOM</pre>
     <section class="card">
       <h2>Nuxt：Vue 全栈框架</h2>
       <p>
-        如果不想手动配置 SSR，<a href="https://nuxt.com" target="_blank" style="color: #00dc82">Nuxt</a> 是 Vue 官方推荐的全栈框架，
-        内置 SSR、SSG、文件路由、自动导入等。
+        如果不想手动配置 SSR，<a href="https://nuxt.com" target="_blank" style="color: #00dc82">Nuxt</a> 是 Vue
+        官方推荐的全栈框架， 内置 SSR、SSG、文件路由、自动导入等。
       </p>
       <div class="nuxt-grid">
         <div class="nuxt-item">
@@ -166,7 +171,10 @@ app.mount('#app') // 激活已有 DOM</pre>
       <div class="caution-grid">
         <div class="caution-item">
           <h4>⚠ 避免服务端特有 API</h4>
-          <p><code>window</code>、<code>document</code>、<code>localStorage</code> 在 Node.js 中不可用，需在 <code>onMounted</code> 中访问</p>
+          <p>
+            <code>window</code>、<code>document</code>、<code>localStorage</code> 在 Node.js 中不可用，需在
+            <code>onMounted</code> 中访问
+          </p>
         </div>
         <div class="caution-item">
           <h4>⚠ 状态污染</h4>

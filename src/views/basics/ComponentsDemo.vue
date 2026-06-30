@@ -123,7 +123,8 @@ const slotsCode = `// ===== Slots：父组件向子组件注入内容 =====
       <h2>📖 什么是组件？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong>组件是<em>可复用的 Vue 实例</em>，通过 Props（父→子）、Emits（子→父）、Slots（内容分发）实现通信。
+          <strong>一句话解释：</strong>组件是<em>可复用的 Vue 实例</em>，通过
+          Props（父→子）、Emits（子→父）、Slots（内容分发）实现通信。
         </p>
 
         <div class="key-points">
@@ -141,9 +142,7 @@ const slotsCode = `// ===== Slots：父组件向子组件注入内容 =====
     <!-- 1. 组件定义 -->
     <section class="demo-section">
       <h2>1. 组件定义 — import 即用</h2>
-      <p class="section-desc">
-        <code>&lt;script setup&gt;</code> 中 import 的组件会自动注册，模板中直接使用。
-      </p>
+      <p class="section-desc"><code>&lt;script setup&gt;</code> 中 import 的组件会自动注册，模板中直接使用。</p>
       <div class="demo-row">
         <MyButton type="default">默认按钮</MyButton>
         <MyButton type="primary">主要按钮</MyButton>
@@ -155,9 +154,7 @@ const slotsCode = `// ===== Slots：父组件向子组件注入内容 =====
     <!-- 2. Props -->
     <section class="demo-section">
       <h2>2. Props — 父 → 子传数据</h2>
-      <p class="section-desc">
-        静态值、动态绑定、<code>v-bind</code> 批量传递——三种传值方式。
-      </p>
+      <p class="section-desc">静态值、动态绑定、<code>v-bind</code> 批量传递——三种传值方式。</p>
       <pre class="code-block">{{ propsCode }}</pre>
       <div class="card-row">
         <UserCard name="张三" />
@@ -170,19 +167,16 @@ const slotsCode = `// ===== Slots：父组件向子组件注入内容 =====
     <!-- 3. Emits -->
     <section class="demo-section">
       <h2>3. Emits — 子 → 父发事件</h2>
-      <p class="section-desc">
-        子组件 <code>emit('event', value)</code>，父组件 <code>@event="handler"</code>。
-      </p>
+      <p class="section-desc">子组件 <code>emit('event', value)</code>，父组件 <code>@event="handler"</code>。</p>
       <pre class="code-block">{{ emitsCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">父组件计数</span> = <code>{{ counterValue }}</code></p>
+          <p>
+            <span class="label">父组件计数</span> = <code>{{ counterValue }}</code>
+          </p>
         </div>
         <div class="action-box">
-          <CounterButton
-            @update="counterValue = $event"
-            @reset="counterValue = 0"
-          />
+          <CounterButton @update="counterValue = $event" @reset="counterValue = 0" />
         </div>
       </div>
     </section>
@@ -190,9 +184,7 @@ const slotsCode = `// ===== Slots：父组件向子组件注入内容 =====
     <!-- 4. 插槽 -->
     <section class="demo-section">
       <h2>4. Slots — 父 → 子注入内容</h2>
-      <p class="section-desc">
-        默认插槽和具名插槽，父组件填充子组件预留的空位。
-      </p>
+      <p class="section-desc">默认插槽和具名插槽，父组件填充子组件预留的空位。</p>
       <pre class="code-block">{{ slotsCode }}</pre>
       <Card>
         <template #header>
@@ -209,9 +201,7 @@ const slotsCode = `// ===== Slots：父组件向子组件注入内容 =====
     <!-- 5. 作用域插槽 -->
     <section class="demo-section">
       <h2>5. 作用域插槽 — 子组件向父组件暴露数据</h2>
-      <p class="section-desc">
-        子组件把数据暴露给父组件，父组件决定如何渲染每条数据。
-      </p>
+      <p class="section-desc">子组件把数据暴露给父组件，父组件决定如何渲染每条数据。</p>
       <ListComponent :items="productList">
         <template #item="{ item, index }">
           <span class="item-index">{{ index + 1 }}.</span>

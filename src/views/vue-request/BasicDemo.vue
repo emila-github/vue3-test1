@@ -15,7 +15,11 @@ interface UserInfo {
 const { data, loading, error, refresh } = useRequest<UserInfo>(() => get('/vr/demo/user'))
 
 // ========== 2. 手动触发 ==========
-const { data: manualData, run, loading: manualLoading } = useRequest<string>(
+const {
+  data: manualData,
+  run,
+  loading: manualLoading,
+} = useRequest<string>(
   (msg: string) => {
     return new Promise((resolve) => {
       setTimeout(() => resolve(`收到: ${msg} — ${new Date().toLocaleTimeString()}`), 600)

@@ -28,9 +28,7 @@ const leaveLog = ref<string[]>([])
 
 // onBeforeRouteLeave：离开当前页面前触发
 onBeforeRouteLeave((to, from) => {
-  leaveLog.value.unshift(
-    `⏱ ${new Date().toLocaleTimeString()} 离开 → ${String(to.name)}`
-  )
+  leaveLog.value.unshift(`⏱ ${new Date().toLocaleTimeString()} 离开 → ${String(to.name)}`)
   if (leaveLog.value.length > 8) leaveLog.value.pop()
 
   if (formDirty.value) {
@@ -50,9 +48,7 @@ onBeforeRouteLeave((to, from) => {
 
 // onBeforeRouteUpdate：路由参数变化但组件复用时触发
 onBeforeRouteUpdate((to, from) => {
-  leaveLog.value.unshift(
-    `🔄 ${new Date().toLocaleTimeString()} 参数变化 ${String(from.name)} → ${String(to.name)}`
-  )
+  leaveLog.value.unshift(`🔄 ${new Date().toLocaleTimeString()} 参数变化 ${String(from.name)} → ${String(to.name)}`)
   if (leaveLog.value.length > 8) leaveLog.value.pop()
 })
 
@@ -135,8 +131,8 @@ const guardData = [
         <div class="flow-step end">afterEach<br /><small>全局后置</small></div>
       </div>
       <p style="margin-top: 12px">
-        ⚠️ Vue Router 5.x 守卫中使用 <strong>返回值</strong> 控制导航（<code>false</code> 取消、
-        路径字符串/对象 重定向），不再依赖 <code>next()</code> 回调。
+        ⚠️ Vue Router 5.x 守卫中使用 <strong>返回值</strong> 控制导航（<code>false</code> 取消、 路径字符串/对象
+        重定向），不再依赖 <code>next()</code> 回调。
       </p>
     </section>
 
@@ -144,7 +140,8 @@ const guardData = [
     <section class="card">
       <h2>4.2 全局守卫</h2>
       <p>在 <code>createRouter</code> 后通过 <code>router.beforeEach</code> 等注册，对所有路由生效。</p>
-      <pre class="code-block">// ✅ 5.x 推荐：返回值控制
+      <pre class="code-block">
+// ✅ 5.x 推荐：返回值控制
 router.beforeEach((to, from) => {
   // 返回 false 取消导航
   if (!isLoggedIn && to.meta.requiresAuth) {
@@ -156,7 +153,8 @@ router.beforeEach((to, from) => {
 // afterEach 没有返回值，无法控制导航
 router.afterEach((to, from) => {
   document.title = to.meta.title || '默认标题'
-})</pre>
+})</pre
+      >
 
       <a-table
         :columns="guardColumns"
@@ -173,7 +171,9 @@ router.afterEach((to, from) => {
 
       <div class="demo-box">
         <div v-if="isLoggedIn" class="auth-status logged-in">
-          <span>✅ 已登录：<strong>{{ username }}</strong></span>
+          <span
+            >✅ 已登录：<strong>{{ username }}</strong></span
+          >
           <a-button size="small" @click="mockLogout">退出登录</a-button>
         </div>
         <div v-else class="auth-status logged-out">
@@ -182,16 +182,13 @@ router.afterEach((to, from) => {
         </div>
 
         <div style="margin-top: 12px">
-          <a-button :type="isLoggedIn ? 'primary' : 'dashed'" @click="goToAdmin">
-            访问管理后台
-          </a-button>
-          <span style="margin-left: 8px; font-size: 12px; color: #999">
-            （未登录将提示先登录）
-          </span>
+          <a-button :type="isLoggedIn ? 'primary' : 'dashed'" @click="goToAdmin"> 访问管理后台 </a-button>
+          <span style="margin-left: 8px; font-size: 12px; color: #999"> （未登录将提示先登录） </span>
         </div>
       </div>
 
-      <pre class="code-block" style="margin-top: 12px">// src/router/index.ts 中配置全局前置守卫
+      <pre class="code-block" style="margin-top: 12px">
+// src/router/index.ts 中配置全局前置守卫
 router.beforeEach((to, from) => {
   const isLoggedIn = useAuthStore().isLoggedIn
 
@@ -200,7 +197,8 @@ router.beforeEach((to, from) => {
     return { path: '/login', query: { redirect: to.fullPath } }
   }
   // 返回 true / undefined → 放行
-})</pre>
+})</pre
+      >
     </section>
 
     <!-- 4.4 组件内守卫 -->
@@ -212,19 +210,16 @@ router.beforeEach((to, from) => {
         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px">
           <span style="font-size: 13px">模拟表单已修改：</span>
           <a-switch v-model:checked="formDirty" />
-          <span v-if="formDirty" style="color: #fa541c; font-size: 12px">
-            ⚡ 离开此页面将弹出确认提示
-          </span>
-          <span v-else style="color: #52c41a; font-size: 12px">
-            ✓ 可自由离开
-          </span>
+          <span v-if="formDirty" style="color: #fa541c; font-size: 12px"> ⚡ 离开此页面将弹出确认提示 </span>
+          <span v-else style="color: #52c41a; font-size: 12px"> ✓ 可自由离开 </span>
         </div>
         <a-space>
           <RouterLink to="/">← 返回首页（测试离开守卫）</RouterLink>
         </a-space>
       </div>
 
-      <pre class="code-block">import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
+      <pre class="code-block">
+import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
 
 onBeforeRouteLeave((to, from) => {
   if (formDirty.value) {
@@ -239,21 +234,16 @@ onBeforeRouteUpdate((to, from) => {
   if (to.params.id !== from.params.id) {
     fetchData(to.params.id)
   }
-})</pre>
+})</pre
+      >
     </section>
 
     <!-- 离开日志 -->
     <section class="card">
       <h2>守卫触发日志</h2>
       <div class="log-panel">
-        <div
-          v-for="(log, i) in leaveLog"
-          :key="i"
-          class="log-line"
-        >{{ log }}</div>
-        <div v-if="leaveLog.length === 0" style="color: #ccc; font-size: 13px">
-          切换子路由或离开页面时记录...
-        </div>
+        <div v-for="(log, i) in leaveLog" :key="i" class="log-line">{{ log }}</div>
+        <div v-if="leaveLog.length === 0" style="color: #ccc; font-size: 13px">切换子路由或离开页面时记录...</div>
       </div>
     </section>
   </div>

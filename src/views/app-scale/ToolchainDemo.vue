@@ -40,47 +40,55 @@ const packageInfo = ref([
     <section class="card">
       <h2>Vite：下一代构建工具</h2>
       <p>
-        Vite 利用浏览器原生 ES Module 实现<strong>极速冷启动</strong>和<strong>热模块替换（HMR）</strong>。
-        生产构建基于 Rollup，输出高度优化的静态资源。
+        Vite 利用浏览器原生 ES Module 实现<strong>极速冷启动</strong>和<strong>热模块替换（HMR）</strong>。 生产构建基于
+        Rollup，输出高度优化的静态资源。
       </p>
 
       <div class="info-grid">
         <div class="info-card">
           <h4>开发服务器</h4>
-          <pre class="code-block" style="font-size: 12px">pnpm dev
+          <pre class="code-block" style="font-size: 12px">
+pnpm dev
 
 # 启动开发服务器
 # 默认 http://localhost:5173
-# HMR 热更新（<50ms）</pre>
+# HMR 热更新（<50ms）</pre
+          >
         </div>
         <div class="info-card">
           <h4>生产构建</h4>
-          <pre class="code-block" style="font-size: 12px">pnpm build
+          <pre class="code-block" style="font-size: 12px">
+pnpm build
 
 # Rollup 打包
 # Tree Shaking
 # 代码分割
-# CSS/JS 压缩</pre>
+# CSS/JS 压缩</pre
+          >
         </div>
         <div class="info-card">
           <h4>配置文件</h4>
-          <pre class="code-block" style="font-size: 12px">// vite.config.ts
+          <pre class="code-block" style="font-size: 12px">
+// vite.config.ts
 export default defineConfig({
   plugins: [vue(), vueJsx()],
   resolve: { alias: { '@': ... } },
   server: { port: 5173 },
-})</pre>
+})</pre
+          >
         </div>
         <div class="info-card">
           <h4>环境变量</h4>
-          <pre class="code-block" style="font-size: 12px">// .env.development
+          <pre class="code-block" style="font-size: 12px">
+// .env.development
 VITE_API_BASE=/api
 
 // .env.production
 VITE_API_BASE=https://api.xxx.com
 
 // 使用
-import.meta.env.VITE_API_BASE</pre>
+import.meta.env.VITE_API_BASE</pre
+          >
         </div>
       </div>
     </section>
@@ -89,10 +97,11 @@ import.meta.env.VITE_API_BASE</pre>
     <section class="card">
       <h2>TypeScript + vue-tsc</h2>
       <p>
-        本项目使用 TypeScript 6.x，通过 <code>vue-tsc</code> 进行类型检查。
-        <strong>注意</strong>：vue-tsc 仅做类型检查，不参与 Vite 的转译（由 esbuild 负责）。
+        本项目使用 TypeScript 6.x，通过 <code>vue-tsc</code> 进行类型检查。 <strong>注意</strong>：vue-tsc
+        仅做类型检查，不参与 Vite 的转译（由 esbuild 负责）。
       </p>
-      <pre class="code-block">// tsconfig.app.json — 应用代码配置
+      <pre class="code-block">
+// tsconfig.app.json — 应用代码配置
 {
   "compilerOptions": {
     "strict": true,              // 严格模式
@@ -104,7 +113,8 @@ import.meta.env.VITE_API_BASE</pre>
 }
 
 // 命令
-pnpm type-check     # 运行 vue-tsc 类型检查</pre>
+pnpm type-check     # 运行 vue-tsc 类型检查</pre
+      >
     </section>
 
     <!-- 代码规范 -->
@@ -113,7 +123,8 @@ pnpm type-check     # 运行 vue-tsc 类型检查</pre>
       <div class="two-col">
         <div>
           <h4 style="margin-top: 0">ESLint</h4>
-          <pre class="code-block" style="font-size: 12px">pnpm lint        # 运行检查
+          <pre class="code-block" style="font-size: 12px">
+pnpm lint        # 运行检查
 pnpm lint:eslint  # 仅 ESLint
 pnpm lint:oxlint  # Oxlint 极速检查
 
@@ -121,17 +132,20 @@ pnpm lint:oxlint  # Oxlint 极速检查
 // Flat Config (ESLint 9+)
 export default defineConfig([
   // Vue / TS / 通用规则
-])</pre>
+])</pre
+          >
         </div>
         <div>
           <h4 style="margin-top: 0">Prettier</h4>
-          <pre class="code-block" style="font-size: 12px">pnpm format      # 格式化代码
+          <pre class="code-block" style="font-size: 12px">
+pnpm format      # 格式化代码
 
 // 统一风格：
 // - 单引号
 // - 无分号
 // - 2 空格缩进
-// - 120 字符行宽</pre>
+// - 120 字符行宽</pre
+          >
         </div>
       </div>
       <div class="tip-box">

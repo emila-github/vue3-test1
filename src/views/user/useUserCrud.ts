@@ -42,28 +42,21 @@ export function useUserCrud() {
       const va = a[sortField.value]
       const vb = b[sortField.value]
       if (typeof va === 'string' && typeof vb === 'string') {
-        return sortOrder.value === 'asc'
-          ? va.localeCompare(vb)
-          : vb.localeCompare(va)
+        return sortOrder.value === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va)
       }
-      return sortOrder.value === 'asc'
-        ? Number(va) - Number(vb)
-        : Number(vb) - Number(va)
+      return sortOrder.value === 'asc' ? Number(va) - Number(vb) : Number(vb) - Number(va)
     })
   })
 
   /** 表单是否有效 */
   const isFormValid = computed(() => {
-    return (
-      formData.value.name.trim().length >= 2 &&
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.value.email.trim())
-    )
+    return formData.value.name.trim().length >= 2 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.value.email.trim())
   })
 
   /** 全选状态 */
   const isAllSelected = computed(() => {
     if (filteredUsers.value.length === 0) return false
-    return filteredUsers.value.every(u => selectedIds.value.has(u.id))
+    return filteredUsers.value.every((u) => selectedIds.value.has(u.id))
   })
 
   // --- 弹窗操作 ---
@@ -168,7 +161,7 @@ export function useUserCrud() {
     if (isAllSelected.value) {
       selectedIds.value = new Set()
     } else {
-      selectedIds.value = new Set(filteredUsers.value.map(u => u.id))
+      selectedIds.value = new Set(filteredUsers.value.map((u) => u.id))
     }
   }
 
@@ -176,10 +169,8 @@ export function useUserCrud() {
 
   function exportCSV() {
     const headers = ['ID', '姓名', '邮箱', '角色', '状态', '创建时间']
-    const rows = filteredUsers.value.map(u => [
-      u.id, u.name, u.email, u.role, u.status, u.createdAt,
-    ])
-    const csv = [headers, ...rows].map(r => r.join(',')).join('\n')
+    const rows = filteredUsers.value.map((u) => [u.id, u.name, u.email, u.role, u.status, u.createdAt])
+    const csv = [headers, ...rows].map((r) => r.join(',')).join('\n')
     const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')

@@ -10,11 +10,7 @@ defineEmits<{
 </script>
 
 <template>
-  <button
-    :class="['my-btn', `my-btn-${type || 'default'}`]"
-    :disabled="disabled"
-    @click="$emit('click')"
-  >
+  <button :class="['my-btn', `my-btn-${type || 'default'}`]" :disabled="disabled" @click="$emit('click')">
     <slot />
   </button>
 </template>

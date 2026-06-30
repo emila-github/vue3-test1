@@ -126,9 +126,9 @@ export default {
         :pagination="false"
         size="small"
       />
-      <div class="info-box" style="margin-top: 12px;">
-        <strong>铁律</strong>：每一条 <code>eslint-disable</code> 都应该附带注释说明原因，
-        否则 Code Review 时必须要求补充。<br>
+      <div class="info-box" style="margin-top: 12px">
+        <strong>铁律</strong>：每一条 <code>eslint-disable</code> 都应该附带注释说明原因， 否则 Code Review
+        时必须要求补充。<br />
         示例：<code>// eslint-disable-next-line no-console -- CLI 工具需要输出日志</code>
       </div>
     </section>

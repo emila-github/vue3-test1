@@ -79,7 +79,8 @@ function goToVueRouter() {
         </div>
       </div>
 
-      <pre class="code-block">// 路由配置示例
+      <pre class="code-block">
+// 路由配置示例
 const routes = [
   { path: '/',         component: HomeView },
   { path: '/about',    component: AboutView },
@@ -89,7 +90,8 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-})</pre>
+})</pre
+      >
     </section>
 
     <!-- 5.x 关键特性 -->
@@ -122,9 +124,7 @@ const router = createRouter({
           <h2 style="margin: 0 0 4px">深入学习 Vue Router</h2>
           <p style="margin: 0; color: #888">5 阶段完整教程：快速上手 → 动态路由 → 嵌套路由 → 导航守卫 → 进阶特性</p>
         </div>
-        <a-button type="primary" size="large" @click="goToVueRouter">
-          进入 Vue Router 教程 →
-        </a-button>
+        <a-button type="primary" size="large" @click="goToVueRouter"> 进入 Vue Router 教程 → </a-button>
       </div>
     </section>
   </div>

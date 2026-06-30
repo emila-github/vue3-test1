@@ -17,11 +17,18 @@ const currentStyle = themeColors[theme?.value || 'light'] ?? themeColors.light!
 </script>
 
 <template>
-  <div class="provide-child" :style="{ background: currentStyle.bg, color: currentStyle.color, borderColor: currentStyle.border }">
+  <div
+    class="provide-child"
+    :style="{ background: currentStyle.bg, color: currentStyle.color, borderColor: currentStyle.border }"
+  >
     <h4>子组件（Injector）</h4>
-    <p>appName：<strong>{{ appName }}</strong></p>
+    <p>
+      appName：<strong>{{ appName }}</strong>
+    </p>
     <p>config：{{ JSON.stringify(config) }}</p>
-    <p>当前主题：<strong>{{ theme }}</strong></p>
+    <p>
+      当前主题：<strong>{{ theme }}</strong>
+    </p>
     <button @click="toggleTheme" class="child-btn">切换主题</button>
 
     <!-- 孙组件 -->
@@ -37,8 +44,13 @@ const currentStyle = themeColors[theme?.value || 'light'] ?? themeColors.light!
   margin-top: 12px;
 }
 
-h4 { margin: 0 0 8px 0; }
-p { margin: 4px 0; font-size: 14px; }
+h4 {
+  margin: 0 0 8px 0;
+}
+p {
+  margin: 4px 0;
+  font-size: 14px;
+}
 
 .child-btn {
   padding: 6px 14px;
@@ -50,5 +62,8 @@ p { margin: 4px 0; font-size: 14px; }
   margin-top: 8px;
 }
 
-.child-btn:hover { border-color: #2f54eb; color: #2f54eb; }
+.child-btn:hover {
+  border-color: #2f54eb;
+  color: #2f54eb;
+}
 </style>

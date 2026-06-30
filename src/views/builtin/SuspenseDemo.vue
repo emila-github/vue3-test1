@@ -37,13 +37,7 @@ const error = ref<Error | null>(null)
         <button @click="reload" class="demo-btn">重新加载</button>
         <span class="delay-hint">
           模拟延迟: {{ loadDelay }}ms
-          <input
-            type="range"
-            v-model.number="loadDelay"
-            min="500"
-            max="3000"
-            step="500"
-          />
+          <input type="range" v-model.number="loadDelay" min="500" max="3000" step="500" />
         </span>
       </div>
 
@@ -63,7 +57,8 @@ const error = ref<Error | null>(null)
     <!-- Suspense 事件 -->
     <section class="demo-section">
       <h2>2. Suspense 事件</h2>
-      <pre class="code-hint">&lt;Suspense
+      <pre class="code-hint">
+&lt;Suspense
   @pending="onPending"
   @resolve="onResolve"
   @fallback="onFallback"
@@ -74,16 +69,16 @@ const error = ref<Error | null>(null)
   &lt;template #fallback&gt;
     &lt;Loading /&gt;
   &lt;/template&gt;
-&lt;/Suspense&gt;</pre>
-      <p class="hint">
-        @pending: 进入挂起状态 | @resolve: default 插槽完成加载 | @fallback: 显示 fallback
-      </p>
+&lt;/Suspense&gt;</pre
+      >
+      <p class="hint">@pending: 进入挂起状态 | @resolve: default 插槽完成加载 | @fallback: 显示 fallback</p>
     </section>
 
     <!-- 错误处理 -->
     <section class="demo-section">
       <h2>3. 错误处理</h2>
-      <pre class="code-hint">// defineAsyncComponent 配置错误处理
+      <pre class="code-hint">
+// defineAsyncComponent 配置错误处理
 const AsyncComp = defineAsyncComponent({
   loader: () => import('./Comp.vue'),
   loadingComponent: LoadingSpinner,
@@ -94,16 +89,16 @@ const AsyncComp = defineAsyncComponent({
     if (attempts &lt;= 3) retry()  // 自动重试
     else fail()
   }
-})</pre>
-      <p class="hint">
-        Suspense 本身不处理错误，需配合 defineAsyncComponent 的 onError 或 onErrorCaptured
-      </p>
+})</pre
+      >
+      <p class="hint">Suspense 本身不处理错误，需配合 defineAsyncComponent 的 onError 或 onErrorCaptured</p>
     </section>
 
     <!-- 与路由懒加载结合 -->
     <section class="demo-section">
       <h2>4. 路由懒加载 + Suspense</h2>
-      <pre class="code-hint">// router/index.ts
+      <pre class="code-hint">
+// router/index.ts
 const routes = [
   {
     path: '/dashboard',
@@ -119,7 +114,8 @@ const routes = [
   &lt;template #fallback&gt;
     &lt;PageLoading /&gt;
   &lt;/template&gt;
-&lt;/Suspense&gt;</pre>
+&lt;/Suspense&gt;</pre
+      >
     </section>
   </div>
 </template>
@@ -205,7 +201,9 @@ const routes = [
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* 代码块 */

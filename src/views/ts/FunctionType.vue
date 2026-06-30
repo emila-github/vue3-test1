@@ -105,9 +105,9 @@ format(3.14159)    // → '3.14'     匹配第二条
 type MathFn = (a: number, b: number) => number
 
 // 三个不同的实现，但都满足 MathFn 类型
-const addFn: MathFn = (a, b) => a + b   // 加法
-const subFn: MathFn = (a, b) => a - b   // 减法
-const mulFn: MathFn = (a, b) => a * b   // 乘法
+const addFn: MathFn = (a, b) => a + b // 加法
+const subFn: MathFn = (a, b) => a - b // 减法
+const mulFn: MathFn = (a, b) => a * b // 乘法
 
 // 实际应用场景：回调函数
 // 高阶函数：接收一个函数作为参数
@@ -284,7 +284,10 @@ function processResult(result: { ok: true; data: string } | { ok: false; error: 
 // 构造函数类型用 new (...) => Type 表示
 
 class Person {
-  constructor(public name: string, public age: number) {}
+  constructor(
+    public name: string,
+    public age: number,
+  ) {}
 }
 
 // type Constructor = new (...args: any[]) => any
@@ -349,7 +352,7 @@ async function fetchUser(id: number): Promise<string> {
 
 // 方式二：用 await 时，TS 自动推断类型（推荐）
 async function fetchUserWithAwait(id: number) {
-  const name = await fetchUser(id)  // TS 推断 name: string
+  const name = await fetchUser(id) // TS 推断 name: string
   return name.toUpperCase()
 }
 
@@ -380,10 +383,10 @@ async function getUpperName(id: number) {
 // 默认参数：参数名 = 默认值，不传时使用默认值
 
 function createUser(
-  name: string,                          // 必填参数
-  age?: number,                          // 可选参数
-  role: string = 'user',                 // 默认参数
-  tags: string[] = [],                    // 默认空数组
+  name: string, // 必填参数
+  age?: number, // 可选参数
+  role: string = 'user', // 默认参数
+  tags: string[] = [], // 默认空数组
 ): string {
   return JSON.stringify({ name, age, role, tags })
 }
@@ -421,10 +424,10 @@ function request(url: string, config: { timeout?: number = 3000, headers?: objec
 const numbers = [1, 2, 3, 4, 5]
 
 // map 接收一个函数：(number) => number
-const doubled = numbers.map(n => n * 2)
+const doubled = numbers.map((n) => n * 2)
 
 // filter 接收一个函数：(number) => boolean
-const evens = numbers.filter(n => n % 2 === 0)
+const evens = numbers.filter((n) => n % 2 === 0)
 
 // reduce 接收一个函数：(累加器, 当前值) => 累加器
 const total = numbers.reduce((acc, n) => acc + n, 0)
@@ -434,7 +437,7 @@ function multiply(a: number): (b: number) => number {
   return (b: number) => a * b
 }
 
-const double = multiply(2)  // double: (b: number) => number
+const double = multiply(2) // double: (b: number) => number
 const triple = multiply(3) // triple: (b: number) => number
 
 const higherOrderCode = `// ===== 函数作为参数 =====
@@ -517,8 +520,8 @@ add(1, 2)          // ✅ 编译通过，结果是 3</pre
     <section class="demo-section">
       <h2>1. 函数类型声明 — 基础三件套</h2>
       <p class="section-desc">
-        声明函数时同时标注<strong>参数类型</strong>和<strong>返回值类型</strong>。
-        可选参数 <code>?</code>、剩余参数 <code>...</code> 是最常用的扩展语法。
+        声明函数时同时标注<strong>参数类型</strong>和<strong>返回值类型</strong>。 可选参数 <code>?</code>、剩余参数
+        <code>...</code> 是最常用的扩展语法。
       </p>
       <pre class="code-block">{{ funcDeclCode }}</pre>
       <div class="result-box">
@@ -550,8 +553,7 @@ add(1, 2)          // ✅ 编译通过，结果是 3</pre
       <h2>2. 函数重载 — 一个名字，多种用法</h2>
       <p class="section-desc">
         <code>format</code> 根据传入参数类型不同，执行不同逻辑。<br />
-        TypeScript 通过<strong>重载签名</strong>告诉编译器有哪些调用方式，
-        用<strong>实现签名</strong>统一写实际逻辑。
+        TypeScript 通过<strong>重载签名</strong>告诉编译器有哪些调用方式， 用<strong>实现签名</strong>统一写实际逻辑。
       </p>
       <pre class="code-block">{{ overloadCode }}</pre>
       <div class="result-box">
@@ -573,8 +575,7 @@ add(1, 2)          // ✅ 编译通过，结果是 3</pre
     <section class="demo-section">
       <h2>3. 函数类型表达式 — 把函数类型当作值来用</h2>
       <p class="section-desc">
-        用 <code>type</code> 定义函数类型后，就可以像 <code>string</code>、<code>number</code>
-        一样作为变量类型。<br />
+        用 <code>type</code> 定义函数类型后，就可以像 <code>string</code>、<code>number</code> 一样作为变量类型。<br />
         最常见的场景：<strong>回调函数</strong>（作为参数传给其他函数）。
       </p>
       <pre class="code-block">{{ typeExprCode }}</pre>
@@ -606,8 +607,8 @@ add(1, 2)          // ✅ 编译通过，结果是 3</pre
     <section class="demo-section">
       <h2>4. 调用签名 — 函数也是对象</h2>
       <p class="section-desc">
-        JavaScript 中函数也是对象，可以有属性。
-        用<strong>调用签名</strong> <code>{ (参数): 返回值 }</code> 表示"可调用的对象"。
+        JavaScript 中函数也是对象，可以有属性。 用<strong>调用签名</strong>
+        <code>{ (参数): 返回值 }</code> 表示"可调用的对象"。
       </p>
       <pre class="code-block">{{ callSigCode }}</pre>
       <div class="result-box">
@@ -629,8 +630,8 @@ add(1, 2)          // ✅ 编译通过，结果是 3</pre
     <section class="demo-section">
       <h2>5. 泛型函数 — 参数和返回值类型自动同步</h2>
       <p class="section-desc">
-        <code>&lt;T&gt;</code> 是类型变量，调用时由 TypeScript 自动推断具体类型。
-        结合 <code>extends</code> 约束可以让泛型更安全。
+        <code>&lt;T&gt;</code> 是类型变量，调用时由 TypeScript 自动推断具体类型。 结合
+        <code>extends</code> 约束可以让泛型更安全。
       </p>
       <pre class="code-block">{{ genericFnCode }}</pre>
       <div class="result-box">
@@ -646,7 +647,12 @@ add(1, 2)          // ✅ 编译通过，结果是 3</pre
         </p>
         <p>
           <span class="label">logLength('TypeScript')</span> →
-          <code>{{ (() => { logLength('TypeScript'); return 'TypeScript'.length })() }}</code>
+          <code>{{
+            (() => {
+              logLength('TypeScript')
+              return 'TypeScript'.length
+            })()
+          }}</code>
           <span class="type-hint">// T 有 length 约束，安全访问</span>
         </p>
       </div>
@@ -679,8 +685,7 @@ add(1, 2)          // ✅ 编译通过，结果是 3</pre
     <section class="demo-section">
       <h2>7. 构造函数类型 — new 出来的才叫构造函数</h2>
       <p class="section-desc">
-        用 <code>new (...args) => Type</code> 表示构造函数类型。
-        TypeScript 中类本身就可以当作构造函数类型使用。
+        用 <code>new (...args) => Type</code> 表示构造函数类型。 TypeScript 中类本身就可以当作构造函数类型使用。
       </p>
       <pre class="code-block">{{ constructorCode }}</pre>
       <div class="result-box">
@@ -697,8 +702,7 @@ add(1, 2)          // ✅ 编译通过，结果是 3</pre
     <section class="demo-section">
       <h2>8. this 类型 — 显式标注 this 的类型</h2>
       <p class="section-desc">
-        TypeScript 用<strong>第一个参数位置</strong>标注 <code>this</code> 的类型。
-        这不是真正的参数，编译后会完全移除。
+        TypeScript 用<strong>第一个参数位置</strong>标注 <code>this</code> 的类型。 这不是真正的参数，编译后会完全移除。
       </p>
       <pre class="code-block">{{ thisTypeCode }}</pre>
       <div class="result-box">
@@ -720,8 +724,8 @@ add(1, 2)          // ✅ 编译通过，结果是 3</pre
     <section class="demo-section">
       <h2>9. 异步函数类型 — async 函数返回 Promise</h2>
       <p class="section-desc">
-        <code>async</code> 函数总是返回 <code>Promise&lt;T&gt;</code>。
-        标注方式：显式写 <code>Promise&lt;类型&gt;</code> 或让 TS 自动推断。
+        <code>async</code> 函数总是返回 <code>Promise&lt;T&gt;</code>。 标注方式：显式写
+        <code>Promise&lt;类型&gt;</code> 或让 TS 自动推断。
       </p>
       <pre class="code-block">{{ asyncFnCode }}</pre>
       <div class="result-box">
@@ -743,8 +747,9 @@ add(1, 2)          // ✅ 编译通过，结果是 3</pre
     <section class="demo-section">
       <h2>10. 可选参数与默认参数 — 灵活的参数设计</h2>
       <p class="section-desc">
-        <code>?</code> 表示可选（值为 <code>undefined</code>），<code>= 值</code> 表示默认值。
-        顺序规则：<strong>必填 → 可选 → 默认</strong>。
+        <code>?</code> 表示可选（值为 <code>undefined</code>），<code>= 值</code> 表示默认值。 顺序规则：<strong
+          >必填 → 可选 → 默认</strong
+        >。
       </p>
       <pre class="code-block">{{ optionalDefaultCode }}</pre>
       <div class="result-box">
@@ -772,12 +777,12 @@ add(1, 2)          // ✅ 编译通过，结果是 3</pre
       <div class="result-box">
         <p>
           <span class="label">map: n * 2</span> →
-          <code>{{ numbers.map(n => n * 2).join(', ') }}</code>
+          <code>{{ numbers.map((n) => n * 2).join(', ') }}</code>
           <span class="type-hint">// 每个元素变换，返回新数组</span>
         </p>
         <p>
           <span class="label">filter: n % 2 === 0</span> →
-          <code>{{ numbers.filter(n => n % 2 === 0).join(', ') }}</code>
+          <code>{{ numbers.filter((n) => n % 2 === 0).join(', ') }}</code>
           <span class="type-hint">// 保留满足条件的元素</span>
         </p>
         <p>
@@ -885,7 +890,10 @@ function operate(a: number, b: number, fn: (a: number, b: number) => number): nu
 }
 
 class Person {
-  constructor(public name: string, public age: number) {}
+  constructor(
+    public name: string,
+    public age: number,
+  ) {}
 }
 
 function createInstance<T>(ctor: new (...args: any[]) => T, ...args: any[]): T {
@@ -899,12 +907,7 @@ function multiply(a: number): (b: number) => number {
 const double = multiply(2)
 const triple = multiply(3)
 
-function createUser(
-  name: string,
-  age?: number,
-  role: string = 'user',
-  tags: string[] = [],
-): string {
+function createUser(name: string, age?: number, role: string = 'user', tags: string[] = []): string {
   return JSON.stringify({ name, age, role, tags })
 }
 

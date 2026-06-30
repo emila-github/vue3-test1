@@ -28,5 +28,7 @@ defineProps<{
   align-items: center;
 }
 
-.todo-item:last-child { border-bottom: none; }
+.todo-item:last-child {
+  border-bottom: none;
+}
 </style>

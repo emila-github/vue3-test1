@@ -31,20 +31,15 @@ provide('setTheme', setTheme)
 
     <div class="panel">
       <h4>祖先组件（Provider）</h4>
-      <p>当前主题：<strong>{{ theme }}</strong></p>
+      <p>
+        当前主题：<strong>{{ theme }}</strong>
+      </p>
       <div class="theme-buttons">
-        <button
-          v-for="t in themes"
-          :key="t"
-          :class="['theme-btn', { active: theme === t }]"
-          @click="setTheme(t)"
-        >
+        <button v-for="t in themes" :key="t" :class="['theme-btn', { active: theme === t }]" @click="setTheme(t)">
           {{ t }}
         </button>
       </div>
-      <p class="hint">
-        通过 provide 向下传递：theme（只读）、appName、config、toggleTheme、setTheme
-      </p>
+      <p class="hint">通过 provide 向下传递：theme（只读）、appName、config、toggleTheme、setTheme</p>
     </div>
 
     <!-- 子组件 -->
@@ -73,8 +68,14 @@ provide('setTheme', setTheme)
   border-left: 4px solid #2f54eb;
 }
 
-h2 { margin: 0 0 16px 0; color: #333; }
-h4 { margin: 0 0 8px 0; color: #555; }
+h2 {
+  margin: 0 0 16px 0;
+  color: #333;
+}
+h4 {
+  margin: 0 0 8px 0;
+  color: #555;
+}
 
 .panel {
   background: #fff;
@@ -100,10 +101,21 @@ h4 { margin: 0 0 8px 0; color: #555; }
   text-transform: capitalize;
 }
 
-.theme-btn:hover { border-color: #2f54eb; color: #2f54eb; }
-.theme-btn.active { background: #2f54eb; color: #fff; border-color: #2f54eb; }
+.theme-btn:hover {
+  border-color: #2f54eb;
+  color: #2f54eb;
+}
+.theme-btn.active {
+  background: #2f54eb;
+  color: #fff;
+  border-color: #2f54eb;
+}
 
-.hint { color: #999; font-size: 13px; margin-top: 8px; }
+.hint {
+  color: #999;
+  font-size: 13px;
+  margin-top: 8px;
+}
 
 .info {
   background: #f0f5ff;
@@ -114,8 +126,13 @@ h4 { margin: 0 0 8px 0; color: #555; }
   margin-top: 12px;
 }
 
-.info ul { margin: 4px 0; padding-left: 20px; }
-.info li { margin: 4px 0; }
+.info ul {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+.info li {
+  margin: 4px 0;
+}
 .info code {
   background: #d6e4ff;
   padding: 1px 5px;

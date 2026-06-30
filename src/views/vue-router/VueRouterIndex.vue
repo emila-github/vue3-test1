@@ -56,9 +56,7 @@ function navigateTo(path: string) {
   <div class="router-index">
     <header class="page-header">
       <h1>Vue Router 5.x 学习</h1>
-      <p class="subtitle">
-        基于 <code>vue-router@^5.0.4</code>，Composition API 风格，覆盖从入门到进阶的核心特性。
-      </p>
+      <p class="subtitle">基于 <code>vue-router@^5.0.4</code>，Composition API 风格，覆盖从入门到进阶的核心特性。</p>
     </header>
 
     <!-- 核心 API 速览 -->
@@ -114,9 +112,7 @@ function navigateTo(path: string) {
           <span class="stage-icon">{{ s.icon }}</span>
           <h3>{{ s.title }}</h3>
           <p class="stage-desc">{{ s.desc }}</p>
-          <div class="stage-badge" :style="{ background: s.color }">
-            Stage {{ s.id }}
-          </div>
+          <div class="stage-badge" :style="{ background: s.color }">Stage {{ s.id }}</div>
         </div>
       </div>
     </section>
@@ -234,7 +230,9 @@ function navigateTo(path: string) {
   border-radius: 10px;
   padding: 20px 16px;
   cursor: pointer;
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
 }
 
 .stage-card:hover {

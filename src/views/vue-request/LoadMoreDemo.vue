@@ -20,14 +20,7 @@ interface ArticlePage {
 
 const sentinel = ref<HTMLDivElement>()
 
-const {
-  dataList,
-  loading,
-  loadingMore,
-  noMore,
-  loadMore,
-  refresh,
-} = useLoadMore<ArticlePage>(
+const { dataList, loading, loadingMore, noMore, loadMore, refresh } = useLoadMore<ArticlePage>(
   (lastData) => {
     const page = lastData?.currentPage != null ? lastData.currentPage + 1 : 1
     return get('/vr/demo/articles', { page, pageSize: 8 })
@@ -73,13 +66,13 @@ function setupObserver(el: HTMLDivElement | undefined) {
             <a-list-item>
               <a-list-item-meta :title="item.title" :description="item.summary">
                 <template #avatar>
-                  <a-avatar style="background:#1890ff">
+                  <a-avatar style="background: #1890ff">
                     {{ item.id }}
                   </a-avatar>
                 </template>
               </a-list-item-meta>
               <template #extra>
-                <span style="font-size:12px;color:#999">{{ item.createdAt.slice(0, 10) }}</span>
+                <span style="font-size: 12px; color: #999">{{ item.createdAt.slice(0, 10) }}</span>
               </template>
             </a-list-item>
           </template>
@@ -87,18 +80,11 @@ function setupObserver(el: HTMLDivElement | undefined) {
       </a-spin>
 
       <!-- 加载状态区 -->
-      <div
-        :ref="setupObserver"
-        style="text-align:center;padding:20px;color:#999;font-size:14px"
-      >
+      <div :ref="setupObserver" style="text-align: center; padding: 20px; color: #999; font-size: 14px">
         <a-spin v-if="loadingMore" size="small" />
         <span v-else-if="loadingMore">加载中...</span>
-        <span v-else-if="noMore" style="color:#bbb">
-          — 已加载全部 {{ dataList.length }} 条，没有更多了 —
-        </span>
-        <a-button v-else type="link" @click="loadMore()">
-          点击加载更多
-        </a-button>
+        <span v-else-if="noMore" style="color: #bbb"> — 已加载全部 {{ dataList.length }} 条，没有更多了 — </span>
+        <a-button v-else type="link" @click="loadMore()"> 点击加载更多 </a-button>
       </div>
 
       <div class="code-hint">

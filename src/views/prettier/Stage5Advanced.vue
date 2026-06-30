@@ -31,8 +31,16 @@ jobs:
       - run: pnpm prettier --check src/`
 
 const plugins = ref([
-  { plugin: 'prettier-plugin-tailwindcss', desc: '自动排序 Tailwind CSS class 名称', stars: '自动按推荐顺序排列 class' },
-  { plugin: 'prettier-plugin-packagejson', desc: '格式化 package.json 字段顺序', stars: '保持 package.json 字段规范有序' },
+  {
+    plugin: 'prettier-plugin-tailwindcss',
+    desc: '自动排序 Tailwind CSS class 名称',
+    stars: '自动按推荐顺序排列 class',
+  },
+  {
+    plugin: 'prettier-plugin-packagejson',
+    desc: '格式化 package.json 字段顺序',
+    stars: '保持 package.json 字段规范有序',
+  },
   { plugin: 'prettier-plugin-organize-imports', desc: '自动整理 import 语句', stars: '排序、合并、删除未使用 import' },
   { plugin: 'prettier-plugin-sort-json', desc: '对 JSON 文件的 key 排序', stars: '使 JSON 文件内容有序可读' },
   { plugin: 'prettier-plugin-svelte', desc: '格式化 Svelte 组件', stars: '支持 .svelte 单文件组件' },
@@ -73,9 +81,7 @@ const vscodeSettings = `// .vscode/settings.json
     <!-- Editor 集成 -->
     <section class="card">
       <h2>Editor/IDE 集成</h2>
-      <p class="desc">
-        在编辑器中集成 Prettier，保存时自动格式化，是提升开发体验的最佳方式。
-      </p>
+      <p class="desc">在编辑器中集成 Prettier，保存时自动格式化，是提升开发体验的最佳方式。</p>
       <a-table
         :columns="[
           { title: '编辑器', dataIndex: 'editor', key: 'editor' },
@@ -92,9 +98,7 @@ const vscodeSettings = `// .vscode/settings.json
     <!-- VS Code 配置 -->
     <section class="card">
       <h2>VS Code 推荐配置</h2>
-      <p class="desc">
-        在项目 <code>.vscode/settings.json</code> 中配置，让团队成员打开项目即获得一致的格式化体验。
-      </p>
+      <p class="desc">在项目 <code>.vscode/settings.json</code> 中配置，让团队成员打开项目即获得一致的格式化体验。</p>
       <div class="code-block">
         <pre><code>{{ vscodeSettings }}</code></pre>
       </div>
@@ -103,9 +107,7 @@ const vscodeSettings = `// .vscode/settings.json
     <!-- Git Hooks -->
     <section class="card">
       <h2>Git Hooks 集成</h2>
-      <p class="desc">
-        通过 Git pre-commit hook 在提交前自动格式化代码，确保仓库中代码始终规范。
-      </p>
+      <p class="desc">通过 Git pre-commit hook 在提交前自动格式化代码，确保仓库中代码始终规范。</p>
       <a-table
         :columns="[
           { title: '工具', dataIndex: 'tool', key: 'tool' },
@@ -132,9 +134,7 @@ const vscodeSettings = `// .vscode/settings.json
     <!-- 插件生态 -->
     <section class="card">
       <h2>prettier-plugin-* 插件生态</h2>
-      <p class="desc">
-        Prettier 通过插件机制支持更多文件格式和功能。插件通过 npm 安装后，Prettier 会自动发现并加载。
-      </p>
+      <p class="desc">Prettier 通过插件机制支持更多文件格式和功能。插件通过 npm 安装后，Prettier 会自动发现并加载。</p>
       <a-table
         :columns="[
           { title: '插件', dataIndex: 'plugin', key: 'plugin' },
@@ -145,9 +145,7 @@ const vscodeSettings = `// .vscode/settings.json
         :pagination="false"
         size="small"
       />
-      <p class="note">
-        ⚠ Prettier 3.x 的插件 API 还在完善中（标记为 experimental），部分插件可能未兼容。
-      </p>
+      <p class="note">⚠ Prettier 3.x 的插件 API 还在完善中（标记为 experimental），部分插件可能未兼容。</p>
     </section>
 
     <!-- 最佳实践 -->

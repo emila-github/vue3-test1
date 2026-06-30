@@ -134,9 +134,7 @@ const products = ref([
 ])
 
 const filteredProducts = computed(() =>
-  products.value
-    .filter((item) => item.name.includes(keyword.value))
-    .sort((a, b) => a.price - b.price),
+  products.value.filter((item) => item.name.includes(keyword.value)).sort((a, b) => a.price - b.price),
 )
 
 const filterSortCode = `// computed 实现过滤 + 排序
@@ -160,13 +158,17 @@ const filteredProducts = computed(() =>
       <h2>📖 什么是列表渲染？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong><code>v-for</code> 让你<em>根据数组/对象动态生成一组元素</em>，数据变化时列表自动更新。
+          <strong>一句话解释：</strong
+          ><code>v-for</code> 让你<em>根据数组/对象动态生成一组元素</em>，数据变化时列表自动更新。
         </p>
 
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
           <ul>
-            <li><strong>必须加 <code>:key</code></strong>：给每个元素唯一标识，帮助 Vue 精准更新</li>
+            <li>
+              <strong>必须加 <code>:key</code></strong
+              >：给每个元素唯一标识，帮助 Vue 精准更新
+            </li>
             <li>可遍历<strong>数组、对象、数字范围</strong></li>
             <li>Vue 3 通过 Proxy 可检测所有数组变更（push/pop/splice/sort 等）</li>
             <li><strong>不要同时用 v-if 和 v-for</strong>在同一元素上——用 computed 先过滤</li>
@@ -194,9 +196,7 @@ const filteredProducts = computed(() =>
     <!-- 2. 遍历对象 -->
     <section class="demo-section">
       <h2>2. 遍历对象 — (value, key, index) in object</h2>
-      <p class="section-desc">
-        遍历对象的属性，可以获取值、属性名和序号。
-      </p>
+      <p class="section-desc">遍历对象的属性，可以获取值、属性名和序号。</p>
       <pre class="code-block">{{ objectVforCode }}</pre>
       <div class="result-box">
         <ul class="result-list">
@@ -210,9 +210,7 @@ const filteredProducts = computed(() =>
     <!-- 3. 遍历数字 -->
     <section class="demo-section">
       <h2>3. 遍历数字范围 — n in 5</h2>
-      <p class="section-desc">
-        从 1 开始遍历到指定数字。
-      </p>
+      <p class="section-desc">从 1 开始遍历到指定数字。</p>
       <pre class="code-block">{{ rangeVforCode }}</pre>
       <div class="result-box">
         <span v-for="n in 5" :key="n" class="number-badge">{{ n }}</span>
@@ -222,13 +220,13 @@ const filteredProducts = computed(() =>
     <!-- 4. 数组变更检测 -->
     <section class="demo-section">
       <h2>4. 数组变更检测</h2>
-      <p class="section-desc">
-        Vue 3 能检测所有数组变更方法。整体替换数组也会触发更新。
-      </p>
+      <p class="section-desc">Vue 3 能检测所有数组变更方法。整体替换数组也会触发更新。</p>
       <pre class="code-block">{{ arrayMutationCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">列表</span> = <code>{{ numList.join(', ') }}</code></p>
+          <p>
+            <span class="label">列表</span> = <code>{{ numList.join(', ') }}</code>
+          </p>
         </div>
         <div class="action-box">
           <button @click="addItem" class="demo-btn">push 末尾添加</button>
@@ -255,9 +253,7 @@ const filteredProducts = computed(() =>
           </ul>
           <p class="section-label">仅活跃事项（computed 过滤）：</p>
           <ul class="result-list">
-            <li v-for="item in activeItems" :key="item.id" class="active-item">
-              ✅ {{ item.name }}
-            </li>
+            <li v-for="item in activeItems" :key="item.id" class="active-item">✅ {{ item.name }}</li>
           </ul>
         </div>
       </div>
@@ -266,9 +262,7 @@ const filteredProducts = computed(() =>
     <!-- 6. 过滤排序 -->
     <section class="demo-section">
       <h2>6. 搜索过滤 + 排序 — 实战</h2>
-      <p class="section-desc">
-        <code>computed</code> + <code>v-for</code> 实现实时搜索过滤和价格排序。
-      </p>
+      <p class="section-desc"><code>computed</code> + <code>v-for</code> 实现实时搜索过滤和价格排序。</p>
       <pre class="code-block">{{ filterSortCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
@@ -283,9 +277,7 @@ const filteredProducts = computed(() =>
           <input v-model="keyword" class="demo-input" placeholder="搜索商品名称..." />
         </div>
       </div>
-      <p class="hint">
-        💡 输入"果"试试——只显示苹果，且按价格升序排列。
-      </p>
+      <p class="hint">💡 输入"果"试试——只显示苹果，且按价格升序排列。</p>
     </section>
 
     <!-- ==================== 速查表 ==================== -->

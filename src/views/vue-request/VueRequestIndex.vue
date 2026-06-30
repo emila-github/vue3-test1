@@ -44,12 +44,7 @@ const demos = [
     </a-page-header>
 
     <div class="demo-grid">
-      <RouterLink
-        v-for="demo in demos"
-        :key="demo.path"
-        :to="demo.path"
-        class="demo-card"
-      >
+      <RouterLink v-for="demo in demos" :key="demo.path" :to="demo.path" class="demo-card">
         <div class="card-icon">{{ demo.icon }}</div>
         <h3>{{ demo.title }}</h3>
         <p>{{ demo.desc }}</p>
@@ -86,7 +81,7 @@ const demos = [
 }
 
 .demo-card:hover {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   border-color: #1890ff;
   transform: translateY(-2px);
 }

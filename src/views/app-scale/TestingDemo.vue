@@ -5,9 +5,15 @@ import { ref, computed } from 'vue'
 function useCounter(initial = 0) {
   const count = ref(initial)
   const double = computed(() => count.value * 2)
-  function increment() { count.value++ }
-  function decrement() { count.value-- }
-  function reset() { count.value = initial }
+  function increment() {
+    count.value++
+  }
+  function decrement() {
+    count.value--
+  }
+  function reset() {
+    count.value = initial
+  }
   return { count, double, increment, decrement, reset }
 }
 
@@ -46,10 +52,9 @@ const counter = useCounter(0)
     <!-- Vitest 单元测试 -->
     <section class="card">
       <h2>Vitest：单元测试 + 组件测试</h2>
-      <p>
-        Vitest 基于 Vite，与项目配置共享，<strong>开箱即用</strong>。支持 HMR 模式（边改代码边跑测试）。
-      </p>
-      <pre class="code-block">// vitest.config.ts
+      <p>Vitest 基于 Vite，与项目配置共享，<strong>开箱即用</strong>。支持 HMR 模式（边改代码边跑测试）。</p>
+      <pre class="code-block">
+// vitest.config.ts
 import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 
@@ -62,7 +67,8 @@ export default defineConfig({
 })
 
 // 运行
-pnpm test:unit</pre>
+pnpm test:unit</pre
+      >
     </section>
 
     <!-- 测试用例示例 -->
@@ -71,7 +77,8 @@ pnpm test:unit</pre>
       <div class="two-col">
         <div>
           <h4>Composable 测试</h4>
-          <pre class="code-block" style="font-size: 12px">// useCounter.test.ts
+          <pre class="code-block" style="font-size: 12px">
+// useCounter.test.ts
 import { useCounter } from './useCounter'
 
 test('初始值为 0', () => {
@@ -83,11 +90,13 @@ test('increment 后为 1', () => {
   const { count, increment } = useCounter()
   increment()
   expect(count.value).toBe(1)
-})</pre>
+})</pre
+          >
         </div>
         <div>
           <h4>组件测试</h4>
-          <pre class="code-block" style="font-size: 12px">// Counter.test.ts
+          <pre class="code-block" style="font-size: 12px">
+// Counter.test.ts
 import { mount } from '@vue/test-utils'
 import Counter from './Counter.vue'
 
@@ -95,15 +104,20 @@ test('点击按钮 count +1', async () => {
   const wrapper = mount(Counter)
   await wrapper.find('button').trigger('click')
   expect(wrapper.text()).toContain('1')
-})</pre>
+})</pre
+          >
         </div>
       </div>
 
       <div class="demo-box" style="margin-top: 12px">
         <h4>上述 Composable 的运行效果（当前页面实时演示）：</h4>
         <div class="counter-demo">
-          <span>Count: <strong>{{ counter.count.value }}</strong></span>
-          <span>Double: <strong>{{ counter.double.value }}</strong></span>
+          <span
+            >Count: <strong>{{ counter.count.value }}</strong></span
+          >
+          <span
+            >Double: <strong>{{ counter.double.value }}</strong></span
+          >
           <a-space>
             <a-button size="small" @click="counter.increment()">+1</a-button>
             <a-button size="small" @click="counter.decrement()">-1</a-button>
@@ -116,10 +130,9 @@ test('点击按钮 count +1', async () => {
     <!-- Playwright E2E -->
     <section class="card">
       <h2>Playwright：端到端测试</h2>
-      <p>
-        Playwright 模拟真实浏览器操作，测试<strong>完整的用户流程</strong>。支持 Chromium、Firefox、WebKit。
-      </p>
-      <pre class="code-block">// e2e/example.spec.ts
+      <p>Playwright 模拟真实浏览器操作，测试<strong>完整的用户流程</strong>。支持 Chromium、Firefox、WebKit。</p>
+      <pre class="code-block">
+// e2e/example.spec.ts
 import { test, expect } from '@playwright/test'
 
 test('首页标题正确', async ({ page }) => {
@@ -134,7 +147,8 @@ test('计数器点击递增', async ({ page }) => {
 })
 
 // 运行
-pnpm test:e2e</pre>
+pnpm test:e2e</pre
+      >
     </section>
 
     <!-- 测试最佳实践 -->
@@ -283,9 +297,20 @@ pnpm test:e2e</pre>
   width: 420px;
 }
 
-.pyramid-level strong { display: block; font-size: 18px; }
-.pyramid-level span { display: block; font-size: 13px; margin: 2px 0; }
-.pyramid-level small { display: block; font-size: 11px; opacity: .8; }
+.pyramid-level strong {
+  display: block;
+  font-size: 18px;
+}
+.pyramid-level span {
+  display: block;
+  font-size: 13px;
+  margin: 2px 0;
+}
+.pyramid-level small {
+  display: block;
+  font-size: 11px;
+  opacity: 0.8;
+}
 
 .two-col {
   display: grid;
@@ -329,8 +354,14 @@ pnpm test:e2e</pre>
   .practice-grid {
     grid-template-columns: 1fr;
   }
-  .level-top { width: 140px; }
-  .level-mid { width: 220px; }
-  .level-bottom { width: 300px; }
+  .level-top {
+    width: 140px;
+  }
+  .level-mid {
+    width: 220px;
+  }
+  .level-bottom {
+    width: 300px;
+  }
 }
 </style>

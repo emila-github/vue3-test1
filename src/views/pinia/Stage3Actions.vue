@@ -13,7 +13,7 @@ const useTodoStore = defineStore('todo-demo', () => {
   ])
   let nextId = 4
 
-  const doneCount = computed(() => list.value.filter(i => i.done).length)
+  const doneCount = computed(() => list.value.filter((i) => i.done).length)
   const totalCount = computed(() => list.value.length)
 
   // 同步 action
@@ -31,12 +31,12 @@ const useTodoStore = defineStore('todo-demo', () => {
   }
 
   function toggleDone(id: number) {
-    const item = list.value.find(i => i.id === id)
+    const item = list.value.find((i) => i.id === id)
     if (item) item.done = !item.done
   }
 
   function removeTodo(id: number) {
-    list.value = list.value.filter(i => i.id !== id)
+    list.value = list.value.filter((i) => i.id !== id)
   }
 
   return { list, nextId, doneCount, totalCount, addTodo, addTodoAsync, toggleDone, removeTodo }
@@ -132,10 +132,11 @@ function addLog(msg: string) {
     <section class="card">
       <h2>3.1 定义同步与异步 Actions</h2>
       <p>
-        Setup Store 中 action 就是普通函数，<strong>async/await</strong> 定义异步 action。
-        Pinia 中 action 可以直接修改 state，无需 mutations。
+        Setup Store 中 action 就是普通函数，<strong>async/await</strong> 定义异步 action。 Pinia 中 action 可以直接修改
+        state，无需 mutations。
       </p>
-      <pre class="code-block">export const useTodoStore = defineStore('todo', () => {
+      <pre class="code-block">
+export const useTodoStore = defineStore('todo', () => {
   const list = ref([...])
 
   // 同步 action
@@ -161,7 +162,8 @@ function addLog(msg: string) {
   }
 
   return { list, addTodo, fetchTodos, createTodo }
-})</pre>
+})</pre
+      >
       <div class="tip-box">
         <strong>注意事项：</strong>
         <ul>
@@ -178,7 +180,8 @@ function addLog(msg: string) {
       <p>
         <code>$onAction</code> 可以在任意 action 调用前后执行回调，支持 <code>after</code>、<code>onError</code> 钩子。
       </p>
-      <pre class="code-block">const unsubscribe = store.$onAction(({ name, store, args, after, onError }) => {
+      <pre class="code-block">
+const unsubscribe = store.$onAction(({ name, store, args, after, onError }) => {
   console.log(`Action "${name}" 开始执行，参数:`, args)
 
   after((result) => {
@@ -191,7 +194,8 @@ function addLog(msg: string) {
 })
 
 // 停止监听
-unsubscribe()</pre>
+unsubscribe()</pre
+      >
     </section>
 
     <!-- 3.3 待办事项演示 -->
@@ -200,11 +204,9 @@ unsubscribe()</pre>
 
       <!-- 进度条 -->
       <div class="progress-bar-wrap">
-        <div class="progress-bar" :style="{ width: totalCount ? (doneCount / totalCount * 100) + '%' : '0%' }" />
+        <div class="progress-bar" :style="{ width: totalCount ? (doneCount / totalCount) * 100 + '%' : '0%' }" />
       </div>
-      <p style="font-size: 13px; color: #999; margin: 0 0 12px">
-        已完成 {{ doneCount }} / {{ totalCount }}
-      </p>
+      <p style="font-size: 13px; color: #999; margin: 0 0 12px">已完成 {{ doneCount }} / {{ totalCount }}</p>
 
       <!-- 添加 -->
       <div style="display: flex; gap: 8px; margin-bottom: 16px">
@@ -227,8 +229,10 @@ unsubscribe()</pre>
       >
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'done'">
-            <span :style="{ color: record.done ? '#52c41a' : '#d9d9d9', fontSize: '18px', cursor: 'pointer' }"
-                  @click="handleToggle(record.id)">
+            <span
+              :style="{ color: record.done ? '#52c41a' : '#d9d9d9', fontSize: '18px', cursor: 'pointer' }"
+              @click="handleToggle(record.id)"
+            >
               {{ record.done ? '✅' : '⬜' }}
             </span>
           </template>
@@ -247,9 +251,7 @@ unsubscribe()</pre>
           {{ actionWatcher ? '监听中' : '已关闭' }}
         </a-button>
       </div>
-      <div v-if="actionLog.length === 0" style="color: #999; font-size: 13px">
-        操作待办事项查看 $onAction 日志...
-      </div>
+      <div v-if="actionLog.length === 0" style="color: #999; font-size: 13px">操作待办事项查看 $onAction 日志...</div>
       <div v-else>
         <div v-for="(item, i) in actionLog" :key="i" class="log-item">
           <span class="log-num">{{ i + 1 }}</span>

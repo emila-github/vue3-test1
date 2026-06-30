@@ -20,9 +20,7 @@ const displayLikes = computed(() => `${props.likes} 人喜欢`)
 const localCount = ref(props.likes)
 
 // 在模板中验证 status
-const statusLabel = computed(() =>
-  props.status === 'active' ? '✅ 激活' : '⛔ 未激活'
-)
+const statusLabel = computed(() => (props.status === 'active' ? '✅ 激活' : '⛔ 未激活'))
 </script>
 
 <template>

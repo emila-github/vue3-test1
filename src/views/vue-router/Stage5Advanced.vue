@@ -109,9 +109,7 @@ function demoRedirect() {
     <!-- 5.1 路由元信息 -->
     <section class="card">
       <h2>5.1 路由元信息（meta）</h2>
-      <p>
-        <code>meta</code> 是路由配置中的自定义数据字段，常用于存储权限、标题、图标等附加信息。
-      </p>
+      <p><code>meta</code> 是路由配置中的自定义数据字段，常用于存储权限、标题、图标等附加信息。</p>
       <pre class="code-block">{{ metaCode }}</pre>
     </section>
 
@@ -141,7 +139,8 @@ function demoRedirect() {
     <section class="card">
       <h2>5.4 路由过渡动画</h2>
       <p>使用 Vue 的 <code>&lt;Transition&gt;</code> 包裹 <code>&lt;RouterView&gt;</code> 实现页面切换动画。</p>
-      <pre class="code-block">&lt;RouterView v-slot="{{ '{' }} Component, route {{ '}' }}"&gt;
+      <pre class="code-block">
+&lt;RouterView v-slot="{{ '{' }} Component, route {{ '}' }}"&gt;
   &lt;Transition :name="route.meta.transition || 'fade'"&gt;
     &lt;component :is="Component" /&gt;
   &lt;/Transition&gt;
@@ -153,7 +152,8 @@ function demoRedirect() {
 }
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
-}</pre>
+}</pre
+      >
     </section>
 
     <!-- 5.5 动态路由 -->
@@ -166,12 +166,7 @@ function demoRedirect() {
         <a-space>
           <a-button @click="addDynamicRoute">添加根路由</a-button>
           <a-button @click="addNestedDynamic">添加子路由</a-button>
-          <a-button
-            v-for="(p, i) in dynamicRoutes"
-            :key="p"
-            size="small"
-            @click="goToDynamic(i)"
-          >
+          <a-button v-for="(p, i) in dynamicRoutes" :key="p" size="small" @click="goToDynamic(i)">
             访问 {{ p }}
           </a-button>
         </a-space>
@@ -180,7 +175,8 @@ function demoRedirect() {
         </div>
       </div>
 
-      <pre class="code-block" style="margin-top: 12px">// 添加顶级路由
+      <pre class="code-block" style="margin-top: 12px">
+// 添加顶级路由
 router.addRoute({ path: '/new-page', component: NewPage })
 
 // 添加子路由（第二个参数是父路由 name）
@@ -196,7 +192,8 @@ router.removeRoute('route-name')
 router.hasRoute('route-name')  // boolean
 
 // 获取所有路由
-router.getRoutes()  // RouteRecordNormalized[]</pre>
+router.getRoutes()  // RouteRecordNormalized[]</pre
+      >
     </section>
 
     <!-- 5.6 导航故障处理 -->
@@ -211,7 +208,8 @@ router.getRoutes()  // RouteRecordNormalized[]</pre>
         </a-space>
       </div>
 
-      <pre class="code-block" style="margin-top: 12px">import { isNavigationFailure, NavigationFailureType } from 'vue-router'
+      <pre class="code-block" style="margin-top: 12px">
+import { isNavigationFailure, NavigationFailureType } from 'vue-router'
 
 try {
   await router.push('/admin')
@@ -223,7 +221,8 @@ try {
   } else {
     // 其他错误
   }
-}</pre>
+}</pre
+      >
     </section>
   </div>
 </template>

@@ -63,10 +63,21 @@ button {
   font-size: 14px;
 }
 
-button:hover { border-color: #722ed1; color: #722ed1; }
+button:hover {
+  border-color: #722ed1;
+  color: #722ed1;
+}
 
-.btn-submit { background: #f9f0ff; border-color: #d3adf7; color: #722ed1; }
-.btn-cancel { background: #fff1f0; border-color: #ffa39e; color: #ff4d4f; }
+.btn-submit {
+  background: #f9f0ff;
+  border-color: #d3adf7;
+  color: #722ed1;
+}
+.btn-cancel {
+  background: #fff1f0;
+  border-color: #ffa39e;
+  color: #ff4d4f;
+}
 
 .count {
   font-weight: bold;

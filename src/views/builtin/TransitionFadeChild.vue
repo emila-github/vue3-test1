@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="fade-box">
@@ -17,6 +16,12 @@
   text-align: center;
   color: #1890ff;
 }
-.fade-box p { margin: 0 0 4px; font-size: 16px; font-weight: bold; }
-.fade-box span { font-size: 13px; }
+.fade-box p {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.fade-box span {
+  font-size: 13px;
+}
 </style>

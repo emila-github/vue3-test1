@@ -92,7 +92,7 @@ const cliOptions = ref([
           </template>
         </template>
       </a-table>
-      <div class="tip-box" style="margin-top: 12px;">
+      <div class="tip-box" style="margin-top: 12px">
         <strong>💡 提示</strong>：本项目已配置完成，可以直接运行 <code>pnpm lint:eslint</code> 体验效果。
       </div>
     </section>
@@ -129,8 +129,8 @@ const b = 2;
 const sum = a + b;</code></pre>
         </div>
       </div>
-      <div class="info-box" style="margin-top: 12px;">
-        <strong>可自动修复的规则类型</strong>：分号、缩进、引号、逗号、空格、换行等格式类规则。<br>
+      <div class="info-box" style="margin-top: 12px">
+        <strong>可自动修复的规则类型</strong>：分号、缩进、引号、逗号、空格、换行等格式类规则。<br />
         逻辑类规则（如 <code>no-unused-vars</code>）无法自动修复，需要手动处理。
       </div>
     </section>

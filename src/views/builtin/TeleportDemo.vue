@@ -51,9 +51,7 @@ function showToast(type: string) {
         </div>
       </Teleport>
 
-      <p class="hint">
-        打开开发者工具查看 DOM — 模态框在 &lt;body&gt; 下，不在当前组件内
-      </p>
+      <p class="hint">打开开发者工具查看 DOM — 模态框在 &lt;body&gt; 下，不在当前组件内</p>
     </section>
 
     <!-- 2. Toast 通知 -->
@@ -69,11 +67,7 @@ function showToast(type: string) {
       <!-- 多个 Teleport 到同一目标 -->
       <Teleport to="#toast-container">
         <TransitionGroup name="toast" tag="div" class="toast-list">
-          <div
-            v-for="toast in toasts"
-            :key="toast.id"
-            :class="`toast-item toast-${toast.type}`"
-          >
+          <div v-for="toast in toasts" :key="toast.id" :class="`toast-item toast-${toast.type}`">
             {{ toast.message }}
           </div>
         </TransitionGroup>
@@ -85,9 +79,11 @@ function showToast(type: string) {
     <!-- 3. :disabled 属性 -->
     <section class="demo-section">
       <h2>3. :disabled 属性</h2>
-      <pre class="code-hint">&lt;Teleport to="body" :disabled="isMobile"&gt;
+      <pre class="code-hint">
+&lt;Teleport to="body" :disabled="isMobile"&gt;
   &lt;Modal v-if="show" /&gt;
-&lt;/Teleport&gt;</pre>
+&lt;/Teleport&gt;</pre
+      >
       <p class="hint">disabled 为 true 时，内容将在原位置渲染，不传送</p>
     </section>
   </div>
@@ -204,13 +200,18 @@ function showToast(type: string) {
   background: #fff;
 }
 
-.btn-cancel:hover { border-color: #999; color: #999; }
+.btn-cancel:hover {
+  border-color: #999;
+  color: #999;
+}
 .btn-ok {
   background: #fa8c16 !important;
   color: #fff !important;
   border-color: #fa8c16 !important;
 }
-.btn-ok:hover { opacity: 0.85; }
+.btn-ok:hover {
+  opacity: 0.85;
+}
 
 /* Toast */
 .toast-btns {
@@ -230,10 +231,26 @@ function showToast(type: string) {
   transition: all 0.2s;
 }
 
-.toast-success:hover { border-color: #52c41a; color: #52c41a; background: #f6ffed; }
-.toast-error:hover { border-color: #f5222d; color: #f5222d; background: #fff2f0; }
-.toast-warning:hover { border-color: #faad14; color: #faad14; background: #fffbe6; }
-.toast-info:hover { border-color: #1890ff; color: #1890ff; background: #e6f7ff; }
+.toast-success:hover {
+  border-color: #52c41a;
+  color: #52c41a;
+  background: #f6ffed;
+}
+.toast-error:hover {
+  border-color: #f5222d;
+  color: #f5222d;
+  background: #fff2f0;
+}
+.toast-warning:hover {
+  border-color: #faad14;
+  color: #faad14;
+  background: #fffbe6;
+}
+.toast-info:hover {
+  border-color: #1890ff;
+  color: #1890ff;
+  background: #e6f7ff;
+}
 
 /* Toast 列表（在 #toast-container 中渲染） */
 .toast-list {
@@ -255,10 +272,18 @@ function showToast(type: string) {
   min-width: 200px;
 }
 
-.toast-success { background: #52c41a; }
-.toast-error { background: #f5222d; }
-.toast-warning { background: #faad14; }
-.toast-info { background: #1890ff; }
+.toast-success {
+  background: #52c41a;
+}
+.toast-error {
+  background: #f5222d;
+}
+.toast-warning {
+  background: #faad14;
+}
+.toast-info {
+  background: #1890ff;
+}
 </style>
 
 <!-- Toast 动画 -->

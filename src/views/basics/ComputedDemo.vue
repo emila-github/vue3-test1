@@ -148,9 +148,7 @@ const cart = ref([
   { name: '商品A', price: 100, count: 2 },
   { name: '商品B', price: 200, count: 1 },
 ])
-const totalPrice = computed(() =>
-  cart.value.reduce((sum, item) => sum + item.price * item.count, 0),
-)
+const totalPrice = computed(() => cart.value.reduce((sum, item) => sum + item.price * item.count, 0))
 
 const cartCode = `// computed 实现购物车总价自动计算
 const cart = ref([
@@ -195,7 +193,8 @@ const isPasswordValid = computed(() =>
       <h2>📖 什么是计算属性？为什么用它？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong><code>computed</code> 是<em>声明式的派生状态</em>——你只需要描述"这个值怎么算出来的"，Vue 负责追踪依赖和缓存。
+          <strong>一句话解释：</strong
+          ><code>computed</code> 是<em>声明式的派生状态</em>——你只需要描述"这个值怎么算出来的"，Vue 负责追踪依赖和缓存。
         </p>
 
         <h3>不用 computed 的痛苦 😫</h3>
@@ -205,13 +204,15 @@ let total = 0
 function updateTotal() {
   total = price * quantity * discount  // 每次改 price/quantity/discount 都要调用！
 }
-updateTotal()  // 忘了调用 → 数据不一致 → bug！</pre>
+updateTotal()  // 忘了调用 → 数据不一致 → bug！</pre
+        >
 
         <h3>用了 computed 之后 😎</h3>
         <pre class="code-block">
 // 声明式：描述计算关系即可，Vue 自动维护
 const total = computed(() => price.value * quantity.value * discount.value)
-// total 自动与 price、quantity、discount 保持同步！</pre>
+// total 自动与 price、quantity、discount 保持同步！</pre
+        >
 
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
@@ -236,8 +237,12 @@ const total = computed(() => price.value * quantity.value * discount.value)
       <pre class="code-block">{{ basicComputedCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">姓</span> = <code>{{ firstName }}</code></p>
-          <p><span class="label">名</span> = <code>{{ lastName }}</code></p>
+          <p>
+            <span class="label">姓</span> = <code>{{ firstName }}</code>
+          </p>
+          <p>
+            <span class="label">名</span> = <code>{{ lastName }}</code>
+          </p>
           <p class="highlight-result">
             <span class="label">全名</span> = <code>{{ fullName }}</code>
             <span class="type-hint">// 自动派生</span>
@@ -249,8 +254,7 @@ const total = computed(() => price.value * quantity.value * discount.value)
         </div>
       </div>
       <p class="hint">
-        💡 <code>fullName</code> 只依赖 <code>firstName</code> 和 <code>lastName</code>，
-        这两个值不变就不会重新计算。
+        💡 <code>fullName</code> 只依赖 <code>firstName</code> 和 <code>lastName</code>， 这两个值不变就不会重新计算。
       </p>
     </section>
 
@@ -263,19 +267,23 @@ const total = computed(() => price.value * quantity.value * discount.value)
       <pre class="code-block">{{ writableComputedCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">姓</span> = <code>{{ first }}</code></p>
-          <p><span class="label">名</span> = <code>{{ last }}</code></p>
+          <p>
+            <span class="label">姓</span> = <code>{{ first }}</code>
+          </p>
+          <p>
+            <span class="label">名</span> = <code>{{ last }}</code>
+          </p>
           <p class="highlight-result">
             <span class="label">全名（可写）</span> = <code>{{ writableFullName }}</code>
           </p>
         </div>
         <div class="action-box">
-          <label class="input-label">修改全名：<input v-model="writableFullName" class="demo-input" placeholder="输入 '李 四' 试试" /></label>
+          <label class="input-label"
+            >修改全名：<input v-model="writableFullName" class="demo-input" placeholder="输入 '李 四' 试试"
+          /></label>
         </div>
       </div>
-      <p class="hint">
-        💡 输入 "李 四" 并回车：姓变成"李"，名变成"四"——这就是 setter 的反向拆解逻辑。
-      </p>
+      <p class="hint">💡 输入 "李 四" 并回车：姓变成"李"，名变成"四"——这就是 setter 的反向拆解逻辑。</p>
     </section>
 
     <!-- 3. 计算属性 vs 方法 -->
@@ -288,26 +296,37 @@ const total = computed(() => price.value * quantity.value * discount.value)
       <pre class="code-block">{{ vsMethodCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">计数 counter</span> = <code>{{ counter }}</code></p>
+          <p>
+            <span class="label">计数 counter</span> = <code>{{ counter }}</code>
+          </p>
           <p>
             <span class="label">computed 调用次数</span> = <code>{{ computedCallCount }}</code>
             <span class="type-hint">（多次访问只算一次）</span>
           </p>
-          <p><span class="label">computed 结果</span> = <code>{{ computedMsg }}</code></p>
-          <p><span class="label">computed 再次访问</span> = <code>{{ computedMsg }}</code></p>
+          <p>
+            <span class="label">computed 结果</span> = <code>{{ computedMsg }}</code>
+          </p>
+          <p>
+            <span class="label">computed 再次访问</span> = <code>{{ computedMsg }}</code>
+          </p>
           <p>
             <span class="label">方法调用次数</span> = <code>{{ methodCallCount }}</code>
             <span class="type-hint">（每次访问都重新算）</span>
           </p>
-          <p><span class="label">方法结果</span> = <code>{{ getMsg() }}</code></p>
-          <p><span class="label">方法再次调用</span> = <code>{{ getMsg() }}</code></p>
+          <p>
+            <span class="label">方法结果</span> = <code>{{ getMsg() }}</code>
+          </p>
+          <p>
+            <span class="label">方法再次调用</span> = <code>{{ getMsg() }}</code>
+          </p>
         </div>
         <div class="action-box">
           <button @click="counter++" class="demo-btn">counter++</button>
         </div>
       </div>
       <p class="hint">
-        💡 注意看：模板中访问了两次 <code>computedMsg</code>，但只调用 1 次；访问两次 <code>getMsg()</code>，却调用了 2 次！
+        💡 注意看：模板中访问了两次 <code>computedMsg</code>，但只调用 1 次；访问两次 <code>getMsg()</code>，却调用了 2
+        次！
       </p>
     </section>
 
@@ -320,7 +339,9 @@ const total = computed(() => price.value * quantity.value * discount.value)
       <pre class="code-block">{{ filterCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">搜索关键词</span> = <code>"{{ keyword }}"</code></p>
+          <p>
+            <span class="label">搜索关键词</span> = <code>"{{ keyword }}"</code>
+          </p>
           <ul class="result-list" v-if="filteredList.length">
             <li v-for="item in filteredList" :key="item">{{ item }}</li>
           </ul>
@@ -335,9 +356,7 @@ const total = computed(() => price.value * quantity.value * discount.value)
     <!-- 5. 购物车 -->
     <section class="demo-section">
       <h2>5. 购物车总价 — 多依赖计算</h2>
-      <p class="section-desc">
-        购物车中任何商品的价格、数量变化，总价自动重新计算。
-      </p>
+      <p class="section-desc">购物车中任何商品的价格、数量变化，总价自动重新计算。</p>
       <pre class="code-block">{{ cartCode }}</pre>
       <div class="result-box">
         <ul class="result-list">
@@ -356,9 +375,7 @@ const total = computed(() => price.value * quantity.value * discount.value)
     <!-- 6. 表单验证 -->
     <section class="demo-section">
       <h2>6. 表单验证 — 实时反馈</h2>
-      <p class="section-desc">
-        每输入一个字符，<code>isPasswordValid</code> 自动重新验证——无需手动调用验证函数。
-      </p>
+      <p class="section-desc">每输入一个字符，<code>isPasswordValid</code> 自动重新验证——无需手动调用验证函数。</p>
       <pre class="code-block">{{ validationCode }}</pre>
       <div class="demo-row">
         <div class="result-box">

@@ -98,7 +98,10 @@ const configItems = ref([
 ])
 
 const beforeAfter = ref([
-  { before: `const   obj =   {name:"foo",age:18 ,  gender:"male" }`, after: `const obj = { name: 'foo', age: 18, gender: 'male' }` },
+  {
+    before: `const   obj =   {name:"foo",age:18 ,  gender:"male" }`,
+    after: `const obj = { name: 'foo', age: 18, gender: 'male' }`,
+  },
   { before: `function  hello(  x , y ){return x+y}`, after: `function hello(x, y) { return x + y }` },
   { before: `if( x ){ doSomething ( ) }`, after: `if (x) { doSomething() }` },
   { before: `import { A ,B , C} from "foo"`, after: `import { A, B, C } from 'foo'` },
@@ -116,7 +119,9 @@ const beforeAfter = ref([
     <section class="card">
       <h2>配置文件总览</h2>
       <p class="desc">
-        Prettier 支持多种配置文件格式：<code>.prettierrc</code>（JSON/YAML）、<code>.prettierrc.json</code>、<code>prettier.config.js</code>、或在 <code>package.json</code> 中通过 <code>"prettier"</code> 字段配置。
+        Prettier
+        支持多种配置文件格式：<code>.prettierrc</code>（JSON/YAML）、<code>.prettierrc.json</code>、<code>prettier.config.js</code>、或在
+        <code>package.json</code> 中通过 <code>"prettier"</code> 字段配置。
       </p>
       <div class="code-block">
         <pre><code>// .prettierrc.json (本项目)
@@ -128,7 +133,8 @@ const beforeAfter = ref([
 }</code></pre>
       </div>
       <p class="note">
-        <code>$schema</code> 提供 IDE 自动补全和校验，指向 <a :href="schemaUrl" target="_blank">{{ schemaUrl }}</a>。
+        <code>$schema</code> 提供 IDE 自动补全和校验，指向 <a :href="schemaUrl" target="_blank">{{ schemaUrl }}</a
+        >。
       </p>
     </section>
 
@@ -174,7 +180,8 @@ const beforeAfter = ref([
 
       <h3>printWidth — 控制行宽</h3>
       <p class="desc">
-        Prettier 会尽量让每行不超过 <code>printWidth</code> 个字符。但有些内容如长字符串、注释中的 URL 不会被硬换行。建议设为 80-120，本项目设为 <strong>120</strong>。
+        Prettier 会尽量让每行不超过 <code>printWidth</code> 个字符。但有些内容如长字符串、注释中的 URL
+        不会被硬换行。建议设为 80-120，本项目设为 <strong>120</strong>。
       </p>
 
       <h3>semi / singleQuote — 风格控制</h3>
@@ -191,7 +198,8 @@ const beforeAfter = ref([
 
       <h3>endOfLine — 换行符</h3>
       <p class="desc">
-        默认 <code>lf</code>（\n，Unix/Mac）。Windows 下建议设为 <code>auto</code> 让 Prettier 自动判断当前操作系统的换行符，避免 Git 提交时产生大量差异。
+        默认 <code>lf</code>（\n，Unix/Mac）。Windows 下建议设为 <code>auto</code> 让 Prettier
+        自动判断当前操作系统的换行符，避免 Git 提交时产生大量差异。
       </p>
     </section>
   </div>
@@ -239,7 +247,8 @@ const beforeAfter = ref([
   line-height: 1.8;
   margin: 0 0 12px;
 }
-.desc code, .desc strong {
+.desc code,
+.desc strong {
   background: #f0f0f0;
   padding: 1px 6px;
   border-radius: 3px;

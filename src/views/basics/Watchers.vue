@@ -179,9 +179,7 @@ watchEffect(() => {
     <section class="demo-section intro-section">
       <h2>📖 什么是侦听器？什么时候用它？</h2>
       <div class="explain-box">
-        <p>
-          <strong>一句话解释：</strong>侦听器让你在<em>数据变化时自动执行操作</em>（如发请求、存数据、操作 DOM）。
-        </p>
+        <p><strong>一句话解释：</strong>侦听器让你在<em>数据变化时自动执行操作</em>（如发请求、存数据、操作 DOM）。</p>
 
         <h3>为什么需要侦听器？🤔</h3>
         <pre class="code-block">
@@ -198,7 +196,8 @@ watch(keyword, (val) => {
   searchAPI(val)       // 自动执行！
   saveToLocal(val)     // 自动执行！
   updateLog(val)       // 自动执行！
-})</pre>
+})</pre
+        >
 
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
@@ -215,14 +214,16 @@ watch(keyword, (val) => {
     <!-- 1. watch() 基本用法 -->
     <section class="demo-section">
       <h2>1. watch() — 搜索示例</h2>
-      <p class="section-desc">
-        输入关键词 → <code>watch</code> 自动执行过滤逻辑 → 结果列表自动更新。
-      </p>
+      <p class="section-desc">输入关键词 → <code>watch</code> 自动执行过滤逻辑 → 结果列表自动更新。</p>
       <pre class="code-block">{{ watchBasicCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">关键词</span> = <code>"{{ keyword }}"</code></p>
-          <p><span class="label">匹配结果</span> = <code>{{ results.length }} 条</code></p>
+          <p>
+            <span class="label">关键词</span> = <code>"{{ keyword }}"</code>
+          </p>
+          <p>
+            <span class="label">匹配结果</span> = <code>{{ results.length }} 条</code>
+          </p>
           <ul class="result-list" v-if="results.length">
             <li v-for="item in results" :key="item">{{ item }}</li>
           </ul>
@@ -232,22 +233,22 @@ watch(keyword, (val) => {
           <input v-model="keyword" class="demo-input" placeholder="搜索水果..." />
         </div>
       </div>
-      <p class="hint">
-        💡 打开控制台可以看到新旧值对比日志。
-      </p>
+      <p class="hint">💡 打开控制台可以看到新旧值对比日志。</p>
     </section>
 
     <!-- 2. 监听多个数据源 -->
     <section class="demo-section">
       <h2>2. 监听多个数据源</h2>
-      <p class="section-desc">
-        同时监听姓和名，任一变化都会触发回调——新旧值以数组形式提供。
-      </p>
+      <p class="section-desc">同时监听姓和名，任一变化都会触发回调——新旧值以数组形式提供。</p>
       <pre class="code-block">{{ multiWatchCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">姓</span> = <code>{{ firstName }}</code></p>
-          <p><span class="label">名</span> = <code>{{ lastName }}</code></p>
+          <p>
+            <span class="label">姓</span> = <code>{{ firstName }}</code>
+          </p>
+          <p>
+            <span class="label">名</span> = <code>{{ lastName }}</code>
+          </p>
           <p class="highlight-result">
             <span class="label">全名</span> = <code>{{ firstName }} {{ lastName }}</code>
           </p>
@@ -266,9 +267,7 @@ watch(keyword, (val) => {
     <!-- 3. watchEffect() -->
     <section class="demo-section">
       <h2>3. watchEffect() — 自动追踪</h2>
-      <p class="section-desc">
-        不用指定侦听谁，函数里用了谁就自动侦听谁。立即执行一次，之后依赖变化再执行。
-      </p>
+      <p class="section-desc">不用指定侦听谁，函数里用了谁就自动侦听谁。立即执行一次，之后依赖变化再执行。</p>
       <pre class="code-block">{{ watchEffectCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
@@ -280,9 +279,7 @@ watch(keyword, (val) => {
           <button @click="effectCount++" class="demo-btn">effectCount++</button>
         </div>
       </div>
-      <p class="hint">
-        💡 <code>watchEffect</code> 初始化时立即执行了一次（第 1 次），每次点击按钮会再执行。
-      </p>
+      <p class="hint">💡 <code>watchEffect</code> 初始化时立即执行了一次（第 1 次），每次点击按钮会再执行。</p>
     </section>
 
     <!-- 4. 监听 reactive 对象 -->
@@ -294,12 +291,18 @@ watch(keyword, (val) => {
       <pre class="code-block">{{ reactiveWatchCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">state.count</span> = <code>{{ state.count }}</code></p>
-          <p><span class="label">state.name</span> = <code>{{ state.name }}</code></p>
+          <p>
+            <span class="label">state.count</span> = <code>{{ state.count }}</code>
+          </p>
+          <p>
+            <span class="label">state.name</span> = <code>{{ state.name }}</code>
+          </p>
         </div>
         <div class="action-box">
           <button @click="state.count++" class="demo-btn">state.count++</button>
-          <button @click="state.name = state.name === 'test' ? 'hello' : 'test'" class="demo-btn">切换 state.name</button>
+          <button @click="state.name = state.name === 'test' ? 'hello' : 'test'" class="demo-btn">
+            切换 state.name
+          </button>
         </div>
       </div>
       <p class="hint">

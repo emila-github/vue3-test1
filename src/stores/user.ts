@@ -37,14 +37,14 @@ export const useUserStore = defineStore('user', () => {
   // --- 计算属性 ---
 
   const totalCount = computed(() => users.value.length)
-  const activeCount = computed(() => users.value.filter(u => u.status === 'active').length)
-  const inactiveCount = computed(() => users.value.filter(u => u.status === 'inactive').length)
+  const activeCount = computed(() => users.value.filter((u) => u.status === 'active').length)
+  const inactiveCount = computed(() => users.value.filter((u) => u.status === 'inactive').length)
 
   // --- 增删改查 ---
 
   /** 根据 ID 查找用户 */
   function findById(id: number): User | undefined {
-    return users.value.find(u => u.id === id)
+    return users.value.find((u) => u.id === id)
   }
 
   /** 添加用户 */
@@ -63,7 +63,7 @@ export const useUserStore = defineStore('user', () => {
 
   /** 更新用户 */
   function updateUser(id: number, form: UserFormData): boolean {
-    const existing = users.value.find(u => u.id === id)
+    const existing = users.value.find((u) => u.id === id)
     if (!existing) return false
     existing.name = form.name
     existing.email = form.email
@@ -74,7 +74,7 @@ export const useUserStore = defineStore('user', () => {
 
   /** 删除用户 */
   function deleteUser(id: number): boolean {
-    const index = users.value.findIndex(u => u.id === id)
+    const index = users.value.findIndex((u) => u.id === id)
     if (index === -1) return false
     users.value.splice(index, 1)
     return true
@@ -83,13 +83,13 @@ export const useUserStore = defineStore('user', () => {
   /** 批量删除 */
   function deleteUsers(ids: number[]): number {
     const before = users.value.length
-    users.value = users.value.filter(u => !ids.includes(u.id))
+    users.value = users.value.filter((u) => !ids.includes(u.id))
     return before - users.value.length
   }
 
   /** 切换用户状态 */
   function toggleStatus(id: number): boolean {
-    const user = users.value.find(u => u.id === id)
+    const user = users.value.find((u) => u.id === id)
     if (!user) return false
     user.status = user.status === 'active' ? 'inactive' : 'active'
     return true
@@ -100,10 +100,8 @@ export const useUserStore = defineStore('user', () => {
     const kw = keyword.toLowerCase().trim()
     if (!kw) return users.value
     return users.value.filter(
-      u =>
-        u.name.toLowerCase().includes(kw) ||
-        u.email.toLowerCase().includes(kw) ||
-        u.role.toLowerCase().includes(kw),
+      (u) =>
+        u.name.toLowerCase().includes(kw) || u.email.toLowerCase().includes(kw) || u.role.toLowerCase().includes(kw),
     )
   }
 

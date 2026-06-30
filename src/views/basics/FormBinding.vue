@@ -84,7 +84,8 @@ const modifierCode = `// v-model 修饰符
       <h2>📖 什么是表单绑定？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong><code>v-model</code> 让<em>表单元素的值和 JS 数据自动同步</em>，输入即更新，更新即显示。
+          <strong>一句话解释：</strong><code>v-model</code> 让<em>表单元素的值和 JS 数据自动同步</em
+          >，输入即更新，更新即显示。
         </p>
 
         <div class="key-points">
@@ -92,7 +93,10 @@ const modifierCode = `// v-model 修饰符
           <ul>
             <li><code>v-model</code> 本质是 <code>:value</code> + <code>@input</code> 的语法糖</li>
             <li>不同表单元素有不同绑定规则：文本→字符串，复选框→布尔/数组</li>
-            <li><strong>修饰符</strong>：<code>.lazy</code> 延迟更新、<code>.number</code> 转数字、<code>.trim</code> 去空格</li>
+            <li>
+              <strong>修饰符</strong>：<code>.lazy</code> 延迟更新、<code>.number</code> 转数字、<code>.trim</code>
+              去空格
+            </li>
             <li><code>v-model</code> 只能用于表单元素，不能用于普通 div</li>
           </ul>
         </div>
@@ -102,9 +106,7 @@ const modifierCode = `// v-model 修饰符
     <!-- 1. 基本表单 -->
     <section class="demo-section">
       <h2>1. 基本表单元素 — v-model 双向绑定</h2>
-      <p class="section-desc">
-        输入即更新——右边实时显示绑定的数据值。
-      </p>
+      <p class="section-desc">输入即更新——右边实时显示绑定的数据值。</p>
       <pre class="code-block">{{ vModelCode }}</pre>
 
       <div class="form-grid">
@@ -169,9 +171,7 @@ const modifierCode = `// v-model 修饰符
     <!-- 2. 修饰符 -->
     <section class="demo-section">
       <h2>2. v-model 修饰符</h2>
-      <p class="section-desc">
-        <code>.lazy</code> 延迟更新、<code>.number</code> 转数字、<code>.trim</code> 去空格。
-      </p>
+      <p class="section-desc"><code>.lazy</code> 延迟更新、<code>.number</code> 转数字、<code>.trim</code> 去空格。</p>
       <pre class="code-block">{{ modifierCode }}</pre>
 
       <div class="form-grid">

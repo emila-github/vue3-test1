@@ -154,26 +154,100 @@ export default defineConfig({
 </template>
 
 <style scoped>
-.stage-page { max-width: 960px; margin: 0 auto; padding: 24px; }
-.page-header { text-align: center; margin-bottom: 28px; }
-.page-header h1 { font-size: 26px; color: #1a1a1a; margin: 0 0 6px; }
-.page-header p { color: #666; font-size: 14px; }
+.stage-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.page-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.page-header h1 {
+  font-size: 26px;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+}
+.page-header p {
+  color: #666;
+  font-size: 14px;
+}
 
-.card { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-.card h2 { margin: 0 0 12px; font-size: 18px; color: #333; }
-.card h3 { margin: 16px 0 8px; font-size: 15px; color: #555; }
-.desc { color: #666; font-size: 14px; margin-bottom: 12px; }
-.desc code { background: #f0f0f0; padding: 1px 6px; border-radius: 3px; font-size: 13px; }
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: #333;
+}
+.card h3 {
+  margin: 16px 0 8px;
+  font-size: 15px;
+  color: #555;
+}
+.desc {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.desc code {
+  background: #f0f0f0;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}
 
-.code-block { background: #1a1a1a; color: #e6e6e6; padding: 16px 20px; border-radius: 8px; font-size: 13px; line-height: 1.7; margin: 0; overflow-x: auto; white-space: pre; }
-.code-block code { font-family: 'Fira Code', 'Consolas', monospace; }
+.code-block {
+  background: #1a1a1a;
+  color: #e6e6e6;
+  padding: 16px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+  overflow-x: auto;
+  white-space: pre;
+}
+.code-block code {
+  font-family: 'Fira Code', 'Consolas', monospace;
+}
 
-.mt-12 { margin-top: 12px; }
+.mt-12 {
+  margin-top: 12px;
+}
 
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
 
-.highlight-box { background: #fffbe6; border: 1px solid #ffe58f; border-radius: 8px; padding: 14px; margin-top: 12px; }
-.highlight-box p { margin: 4px 0; font-size: 13px; color: #ad6800; }
-.highlight-box code { background: #fff1b8; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+.highlight-box {
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 8px;
+  padding: 14px;
+  margin-top: 12px;
+}
+.highlight-box p {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #ad6800;
+}
+.highlight-box code {
+  background: #fff1b8;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+}
 </style>

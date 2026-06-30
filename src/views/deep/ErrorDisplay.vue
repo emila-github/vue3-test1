@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="error-display">
@@ -18,5 +17,8 @@
   color: #ff4d4f;
 }
 
-.hint { color: #999; font-size: 13px; }
+.hint {
+  color: #999;
+  font-size: 13px;
+}
 </style>

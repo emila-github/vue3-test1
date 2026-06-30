@@ -240,7 +240,9 @@ function navigateTo(path: string) {
   border-radius: 10px;
   padding: 20px 16px;
   cursor: pointer;
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
 }
 
 .stage-card:hover {

@@ -13,11 +13,13 @@ onDeactivated(() => {
 </script>
 
 <template>
-  <div class="tab-content-inner" style="background: #e6f7ff; border: 1px solid #91d5ff;">
-    <p style="color: #1890ff; margin: 0 0 8px; font-weight: bold;">Tab A — 蓝色区域</p>
-    <p>计数器: <strong>{{ count }}</strong></p>
+  <div class="tab-content-inner" style="background: #e6f7ff; border: 1px solid #91d5ff">
+    <p style="color: #1890ff; margin: 0 0 8px; font-weight: bold">Tab A — 蓝色区域</p>
+    <p>
+      计数器: <strong>{{ count }}</strong>
+    </p>
     <input v-model="count" type="number" class="mini-input" placeholder="输入数值" />
-    <p style="font-size: 12px; color: #999; margin: 8px 0 0;">切换 Tab 后计数器和输入值都会保留</p>
+    <p style="font-size: 12px; color: #999; margin: 8px 0 0">切换 Tab 后计数器和输入值都会保留</p>
   </div>
 </template>
 

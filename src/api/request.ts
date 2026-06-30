@@ -72,27 +72,15 @@ instance.interceptors.response.use(
 )
 
 // ==================== 便捷方法 ====================
-export function get<T = any>(
-  url: string,
-  params?: Record<string, any>,
-  config?: AxiosRequestConfig,
-): Promise<T> {
+export function get<T = any>(url: string, params?: Record<string, any>, config?: AxiosRequestConfig): Promise<T> {
   return instance.get(url, { params, ...config }) as any
 }
 
-export function post<T = any>(
-  url: string,
-  data?: Record<string, any>,
-  config?: AxiosRequestConfig,
-): Promise<T> {
+export function post<T = any>(url: string, data?: Record<string, any>, config?: AxiosRequestConfig): Promise<T> {
   return instance.post(url, data, config) as any
 }
 
-export function put<T = any>(
-  url: string,
-  data?: Record<string, any>,
-  config?: AxiosRequestConfig,
-): Promise<T> {
+export function put<T = any>(url: string, data?: Record<string, any>, config?: AxiosRequestConfig): Promise<T> {
   return instance.put(url, data, config) as any
 }
 

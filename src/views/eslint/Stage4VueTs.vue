@@ -86,7 +86,11 @@ const pkgScripts = ref([
 
 const faqList = ref([
   { q: 'Parsing error at template block', r: '未使用 vue-eslint-parser', a: '确保 eslint-plugin-vue 已引入' },
-  { q: 'Cannot find module tsconfig.json', r: 'parserOptions.project 路径错误', a: '检查 project 路径或使用 projectService' },
+  {
+    q: 'Cannot find module tsconfig.json',
+    r: 'parserOptions.project 路径错误',
+    a: '检查 project 路径或使用 projectService',
+  },
   { q: 'Rule not found: vue/...', r: '插件未导入', a: 'import pluginVue from eslint-plugin-vue' },
   { q: 'Expected linebreaks to be LF...', r: 'linebreak-style 与 git 冲突', a: '添加 * text=auto 到 .gitattributes' },
 ])
@@ -140,7 +144,7 @@ const faqList = ref([
         :pagination="false"
         size="small"
       />
-      <div class="info-box" style="margin-top: 12px;">
+      <div class="info-box" style="margin-top: 12px">
         <strong>lint vs format</strong>：<code>lint</code> 关注<strong>代码质量</strong>（语法错误、不良实践），
         <code>format</code> 关注<strong>代码风格</strong>（缩进、引号、换行）。两者互补不冲突。
       </div>

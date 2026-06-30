@@ -481,7 +481,8 @@ function moveAnimal(animal: any, distance: number) {
 function setAge(animal: any, age: number) {
   if (age &lt; 0) throw new Error('年龄不能为负')  // 每次都要写
   animal.age = age
-}</pre>
+}</pre
+        >
 
         <h3>有了类之后 😎</h3>
         <pre class="code-block">
@@ -508,7 +509,8 @@ class Animal {
 
 // 创建实例：一行代码，数据 + 行为都就绪
 const cat = new Animal('小花', 3)
-cat.move(10)  // "小花 移动了 10 米" ✅ 类型安全</pre>
+cat.move(10)  // "小花 移动了 10 米" ✅ 类型安全</pre
+        >
 
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
@@ -529,8 +531,7 @@ cat.move(10)  // "小花 移动了 10 米" ✅ 类型安全</pre>
       <h2 class="section-title">1. 基本类 <span class="badge">class</span></h2>
       <p class="section-desc">
         一个类包含 <strong>属性</strong>（数据）和 <strong>方法</strong>（行为）。
-        <code class="inline-code">constructor</code> 在
-        <code class="inline-code">new</code> 时自动执行，
+        <code class="inline-code">constructor</code> 在 <code class="inline-code">new</code> 时自动执行，
         <code class="inline-code">get/set</code> 让你像访问属性一样触发逻辑。
       </p>
       <pre class="code-block">{{ basicClassCode }}</pre>
@@ -587,8 +588,7 @@ cat.move(10)  // "小花 移动了 10 米" ✅ 类型安全</pre>
       <p class="section-desc">
         <code class="inline-code">extends</code> 让子类获得父类的所有属性和方法，
         还可以<strong>重写（override）</strong>父类方法实现多态。
-        <code class="inline-code">super()</code> 必须先调用，才能使用
-        <code class="inline-code">this</code>。
+        <code class="inline-code">super()</code> 必须先调用，才能使用 <code class="inline-code">this</code>。
       </p>
       <pre class="code-block">{{ extendsCode }}</pre>
 
@@ -619,8 +619,10 @@ cat.move(10)  // "小花 移动了 10 米" ✅ 类型安全</pre>
     <section class="demo-section">
       <h2 class="section-title">3. 抽象类 <span class="badge">abstract</span></h2>
       <p class="section-desc">
-        抽象类不能直接 <code class="inline-code">new</code>，它的作用是
-        <strong>定义子类必须遵守的模板</strong>。<code class="inline-code">abstract</code>
+        抽象类不能直接 <code class="inline-code">new</code>，它的作用是 <strong>定义子类必须遵守的模板</strong>。<code
+          class="inline-code"
+          >abstract</code
+        >
         方法没有函数体，子类<strong>必须实现</strong>。
       </p>
       <pre class="code-block">{{ abstractCode }}</pre>
@@ -686,12 +688,10 @@ cat.move(10)  // "小花 移动了 10 米" ✅ 类型安全</pre>
 
     <!-- ==================== 5. 访问修饰符 ==================== -->
     <section class="demo-section">
-      <h2 class="section-title">
-        5. 访问修饰符 <span class="badge">public/private/protected</span>
-      </h2>
+      <h2 class="section-title">5. 访问修饰符 <span class="badge">public/private/protected</span></h2>
       <p class="section-desc">
-        用<strong>真实的银行账户</strong>例子理解修饰符：余额不能让外界直接改（private）， 必须通过
-        deposit/withdraw 方法操作（封装）。这叫做<strong>"数据保护"</strong>。
+        用<strong>真实的银行账户</strong>例子理解修饰符：余额不能让外界直接改（private）， 必须通过 deposit/withdraw
+        方法操作（封装）。这叫做<strong>"数据保护"</strong>。
       </p>
       <pre class="code-block">{{ modifierCode }}</pre>
 
@@ -798,8 +798,7 @@ cat.move(10)  // "小花 移动了 10 米" ✅ 类型安全</pre>
       <h2 class="section-title">6. 静态成员 <span class="badge">static</span></h2>
       <p class="section-desc">
         <code class="inline-code">static</code> 成员<strong>属于类本身</strong>，不属于实例。不需要
-        <code class="inline-code">new</code> 就能调用。
-        适合放工具函数、常量、全局计数器等"和具体对象无关"的东西。
+        <code class="inline-code">new</code> 就能调用。 适合放工具函数、常量、全局计数器等"和具体对象无关"的东西。
       </p>
       <pre class="code-block">{{ staticCode }}</pre>
 
@@ -916,10 +915,13 @@ cat.move(10)  // "小花 移动了 10 米" ✅ 类型安全</pre>
         </tbody>
       </table>
 
-      <div class="hint-box" style="margin-top: 14px;">
+      <div class="hint-box" style="margin-top: 14px">
         <p>💡 <strong>记忆技巧：</strong></p>
-        <ul style="margin: 6px 0 0; padding-left: 20px; color: #555; font-size: 14px;">
-          <li><strong>extends vs implements：</strong>extends 是"是一个..."（继承身份），implements 是"能做什么..."（具备能力）</li>
+        <ul style="margin: 6px 0 0; padding-left: 20px; color: #555; font-size: 14px">
+          <li>
+            <strong>extends vs implements：</strong>extends 是"是一个..."（继承身份），implements
+            是"能做什么..."（具备能力）
+          </li>
           <li><strong>abstract vs interface：</strong>abstract 可以有实现代码，interface 只能定义结构</li>
           <li><strong>private vs #：</strong>private 是 TS 编译时检查，# 是 JS 原生硬私有</li>
           <li><strong>static vs 实例：</strong>实例属性每个对象一份，静态属性整个类共享一份</li>

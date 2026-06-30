@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="bounce-box">
@@ -17,6 +16,12 @@
   text-align: center;
   color: #52c41a;
 }
-.bounce-box p { margin: 0 0 4px; font-size: 16px; font-weight: bold; }
-.bounce-box span { font-size: 13px; }
+.bounce-box p {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.bounce-box span {
+  font-size: 13px;
+}
 </style>

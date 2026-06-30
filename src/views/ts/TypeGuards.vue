@@ -12,10 +12,7 @@ function processValue(value: string | number): string {
 const typeofResults = ref<string[]>([])
 
 function testTypeofGuard() {
-  typeofResults.value = [
-    processValue('hello'),
-    processValue(3.14159),
-  ]
+  typeofResults.value = [processValue('hello'), processValue(3.14159)]
 }
 
 const typeofCode = `function processValue(value: string | number): string {
@@ -29,7 +26,10 @@ const typeofCode = `function processValue(value: string | number): string {
 
 // ====== 2. instanceof 类型守卫 ======
 class ApiError extends Error {
-  constructor(public statusCode: number, message: string) {
+  constructor(
+    public statusCode: number,
+    message: string,
+  ) {
     super(message)
     this.name = 'ApiError'
   }
@@ -45,10 +45,7 @@ function handleError(error: Error): string {
 const instanceofResults = ref<string[]>([])
 
 function testInstanceofGuard() {
-  instanceofResults.value = [
-    handleError(new ApiError(404, '资源未找到')),
-    handleError(new Error('网络连接失败')),
-  ]
+  instanceofResults.value = [handleError(new ApiError(404, '资源未找到')), handleError(new Error('网络连接失败'))]
 }
 
 const instanceofCode = `class ApiError extends Error {
@@ -66,8 +63,14 @@ function handleError(error: Error): string {
 }`
 
 // ====== 3. 自定义类型守卫 (is) ======
-interface Cat { type: 'cat'; meow(): string }
-interface Dog { type: 'dog'; bark(): string }
+interface Cat {
+  type: 'cat'
+  meow(): string
+}
+interface Dog {
+  type: 'dog'
+  bark(): string
+}
 
 function isCat(animal: Cat | Dog): animal is Cat {
   return animal.type === 'cat'
@@ -75,9 +78,9 @@ function isCat(animal: Cat | Dog): animal is Cat {
 
 function handleAnimal(animal: Cat | Dog): string {
   if (isCat(animal)) {
-    return animal.meow()  // Cat
+    return animal.meow() // Cat
   }
-  return animal.bark()   // Dog
+  return animal.bark() // Dog
 }
 
 const cat: Cat = { type: 'cat', meow: () => '喵喵~' }
@@ -86,10 +89,7 @@ const dog: Dog = { type: 'dog', bark: () => '汪汪!' }
 const isGuardResults = ref<string[]>([])
 
 function testIsGuard() {
-  isGuardResults.value = [
-    handleAnimal(cat),
-    handleAnimal(dog),
-  ]
+  isGuardResults.value = [handleAnimal(cat), handleAnimal(dog)]
 }
 
 const isGuardCode = `interface Cat { type: 'cat'; meow(): string }
@@ -108,9 +108,19 @@ function handleAnimal(animal: Cat | Dog): string {
 }`
 
 // ====== 4. 可辨识联合 ======
-interface Square { kind: 'square'; size: number }
-interface Circle { kind: 'circle'; radius: number }
-interface Triangle { kind: 'triangle'; base: number; height: number }
+interface Square {
+  kind: 'square'
+  size: number
+}
+interface Circle {
+  kind: 'circle'
+  radius: number
+}
+interface Triangle {
+  kind: 'triangle'
+  base: number
+  height: number
+}
 
 type Shape = Square | Circle | Triangle
 
@@ -152,8 +162,12 @@ function getArea(shape: Shape): string {
 }`
 
 // ====== 5. in 操作符收窄 ======
-interface Fish { swim(): string }
-interface Bird { fly(): string }
+interface Fish {
+  swim(): string
+}
+interface Bird {
+  fly(): string
+}
 
 function move(animal: Fish | Bird): string {
   if ('swim' in animal) {
@@ -168,10 +182,7 @@ const bird: Bird = { fly: () => '鸟在天上飞 🐦' }
 const inResults = ref<string[]>([])
 
 function testInGuard() {
-  inResults.value = [
-    move(fish),
-    move(bird),
-  ]
+  inResults.value = [move(fish), move(bird)]
 }
 
 const inCode = `interface Fish { swim(): string }
@@ -218,7 +229,10 @@ const config = {
   <div class="type-guards-page">
     <header class="page-header">
       <h1>TypeScript 类型守卫</h1>
-      <p class="page-subtitle">类型守卫让你在<strong>运行时检查类型</strong>，TypeScript 会自动<strong>收窄（narrowing）</strong>联合类型，让你安全地使用特定类型的属性。</p>
+      <p class="page-subtitle">
+        类型守卫让你在<strong>运行时检查类型</strong>，TypeScript
+        会自动<strong>收窄（narrowing）</strong>联合类型，让你安全地使用特定类型的属性。
+      </p>
     </header>
 
     <!-- ==================== 引言 ==================== -->
@@ -226,7 +240,9 @@ const config = {
       <h2 class="section-title">📖 什么是类型守卫？为什么需要它？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong>当变量是<em>联合类型</em>（如 <code>string | number</code>）时，类型守卫帮你<strong>在运行时判断它到底是哪个具体类型</strong>，从而安全地使用对应类型的方法。
+          <strong>一句话解释：</strong>当变量是<em>联合类型</em>（如
+          <code>string | number</code
+          >）时，类型守卫帮你<strong>在运行时判断它到底是哪个具体类型</strong>，从而安全地使用对应类型的方法。
         </p>
         <h3>没有类型守卫的痛苦 😫</h3>
         <pre class="code-block">
@@ -234,7 +250,8 @@ const config = {
 function process(value: string | number) {
   return value.toUpperCase()  // ❌ 编译错误：number 没有 toUpperCase
 }
-process('hello')  // 实际上我们传了 string，但 TS 不信任</pre>
+process('hello')  // 实际上我们传了 string，但 TS 不信任</pre
+        >
         <h3>有了类型守卫之后 😎</h3>
         <pre class="code-block">
 // typeof 守卫让 TS 收窄类型，安全访问
@@ -245,7 +262,8 @@ function process(value: string | number) {
   return value.toFixed(2)       // ✅ TS 知道这里 value 是 number
 }
 process('hello')  // → 'HELLO'
-process(3.14)     // → '3.14'</pre>
+process(3.14)     // → '3.14'</pre
+        >
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
           <ul>
@@ -375,8 +393,11 @@ process(3.14)     // → '3.14'</pre>
           </tr>
         </tbody>
       </table>
-      <div class="hint-box" style="margin-top: 16px;">
-        <p>💡 <strong>记忆技巧：</strong>typeof 看原始类型，instanceof 看类实例，in 看属性，is 自定义。可辨识联合（kind 字段）是生产环境最常用的模式。</p>
+      <div class="hint-box" style="margin-top: 16px">
+        <p>
+          💡 <strong>记忆技巧：</strong>typeof 看原始类型，instanceof 看类实例，in 看属性，is 自定义。可辨识联合（kind
+          字段）是生产环境最常用的模式。
+        </p>
       </div>
     </section>
   </div>

@@ -7,17 +7,13 @@ defineOptions({
 })
 
 const attrs = useAttrs()
-const attrsList = Object.entries(attrs).filter(
-  ([key]) => !key.startsWith('on') && key !== 'style'
-)
+const attrsList = Object.entries(attrs).filter(([key]) => !key.startsWith('on') && key !== 'style')
 </script>
 
 <template>
   <div class="attrs-child">
     <!-- 手动绑定 $attrs -->
-    <button v-bind="$attrs" class="inner-btn">
-      手动 v-bind="$attrs"
-    </button>
+    <button v-bind="$attrs" class="inner-btn">手动 v-bind="$attrs"</button>
 
     <div class="attrs-display">
       <p class="label">透传属性列表（useAttrs()）：</p>
@@ -48,7 +44,10 @@ const attrsList = Object.entries(attrs).filter(
   font-size: 14px;
 }
 
-.inner-btn:hover { border-color: #eb2f96; color: #eb2f96; }
+.inner-btn:hover {
+  border-color: #eb2f96;
+  color: #eb2f96;
+}
 
 .attrs-display {
   margin-top: 12px;
@@ -59,7 +58,10 @@ const attrsList = Object.entries(attrs).filter(
   font-size: 13px;
 }
 
-.label { color: #888; margin: 0 0 6px 0; }
+.label {
+  color: #888;
+  margin: 0 0 6px 0;
+}
 
 .attr-item {
   margin: 2px 0;
@@ -70,5 +72,7 @@ const attrsList = Object.entries(attrs).filter(
   color: #ffa940;
 }
 
-.hint { color: #666; }
+.hint {
+  color: #666;
+}
 </style>

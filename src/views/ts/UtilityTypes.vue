@@ -77,7 +77,7 @@ function createUser(name: string, age: number): { name: string; age: number } {
 }
 
 type CreateUserParams = Parameters<typeof createUser> // [string, number]
-type CreateUserReturn = ReturnType<typeof createUser>  // { name: string; age: number }
+type CreateUserReturn = ReturnType<typeof createUser> // { name: string; age: number }
 
 const utilCode = `// NonNullable — 排除 null 和 undefined
 type Nullable = string | null | undefined
@@ -113,7 +113,10 @@ type ValueOf<T> = T[keyof T]`
   <div class="utility-types-page">
     <header class="page-header">
       <h1>TypeScript 工具类型</h1>
-      <p class="page-subtitle">TypeScript 内置了大量<strong>工具类型</strong>（Utility Types），让你从已有类型<strong>快速派生</strong>出新类型，无需手写。</p>
+      <p class="page-subtitle">
+        TypeScript 内置了大量<strong>工具类型</strong>（Utility
+        Types），让你从已有类型<strong>快速派生</strong>出新类型，无需手写。
+      </p>
     </header>
 
     <!-- ==================== 引言 ==================== -->
@@ -121,7 +124,8 @@ type ValueOf<T> = T[keyof T]`
       <h2 class="section-title">📖 什么是工具类型？为什么需要它？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong>工具类型是 TypeScript 内置的<em>"类型转换函数"</em>——传入一个类型，返回一个变换后的新类型。
+          <strong>一句话解释：</strong>工具类型是 TypeScript
+          内置的<em>"类型转换函数"</em>——传入一个类型，返回一个变换后的新类型。
         </p>
         <h3>没有工具类型的痛苦 😫</h3>
         <pre class="code-block">
@@ -139,7 +143,8 @@ interface UserUpdate {
 interface UserPreview {
   name: string
   age: number
-}</pre>
+}</pre
+        >
         <h3>有了工具类型之后 😎</h3>
         <pre class="code-block">
 // 一行搞定，不会遗漏
@@ -148,7 +153,8 @@ type UserPreview = Pick&lt;User, 'name' | 'age'&gt;  // 只取 name + age
 
 // 更多变体：
 type ReadonlyUser = Readonly&lt;User&gt;      // 全部只读
-type UserNameOnly = Omit&lt;User, 'age' | 'email'&gt;  // 去掉 age 和 email</pre>
+type UserNameOnly = Omit&lt;User, 'age' | 'email'&gt;  // 去掉 age 和 email</pre
+        >
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
           <ul>

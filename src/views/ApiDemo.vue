@@ -182,8 +182,9 @@ async function demoResponseType() {
 
     <!-- 环境信息 -->
     <div class="env-badge">
-      当前环境：<strong>{{ env.VITE_APP_TITLE }}</strong>
-      &nbsp;|&nbsp; API 地址：<code>{{ env.VITE_API_BASE_URL }}</code>
+      当前环境：<strong>{{ env.VITE_APP_TITLE }}</strong> &nbsp;|&nbsp; API 地址：<code>{{
+        env.VITE_API_BASE_URL
+      }}</code>
     </div>
 
     <!-- 通用方法 -->
@@ -210,7 +211,9 @@ async function demoResponseType() {
     <!-- 带 config 调用 -->
     <section class="demo-section">
       <h2>3. 带 config 的便捷方法</h2>
-      <p class="desc">第三个参数传入 <code>AxiosRequestConfig</code>，支持自定义 headers、timeout、signal、responseType 等。</p>
+      <p class="desc">
+        第三个参数传入 <code>AxiosRequestConfig</code>，支持自定义 headers、timeout、signal、responseType 等。
+      </p>
       <div class="btn-group">
         <button class="demo-btn config" @click="demoGetWithHeaders">GET + 自定义 Headers</button>
         <button class="demo-btn config" @click="demoPostWithTimeout">POST + timeout=5s</button>
@@ -231,7 +234,8 @@ async function demoResponseType() {
     <section class="demo-section">
       <h2>📖 使用说明</h2>
       <div class="code-block">
-        <pre>// 1. 通用方法 — 全站任意位置直接调用
+        <pre>
+// 1. 通用方法 — 全站任意位置直接调用
 import { get, post, put, del } from '@/api/request'
 
 const users = await get('/users', { page: 1 })
@@ -282,7 +286,8 @@ try {
 }
 
 // 5. 每个请求自动带上 t=时间戳
-// GET /api/users?page=1&t=1686912345678</pre>
+// GET /api/users?page=1&t=1686912345678</pre
+        >
       </div>
     </section>
 
@@ -388,13 +393,25 @@ h1 {
   transition: opacity 0.2s;
 }
 
-.demo-btn:hover { opacity: 0.85; }
+.demo-btn:hover {
+  opacity: 0.85;
+}
 
-.demo-btn.get     { background: #52c41a; }
-.demo-btn.post    { background: #1890ff; }
-.demo-btn.put     { background: #fa8c16; }
-.demo-btn.delete  { background: #ff4d4f; }
-.demo-btn.config  { background: #722ed1; }
+.demo-btn.get {
+  background: #52c41a;
+}
+.demo-btn.post {
+  background: #1890ff;
+}
+.demo-btn.put {
+  background: #fa8c16;
+}
+.demo-btn.delete {
+  background: #ff4d4f;
+}
+.demo-btn.config {
+  background: #722ed1;
+}
 
 .loading {
   color: #1890ff;

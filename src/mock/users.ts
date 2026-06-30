@@ -10,7 +10,14 @@ const routes: MockRoute[] = [
       code: 200,
       data: {
         list: [
-          { id: 1, name: '张三', email: 'zhangsan@example.com', role: 'editor', status: 'active', createdAt: '2025-01-01' },
+          {
+            id: 1,
+            name: '张三',
+            email: 'zhangsan@example.com',
+            role: 'editor',
+            status: 'active',
+            createdAt: '2025-01-01',
+          },
           { id: 2, name: '李四', email: 'lisi@example.com', role: 'viewer', status: 'active', createdAt: '2025-02-15' },
         ],
         total: 2,
@@ -26,7 +33,14 @@ const routes: MockRoute[] = [
     method: 'POST',
     response: {
       code: 200,
-      data: { id: Date.now(), name: '张三', email: 'zhangsan@example.com', role: 'editor', status: 'active', createdAt: new Date().toISOString() },
+      data: {
+        id: Date.now(),
+        name: '张三',
+        email: 'zhangsan@example.com',
+        role: 'editor',
+        status: 'active',
+        createdAt: new Date().toISOString(),
+      },
       message: 'ok',
     },
   },

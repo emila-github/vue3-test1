@@ -22,16 +22,7 @@ interface PageResult {
 
 const searchForm = reactive({ keyword: '' })
 
-const {
-  data,
-  loading,
-  current,
-  pageSize,
-  total,
-  changeCurrent,
-  changePageSize,
-  refresh,
-} = usePagination<PageResult>(
+const { data, loading, current, pageSize, total, changeCurrent, changePageSize, refresh } = usePagination<PageResult>(
   ({ current, pageSize }) =>
     get('/vr/demo/user-list', {
       page: current,
@@ -76,14 +67,14 @@ const columns = [
   <div class="pagination-demo">
     <a-page-header title="② 分页 (usePagination)" @back="() => $router.push('/vue-request')" />
 
-    <a-card size="small" style="margin-bottom:16px">
+    <a-card size="small" style="margin-bottom: 16px">
       <a-form layout="inline" :model="searchForm">
         <a-form-item label="搜索">
           <a-input
             v-model:value="searchForm.keyword"
             placeholder="姓名/邮箱"
             allow-clear
-            style="width:200px"
+            style="width: 200px"
             @press-enter="handleSearch"
           />
         </a-form-item>

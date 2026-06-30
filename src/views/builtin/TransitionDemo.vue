@@ -42,8 +42,10 @@ function switchTab(key: string) {
           <p>淡入淡出</p>
         </div>
       </Transition>
-      <pre class="code-hint">.fade-enter-active, .fade-leave-active { transition: opacity 0.5s ease; }
-.fade-enter-from, .fade-leave-to { opacity: 0; }</pre>
+      <pre class="code-hint">
+.fade-enter-active, .fade-leave-active { transition: opacity 0.5s ease; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }</pre
+      >
     </section>
 
     <!-- CSS Animation -->
@@ -57,23 +59,23 @@ function switchTab(key: string) {
           <p>弹跳动画</p>
         </div>
       </Transition>
-      <pre class="code-hint">.bounce-enter-active { animation: bounce-in 0.5s; }
+      <pre class="code-hint">
+.bounce-enter-active { animation: bounce-in 0.5s; }
 .bounce-leave-active { animation: bounce-in 0.5s reverse; }
 
 @keyframes bounce-in {
   0% { transform: scale(0); }
   50% { transform: scale(1.25); }
   100% { transform: scale(1); }
-}</pre>
+}</pre
+      >
     </section>
 
     <!-- 滑动 + 过渡模式 -->
     <section class="demo-section">
       <h2>3. 滑动 + mode="out-in"</h2>
       <div class="mode-btns">
-        <button @click="showSlide = !showSlide" class="demo-btn">
-          Toggle
-        </button>
+        <button @click="showSlide = !showSlide" class="demo-btn">Toggle</button>
         <button @click="modeView = modeView === 1 ? 2 : 1" class="demo-btn">
           mode="out-in" 演示 (当前: View {{ modeView }})
         </button>
@@ -164,9 +166,21 @@ function switchTab(key: string) {
   font-weight: bold;
 }
 
-.box-blue { background: #e6f7ff; border: 1px solid #91d5ff; color: #1890ff; }
-.box-green { background: #f6ffed; border: 1px solid #b7eb8f; color: #52c41a; }
-.box-orange { background: #fff7e6; border: 1px solid #ffd591; color: #fa8c16; }
+.box-blue {
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+  color: #1890ff;
+}
+.box-green {
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+  color: #52c41a;
+}
+.box-orange {
+  background: #fff7e6;
+  border: 1px solid #ffd591;
+  color: #fa8c16;
+}
 
 .mode-btns {
   display: flex;
@@ -191,7 +205,9 @@ function switchTab(key: string) {
   transition: all 0.2s;
 }
 
-.tab-btn:hover { border-color: #13c2c2; }
+.tab-btn:hover {
+  border-color: #13c2c2;
+}
 .tab-btn.tab-active {
   background: #13c2c2;
   color: #fff;
@@ -219,9 +235,15 @@ function switchTab(key: string) {
   animation: bounce-in 0.5s reverse;
 }
 @keyframes bounce-in {
-  0% { transform: scale(0); }
-  50% { transform: scale(1.25); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* ====== 滑动 ====== */

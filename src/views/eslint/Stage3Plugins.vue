@@ -71,7 +71,11 @@ export default defineConfigWithVueTs(
 )`)
 
 const extendsVsPlugins = ref([
-  { dim: 'eslintrc extends', action: '字符串引用，@vue/eslint-config-typescript', flat: '直接 import JS 对象，@vue/eslint-config-typescript' },
+  {
+    dim: 'eslintrc extends',
+    action: '字符串引用，@vue/eslint-config-typescript',
+    flat: '直接 import JS 对象，@vue/eslint-config-typescript',
+  },
   { dim: 'eslintrc plugins', action: '字符串数组，["vue", "jest"]', flat: 'import pluginVue from "eslint-plugin-vue"' },
   { dim: 'eslintrc rules 前缀', action: 'vue/rule-name', flat: 'vue/rule-name（无插件前缀）' },
   { dim: 'eslintrc 层级', action: 'extends 链式继承', flat: '数组顺序决定优先级' },
@@ -126,10 +130,9 @@ const extendsVsPlugins = ref([
       <div class="code-block">
         <pre><code>{{ configExample }}</code></pre>
       </div>
-      <div class="info-box" style="margin-top: 12px;">
-        <strong>关键点</strong>：
-        1. 使用 <code>...</code> 展开操作符将插件配置数组展平<br>
-        2. <code>skipFormatting</code> 必须放在数组<strong>最后</strong>，确保覆盖所有前面的格式规则<br>
+      <div class="info-box" style="margin-top: 12px">
+        <strong>关键点</strong>： 1. 使用 <code>...</code> 展开操作符将插件配置数组展平<br />
+        2. <code>skipFormatting</code> 必须放在数组<strong>最后</strong>，确保覆盖所有前面的格式规则<br />
         3. <code>defineConfigWithVueTs</code> 自动合并 Vue 和 TS 的基础配置
       </div>
     </section>
@@ -252,8 +255,14 @@ export default {
   border: 1px solid #f0f0f0;
 }
 
-.plugin-box { background: #f9f0ff; border-color: #d3adf7; }
-.config-box { background: #e6f7ff; border-color: #91d5ff; }
+.plugin-box {
+  background: #f9f0ff;
+  border-color: #d3adf7;
+}
+.config-box {
+  background: #e6f7ff;
+  border-color: #91d5ff;
+}
 
 .diff-box strong {
   display: block;
@@ -270,7 +279,7 @@ export default {
 }
 
 .diff-box code {
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.7);
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 12px;

@@ -15,7 +15,7 @@ const AsyncCard = defineAsyncComponent({
   },
   loadingComponent: LoadingSpinner,
   errorComponent: ErrorDisplay,
-  delay: 300,   // 300ms 后才显示 loading
+  delay: 300, // 300ms 后才显示 loading
   timeout: 5000, // 5 秒超时
 })
 
@@ -34,9 +34,7 @@ function loadComponent() {
     <div class="panel">
       <h4>1. defineAsyncComponent 异步加载</h4>
       <p class="hint">点击按钮后，模拟 1.5 秒加载延迟</p>
-      <button v-if="!showAsync" @click="loadComponent" class="load-btn">
-        加载异步组件
-      </button>
+      <button v-if="!showAsync" @click="loadComponent" class="load-btn">加载异步组件</button>
 
       <!-- 使用 Suspense 包裹 -->
       <Suspense v-if="showAsync">
@@ -89,8 +87,14 @@ function loadComponent() {
   border-left: 4px solid #fa8c16;
 }
 
-h2 { margin: 0 0 16px 0; color: #333; }
-h4 { margin: 0 0 8px 0; color: #555; }
+h2 {
+  margin: 0 0 16px 0;
+  color: #333;
+}
+h4 {
+  margin: 0 0 8px 0;
+  color: #555;
+}
 
 .panel {
   background: #fff;
@@ -100,7 +104,11 @@ h4 { margin: 0 0 8px 0; color: #555; }
   border: 1px solid #f0f0f0;
 }
 
-.hint { color: #999; font-size: 13px; margin-top: 4px; }
+.hint {
+  color: #999;
+  font-size: 13px;
+  margin-top: 4px;
+}
 
 .load-btn {
   padding: 10px 24px;
@@ -112,7 +120,9 @@ h4 { margin: 0 0 8px 0; color: #555; }
   font-size: 15px;
 }
 
-.load-btn:hover { opacity: 0.9; }
+.load-btn:hover {
+  opacity: 0.9;
+}
 
 .fallback {
   text-align: center;
@@ -131,7 +141,9 @@ h4 { margin: 0 0 8px 0; color: #555; }
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 pre {
@@ -152,8 +164,13 @@ pre {
   color: #555;
 }
 
-.info ul { margin: 4px 0; padding-left: 20px; }
-.info li { margin: 4px 0; }
+.info ul {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+.info li {
+  margin: 4px 0;
+}
 .info code {
   background: #ffe7ba;
   padding: 1px 5px;

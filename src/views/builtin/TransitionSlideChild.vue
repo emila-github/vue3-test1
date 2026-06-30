@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="slide-box">
@@ -17,6 +16,12 @@
   text-align: center;
   color: #fa8c16;
 }
-.slide-box p { margin: 0 0 4px; font-size: 16px; font-weight: bold; }
-.slide-box span { font-size: 13px; }
+.slide-box p {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.slide-box span {
+  font-size: 13px;
+}
 </style>

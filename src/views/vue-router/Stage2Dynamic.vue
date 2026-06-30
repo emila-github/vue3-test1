@@ -42,13 +42,11 @@ const routeChangeLog = ref<string[]>([])
 watch(
   () => route.fullPath,
   (newPath, oldPath) => {
-    routeChangeLog.value.unshift(
-      `${new Date().toLocaleTimeString()}  ${oldPath} → ${newPath}`
-    )
+    routeChangeLog.value.unshift(`${new Date().toLocaleTimeString()}  ${oldPath} → ${newPath}`)
     if (routeChangeLog.value.length > 10) {
       routeChangeLog.value.pop()
     }
-  }
+  },
 )
 
 // ===== 对比 params vs query =====
@@ -96,10 +94,7 @@ const compareData = [
     <!-- 2.1 路径参数 params -->
     <section class="card">
       <h2>2.1 路径参数：params</h2>
-      <p>
-        在路由路径中使用 <code>:paramName</code> 定义动态段，通过
-        <code>route.params</code> 访问。
-      </p>
+      <p>在路由路径中使用 <code>:paramName</code> 定义动态段，通过 <code>route.params</code> 访问。</p>
 
       <div class="demo-box">
         <h4>产品列表（点击查看详情，带 params）：</h4>
@@ -111,21 +106,14 @@ const compareData = [
                 &nbsp; ¥{{ item.price }}
                 <a-tag size="small">{{ item.category }}</a-tag>
               </span>
-              <a-button size="small" type="link" @click="goToProduct(item.id)">
-                查看详情 →
-              </a-button>
+              <a-button size="small" type="link" @click="goToProduct(item.id)"> 查看详情 → </a-button>
             </a-list-item>
           </template>
         </a-list>
 
         <div style="margin-top: 12px; display: flex; gap: 8px; align-items: center">
           <span style="font-size: 13px; color: #999">自定义 ID 跳转：</span>
-          <a-input-number
-            v-model:value="customId"
-            :min="1"
-            :max="4"
-            style="width: 100px"
-          />
+          <a-input-number v-model:value="customId" :min="1" :max="4" style="width: 100px" />
           <a-button size="small" @click="goWithCustomId">跳转</a-button>
         </div>
       </div>
@@ -139,38 +127,26 @@ router.push({ name: 'product', params: { id: '123' } })
 
 // 组件内获取
 const route = useRoute()
-console.log(route.params.id)  // '123'</pre>
+console.log(route.params.id)  // '123'</pre
+      >
     </section>
 
     <!-- 2.2 查询参数 query -->
     <section class="card">
       <h2>2.2 查询参数：query</h2>
-      <p>
-        <code>query</code> 是 URL <code>?</code> 后的键值对，完全可选，适合搜索筛选场景。
-      </p>
+      <p><code>query</code> 是 URL <code>?</code> 后的键值对，完全可选，适合搜索筛选场景。</p>
 
       <div class="demo-box">
         <h4>搜索筛选（query 传参）：</h4>
         <a-space>
-          <a-input
-            v-model:value="searchKeyword"
-            placeholder="关键词"
-            style="width: 160px"
-          />
-          <a-select
-            v-model:value="searchCategory"
-            placeholder="分类"
-            style="width: 120px"
-            allow-clear
-          >
+          <a-input v-model:value="searchKeyword" placeholder="关键词" style="width: 160px" />
+          <a-select v-model:value="searchCategory" placeholder="分类" style="width: 120px" allow-clear>
             <a-select-option value="前端">前端</a-select-option>
             <a-select-option value="后端">后端</a-select-option>
             <a-select-option value="语言">语言</a-select-option>
             <a-select-option value="计算机">计算机</a-select-option>
           </a-select>
-          <a-button type="primary" size="small" @click="pushWithQuery">
-            搜索（query 跳转）
-          </a-button>
+          <a-button type="primary" size="small" @click="pushWithQuery"> 搜索（query 跳转） </a-button>
         </a-space>
       </div>
 
@@ -184,23 +160,18 @@ router.push({
 
 // 组件内获取
 console.log(route.query.keyword)   // 'Vue'
-console.log(route.query.category)  // '前端'</pre>
+console.log(route.query.category)  // '前端'</pre
+      >
     </section>
 
     <!-- 2.3 对比表格 -->
     <section class="card">
       <h2>2.3 params vs query 对比</h2>
-      <a-table
-        :columns="compareColumns"
-        :data-source="compareData"
-        :pagination="false"
-        size="small"
-      />
+      <a-table :columns="compareColumns" :data-source="compareData" :pagination="false" size="small" />
       <div class="tip-box" style="margin-top: 12px">
         <strong>参数变化时组件不重新创建：</strong>
-        从 <code>/product/1</code> 到 <code>/product/2</code>，同一个组件会复用。
-        需要用 <code>watch(route.params)</code> 或
-        <code>onBeforeRouteUpdate</code> 来响应变化。
+        从 <code>/product/1</code> 到 <code>/product/2</code>，同一个组件会复用。 需要用
+        <code>watch(route.params)</code> 或 <code>onBeforeRouteUpdate</code> 来响应变化。
       </div>
     </section>
 
@@ -223,16 +194,15 @@ import { onBeforeRouteUpdate } from 'vue-router'
 
 onBeforeRouteUpdate((to) => {
   fetchData(to.params.id)
-})</pre>
+})</pre
+      >
 
       <div class="log-panel">
-        <h4>当前 query：<code>{{ JSON.stringify(route.query) || '(无)' }}</code></h4>
+        <h4>
+          当前 query：<code>{{ JSON.stringify(route.query) || '(无)' }}</code>
+        </h4>
         <div class="log-list">
-          <div
-            v-for="(log, i) in routeChangeLog"
-            :key="i"
-            class="log-line"
-          >
+          <div v-for="(log, i) in routeChangeLog" :key="i" class="log-line">
             {{ log }}
           </div>
           <div v-if="routeChangeLog.length === 0" style="color: #ccc">暂无路由变化记录</div>

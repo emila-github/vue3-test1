@@ -25,7 +25,8 @@ function increment() {
         一个 <code>.vue</code> 文件包含三部分：<code>&lt;script setup&gt;</code>（逻辑）、
         <code>&lt;template&gt;</code>（模板）、<code>&lt;style scoped&gt;</code>（样式）。
       </p>
-      <pre class="code-block">&lt;script setup lang="ts"&gt;
+      <pre class="code-block">
+&lt;script setup lang="ts"&gt;
 import { ref } from 'vue'
 
 const count = ref(0)
@@ -40,7 +41,8 @@ function increment() { count.value++ }
 
 &lt;style scoped&gt;
 button { font-weight: bold; }
-&lt;/style&gt;</pre>
+&lt;/style&gt;</pre
+      >
     </section>
 
     <!-- 演示 -->
@@ -48,9 +50,7 @@ button { font-weight: bold; }
       <h2>当前文件运行效果</h2>
       <div class="demo-box">
         <a-space align="center" :size="16">
-          <a-button type="primary" @click="increment">
-            Count: {{ count }}
-          </a-button>
+          <a-button type="primary" @click="increment"> Count: {{ count }} </a-button>
           <a-input v-model:value="name" placeholder="输入名称" style="width: 200px" />
           <span style="font-size: 14px">Hello, {{ name }}!</span>
         </a-space>
@@ -67,7 +67,11 @@ button { font-weight: bold; }
           { title: '对比 Options API', dataIndex: 'compare', key: 'compare' },
         ]"
         :data-source="[
-          { feature: '顶级变量自动暴露', desc: '模板中可直接使用脚本顶级变量和函数', compare: '需在 return 或 methods 中声明' },
+          {
+            feature: '顶级变量自动暴露',
+            desc: '模板中可直接使用脚本顶级变量和函数',
+            compare: '需在 return 或 methods 中声明',
+          },
           { feature: '编译时优化', desc: '更小的运行时开销，静态分析更准确', compare: '运行时解析 this 访问' },
           { feature: 'TypeScript 原生', desc: '直接使用 TS 类型，无需额外配置', compare: '需 defineComponent 包装' },
           { feature: '更少的样板代码', desc: '无需 data()、methods、computed 等选项', compare: '需在对应选项中声明' },
@@ -86,39 +90,47 @@ button { font-weight: bold; }
         <div class="style-card">
           <h4>scoped</h4>
           <p>样式只作用于当前组件，通过 data-v-xxx 属性隔离</p>
-          <pre class="code-block" style="font-size: 12px">&lt;style scoped&gt;
+          <pre class="code-block" style="font-size: 12px">
+&lt;style scoped&gt;
 .title { color: red; }
-&lt;/style&gt;</pre>
+&lt;/style&gt;</pre
+          >
         </div>
         <div class="style-card">
           <h4>:deep()</h4>
           <p>穿透 scoped 限制，影响子组件内部元素</p>
-          <pre class="code-block" style="font-size: 12px">&lt;style scoped&gt;
+          <pre class="code-block" style="font-size: 12px">
+&lt;style scoped&gt;
 .container :deep(.child) {
   color: blue;
 }
-&lt;/style&gt;</pre>
+&lt;/style&gt;</pre
+          >
         </div>
         <div class="style-card">
           <h4>CSS Modules</h4>
           <p>编译为唯一类名，JS 中通过 $style 访问</p>
-          <pre class="code-block" style="font-size: 12px">&lt;style module&gt;
+          <pre class="code-block" style="font-size: 12px">
+&lt;style module&gt;
 .red { color: red; }
 &lt;/style&gt;
 
 &lt;!-- 模板中 --&gt;
-&lt;div :class="$style.red"&gt;</pre>
+&lt;div :class="$style.red"&gt;</pre
+          >
         </div>
         <div class="style-card">
           <h4>v-bind() in CSS</h4>
           <p>将 JS 变量注入 CSS（Vue 3.2+）</p>
-          <pre class="code-block" style="font-size: 12px">&lt;script setup&gt;
+          <pre class="code-block" style="font-size: 12px">
+&lt;script setup&gt;
 const color = ref('red')
 &lt;/script&gt;
 
 &lt;style scoped&gt;
 .title { color: v-bind(color); }
-&lt;/style&gt;</pre>
+&lt;/style&gt;</pre
+          >
         </div>
       </div>
     </section>

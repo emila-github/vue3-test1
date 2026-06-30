@@ -56,8 +56,7 @@ function clearLog() {
     <section class="card">
       <h2>1.1 创建路由实例</h2>
       <p>
-        Vue Router 5.x 使用 <code>createRouter</code> 创建实例，通过
-        <code>createWebHistory</code>（HTML5 模式）或
+        Vue Router 5.x 使用 <code>createRouter</code> 创建实例，通过 <code>createWebHistory</code>（HTML5 模式）或
         <code>createWebHashHistory</code>（Hash 模式）指定历史模式。
       </p>
       <pre class="code-block">
@@ -71,7 +70,8 @@ const router = createRouter({
   ],
 })
 
-export default router</pre>
+export default router</pre
+      >
       <div class="tip-box">
         <strong>两种模式对比：</strong>
         <ul>
@@ -85,8 +85,7 @@ export default router</pre>
     <section class="card">
       <h2>1.2 RouterLink 和 RouterView</h2>
       <p>
-        <code>RouterLink</code> 生成 &lt;a&gt; 标签实现声明式导航，
-        <code>RouterView</code> 作为路由组件的渲染出口。
+        <code>RouterLink</code> 生成 &lt;a&gt; 标签实现声明式导航， <code>RouterView</code> 作为路由组件的渲染出口。
       </p>
 
       <div class="demo-box">
@@ -94,9 +93,7 @@ export default router</pre>
         <a-space>
           <RouterLink to="/" class="demo-link">首页</RouterLink>
           <RouterLink to="/about" class="demo-link">关于</RouterLink>
-          <RouterLink to="/vue-router/stage1?tab=hello" class="demo-link">
-            本页（带 query）
-          </RouterLink>
+          <RouterLink to="/vue-router/stage1?tab=hello" class="demo-link"> 本页（带 query） </RouterLink>
         </a-space>
       </div>
 
@@ -109,15 +106,16 @@ export default router</pre>
 
   &lt;!-- 路由组件在此渲染 --&gt;
   &lt;RouterView /&gt;
-&lt;/template&gt;</pre>
+&lt;/template&gt;</pre
+      >
     </section>
 
     <!-- 1.3 编程式导航 -->
     <section class="card">
       <h2>1.3 编程式导航：useRouter()</h2>
       <p>
-        在 Composition API 中通过 <code>useRouter()</code> 获取路由实例，
-        使用 <code>push</code>、<code>replace</code>、<code>back</code>、<code>forward</code> 进行编程式导航。
+        在 Composition API 中通过 <code>useRouter()</code> 获取路由实例， 使用
+        <code>push</code>、<code>replace</code>、<code>back</code>、<code>forward</code> 进行编程式导航。
       </p>
 
       <div class="demo-box">
@@ -152,7 +150,8 @@ router.replace('/about')
 // 历史栈导航
 router.back()     // 后退一步
 router.forward()  // 前进一步
-router.go(-2)     // 后退两步</pre>
+router.go(-2)     // 后退两步</pre
+      >
     </section>
 
     <!-- 1.4 useRoute() -->
@@ -172,14 +171,23 @@ console.log(route.path)       // 当前路径
 console.log(route.params.id)  // 路径参数
 console.log(route.query.tab)  // 查询参数
 console.log(route.name)       // 路由名称
-console.log(route.meta)       // 路由元信息</pre>
+console.log(route.meta)       // 路由元信息</pre
+      >
       <div class="tip-box">
         <strong>当前路由信息：</strong>
         <ul>
-          <li>路径 path：<code>{{ route.path }}</code></li>
-          <li>名称 name：<code>{{ route.name }}</code></li>
-          <li>查询 query：<code>{{ JSON.stringify(route.query) }}</code></li>
-          <li>参数 params：<code>{{ JSON.stringify(route.params) }}</code></li>
+          <li>
+            路径 path：<code>{{ route.path }}</code>
+          </li>
+          <li>
+            名称 name：<code>{{ route.name }}</code>
+          </li>
+          <li>
+            查询 query：<code>{{ JSON.stringify(route.query) }}</code>
+          </li>
+          <li>
+            参数 params：<code>{{ JSON.stringify(route.params) }}</code>
+          </li>
         </ul>
       </div>
     </section>
@@ -187,17 +195,13 @@ console.log(route.meta)       // 路由元信息</pre>
     <!-- 导航历史日志 -->
     <section class="card">
       <h2>导航日志</h2>
-      <div v-if="historyLog.length === 0" style="color: #999; font-size: 13px;">
-        点击上方按钮记录导航操作...
-      </div>
+      <div v-if="historyLog.length === 0" style="color: #999; font-size: 13px">点击上方按钮记录导航操作...</div>
       <div v-else>
         <div v-for="(log, i) in historyLog" :key="i" class="log-item">
           <span class="log-num">{{ i + 1 }}</span>
           <span>{{ log }}</span>
         </div>
-        <a-button size="small" danger @click="clearLog" style="margin-top: 8px">
-          清除日志
-        </a-button>
+        <a-button size="small" danger @click="clearLog" style="margin-top: 8px"> 清除日志 </a-button>
       </div>
     </section>
   </div>

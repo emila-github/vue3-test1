@@ -3,9 +3,9 @@ import { ref } from 'vue'
 
 // ====== 1. 数字枚举 ======
 enum Direction {
-  Up,    // 0
-  Down,  // 1
-  Left,  // 2
+  Up, // 0
+  Down, // 1
+  Left, // 2
   Right, // 3
 }
 
@@ -97,7 +97,9 @@ const level = LogLevel.Info  // 编译为: const level = 1`
       <h2 class="section-title">📖 什么是枚举？为什么需要它？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong>枚举（<code>enum</code>）让你给一组相关常量起<em>有意义的名字</em>，而不是在代码里写 <code>0</code>、<code>1</code>、<code>2</code> 这种"魔法数字"。
+          <strong>一句话解释：</strong
+          >枚举（<code>enum</code>）让你给一组相关常量起<em>有意义的名字</em>，而不是在代码里写
+          <code>0</code>、<code>1</code>、<code>2</code> 这种"魔法数字"。
         </p>
         <h3>没有枚举的痛苦 😫</h3>
         <pre class="code-block">
@@ -107,7 +109,8 @@ function setStatus(status: number) {
   else if (status === 1) { /* 非活跃 */ }
   else if (status === 2) { /* 待审核 */ }
 }
-setStatus(3)  // ❌ 编译通过，但 3 不是合法状态！</pre>
+setStatus(3)  // ❌ 编译通过，但 3 不是合法状态！</pre
+        >
         <h3>有了枚举之后 😎</h3>
         <pre class="code-block">
 // 枚举让状态有名字 — 清晰、安全、自文档化
@@ -117,7 +120,8 @@ function setStatus(status: Status) {
   if (status === Status.Active) { /* ... */ }
 }
 setStatus(Status.Active)    // ✅
-// setStatus(3)              // ❌ TS 5.x+ 不兼容数字枚举直接传数字</pre>
+// setStatus(3)              // ❌ TS 5.x+ 不兼容数字枚举直接传数字</pre
+        >
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
           <ul>
@@ -158,22 +162,17 @@ setStatus(Status.Active)    // ✅
       <h2>3. 枚举使用演示</h2>
       <div class="enum-demo">
         <div class="enum-item">
-          <button @click="nextDirection" class="demo-btn">
-            切换方向
-          </button>
+          <button @click="nextDirection" class="demo-btn">切换方向</button>
           <p>当前方向: {{ dirMap[selectedDirection] }} (Direction[{{ selectedDirection }}])</p>
         </div>
         <div class="enum-item">
-          <button @click="nextColor" class="demo-btn">
-            切换颜色
-          </button>
+          <button @click="nextColor" class="demo-btn">切换颜色</button>
           <p>当前颜色: {{ selectedColor }} (枚举值: "{{ selectedColor }}")</p>
           <div
             class="color-box"
             :style="{
               background:
-                selectedColor === Color.Red ? '#f5222d' :
-                selectedColor === Color.Green ? '#52c41a' : '#1890ff'
+                selectedColor === Color.Red ? '#f5222d' : selectedColor === Color.Green ? '#52c41a' : '#1890ff',
             }"
           ></div>
         </div>
@@ -245,8 +244,13 @@ setStatus(Status.Active)    // ✅
           </tr>
         </tbody>
       </table>
-      <div class="hint-box" style="margin-top: 16px;">
-        <p>💡 <strong>建议：</strong>实际项目中，优先使用<strong>字符串枚举</strong>（调试友好）或<strong>字面量联合类型</strong> <code>type Status = 'active' | 'inactive'</code>（更轻量）。</p>
+      <div class="hint-box" style="margin-top: 16px">
+        <p>
+          💡 <strong>建议：</strong>实际项目中，优先使用<strong>字符串枚举</strong>（调试友好）或<strong
+            >字面量联合类型</strong
+          >
+          <code>type Status = 'active' | 'inactive'</code>（更轻量）。
+        </p>
       </div>
     </section>
   </div>

@@ -60,7 +60,8 @@ function clearLog() {
         Pinia 3.x 推荐使用 <strong>Setup Store</strong> 语法，与 Vue 组件 Composition API 写法完全一致，
         <code>ref</code> 作为 state，<code>computed</code> 作为 getter，<code>function</code> 作为 action。
       </p>
-      <pre class="code-block">// stores/counter.ts
+      <pre class="code-block">
+// stores/counter.ts
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
@@ -78,7 +79,8 @@ export const useCounterStore = defineStore('counter', () => {
 
   // 必须 return 所有需要暴露的内容
   return { count, doubleCount, increment }
-})</pre>
+})</pre
+      >
       <div class="tip-box">
         <strong>要点：</strong>
         <ul>
@@ -118,7 +120,8 @@ export const useCounterStore = defineStore('counter', () => {
         </a-space>
       </div>
 
-      <pre class="code-block">import { storeToRefs } from 'pinia'
+      <pre class="code-block">
+import { storeToRefs } from 'pinia'
 import { useCounterStore } from '@/stores/counter'
 
 const store = useCounterStore()
@@ -135,16 +138,16 @@ const { increment } = store
 // 直接修改 state 也可以（不需要 mutation）
 store.count++
 store.$patch({ count: 100 })
-store.$reset()</pre>
+store.$reset()</pre
+      >
     </section>
 
     <!-- 1.3 Options Store 对比 -->
     <section class="card">
       <h2>1.3 Options Store 语法（对比）</h2>
-      <p>
-        Pinia 同时支持 Options Store 语法，类似 Vuex 风格但更简洁。适合从 Vuex 迁移的场景。
-      </p>
-      <pre class="code-block">// Options Store 风格
+      <p>Pinia 同时支持 Options Store 语法，类似 Vuex 风格但更简洁。适合从 Vuex 迁移的场景。</p>
+      <pre class="code-block">
+// Options Store 风格
 export const useCounterStore = defineStore('counter', {
   state: () => ({ count: 0 }),
   getters: {
@@ -155,7 +158,8 @@ export const useCounterStore = defineStore('counter', {
       this.count++
     },
   },
-})</pre>
+})</pre
+      >
       <div class="tip-box">
         <strong>两种语法对比：</strong>
         <a-table
@@ -182,30 +186,28 @@ export const useCounterStore = defineStore('counter', {
     <!-- 1.4 Pinia 与 main.ts 集成 -->
     <section class="card">
       <h2>1.4 Pinia 全局注册</h2>
-      <pre class="code-block">// main.ts
+      <pre class="code-block">
+// main.ts
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 
 const app = createApp(App)
 app.use(createPinia())   // 注册 Pinia
-app.mount('#app')</pre>
+app.mount('#app')</pre
+      >
     </section>
 
     <!-- 操作日志 -->
     <section class="card">
       <h2>操作日志</h2>
-      <div v-if="log.length === 0" style="color: #999; font-size: 13px;">
-        点击上方按钮记录操作...
-      </div>
+      <div v-if="log.length === 0" style="color: #999; font-size: 13px">点击上方按钮记录操作...</div>
       <div v-else>
         <div v-for="(item, i) in log" :key="i" class="log-item">
           <span class="log-num">{{ i + 1 }}</span>
           <span>{{ item }}</span>
         </div>
-        <a-button size="small" danger @click="clearLog" style="margin-top: 8px">
-          清除日志
-        </a-button>
+        <a-button size="small" danger @click="clearLog" style="margin-top: 8px"> 清除日志 </a-button>
       </div>
     </section>
   </div>

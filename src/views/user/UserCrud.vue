@@ -86,22 +86,11 @@ function statusBadgeClass(status: string): string {
     <!-- 工具栏 -->
     <div class="toolbar">
       <div class="toolbar-left">
-        <input
-          v-model.trim="searchKeyword"
-          type="text"
-          class="search-input"
-          placeholder="搜索姓名、邮箱、角色..."
-        />
-        <span class="search-result" v-if="searchKeyword">
-          找到 {{ filteredUsers.length }} 条结果
-        </span>
+        <input v-model.trim="searchKeyword" type="text" class="search-input" placeholder="搜索姓名、邮箱、角色..." />
+        <span class="search-result" v-if="searchKeyword"> 找到 {{ filteredUsers.length }} 条结果 </span>
       </div>
       <div class="toolbar-right">
-        <button
-          v-if="selectedIds.size > 0"
-          class="btn btn-danger-outline"
-          @click="confirmBatchDelete"
-        >
+        <button v-if="selectedIds.size > 0" class="btn btn-danger-outline" @click="confirmBatchDelete">
           删除选中 ({{ selectedIds.size }})
         </button>
         <button class="btn btn-outline" @click="exportCSV">导出 CSV</button>
@@ -115,11 +104,7 @@ function statusBadgeClass(status: string): string {
         <thead>
           <tr>
             <th class="col-check">
-              <input
-                type="checkbox"
-                :checked="isAllSelected"
-                @change="toggleSelectAll"
-              />
+              <input type="checkbox" :checked="isAllSelected" @change="toggleSelectAll" />
             </th>
             <th class="col-id sortable" @click="toggleSort('id')">
               ID <span class="sort-icon">{{ sortIcon('id') }}</span>
@@ -143,17 +128,9 @@ function statusBadgeClass(status: string): string {
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="user in filteredUsers"
-            :key="user.id"
-            :class="{ 'row-selected': selectedIds.has(user.id) }"
-          >
+          <tr v-for="user in filteredUsers" :key="user.id" :class="{ 'row-selected': selectedIds.has(user.id) }">
             <td>
-              <input
-                type="checkbox"
-                :checked="selectedIds.has(user.id)"
-                @change="toggleSelect(user.id)"
-              />
+              <input type="checkbox" :checked="selectedIds.has(user.id)" @change="toggleSelect(user.id)" />
             </td>
             <td class="col-id">{{ user.id }}</td>
             <td class="user-name">{{ user.name }}</td>
@@ -164,20 +141,14 @@ function statusBadgeClass(status: string): string {
               </span>
             </td>
             <td>
-              <button
-                class="status-toggle"
-                :class="statusBadgeClass(user.status)"
-                @click="store.toggleStatus(user.id)"
-              >
+              <button class="status-toggle" :class="statusBadgeClass(user.status)" @click="store.toggleStatus(user.id)">
                 {{ statusLabel(user.status) }}
               </button>
             </td>
             <td>{{ user.createdAt }}</td>
             <td class="action-btns">
               <button class="btn-action btn-edit" @click="openEditDialog(user)">编辑</button>
-              <button class="btn-action btn-delete" @click="confirmDelete(user.id, user.name)">
-                删除
-              </button>
+              <button class="btn-action btn-delete" @click="confirmDelete(user.id, user.name)">删除</button>
             </td>
           </tr>
           <tr v-if="filteredUsers.length === 0">

@@ -5,11 +5,7 @@
  */
 import { ref, computed } from 'vue'
 import { message } from 'ant-design-vue'
-import {
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-  LoadingOutlined,
-} from '@ant-design/icons-vue'
+import { CheckCircleOutlined, CloseCircleOutlined, LoadingOutlined } from '@ant-design/icons-vue'
 
 // ===== 大数据表格（虚拟滚动演示） =====
 interface BigDataItem {
@@ -115,16 +111,12 @@ test('Button emits click', async () => {
 <template>
   <div class="stage-page">
     <h1>阶段五：性能优化与工程化实践</h1>
-    <p class="subtitle">
-      按需加载、gzip 压缩、图标优化、自动化测试 —— 从开发到生产全链路优化。
-    </p>
+    <p class="subtitle">按需加载、gzip 压缩、图标优化、自动化测试 —— 从开发到生产全链路优化。</p>
 
     <!-- 大数据表格 + 防抖搜索 -->
     <section class="card">
       <h2>5.1 大数据表格 + 虚拟滚动 + 防抖搜索</h2>
-      <p>
-        Table 内置 <code>virtual</code> 支持虚拟滚动；搜索输入使用防抖（debounce 300ms）避免频繁请求。
-      </p>
+      <p>Table 内置 <code>virtual</code> 支持虚拟滚动；搜索输入使用防抖（debounce 300ms）避免频繁请求。</p>
 
       <div class="demo-row">
         <a-input

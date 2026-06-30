@@ -28,8 +28,8 @@ const commands = ref([
     <section class="card">
       <h2>Prettier 是什么？</h2>
       <p class="desc">
-        Prettier 是一个<strong>有主见（opinionated）的代码格式化工具</strong>。不同于 ESLint 提供数百条可配置规则，Prettier
-        只保留极少量配置项，保证团队内代码风格<strong>绝对一致</strong>。
+        Prettier 是一个<strong>有主见（opinionated）的代码格式化工具</strong>。不同于 ESLint
+        提供数百条可配置规则，Prettier 只保留极少量配置项，保证团队内代码风格<strong>绝对一致</strong>。
       </p>
       <div class="feature-grid">
         <div class="feature-item">

@@ -45,7 +45,7 @@ const useOrderStore = defineStore('multi-order', () => {
   }
 
   function cancelOrder(id: number) {
-    const order = orders.value.find(o => o.id === id)
+    const order = orders.value.find((o) => o.id === id)
     if (order) order.status = 'cancelled'
   }
 
@@ -94,9 +94,7 @@ let unsub: (() => void) | null = null
 
 function setupSubscribe() {
   unsub = orderStore.$subscribe((mutation, state) => {
-    subscribeLog.value.push(
-      `📡 store 变化 → ${mutation.events.length} 条变更，订单数：${state.orders.length}`,
-    )
+    subscribeLog.value.push(`📡 store 变化 → ${mutation.events.length} 条变更，订单数：${state.orders.length}`)
   })
 }
 
@@ -130,7 +128,8 @@ function toggleSubscribe() {
         Pinia 的 Store 天然支持互相引用 — 直接在 action/getter 中调用 <code>useXxxStore()</code> 即可。
         注意：不要在顶层直接调用（会导致循环依赖），应在 action/getter 函数体内调用。
       </p>
-      <pre class="code-block">// orderStore.ts
+      <pre class="code-block">
+// orderStore.ts
 import { useUserStore } from './userStore'
 
 export const useOrderStore = defineStore('order', () => {
@@ -147,7 +146,8 @@ export const useOrderStore = defineStore('order', () => {
   }
 
   return { canEdit, placeOrder }
-})</pre>
+})</pre
+      >
       <div class="tip-box">
         <strong>注意事项：</strong>
         <ul>
@@ -237,19 +237,17 @@ export const useOrderStore = defineStore('order', () => {
           {{ subscribing ? '订阅中' : '已关闭' }}
         </a-button>
       </div>
-      <p>
-        <code>$subscribe</code> 类似 Vue 的 <code>watch</code>，每当 store 的 state 发生变化时触发回调。
-      </p>
-      <pre class="code-block">store.$subscribe((mutation, state) => {
+      <p><code>$subscribe</code> 类似 Vue 的 <code>watch</code>，每当 store 的 state 发生变化时触发回调。</p>
+      <pre class="code-block">
+store.$subscribe((mutation, state) => {
   // mutation.type     — 'direct' | 'patch object' | 'patch function'
   // mutation.storeId  — store ID
   // mutation.events   — 变更事件数组
   // state              — 变更后的 state
-})</pre>
+})</pre
+      >
       <div class="subscribe-logs">
-        <div v-if="subscribeLog.length === 0" style="color: #999; font-size: 13px">
-          操作订单列表查看订阅日志...
-        </div>
+        <div v-if="subscribeLog.length === 0" style="color: #999; font-size: 13px">操作订单列表查看订阅日志...</div>
         <div v-for="(item, i) in subscribeLog" :key="i" class="log-item">
           <span class="log-num">{{ i + 1 }}</span>
           <span>{{ item }}</span>

@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import {
-  ref,
-  onBeforeMount,
-  onMounted,
-  onBeforeUpdate,
-  onUpdated,
-  onBeforeUnmount,
-  onUnmounted,
-} from 'vue'
+import { ref, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted } from 'vue'
 
 // ====================================================================
 // 1. 常用生命周期钩子
@@ -133,7 +125,8 @@ onBeforeUnmount(() => {
       <h2>📖 什么是生命周期？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong>Vue 组件从<em>创建→挂载→更新→销毁</em>会经历一系列阶段，每个阶段提供钩子函数让你在合适的时机执行代码。
+          <strong>一句话解释：</strong>Vue
+          组件从<em>创建→挂载→更新→销毁</em>会经历一系列阶段，每个阶段提供钩子函数让你在合适的时机执行代码。
         </p>
 
         <div class="key-points">
@@ -141,7 +134,9 @@ onBeforeUnmount(() => {
           <ul>
             <li><code>onMounted</code> 最常用：API 请求、初始化、DOM 操作都在这里</li>
             <li><code>onBeforeUnmount</code> 很重要：<strong>必须清理</strong>定时器、事件监听、订阅</li>
-            <li><strong>setup 阶段</strong>：相当于 <code>beforeCreate</code> + <code>created</code>，数据初始化在这里</li>
+            <li>
+              <strong>setup 阶段</strong>：相当于 <code>beforeCreate</code> + <code>created</code>，数据初始化在这里
+            </li>
             <li><strong>不清理的后果</strong>：内存泄漏、重复请求、事件冲突</li>
           </ul>
         </div>
@@ -151,13 +146,13 @@ onBeforeUnmount(() => {
     <!-- 1. 常用生命周期钩子 -->
     <section class="demo-section">
       <h2>1. 最常用的 4 个钩子</h2>
-      <p class="section-desc">
-        点击 +1 按钮触发 <code>beforeUpdate</code> 和 <code>updated</code>，日志会实时显示。
-      </p>
+      <p class="section-desc">点击 +1 按钮触发 <code>beforeUpdate</code> 和 <code>updated</code>，日志会实时显示。</p>
       <pre class="code-block">{{ lifecycleCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">计数</span> = <code>{{ count }}</code></p>
+          <p>
+            <span class="label">计数</span> = <code>{{ count }}</code>
+          </p>
         </div>
         <div class="action-box">
           <button @click="count++" class="demo-btn">+1（触发 update 钩子）</button>
@@ -171,9 +166,7 @@ onBeforeUnmount(() => {
     <!-- 2. 实战示例 -->
     <section class="demo-section">
       <h2>2. 实战示例 — 定时器 + 事件监听</h2>
-      <p class="section-desc">
-        标准模式：<code>onMounted</code> 启动 → <code>onBeforeUnmount</code> 清理。缺一不可！
-      </p>
+      <p class="section-desc">标准模式：<code>onMounted</code> 启动 → <code>onBeforeUnmount</code> 清理。缺一不可！</p>
       <pre class="code-block">{{ cleanupCode }}</pre>
       <div class="info-card">
         <div class="info-item">
@@ -185,9 +178,7 @@ onBeforeUnmount(() => {
           <span class="info-value">{{ windowWidth }} × {{ windowHeight }}</span>
         </div>
       </div>
-      <p class="hint">
-        💡 定时器每秒更新，窗口大小实时响应。切换到其他标签页再回来——清理机制确保不会有残留的定时器。
-      </p>
+      <p class="hint">💡 定时器每秒更新，窗口大小实时响应。切换到其他标签页再回来——清理机制确保不会有残留的定时器。</p>
     </section>
 
     <!-- 3. 生命周期一览表 -->

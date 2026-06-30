@@ -23,9 +23,7 @@ const isDisabled = ref(false)
           data-type="primary"
           style="margin-right: 8px"
         />
-        <button @click="isDisabled = !isDisabled">
-          切换 disabled ({{ isDisabled }})
-        </button>
+        <button @click="isDisabled = !isDisabled">切换 disabled ({{ isDisabled }})</button>
       </div>
     </div>
 
@@ -57,8 +55,14 @@ const isDisabled = ref(false)
   border-left: 4px solid #eb2f96;
 }
 
-h2 { margin: 0 0 16px 0; color: #333; }
-h4 { margin: 0 0 8px 0; color: #555; }
+h2 {
+  margin: 0 0 16px 0;
+  color: #333;
+}
+h4 {
+  margin: 0 0 8px 0;
+  color: #555;
+}
 
 .panel {
   background: #fff;
@@ -75,7 +79,11 @@ h4 { margin: 0 0 8px 0; color: #555; }
   margin-top: 8px;
 }
 
-.hint { color: #999; font-size: 13px; margin-top: 4px; }
+.hint {
+  color: #999;
+  font-size: 13px;
+  margin-top: 4px;
+}
 
 button {
   padding: 6px 14px;
@@ -86,7 +94,10 @@ button {
   font-size: 14px;
 }
 
-button:hover { border-color: #eb2f96; color: #eb2f96; }
+button:hover {
+  border-color: #eb2f96;
+  color: #eb2f96;
+}
 
 .info {
   background: #fff0f6;
@@ -96,8 +107,13 @@ button:hover { border-color: #eb2f96; color: #eb2f96; }
   color: #555;
 }
 
-.info ul { margin: 4px 0; padding-left: 20px; }
-.info li { margin: 4px 0; }
+.info ul {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+.info li {
+  margin: 4px 0;
+}
 .info code {
   background: #ffd6e7;
   padding: 1px 5px;

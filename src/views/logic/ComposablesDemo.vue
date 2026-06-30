@@ -12,8 +12,18 @@ const { count, double, increment, decrement, logs } = useCounter(0)
 
 // ====== 防抖搜索 ======
 const mockItems = [
-  'Apple', 'Banana', 'Cherry', 'Date', 'Grape', 'Orange', 'Peach',
-  'Mango', 'Strawberry', 'Blueberry', 'Pineapple', 'Watermelon',
+  'Apple',
+  'Banana',
+  'Cherry',
+  'Date',
+  'Grape',
+  'Orange',
+  'Peach',
+  'Mango',
+  'Strawberry',
+  'Blueberry',
+  'Pineapple',
+  'Watermelon',
 ]
 
 async function searchApi(keyword: string) {
@@ -31,7 +41,9 @@ const { keyword, results, loading: searchLoading } = useDebouncedSearch(searchAp
     <section class="demo-section">
       <h2>1. useMouse — 鼠标追踪</h2>
       <div class="mouse-tracker" ref="trackerRef">
-        <p>鼠标坐标: <strong>{{ x }}, {{ y }}</strong></p>
+        <p>
+          鼠标坐标: <strong>{{ x }}, {{ y }}</strong>
+        </p>
         <p class="hint">在此区域内移动鼠标查看实时坐标</p>
       </div>
       <p class="hint">onMounted 注册事件监听，onUnmounted 自动清理</p>
@@ -42,8 +54,12 @@ const { keyword, results, loading: searchLoading } = useDebouncedSearch(searchAp
       <h2>2. useCounter + useEventLogger — 组合式函数复用</h2>
       <div class="counter-demo">
         <div class="counter-display">
-          <p>Count: <strong>{{ count }}</strong></p>
-          <p>Double: <strong>{{ double }}</strong></p>
+          <p>
+            Count: <strong>{{ count }}</strong>
+          </p>
+          <p>
+            Double: <strong>{{ double }}</strong>
+          </p>
         </div>
         <div class="counter-btns">
           <button @click="decrement" class="btn-dec">-</button>
@@ -153,8 +169,16 @@ const { keyword, results, loading: searchLoading } = useDebouncedSearch(searchAp
   justify-content: center;
 }
 
-.btn-inc:hover { background: #f6ffed; border-color: #52c41a; color: #52c41a; }
-.btn-dec:hover { background: #fff2f0; border-color: #f5222d; color: #f5222d; }
+.btn-inc:hover {
+  background: #f6ffed;
+  border-color: #52c41a;
+  color: #52c41a;
+}
+.btn-dec:hover {
+  background: #fff2f0;
+  border-color: #f5222d;
+  color: #f5222d;
+}
 
 /* 日志 */
 .logs {
@@ -210,7 +234,9 @@ const { keyword, results, loading: searchLoading } = useDebouncedSearch(searchAp
 }
 
 @keyframes blink {
-  50% { opacity: 0.3; }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 .result-list {

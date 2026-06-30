@@ -43,10 +43,11 @@ const namedViewCode = `{
     <section class="card">
       <h2>3.1 嵌套路由（children）</h2>
       <p>
-        当页面有公共布局（如侧边栏 + 主内容区），使用 <code>children</code> 定义子路由。
-        父组件中放置 <code>&lt;RouterView /&gt;</code> 作为子路由渲染出口。
+        当页面有公共布局（如侧边栏 + 主内容区），使用 <code>children</code> 定义子路由。 父组件中放置
+        <code>&lt;RouterView /&gt;</code> 作为子路由渲染出口。
       </p>
-      <pre class="code-block">const routes = [
+      <pre class="code-block">
+const routes = [
   {
     path: '/user',
     component: UserLayout,     // 父组件，包含公共布局 + &lt;RouterView /&gt;
@@ -56,7 +57,8 @@ const namedViewCode = `{
       { path: 'orders', component: Orders },   // /user/orders
     ],
   },
-]</pre>
+]</pre
+      >
       <div class="tip-box">
         <strong>关键规则：</strong>
         <ul>
@@ -70,19 +72,14 @@ const namedViewCode = `{
     <!-- 3.2 嵌套路由演示 -->
     <section class="card">
       <h2>3.2 嵌套路由演示</h2>
-      <p>
-        下方是一个模拟用户中心，包含公共顶栏和三个子页面。
-        注意 URL 变化和面包屑导航。
-      </p>
+      <p>下方是一个模拟用户中心，包含公共顶栏和三个子页面。 注意 URL 变化和面包屑导航。</p>
 
       <div class="demo-nested">
         <!-- 模拟父组件布局 -->
         <div class="nested-parent">
           <div class="nested-header">
             <strong>👤 用户中心（父组件布局）</strong>
-            <span class="nested-breadcrumb">
-              /user/{{ route.path.split('/').pop() || 'profile' }}
-            </span>
+            <span class="nested-breadcrumb"> /user/{{ route.path.split('/').pop() || 'profile' }} </span>
           </div>
           <div class="nested-tabs">
             <button
@@ -124,16 +121,16 @@ const namedViewCode = `{
       component: () => import('./NestedSettings.vue'),
     },
   ],
-}</pre>
+}</pre
+      >
     </section>
 
     <!-- 3.3 命名视图 -->
     <section class="card">
       <h2>3.3 命名视图（Named Views）</h2>
       <p>
-        同一页面中可以有多个 <code>&lt;RouterView&gt;</code>，
-        通过 <code>name</code> 属性区分。路由配置中用 <code>components</code>（复数）替代
-        <code>component</code>。
+        同一页面中可以有多个 <code>&lt;RouterView&gt;</code>， 通过 <code>name</code> 属性区分。路由配置中用
+        <code>components</code>（复数）替代 <code>component</code>。
       </p>
 
       <div class="demo-named-view">
@@ -161,7 +158,8 @@ const namedViewCode = `{
       <div class="two-col">
         <div class="col">
           <h4>重定向 redirect</h4>
-          <pre class="code-block mini">// 字符串路径
+          <pre class="code-block mini">
+// 字符串路径
 { path: '/old', redirect: '/new' }
 
 // 命名路由
@@ -173,11 +171,13 @@ const namedViewCode = `{
   redirect: (to) => ({
     path: `/${to.params.role}/dashboard`
   }),
-}</pre>
+}</pre
+          >
         </div>
         <div class="col">
           <h4>别名 alias</h4>
-          <pre class="code-block mini">// 单个别名
+          <pre class="code-block mini">
+// 单个别名
 { path: '/', alias: '/home' }
 
 // 多个别名
@@ -187,7 +187,8 @@ const namedViewCode = `{
 {
   path: '/user/:id',
   alias: '/u/:id'
-}</pre>
+}</pre
+          >
         </div>
       </div>
       <div class="tip-box">

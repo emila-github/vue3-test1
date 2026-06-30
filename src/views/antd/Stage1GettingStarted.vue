@@ -5,12 +5,7 @@
  */
 import { ref } from 'vue'
 import { message } from 'ant-design-vue'
-import {
-  SmileOutlined,
-  HomeOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from '@ant-design/icons-vue'
+import { SmileOutlined, HomeOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons-vue'
 
 // ===== Button 示例 =====
 const btnLoading = ref(false)
@@ -52,9 +47,7 @@ function handleClose(removedTag: string) {
 <template>
   <div class="stage-page">
     <h1>阶段一：技术选型与项目起步</h1>
-    <p class="subtitle">
-      锁定技术栈 Vue 3.5 + Vite 6 + Ant Design Vue 4.2.6，全局注册后可直接使用所有组件。
-    </p>
+    <p class="subtitle">锁定技术栈 Vue 3.5 + Vite 6 + Ant Design Vue 4.2.6，全局注册后可直接使用所有组件。</p>
 
     <!-- Button 按钮 -->
     <section class="card">
@@ -69,9 +62,7 @@ function handleClose(removedTag: string) {
         <a-button danger>Danger</a-button>
       </div>
       <div class="demo-row">
-        <a-button type="primary" :loading="btnLoading" @click="handleClick">
-          点击加载
-        </a-button>
+        <a-button type="primary" :loading="btnLoading" @click="handleClick"> 点击加载 </a-button>
         <a-button type="primary" shape="circle">
           <template #icon><SmileOutlined /></template>
         </a-button>

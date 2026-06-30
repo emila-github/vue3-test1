@@ -111,7 +111,8 @@ const templateVifCode = `// template 上使用 v-if：不渲染包裹元素
       <h2>📖 什么是条件渲染？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong>根据数据条件<em>动态决定元素是否显示</em>。Vue 提供两种方式：<code>v-if</code>（销毁/重建 DOM）和 <code>v-show</code>（CSS 切换）。
+          <strong>一句话解释：</strong>根据数据条件<em>动态决定元素是否显示</em>。Vue
+          提供两种方式：<code>v-if</code>（销毁/重建 DOM）和 <code>v-show</code>（CSS 切换）。
         </p>
 
         <div class="key-points">
@@ -130,13 +131,13 @@ const templateVifCode = `// template 上使用 v-if：不渲染包裹元素
     <!-- 1. v-if / v-else-if / v-else -->
     <section class="demo-section">
       <h2>1. v-if / v-else-if / v-else — 条件链</h2>
-      <p class="section-desc">
-        像 JavaScript 的 <code>if/else</code> 一样形成条件链，只渲染第一个满足条件的元素。
-      </p>
+      <p class="section-desc">像 JavaScript 的 <code>if/else</code> 一样形成条件链，只渲染第一个满足条件的元素。</p>
       <pre class="code-block">{{ vIfCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">当前类型</span> = <code>{{ type }}</code></p>
+          <p>
+            <span class="label">当前类型</span> = <code>{{ type }}</code>
+          </p>
           <div v-if="type === 'A'" class="type-box type-a">✅ 类型 A 的内容</div>
           <div v-else-if="type === 'B'" class="type-box type-b">✅ 类型 B 的内容</div>
           <div v-else-if="type === 'C'" class="type-box type-c">✅ 类型 C 的内容</div>
@@ -146,38 +147,32 @@ const templateVifCode = `// template 上使用 v-if：不渲染包裹元素
           <button @click="changeType" class="demo-btn">切换类型</button>
         </div>
       </div>
-      <p class="hint">
-        💡 打开开发者工具观察：切换时只有当前匹配的元素存在于 DOM 中，其他的被完全移除。
-      </p>
+      <p class="hint">💡 打开开发者工具观察：切换时只有当前匹配的元素存在于 DOM 中，其他的被完全移除。</p>
     </section>
 
     <!-- 2. v-show -->
     <section class="demo-section">
       <h2>2. v-show — CSS 切换显示</h2>
-      <p class="section-desc">
-        元素始终在 DOM 中，只是通过 <code>display: none</code> 隐藏。
-      </p>
+      <p class="section-desc">元素始终在 DOM 中，只是通过 <code>display: none</code> 隐藏。</p>
       <pre class="code-block">{{ vShowCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
           <div v-show="isVisible" class="type-box type-a">这个元素通过 v-show 控制</div>
-          <p><span class="label">isVisible</span> = <code>{{ isVisible }}</code></p>
+          <p>
+            <span class="label">isVisible</span> = <code>{{ isVisible }}</code>
+          </p>
         </div>
         <div class="action-box">
           <button @click="isVisible = !isVisible" class="demo-btn">切换显示</button>
         </div>
       </div>
-      <p class="hint">
-        💡 打开开发者工具观察：元素始终在 DOM 中，只是 style 变成了 <code>display: none</code>。
-      </p>
+      <p class="hint">💡 打开开发者工具观察：元素始终在 DOM 中，只是 style 变成了 <code>display: none</code>。</p>
     </section>
 
     <!-- 3. v-if vs v-show -->
     <section class="demo-section">
       <h2>3. v-if vs v-show 对比</h2>
-      <p class="section-desc">
-        两者的本质区别：<code>v-if</code> 销毁/重建 DOM，<code>v-show</code> 只改 CSS。
-      </p>
+      <p class="section-desc">两者的本质区别：<code>v-if</code> 销毁/重建 DOM，<code>v-show</code> 只改 CSS。</p>
       <pre class="code-block">{{ vIfVsShowCode }}</pre>
       <table class="summary-table">
         <thead>
@@ -225,9 +220,7 @@ const templateVifCode = `// template 上使用 v-if：不渲染包裹元素
     <!-- 4. template 上使用 v-if -->
     <section class="demo-section">
       <h2>4. template 上使用 v-if — 不渲染包裹元素</h2>
-      <p class="section-desc">
-        <code>template</code> 是"幽灵标签"——只用来包裹多个元素，自身不会渲染到 DOM。
-      </p>
+      <p class="section-desc"><code>template</code> 是"幽灵标签"——只用来包裹多个元素，自身不会渲染到 DOM。</p>
       <pre class="code-block">{{ templateVifCode }}</pre>
       <div class="result-box">
         <template v-if="isLoggedIn">
@@ -243,9 +236,7 @@ const templateVifCode = `// template 上使用 v-if：不渲染包裹元素
           </div>
         </template>
       </div>
-      <p class="hint">
-        💡 查看 DOM 结构：找不到 <code>&lt;template&gt;</code> 标签，只有里面的 <code>div</code>。
-      </p>
+      <p class="hint">💡 查看 DOM 结构：找不到 <code>&lt;template&gt;</code> 标签，只有里面的 <code>div</code>。</p>
     </section>
   </div>
 </template>

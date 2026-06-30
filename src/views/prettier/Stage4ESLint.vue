@@ -29,8 +29,16 @@ const conflictExamples = ref([
 ])
 
 const configTypes = ref([
-  { type: 'eslint-config-prettier', desc: '关闭 ESLint 中所有与 Prettier 冲突的规则', usage: '只在 extends/配置数组中引入即可' },
-  { type: 'eslint-plugin-prettier', desc: '把 Prettier 作为 ESLint 的一条规则运行', usage: '需要插件 + config，ESLint --fix 会同时执行 Prettier' },
+  {
+    type: 'eslint-config-prettier',
+    desc: '关闭 ESLint 中所有与 Prettier 冲突的规则',
+    usage: '只在 extends/配置数组中引入即可',
+  },
+  {
+    type: 'eslint-plugin-prettier',
+    desc: '把 Prettier 作为 ESLint 的一条规则运行',
+    usage: '需要插件 + config，ESLint --fix 会同时执行 Prettier',
+  },
 ])
 
 const strategyTable = ref([
@@ -123,7 +131,8 @@ const lintStagedExample = `// .lintstagedrc.json
     <section class="card">
       <h2>典型冲突场景</h2>
       <p class="desc">
-        当 ESLint 的格式化规则（如 <code>semi</code>、<code>quotes</code>）与 Prettier 设置不一致时，两者会互相覆盖，产生"格式化→检查→又格式化"的死循环。
+        当 ESLint 的格式化规则（如 <code>semi</code>、<code>quotes</code>）与 Prettier
+        设置不一致时，两者会互相覆盖，产生"格式化→检查→又格式化"的死循环。
       </p>
       <a-table
         :columns="[
@@ -174,8 +183,8 @@ const lintStagedExample = `// .lintstagedrc.json
     <section class="card">
       <h2>本项目的 ESLint + Prettier 配置</h2>
       <p class="desc">
-        本项目中 ESLint 通过 <code>eslint-plugin-prettier</code> 把 Prettier 作为一条规则运行，
-        同时用 <code>eslint-config-prettier</code> 关闭冲突规则。
+        本项目中 ESLint 通过 <code>eslint-plugin-prettier</code> 把 Prettier 作为一条规则运行， 同时用
+        <code>eslint-config-prettier</code> 关闭冲突规则。
       </p>
       <div class="code-block">
         <pre><code>{{ eslintRcPrettierExample }}</code></pre>

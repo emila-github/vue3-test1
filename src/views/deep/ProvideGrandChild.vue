@@ -33,7 +33,10 @@ const style = themeColors[theme?.value || 'light'] ?? themeColors.light!
   margin-top: 12px;
 }
 
-p { margin: 4px 0; font-size: 13px; }
+p {
+  margin: 4px 0;
+  font-size: 13px;
+}
 
 .gc-btn {
   padding: 4px 10px;
@@ -46,5 +49,8 @@ p { margin: 4px 0; font-size: 13px; }
   margin-top: 6px;
 }
 
-.gc-btn:hover { border-color: #2f54eb; color: #2f54eb; }
+.gc-btn:hover {
+  border-color: #2f54eb;
+  color: #2f54eb;
+}
 </style>

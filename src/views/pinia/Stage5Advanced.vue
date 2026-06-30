@@ -85,7 +85,9 @@ const dynamicStores = ref<ReturnType<typeof createCountStore>[]>([])
 function createCountStore(label: string) {
   return defineStore(`dynamic-${label}`, () => {
     const count = ref(0)
-    function add() { count.value++ }
+    function add() {
+      count.value++
+    }
     return { count, add }
   })()
 }
@@ -108,10 +110,11 @@ function addDynamicStore() {
     <section class="card">
       <h2>5.1 Options Store 语法</h2>
       <p>
-        Pinia 同时支持类 Vuex 的 Options Store 语法，使用 <code>state</code>、<code>getters</code>、<code>actions</code> 定义。
-        <code>this</code> 可以访问所有内容。
+        Pinia 同时支持类 Vuex 的 Options Store 语法，使用 <code>state</code>、<code>getters</code>、<code>actions</code>
+        定义。 <code>this</code> 可以访问所有内容。
       </p>
-      <pre class="code-block">// Options Store — 类 Vuex 风格
+      <pre class="code-block">
+// Options Store — 类 Vuex 风格
 export const useProfileStore = defineStore('profile', {
   state: () => ({
     nickname: '小明',
@@ -132,7 +135,8 @@ export const useProfileStore = defineStore('profile', {
       this.$reset()
     },
   },
-})</pre>
+})</pre
+      >
 
       <div class="demo-box" style="margin-top: 12px">
         <h4>Options Store 演示 — 个人资料：</h4>
@@ -165,7 +169,8 @@ export const useProfileStore = defineStore('profile', {
         Pinia 不自带持久化，但可以通过 <code>watch</code> + <code>localStorage</code> 或第三方插件
         <code>pinia-plugin-persistedstate</code> 实现。
       </p>
-      <pre class="code-block">// 方案一：手动 watch（适合简单场景）
+      <pre class="code-block">
+// 方案一：手动 watch（适合简单场景）
 import { watch } from 'vue'
 
 const store = useSettingsStore()
@@ -178,7 +183,8 @@ watch(
 // 方案二：插件（推荐）
 // import { createPersistedState } from 'pinia-plugin-persistedstate'
 // const pinia = createPinia()
-// pinia.use(createPersistedState())</pre>
+// pinia.use(createPersistedState())</pre
+      >
 
       <div class="demo-box">
         <h4>演示 — 应用设置（刷新后保留）：</h4>
@@ -208,8 +214,7 @@ watch(
           <a-button danger size="small" @click="settingsStore.resetSettings()">重置</a-button>
         </a-space>
         <p style="margin-top: 12px; font-size: 13px; color: #999">
-          当前：theme={{ theme }}, lang={{ lang }}
-          &nbsp;—&nbsp;<em>刷新页面后设置仍然保留</em>
+          当前：theme={{ theme }}, lang={{ lang }} &nbsp;—&nbsp;<em>刷新页面后设置仍然保留</em>
         </p>
       </div>
     </section>
@@ -218,7 +223,8 @@ watch(
     <section class="card">
       <h2>5.3 Pinia 插件</h2>
       <p>Pinia 插件可以拦截所有 Store 的创建，实现全局功能扩展（如日志、持久化、重置）。</p>
-      <pre class="code-block">// 自定义 Pinia 插件
+      <pre class="code-block">
+// 自定义 Pinia 插件
 function myPlugin({ store }) {
   // 在 state 上添加公共属性
   store.apiUrl = 'https://api.example.com'
@@ -231,7 +237,8 @@ function myPlugin({ store }) {
 
 const pinia = createPinia()
 pinia.use(myPlugin)
-app.use(pinia)</pre>
+app.use(pinia)</pre
+      >
 
       <div class="tip-box">
         <strong>常用 Pinia 插件：</strong>
@@ -247,13 +254,18 @@ app.use(pinia)</pre>
     <section class="card">
       <h2>5.4 动态创建 Store 实例</h2>
       <p>
-        Pinia 的 <code>defineStore</code> 返回的是一个 <strong>hook 函数</strong>，可以在运行时多次调用，每次创建独立实例。
+        Pinia 的 <code>defineStore</code> 返回的是一个
+        <strong>hook 函数</strong>，可以在运行时多次调用，每次创建独立实例。
       </p>
       <div class="demo-box">
         <h4>演示 — 动态计数器：</h4>
         <a-button type="primary" size="small" @click="addDynamicStore">创建 Store 实例</a-button>
         <div v-if="dynamicStores.length > 0" style="margin-top: 12px">
-          <div v-for="(store, i) in dynamicStores" :key="i" style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px">
+          <div
+            v-for="(store, i) in dynamicStores"
+            :key="i"
+            style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px"
+          >
             <span style="font-weight: 500; width: 40px">Store {{ String.fromCharCode(65 + i) }}:</span>
             <span style="font-size: 18px; font-weight: 700; color: #fa541c">{{ store.count }}</span>
             <a-button size="small" @click="store.add()">+1</a-button>

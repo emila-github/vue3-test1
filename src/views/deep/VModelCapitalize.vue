@@ -18,12 +18,7 @@ function onInput(e: Event) {
 </script>
 
 <template>
-  <input
-    :value="modelValue"
-    @input="onInput"
-    placeholder="输入内容（首字母自动大写）..."
-    class="capitalize-input"
-  />
+  <input :value="modelValue" @input="onInput" placeholder="输入内容（首字母自动大写）..." class="capitalize-input" />
 </template>
 
 <style scoped>

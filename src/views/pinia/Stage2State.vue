@@ -23,7 +23,7 @@ const useCartStore = defineStore('cart-demo', () => {
   }
 
   function removeItem(id: number) {
-    items.value = items.value.filter(i => i.id !== id)
+    items.value = items.value.filter((i) => i.id !== id)
   }
 
   function clearCart() {
@@ -31,12 +31,12 @@ const useCartStore = defineStore('cart-demo', () => {
   }
 
   function addQty(id: number) {
-    const item = items.value.find(i => i.id === id)
+    const item = items.value.find((i) => i.id === id)
     if (item) item.qty++
   }
 
   return { items, totalItems, totalPrice, hasItems, addItem, removeItem, clearCart, addQty }
-})()
+})
 
 const cartStore = useCartStore()
 const { items, totalItems, totalPrice, hasItems } = storeToRefs(cartStore)
@@ -87,6 +87,33 @@ function addDemoLog(msg: string) {
   demoLog.value.push(msg)
   message.info(msg)
 }
+
+// 代码块内容（避免 </pre> 被 HTML 解析）
+const stateDefCode = `// Setup Store — 使用 ref/reactive
+export const useStore = defineStore('my', () => {
+  const count = ref(0)                    // 基本类型
+  const user = ref({ name: 'Alice' })     // 对象（用 ref）
+  const list = reactive<string[]>([])     // 数组（reactive 也可）
+  const config = reactive({ theme: 'dark', lang: 'zh' })
+
+  return { count, user, list, config }
+})`
+
+const getterCode = `const items = ref([...])
+
+// 基础 getter — 依赖当前 store
+const totalItems = computed(() => items.value.reduce((s, i) => s + i.qty, 0))
+const totalPrice = computed(() => items.value.reduce((s, i) => s + i.price * i.qty, 0))
+
+// 跨 Store getter — 引用其他 Store
+import { useUserStore } from './user'
+const user = useUserStore()
+const isVip = computed(() => user.role === 'admin')
+
+// 带参数的 getter — 返回函数
+function findById(id: number) {
+  return computed(() => items.value.find(i => i.id === id))
+}`
 </script>
 
 <template>
@@ -103,15 +130,7 @@ function addDemoLog(msg: string) {
         在 Setup Store 中，使用 <code>ref</code> 或 <code>reactive</code> 定义 state。
         <code>ref</code> 适合基本类型和数组，<code>reactive</code> 适合对象。
       </p>
-      <pre class="code-block">// Setup Store — 使用 ref/reactive
-export const useStore = defineStore('my', () => {
-  const count = ref(0)                    // 基本类型
-  const user = ref({ name: 'Alice' })     // 对象（用 ref）
-  const list = reactive<string[]>([])     // 数组（reactive 也可）
-  const config = reactive({ theme: 'dark', lang: 'zh' })
-
-  return { count, user, list, config }
-})</pre>
+      <pre class="code-block">{{ stateDefCode }}</pre>
       <div class="tip-box">
         <strong>最佳实践：</strong>
         <ul>
@@ -126,24 +145,10 @@ export const useStore = defineStore('my', () => {
     <section class="card">
       <h2>2.2 Getters：使用 computed</h2>
       <p>
-        Setup Store 中直接用 <code>computed</code> 定义 getter，既支持依赖当前 store 的 state，
-        也可以引用其他 store 的数据。
+        Setup Store 中直接用 <code>computed</code> 定义 getter，既支持依赖当前 store 的 state， 也可以引用其他 store
+        的数据。
       </p>
-      <pre class="code-block">const items = ref([...])
-
-// 基础 getter — 依赖当前 store
-const totalItems = computed(() => items.value.reduce((s, i) => s + i.qty, 0))
-const totalPrice = computed(() => items.value.reduce((s, i) => s + i.price * i.qty, 0))
-
-// 跨 Store getter — 引用其他 Store
-import { useUserStore } from './user'
-const user = useUserStore()
-const isVip = computed(() => user.role === 'admin')
-
-// 带参数的 getter — 返回函数
-function findById(id: number) {
-  return computed(() => items.value.find(i => i.id === id))
-}</pre>
+      <pre class="code-block">{{ getterCode }}</pre>
     </section>
 
     <!-- 2.3 购物车演示 -->

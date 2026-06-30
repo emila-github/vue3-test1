@@ -1,10 +1,12 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="child-page">
     <h4>👤 个人资料</h4>
-    <p>这是嵌套子路由页面：个人资料。注意 URL 变成了 <code>/vue-router/stage3/profile</code>，但页面的公共布局（顶栏和标签）保持不变。</p>
+    <p>
+      这是嵌套子路由页面：个人资料。注意 URL 变成了
+      <code>/vue-router/stage3/profile</code>，但页面的公共布局（顶栏和标签）保持不变。
+    </p>
     <a-descriptions bordered size="small" :column="2">
       <a-descriptions-item label="用户名">张三</a-descriptions-item>
       <a-descriptions-item label="角色">前端开发</a-descriptions-item>

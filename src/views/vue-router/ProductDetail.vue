@@ -6,10 +6,30 @@ const route = useRoute()
 const productId = computed(() => route.params.id as string)
 
 const products: Record<string, { name: string; price: number; category: string; desc: string }> = {
-  '1': { name: 'Vue 3 实战', price: 79, category: '前端', desc: '基于 Vue 3 Composition API 的实战教程，涵盖组件设计、状态管理、路由和工程化实践。' },
-  '2': { name: 'TypeScript 精讲', price: 89, category: '语言', desc: '从类型系统到高级模式的完整 TypeScript 学习路径。' },
-  '3': { name: 'Node.js 后端', price: 99, category: '后端', desc: 'Express/Koa 框架、数据库操作、RESTful API 设计与部署。' },
-  '4': { name: '算法与数据结构', price: 69, category: '计算机', desc: '常见算法与数据结构的 JavaScript/TypeScript 实现。' },
+  '1': {
+    name: 'Vue 3 实战',
+    price: 79,
+    category: '前端',
+    desc: '基于 Vue 3 Composition API 的实战教程，涵盖组件设计、状态管理、路由和工程化实践。',
+  },
+  '2': {
+    name: 'TypeScript 精讲',
+    price: 89,
+    category: '语言',
+    desc: '从类型系统到高级模式的完整 TypeScript 学习路径。',
+  },
+  '3': {
+    name: 'Node.js 后端',
+    price: 99,
+    category: '后端',
+    desc: 'Express/Koa 框架、数据库操作、RESTful API 设计与部署。',
+  },
+  '4': {
+    name: '算法与数据结构',
+    price: 69,
+    category: '计算机',
+    desc: '常见算法与数据结构的 JavaScript/TypeScript 实现。',
+  },
 }
 
 const product = computed(() => products[productId.value])
@@ -41,7 +61,9 @@ const product = computed(() => products[productId.value])
     </div>
 
     <div v-else class="not-found">
-      <p>❌ 产品 ID <code>{{ productId }}</code> 不存在</p>
+      <p>
+        ❌ 产品 ID <code>{{ productId }}</code> 不存在
+      </p>
     </div>
   </div>
 </template>

@@ -153,8 +153,9 @@ export default [
   }
 ]</code></pre>
       </div>
-      <div class="info-box" style="margin-top: 12px;">
-        <strong>实战技巧</strong>：公共配置放前面，针对特定文件的覆盖放后面。文件/目录级别的配置通过 <code>files</code> 字段限定作用范围。
+      <div class="info-box" style="margin-top: 12px">
+        <strong>实战技巧</strong>：公共配置放前面，针对特定文件的覆盖放后面。文件/目录级别的配置通过
+        <code>files</code> 字段限定作用范围。
       </div>
     </section>
 
@@ -181,7 +182,7 @@ export default [
         :data-source="rulesExamples"
         :pagination="false"
         size="small"
-        style="margin-top: 12px;"
+        style="margin-top: 12px"
       />
       <div class="code-compare">
         <div v-for="r in rulesExamples" :key="r.rule" class="rule-row">
@@ -419,7 +420,8 @@ export default [
   gap: 8px;
 }
 
-.code-bad, .code-good {
+.code-bad,
+.code-good {
   background: #fff;
   border: 1px solid #f0f0f0;
   border-radius: 6px;
@@ -428,15 +430,20 @@ export default [
   font-family: 'Consolas', monospace;
 }
 
-.code-bad .label, .code-good .label {
+.code-bad .label,
+.code-good .label {
   display: block;
   font-size: 10px;
   margin-bottom: 4px;
   color: #888;
 }
 
-.code-bad code { color: #cf1322; }
-.code-good code { color: #389e0d; }
+.code-bad code {
+  color: #cf1322;
+}
+.code-good code {
+  color: #389e0d;
+}
 
 @media (max-width: 640px) {
   .code-pair {

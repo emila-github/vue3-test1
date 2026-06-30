@@ -56,7 +56,7 @@ function addItem() {
 }
 
 const arrayOpsResult = computed(() => {
-  const joined = arrayOps.items.map(s => `"${s}"`).join(', ')
+  const joined = arrayOps.items.map((s) => `"${s}"`).join(', ')
   return `items: [${joined}] (共 ${arrayOps.items.length} 个)`
 })
 
@@ -238,7 +238,9 @@ const enum LogLevel {
   <div class="basic-types-page">
     <header class="page-header">
       <h1>TypeScript 基础类型</h1>
-      <p class="page-subtitle">掌握 TypeScript 的类型系统是写出健壮代码的第一步。每个类型都配有代码示例和可交互演示。</p>
+      <p class="page-subtitle">
+        掌握 TypeScript 的类型系统是写出健壮代码的第一步。每个类型都配有代码示例和可交互演示。
+      </p>
     </header>
 
     <!-- ==================== 引言：什么是基础类型 ==================== -->
@@ -246,7 +248,8 @@ const enum LogLevel {
       <h2 class="section-title">📖 什么是基础类型？为什么需要它？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong>TypeScript 为 JavaScript 的<em>每个值</em>添加了类型标注，让编译器能在<strong>写代码时就发现错误</strong>，而不是等到运行时才崩溃。
+          <strong>一句话解释：</strong>TypeScript 为 JavaScript
+          的<em>每个值</em>添加了类型标注，让编译器能在<strong>写代码时就发现错误</strong>，而不是等到运行时才崩溃。
         </p>
         <h3>没有类型的痛苦 😫</h3>
         <pre class="code-block">
@@ -258,7 +261,8 @@ let total = price * quantity  // → 500，隐式类型转换，难以发现错�
 function getUser(id) {
   return fetch('/api/user/' + id)  // id 可能传错类型
 }
-getUser({ id: 1 })  // → /api/user/[object Object]，完全不会报错！</pre>
+getUser({ id: 1 })  // → /api/user/[object Object]，完全不会报错！</pre
+        >
         <h3>有了类型之后 😎</h3>
         <pre class="code-block">
 // TypeScript：类型错误在编译时就会暴露
@@ -269,7 +273,8 @@ function getUser(id: number): Promise&lt;User&gt; {
   return fetch('/api/user/' + id)
 }
 getUser({ id: 1 })  // ❌ 编译错误：object 不能赋值给 number
-getUser(1)          // ✅</pre>
+getUser(1)          // ✅</pre
+        >
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
           <ul>
@@ -285,12 +290,16 @@ getUser(1)          // ✅</pre>
     <!-- 1. 原始类型 -->
     <section class="demo-section">
       <h2 class="section-title">1. 原始类型 <span class="badge">Primitive Types</span></h2>
-      <p class="section-desc">TypeScript 为 JavaScript 的 7 种原始类型提供了对应的类型标注。类型标注写在变量名后面，用冒号分隔。</p>
+      <p class="section-desc">
+        TypeScript 为 JavaScript 的 7 种原始类型提供了对应的类型标注。类型标注写在变量名后面，用冒号分隔。
+      </p>
       <pre class="code-block">{{ primitiveCode }}</pre>
       <div class="result-box">
         <p class="result-title">💡 类型推断演示</p>
         <p class="result-text">{{ primitiveInferred }}</p>
-        <p class="result-text">标注: <code class="inline-code">let str: string = '{{ primitiveExample }}'</code></p>
+        <p class="result-text">
+          标注: <code class="inline-code">let str: string = '{{ primitiveExample }}'</code>
+        </p>
       </div>
     </section>
 
@@ -302,21 +311,23 @@ getUser(1)          // ✅</pre>
 
       <div class="result-box">
         <p class="result-title">📋 静态数据展示</p>
-        <p class="result-text">arr1: <code class="inline-code">{{ arrayDemo.arr1.join(', ') }}</code> (number[])</p>
-        <p class="result-text">arr2: <code class="inline-code">{{ arrayDemo.arr2.join(', ') }}</code> (string[])</p>
-        <p class="result-text">tuple: <code class="inline-code">{{ arrayDemo.tuple[0] }}</code>, <code class="inline-code">{{ arrayDemo.tuple[1] }}</code> ([string, number])</p>
+        <p class="result-text">
+          arr1: <code class="inline-code">{{ arrayDemo.arr1.join(', ') }}</code> (number[])
+        </p>
+        <p class="result-text">
+          arr2: <code class="inline-code">{{ arrayDemo.arr2.join(', ') }}</code> (string[])
+        </p>
+        <p class="result-text">
+          tuple: <code class="inline-code">{{ arrayDemo.tuple[0] }}</code
+          >, <code class="inline-code">{{ arrayDemo.tuple[1] }}</code> ([string, number])
+        </p>
       </div>
 
       <!-- 交互式数组操作 -->
       <div class="result-box interactive">
         <p class="result-title">🛠️ 交互式：添加元素到数组</p>
         <div class="input-group">
-          <input
-            v-model="arrayOps.newItem"
-            class="text-input"
-            placeholder="输入框架名称..."
-            @keyup.enter="addItem"
-          />
+          <input v-model="arrayOps.newItem" class="text-input" placeholder="输入框架名称..." @keyup.enter="addItem" />
           <button class="demo-btn demo-btn-primary" @click="addItem">添加</button>
         </div>
         <p class="result-text">{{ arrayOpsResult }}</p>
@@ -336,7 +347,9 @@ getUser(1)          // ✅</pre>
       <!-- unknown 值选择 -->
       <div class="result-box">
         <p class="result-title">🔍 unknown 类型收窄演示</p>
-        <p class="result-text">当前值类型: <strong>{{ unknownTestType }}</strong></p>
+        <p class="result-text">
+          当前值类型: <strong>{{ unknownTestType }}</strong>
+        </p>
         <div class="btn-group">
           <button class="demo-btn" @click="setUnknownValue('string')">string: "hello"</button>
           <button class="demo-btn" @click="setUnknownValue('number')">number: 42</button>
@@ -359,8 +372,8 @@ getUser(1)          // ✅</pre>
     <section class="demo-section">
       <h2 class="section-title">4. 联合类型 (|) 与交叉类型 (&amp;) <span class="badge">组合类型</span></h2>
       <p class="section-desc">
-        <strong>联合 |</strong> = "或" → 值可以是多种类型之一；
-        <strong>交叉 &amp;</strong> = "且" → 同时拥有多个类型的属性。
+        <strong>联合 |</strong> = "或" → 值可以是多种类型之一； <strong>交叉 &amp;</strong> = "且" →
+        同时拥有多个类型的属性。
       </p>
       <pre class="code-block">{{ unionCode }}</pre>
 

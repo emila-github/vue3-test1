@@ -114,15 +114,19 @@ const styleArrayCode = `// :style 数组语法 — 合并多个样式对象
     <section class="demo-section intro-section">
       <h2>📖 为什么要动态绑定 class 和 style？</h2>
       <div class="explain-box">
-        <p>
-          <strong>一句话解释：</strong>根据数据状态<em>自动切换 CSS 类名和内联样式</em>，实现动态视觉效果。
-        </p>
+        <p><strong>一句话解释：</strong>根据数据状态<em>自动切换 CSS 类名和内联样式</em>，实现动态视觉效果。</p>
 
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
           <ul>
-            <li><code>:class</code> 支持<strong>对象语法</strong>（根据布尔值切换）和<strong>数组语法</strong>（应用多个类）</li>
-            <li><code>:style</code> 支持<strong>对象语法</strong>（camelCase 属性名）和<strong>数组语法</strong>（合并多个样式）</li>
+            <li>
+              <code>:class</code>
+              支持<strong>对象语法</strong>（根据布尔值切换）和<strong>数组语法</strong>（应用多个类）
+            </li>
+            <li>
+              <code>:style</code> 支持<strong>对象语法</strong>（camelCase
+              属性名）和<strong>数组语法</strong>（合并多个样式）
+            </li>
             <li>可以<strong>与静态 class 共存</strong>：<code>class="static" :class="dynamic"</code></li>
             <li>推荐用 <code>computed</code> 处理复杂的 class 逻辑</li>
           </ul>
@@ -133,9 +137,7 @@ const styleArrayCode = `// :style 数组语法 — 合并多个样式对象
     <!-- 1. class 对象语法 -->
     <section class="demo-section">
       <h2>1. :class 对象语法 — 布尔开关</h2>
-      <p class="section-desc">
-        每个属性是一个开关，<code>true</code> 则应用该类，<code>false</code> 则移除。
-      </p>
+      <p class="section-desc">每个属性是一个开关，<code>true</code> 则应用该类，<code>false</code> 则移除。</p>
       <pre class="code-block">{{ classObjectCode }}</pre>
       <div class="demo-boxes">
         <div :class="{ active: isActive }" class="demo-box">单个 class 切换</div>
@@ -145,21 +147,15 @@ const styleArrayCode = `// :style 数组语法 — 合并多个样式对象
         <div :class="computedClassObj" class="demo-box">computed 对象</div>
       </div>
       <div class="controls">
-        <button @click="isActive = !isActive" class="demo-btn">
-          isActive = {{ isActive }}
-        </button>
-        <button @click="hasError = !hasError" class="demo-btn">
-          hasError = {{ hasError }}
-        </button>
+        <button @click="isActive = !isActive" class="demo-btn">isActive = {{ isActive }}</button>
+        <button @click="hasError = !hasError" class="demo-btn">hasError = {{ hasError }}</button>
       </div>
     </section>
 
     <!-- 2. class 数组语法 -->
     <section class="demo-section">
       <h2>2. :class 数组语法 — 多个类名</h2>
-      <p class="section-desc">
-        数组元素可以是字符串、对象或三元表达式。
-      </p>
+      <p class="section-desc">数组元素可以是字符串、对象或三元表达式。</p>
       <pre class="code-block">{{ classArrayCode }}</pre>
       <div class="demo-boxes">
         <div :class="[activeClass, errorClass]" class="demo-box">基本数组</div>
@@ -171,9 +167,7 @@ const styleArrayCode = `// :style 数组语法 — 合并多个样式对象
     <!-- 3. style 对象语法 -->
     <section class="demo-section">
       <h2>3. :style 对象语法 — 动态内联样式</h2>
-      <p class="section-desc">
-        属性名用 camelCase（如 <code>fontSize</code>），值可以是响应式变量。
-      </p>
+      <p class="section-desc">属性名用 camelCase（如 <code>fontSize</code>），值可以是响应式变量。</p>
       <pre class="code-block">{{ styleObjectCode }}</pre>
       <div class="demo-boxes">
         <div :style="{ color: activeColor, fontSize: fontSize + 'px' }" class="demo-box">
@@ -192,15 +186,14 @@ const styleArrayCode = `// :style 数组语法 — 合并多个样式对象
     <!-- 4. style 数组语法 -->
     <section class="demo-section">
       <h2>4. :style 数组语法 — 合并多个样式</h2>
-      <p class="section-desc">
-        后面的样式对象会<strong>覆盖</strong>前面相同的属性。
-      </p>
+      <p class="section-desc">后面的样式对象会<strong>覆盖</strong>前面相同的属性。</p>
       <pre class="code-block">{{ styleArrayCode }}</pre>
       <div :style="[baseStyle, overrideStyle]" class="demo-box">
         多个样式对象合并 — 后面的 fontSize:20px 覆盖前面的 14px
       </div>
       <p class="hint">
-        💡 <code>baseStyle</code> 的 <code>fontSize: 14px</code> 被 <code>overrideStyle</code> 的 <code>fontSize: 20px</code> 覆盖了。
+        💡 <code>baseStyle</code> 的 <code>fontSize: 14px</code> 被 <code>overrideStyle</code> 的
+        <code>fontSize: 20px</code> 覆盖了。
       </p>
     </section>
 

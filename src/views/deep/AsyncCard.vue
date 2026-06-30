@@ -22,7 +22,13 @@ defineProps<{
   margin-top: 8px;
 }
 
-h3 { margin: 0 0 8px 0; color: #fa8c16; }
+h3 {
+  margin: 0 0 8px 0;
+  color: #fa8c16;
+}
 
-.hint { color: #999; font-size: 13px; }
+.hint {
+  color: #999;
+  font-size: 13px;
+}
 </style>

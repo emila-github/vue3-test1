@@ -1,9 +1,6 @@
 import { ref, watch } from 'vue'
 
-export function useDebouncedSearch(
-  searchFn: (keyword: string) => Promise<string[]>,
-  delay = 300,
-) {
+export function useDebouncedSearch(searchFn: (keyword: string) => Promise<string[]>, delay = 300) {
   const keyword = ref('')
   const results = ref<string[]>([])
   const loading = ref(false)

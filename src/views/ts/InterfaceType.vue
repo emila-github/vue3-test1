@@ -15,17 +15,17 @@
 //   接口就像一张"身份证模板"，所有人必须按这个模板填写信息
 
 interface User {
-  name: string    // 必填：名字是字符串
-  age: number      // 必填：年龄是数字
-  readonly id: number  // 只读：创建后不能修改（像身份证号）
-  email?: string   // 可选：? 表示这个属性可以有也可以没有
+  name: string // 必填：名字是字符串
+  age: number // 必填：年龄是数字
+  readonly id: number // 只读：创建后不能修改（像身份证号）
+  email?: string // 可选：? 表示这个属性可以有也可以没有
 }
 
 // readonly 的效果演示
 const user: User = { name: '张三', age: 25, id: 1 }
 // user.id = 999    // ❌ 编译错误：Cannot assign to 'id' because it is a read-only property
-user.email = 'zhang@example.com'  // ✅ 可选属性可以后续添加
-user.age = 26                     // ✅ 普通属性可以修改
+user.email = 'zhang@example.com' // ✅ 可选属性可以后续添加
+user.age = 26 // ✅ 普通属性可以修改
 
 const interfaceCode = `// interface 接口名 { 属性定义 }
 // 这是最基础的接口写法：规定对象的"形状"
@@ -57,12 +57,12 @@ const user2: User = { name: '李四', age: 30, id: 2 }
 //   用 extends 表达 "Dog extends Animal" 关系
 
 interface Animal {
-  name: string   // 所有动物都有名字
+  name: string // 所有动物都有名字
 }
 
 interface Dog extends Animal {
-  breed: string  // 狗的品种（金毛、哈士奇...）
-  bark(): void    // 狗的方法：叫
+  breed: string // 狗的品种（金毛、哈士奇...）
+  bark(): void // 狗的方法：叫
 }
 
 const dog: Dog = {
@@ -74,8 +74,12 @@ const dog: Dog = {
 }
 
 // 多继承：同时继承多个接口（interface 独有的能力）
-interface A { a: string }
-interface B { b: number }
+interface A {
+  a: string
+}
+interface B {
+  b: number
+}
 interface C extends A, B {
   c: boolean
 }
@@ -124,8 +128,12 @@ interface Calculator {
 
 const calc: Calculator = {
   name: '我的计算器',
-  add(a, b) { return a + b },
-  subtract(a, b) { return a - b },
+  add(a, b) {
+    return a + b
+  },
+  subtract(a, b) {
+    return a - b
+  },
   multiply: (a, b) => a * b,
 }
 
@@ -170,9 +178,9 @@ type Callback = (data: string) => void
 const point: Point = { x: 10, y: 20 }
 
 // type 的更多用法：给基本类型起别名
-type ID = string | number   // ID 可以是字符串或数字
-type StringOrNumber = string | number  // 同上
-type EmptyCallback = () => void  // 无参数无返回值的函数
+type ID = string | number // ID 可以是字符串或数字
+type StringOrNumber = string | number // 同上
+type EmptyCallback = () => void // 无参数无返回值的函数
 
 const typeAliasCode = `// type 语法：type 别名 = 具体类型
 // 1️⃣ 联合类型：只能是指定的几个值之一
@@ -200,8 +208,12 @@ type ID = string | number`
 //   定义联合类型/元组/映射类型 → 用 type（interface 做不到）
 
 // interface 支持声明合并（type 不支持）
-interface Config { host: string }
-interface Config { port: number }
+interface Config {
+  host: string
+}
+interface Config {
+  port: number
+}
 // 两次声明合并成：Config = { host: string; port: number }
 
 // type 做不到这个：重复声明会报错
@@ -247,14 +259,14 @@ type IsString<T> = T extends string ? 'yes' : 'no'
 //   索引签名 [key: string]: string 表示"key 是字符串，value 也是字符串"
 
 interface StringMap {
-  [key: string]: string  // key 名字随便取，类型是 string，value 也是 string
+  [key: string]: string // key 名字随便取，类型是 string，value 也是 string
 }
 
 const map: StringMap = { name: '张三', city: '北京', role: '管理员' }
 
 // 带数值索引的接口：number 索引通常用于数组
 interface NumberList {
-  [index: number]: string  // 下标是 number，值是 string
+  [index: number]: string // 下标是 number，值是 string
 }
 
 const list: NumberList = ['苹果', '香蕉', '橙子']
@@ -298,7 +310,7 @@ interface Animal {
 }
 
 interface AnimalConstructor {
-  new (name: string): Animal  // 用 new 调用，返回 Animal 实例
+  new (name: string): Animal // 用 new 调用，返回 Animal 实例
 }
 
 function createAnimal(ctor: AnimalConstructor, name: string): Animal {
@@ -670,8 +682,7 @@ const user: User = { name: '张三', age: 25 }
     <section class="demo-section">
       <h2>3. 接口中的方法签名</h2>
       <p class="section-desc">
-        接口不仅能定义属性，还能定义方法。<strong>标准写法</strong>
-        <code>method(): T</code> 和<strong>箭头写法</strong>
+        接口不仅能定义属性，还能定义方法。<strong>标准写法</strong> <code>method(): T</code> 和<strong>箭头写法</strong>
         <code>method: () =&gt; T</code> 两种形式等价。
       </p>
       <pre class="code-block">{{ methodCode }}</pre>
@@ -815,8 +826,7 @@ const user: User = { name: '张三', age: 25 }
     <section class="demo-section">
       <h2>8. 类实现接口 (implements)</h2>
       <p class="section-desc">
-        <code>implements</code> 让类"承诺"实现某个接口的所有必填成员。
-        一个类可以同时实现多个接口（用逗号分隔）。
+        <code>implements</code> 让类"承诺"实现某个接口的所有必填成员。 一个类可以同时实现多个接口（用逗号分隔）。
       </p>
       <pre class="code-block">{{ implCode }}</pre>
       <div class="result-box">
@@ -839,8 +849,7 @@ const user: User = { name: '张三', age: 25 }
     <section class="demo-section">
       <h2>9. 内置工具类型 — Readonly / Partial / Pick / Omit</h2>
       <p class="section-desc">
-        TypeScript 内置的工具类型用于<strong>从已有类型派生新类型</strong>，
-        是日常开发中最常用的类型操作。
+        TypeScript 内置的工具类型用于<strong>从已有类型派生新类型</strong>， 是日常开发中最常用的类型操作。
       </p>
       <pre class="code-block">{{ readonlyCode }}</pre>
       <div class="result-box">

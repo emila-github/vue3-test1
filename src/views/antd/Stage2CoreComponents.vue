@@ -174,20 +174,10 @@ function handleDrawerOk() {
     <section class="card">
       <h2>2.2 Table 表格</h2>
       <p>支持列排序、<code>#bodyCell</code> 插槽自定义渲染（antdv 4.x 推荐）、分页。</p>
-      <a-table
-        :columns="columns"
-        :data-source="tableData"
-        :pagination="{ pageSize: 5 }"
-        bordered
-      >
+      <a-table :columns="columns" :data-source="tableData" :pagination="{ pageSize: 5 }" bordered>
         <template #bodyCell="{ column, text }">
           <template v-if="column.key === 'tags'">
-            <a-tag
-              v-for="tag in text"
-              :key="tag"
-              :color="getTagColor(tag)"
-              style="margin-right: 4px"
-            >
+            <a-tag v-for="tag in text" :key="tag" :color="getTagColor(tag)" style="margin-right: 4px">
               {{ tag }}
             </a-tag>
           </template>

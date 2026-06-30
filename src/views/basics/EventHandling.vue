@@ -129,15 +129,22 @@ const keyModifierCode = `// 按键修饰符：监听特定按键
       <h2>📖 什么是事件处理？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong><code>v-on</code>（简写 <code>@</code>）让你<em>在 HTML 中直接绑定事件处理函数</em>，告别 <code>addEventListener</code>。
+          <strong>一句话解释：</strong><code>v-on</code>（简写 <code>@</code>）让你<em
+            >在 HTML 中直接绑定事件处理函数</em
+          >，告别 <code>addEventListener</code>。
         </p>
 
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
           <ul>
             <li><code>@click="handler"</code> 是最常用的事件绑定方式</li>
-            <li><strong>事件修饰符</strong>：<code>.prevent</code> <code>.stop</code> <code>.once</code> <code>.self</code> 简化常见操作</li>
-            <li><strong>按键修饰符</strong>：<code>.enter</code> <code>.esc</code> <code>.delete</code> 等，响应特定按键</li>
+            <li>
+              <strong>事件修饰符</strong>：<code>.prevent</code> <code>.stop</code> <code>.once</code>
+              <code>.self</code> 简化常见操作
+            </li>
+            <li>
+              <strong>按键修饰符</strong>：<code>.enter</code> <code>.esc</code> <code>.delete</code> 等，响应特定按键
+            </li>
             <li><code>$event</code> 是原生 DOM 事件对象，可传给方法</li>
           </ul>
         </div>
@@ -147,13 +154,13 @@ const keyModifierCode = `// 按键修饰符：监听特定按键
     <!-- 1. 基本事件 -->
     <section class="demo-section">
       <h2>1. 基本用法 — @click 等</h2>
-      <p class="section-desc">
-        内联语句、调用方法、传参、获取 <code>$event</code>——五种常见用法。
-      </p>
+      <p class="section-desc">内联语句、调用方法、传参、获取 <code>$event</code>——五种常见用法。</p>
       <pre class="code-block">{{ basicEventCode }}</pre>
       <div class="demo-row">
         <div class="result-box">
-          <p><span class="label">计数</span> = <code>{{ count }}</code></p>
+          <p>
+            <span class="label">计数</span> = <code>{{ count }}</code>
+          </p>
         </div>
         <div class="action-box">
           <button @click="count++" class="demo-btn">内联语句：count++</button>
@@ -204,19 +211,15 @@ const keyModifierCode = `// 按键修饰符：监听特定按键
     <!-- 3. 按键修饰符 -->
     <section class="demo-section">
       <h2>3. 按键修饰符</h2>
-      <p class="section-desc">
-        监听特定按键触发事件，如 Enter 提交、Esc 取消。
-      </p>
+      <p class="section-desc">监听特定按键触发事件，如 Enter 提交、Esc 取消。</p>
       <pre class="code-block">{{ keyModifierCode }}</pre>
       <div class="demo-row">
-        <div class="action-box" style="width: 100%;">
+        <div class="action-box" style="width: 100%">
           <input @keyup.enter="addLog('按下了 Enter')" class="demo-input wide" placeholder="按回车键触发 .enter" />
           <input @keyup.esc="addLog('按下了 Esc')" class="demo-input wide" placeholder="按 Esc 触发 .esc" />
         </div>
       </div>
-      <p class="hint">
-        常用按键：.enter .tab .delete .esc .space .up .down .left .right
-      </p>
+      <p class="hint">常用按键：.enter .tab .delete .esc .space .up .down .left .right</p>
     </section>
 
     <!-- 事件日志 -->
@@ -226,7 +229,7 @@ const keyModifierCode = `// 按键修饰符：监听特定按键
         <p v-for="(log, i) in eventLog" :key="i" class="log-item">{{ log }}</p>
         <p v-if="eventLog.length === 0" class="log-empty">暂无日志，点击上方按钮试试</p>
       </div>
-      <button @click="eventLog = []" class="demo-btn" style="margin-top: 8px;">清空日志</button>
+      <button @click="eventLog = []" class="demo-btn" style="margin-top: 8px">清空日志</button>
     </section>
   </div>
 </template>

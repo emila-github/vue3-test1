@@ -83,7 +83,8 @@ const vPermission = {
     <!-- 2. v-highlight -->
     <section class="demo-section">
       <h2>2. v-highlight — 动态高亮</h2>
-      <p>选择颜色：
+      <p>
+        选择颜色：
         <label v-for="c in ['#e6f7ff', '#fff7e6', '#f9f0ff', '#fff2f0']" :key="c" class="color-label">
           <input type="radio" v-model="highlightColor" :value="c" />
           <span :style="{ background: c }" class="color-dot"></span>
@@ -107,10 +108,10 @@ const vPermission = {
     <!-- 4. v-debounce-click -->
     <section class="demo-section">
       <h2>4. v-debounce-click — 防抖点击</h2>
-      <button v-debounce-click:1000="onDebounceClick" class="demo-btn">
-        防抖按钮（1秒）
-      </button>
-      <p>实际触发次数: <strong>{{ clickCount }}</strong></p>
+      <button v-debounce-click:1000="onDebounceClick" class="demo-btn">防抖按钮（1秒）</button>
+      <p>
+        实际触发次数: <strong>{{ clickCount }}</strong>
+      </p>
       <p class="hint">1秒内重复点击只触发一次，使用 :arg 传递延迟时间</p>
     </section>
 
@@ -121,7 +122,13 @@ const vPermission = {
       <div class="perm-demo">
         <button v-permission="'read'" class="demo-btn">读取数据 ✅</button>
         <button v-permission="'write'" class="demo-btn">编辑数据 ✅</button>
-        <button v-permission="'admin'" class="demo-btn" style="background:#fff2f0;border-color:#f5222d;color:#f5222d;">删除用户 ❌</button>
+        <button
+          v-permission="'admin'"
+          class="demo-btn"
+          style="background: #fff2f0; border-color: #f5222d; color: #f5222d"
+        >
+          删除用户 ❌
+        </button>
       </div>
       <p class="hint">无权限时通过 el.parentNode?.removeChild 移除元素</p>
     </section>

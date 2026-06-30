@@ -34,9 +34,7 @@ function toggleDynamicSlot() {
         <p>这是默认插槽的主体内容区域</p>
 
         <template #footer>
-          <span style="color: #999; font-size: 13px">
-            共 {{ todos.length }} 项任务
-          </span>
+          <span style="color: #999; font-size: 13px"> 共 {{ todos.length }} 项任务 </span>
         </template>
       </SlotsCard>
     </div>
@@ -85,8 +83,14 @@ function toggleDynamicSlot() {
   border-left: 4px solid #13c2c2;
 }
 
-h2 { margin: 0 0 16px 0; color: #333; }
-h4 { margin: 0 0 8px 0; color: #555; }
+h2 {
+  margin: 0 0 16px 0;
+  color: #333;
+}
+h4 {
+  margin: 0 0 8px 0;
+  color: #555;
+}
 
 .panel {
   background: #fff;
@@ -96,9 +100,17 @@ h4 { margin: 0 0 8px 0; color: #555; }
   border: 1px solid #f0f0f0;
 }
 
-.todo-index { color: #999; margin-right: 8px; }
-.done { text-decoration: line-through; color: #bbb; }
-.check { margin-left: 8px; }
+.todo-index {
+  color: #999;
+  margin-right: 8px;
+}
+.done {
+  text-decoration: line-through;
+  color: #bbb;
+}
+.check {
+  margin-left: 8px;
+}
 
 button {
   padding: 6px 14px;
@@ -109,7 +121,10 @@ button {
   font-size: 14px;
 }
 
-button:hover { border-color: #13c2c2; color: #13c2c2; }
+button:hover {
+  border-color: #13c2c2;
+  color: #13c2c2;
+}
 
 .info {
   background: #e6fffb;
@@ -119,8 +134,13 @@ button:hover { border-color: #13c2c2; color: #13c2c2; }
   color: #555;
 }
 
-.info ul { margin: 4px 0; padding-left: 20px; }
-.info li { margin: 4px 0; }
+.info ul {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+.info li {
+  margin: 4px 0;
+}
 .info code {
   background: #b5f5ec;
   padding: 1px 5px;

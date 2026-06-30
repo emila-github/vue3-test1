@@ -44,12 +44,7 @@ function shuffle() {
         <button @click="shuffle" class="demo-btn">随机排序</button>
       </div>
       <TransitionGroup name="list" tag="ul" class="tg-list">
-        <li
-          v-for="item in items"
-          :key="item.id"
-          :style="{ background: item.color }"
-          class="tg-item"
-        >
+        <li v-for="item in items" :key="item.id" :style="{ background: item.color }" class="tg-item">
           <span>{{ item.text }}</span>
           <button @click="removeItem(item.id)" class="remove-btn">×</button>
         </li>

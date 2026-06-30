@@ -104,7 +104,9 @@ export default defineConfig({
     <!-- 1.5 HMR 交互演示 -->
     <section class="card">
       <h2>HMR 实战演示：计数器</h2>
-      <p class="tip">当前计数 <strong>{{ counter }}</strong> — 修改本文件任意内容保存，观察计数器值是否丢失</p>
+      <p class="tip">
+        当前计数 <strong>{{ counter }}</strong> — 修改本文件任意内容保存，观察计数器值是否丢失
+      </p>
       <div class="hmr-demo">
         <a-button type="primary" @click="counter++">+1</a-button>
         <a-button style="margin-left: 8px" @click="counter = 0">清零</a-button>
@@ -136,37 +138,153 @@ export default defineConfig({
 </template>
 
 <style scoped>
-.stage-page { max-width: 960px; margin: 0 auto; padding: 24px; }
-.page-header { text-align: center; margin-bottom: 28px; }
-.page-header h1 { font-size: 26px; color: #1a1a1a; margin: 0 0 6px; }
-.page-header p { color: #666; font-size: 14px; }
+.stage-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.page-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.page-header h1 {
+  font-size: 26px;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+}
+.page-header p {
+  color: #666;
+  font-size: 14px;
+}
 
-.card { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-.card h2 { margin: 0 0 16px; font-size: 18px; color: #333; }
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.card h2 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  color: #333;
+}
 
-.cmd-list { display: flex; flex-direction: column; gap: 10px; }
-.cmd-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #fafafa; border-radius: 8px; border: 1px solid #f0f0f0; }
-.cmd-item code { font-size: 14px; background: #1a1a1a; color: #52c41a; padding: 4px 12px; border-radius: 4px; white-space: nowrap; }
-.cmd-item span { font-size: 13px; color: #999; }
+.cmd-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cmd-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+.cmd-item code {
+  font-size: 14px;
+  background: #1a1a1a;
+  color: #52c41a;
+  padding: 4px 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.cmd-item span {
+  font-size: 13px;
+  color: #999;
+}
 
-.tree-block { background: #1a1a1a; color: #52c41a; padding: 16px 20px; border-radius: 8px; font-size: 13px; line-height: 1.7; margin: 0; overflow-x: auto; }
+.tree-block {
+  background: #1a1a1a;
+  color: #52c41a;
+  padding: 16px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+  overflow-x: auto;
+}
 
-.code-block { background: #1a1a1a; color: #e6e6e6; padding: 16px 20px; border-radius: 8px; font-size: 13px; line-height: 1.7; margin: 0; overflow-x: auto; }
-.code-block code { font-family: 'Fira Code', 'Consolas', monospace; }
+.code-block {
+  background: #1a1a1a;
+  color: #e6e6e6;
+  padding: 16px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+  overflow-x: auto;
+}
+.code-block code {
+  font-family: 'Fira Code', 'Consolas', monospace;
+}
 
-.info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-.info-item { display: flex; flex-direction: column; gap: 4px; padding: 12px; background: #fafafa; border-radius: 8px; border: 1px solid #f0f0f0; }
-.info-item strong { font-size: 14px; color: #333; }
-.info-item span { font-size: 12px; color: #999; line-height: 1.5; }
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+.info-item strong {
+  font-size: 14px;
+  color: #333;
+}
+.info-item span {
+  font-size: 12px;
+  color: #999;
+  line-height: 1.5;
+}
 
-.tip { color: #666; font-size: 14px; margin-bottom: 12px; }
+.tip {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
 
-.hmr-demo { display: flex; align-items: center; gap: 8px; }
-.hmr-note { margin: 8px 0 0; font-size: 12px; color: #52c41a; }
+.hmr-demo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hmr-note {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #52c41a;
+}
 
-.highlight-box { background: #fffbe6; border: 1px solid #ffe58f; border-radius: 8px; padding: 14px; margin-top: 12px; }
-.highlight-box p { margin: 4px 0; font-size: 13px; color: #ad6800; }
-.highlight-box code { background: #fff1b8; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+.highlight-box {
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 8px;
+  padding: 14px;
+  margin-top: 12px;
+}
+.highlight-box p {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #ad6800;
+}
+.highlight-box code {
+  background: #fff1b8;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+}
 
-@media (max-width: 768px) { .info-grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

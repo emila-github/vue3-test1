@@ -41,14 +41,7 @@ function toggleStatus() {
     <!-- Props 演示子组件 -->
     <div class="result">
       <h4>子组件渲染：</h4>
-      <PropsChild
-        :title="title"
-        :likes="likes"
-        :tags="tags"
-        :status="status"
-        :is-active="true"
-        disabled
-      />
+      <PropsChild :title="title" :likes="likes" :tags="tags" :status="status" :is-active="true" disabled />
     </div>
 
     <!-- 说明 -->
@@ -73,8 +66,14 @@ function toggleStatus() {
   border-left: 4px solid #1890ff;
 }
 
-h2 { margin: 0 0 16px 0; color: #333; }
-h4 { margin: 16px 0 8px 0; color: #555; }
+h2 {
+  margin: 0 0 16px 0;
+  color: #333;
+}
+h4 {
+  margin: 16px 0 8px 0;
+  color: #555;
+}
 
 .panel {
   background: #fff;
@@ -114,7 +113,10 @@ button {
   font-size: 14px;
 }
 
-button:hover { border-color: #1890ff; color: #1890ff; }
+button:hover {
+  border-color: #1890ff;
+  color: #1890ff;
+}
 
 .value {
   font-weight: bold;
@@ -148,8 +150,13 @@ button:hover { border-color: #1890ff; color: #1890ff; }
   color: #555;
 }
 
-.info ul { margin: 4px 0; padding-left: 20px; }
-.info li { margin: 4px 0; }
+.info ul {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+.info li {
+  margin: 4px 0;
+}
 .info code {
   background: #e6f7ff;
   padding: 1px 5px;

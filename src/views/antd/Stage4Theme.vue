@@ -66,50 +66,49 @@ const algoPreviewData = [
   { name: '张三', age: 28, address: '北京市朝阳区' },
   { name: '李四', age: 32, address: '上海市浦东新区' },
 ]
-
 </script>
 
 <template>
   <a-config-provider :theme="themeConfig">
-  <div class="stage-page">
-    <h1>阶段四：主题定制与样式隔离</h1>
-    <p class="subtitle">
-      Ant Design Vue 4.x 弃用 Less，采用 <strong>CSS-in-JS</strong>（基于
-      <code>@ant-design/cssinjs</code>），支持运行时动态切换主题色。
-    </p>
-
-    <!-- 主题色切换 -->
-    <section class="card">
-      <h2>4.1 动态主题色切换</h2>
-      <p>
-        通过 <code>ConfigProvider</code> 的 <code>theme.token.colorPrimary</code>
-        即可运行时修改全局主题色，无需 less-loader 和重新编译。
+    <div class="stage-page">
+      <h1>阶段四：主题定制与样式隔离</h1>
+      <p class="subtitle">
+        Ant Design Vue 4.x 弃用 Less，采用 <strong>CSS-in-JS</strong>（基于
+        <code>@ant-design/cssinjs</code>），支持运行时动态切换主题色。
       </p>
 
-      <div class="theme-grid">
-        <div
-          v-for="item in themeColors"
-          :key="item.color"
-          class="theme-item"
-          :class="{ active: currentColor === item.color }"
-          :style="{ borderColor: currentColor === item.color ? item.color : '#e0e0e0' }"
-          @click="setThemeColor(item.color, item.name)"
-        >
-          <div class="theme-swatch" :style="{ background: item.color }">
-            <CheckOutlined v-if="currentColor === item.color" style="color: #fff; font-size: 16px" />
+      <!-- 主题色切换 -->
+      <section class="card">
+        <h2>4.1 动态主题色切换</h2>
+        <p>
+          通过 <code>ConfigProvider</code> 的 <code>theme.token.colorPrimary</code>
+          即可运行时修改全局主题色，无需 less-loader 和重新编译。
+        </p>
+
+        <div class="theme-grid">
+          <div
+            v-for="item in themeColors"
+            :key="item.color"
+            class="theme-item"
+            :class="{ active: currentColor === item.color }"
+            :style="{ borderColor: currentColor === item.color ? item.color : '#e0e0e0' }"
+            @click="setThemeColor(item.color, item.name)"
+          >
+            <div class="theme-swatch" :style="{ background: item.color }">
+              <CheckOutlined v-if="currentColor === item.color" style="color: #fff; font-size: 16px" />
+            </div>
+            <span class="theme-name">{{ item.name }}</span>
+            <code class="theme-hex">{{ item.color }}</code>
           </div>
-          <span class="theme-name">{{ item.name }}</span>
-          <code class="theme-hex">{{ item.color }}</code>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ConfigProvider 示例代码 -->
-    <section class="card">
-      <h2>4.2 ConfigProvider 全局配置</h2>
+      <!-- ConfigProvider 示例代码 -->
+      <section class="card">
+        <h2>4.2 ConfigProvider 全局配置</h2>
 
-      <div class="code-preview">
-        <pre class="code-sm">
+        <div class="code-preview">
+          <pre class="code-sm">
 // main.ts — 全局主题配置
 import { createApp } from 'vue'
 import Antd from 'ant-design-vue'
@@ -133,100 +132,93 @@ app.use(Antd)
 // 方式二：使用 @ant-design/colors 生成色板
 // import { generate } from '@ant-design/colors'
 // const palette = generate('#52c41a')</pre
-        >
-      </div>
-    </section>
+          >
+        </div>
+      </section>
 
-    <!-- 样式隔离 -->
-    <section class="card">
-      <h2>4.3 样式隔离最佳实践</h2>
+      <!-- 样式隔离 -->
+      <section class="card">
+        <h2>4.3 样式隔离最佳实践</h2>
 
-      <div class="info-list">
-        <div class="info-item">
-          <span class="info-badge">1</span>
-          <div>
-            <strong>CSS-in-JS 自动注入</strong>
-            <p>antdv 4.x 使用 <code>@ant-design/cssinjs</code>，样式自动注入到 <code>&lt;style&gt;</code> 标签，无需引入 CSS 文件。</p>
+        <div class="info-list">
+          <div class="info-item">
+            <span class="info-badge">1</span>
+            <div>
+              <strong>CSS-in-JS 自动注入</strong>
+              <p>
+                antdv 4.x 使用 <code>@ant-design/cssinjs</code>，样式自动注入到
+                <code>&lt;style&gt;</code> 标签，无需引入 CSS 文件。
+              </p>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-badge">2</span>
+            <div>
+              <strong>使用 &lt;App&gt; 组件包裹</strong>
+              <p>防止全局 CSS 变量污染，<code>&lt;App&gt;</code> 会重置 CSS 作用域。</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-badge">3</span>
+            <div>
+              <strong>UnoCSS 语义色</strong>
+              <p>推荐使用 UnoCSS 的语义色系统，避免手动覆盖底层样式变量。</p>
+            </div>
           </div>
         </div>
-        <div class="info-item">
-          <span class="info-badge">2</span>
-          <div>
-            <strong>使用 &lt;App&gt; 组件包裹</strong>
-            <p>防止全局 CSS 变量污染，<code>&lt;App&gt;</code> 会重置 CSS 作用域。</p>
+      </section>
+
+      <!-- 主题预览 -->
+      <section class="card">
+        <h2>4.4 主题效果预览</h2>
+        <p>
+          当前主题色：<code>{{ currentColor }}</code>
+        </p>
+
+        <div class="preview-grid">
+          <div class="preview-item">
+            <a-button type="primary">Primary 按钮</a-button>
+          </div>
+          <div class="preview-item">
+            <a-tag color="processing">进行中</a-tag>
+          </div>
+          <div class="preview-item">
+            <a-switch v-model:checked="isChecked" />
+          </div>
+          <div class="preview-item">
+            <a-progress :percent="72" style="width: 200px" />
           </div>
         </div>
-        <div class="info-item">
-          <span class="info-badge">3</span>
-          <div>
-            <strong>UnoCSS 语义色</strong>
-            <p>推荐使用 UnoCSS 的语义色系统，避免手动覆盖底层样式变量。</p>
+      </section>
+
+      <!-- 预设算法 -->
+      <section class="card">
+        <h2>4.5 预设算法（algorithm）</h2>
+        <p>
+          antdv 4.x 内置 <code>darkAlgorithm</code>（暗色模式）和 <code>compactAlgorithm</code>（紧凑模式），通过
+          <code>theme.algorithm</code>
+          即可组合启用，无需额外 CSS。
+        </p>
+
+        <div class="algorithm-controls">
+          <div class="algo-item">
+            <span class="algo-label">
+              <strong>暗色模式</strong>
+              <code>darkAlgorithm</code>
+            </span>
+            <a-switch :checked="isDark" checked-children="🌙" un-checked-children="☀️" @change="toggleDark" />
+          </div>
+          <div class="algo-item">
+            <span class="algo-label">
+              <strong>紧凑模式</strong>
+              <code>compactAlgorithm</code>
+            </span>
+            <a-switch :checked="isCompact" checked-children="密" un-checked-children="疏" @change="toggleCompact" />
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- 主题预览 -->
-    <section class="card">
-      <h2>4.4 主题效果预览</h2>
-      <p>
-        当前主题色：<code>{{ currentColor }}</code>
-      </p>
-
-      <div class="preview-grid">
-        <div class="preview-item">
-          <a-button type="primary">Primary 按钮</a-button>
-        </div>
-        <div class="preview-item">
-          <a-tag color="processing">进行中</a-tag>
-        </div>
-        <div class="preview-item">
-          <a-switch v-model:checked="isChecked" />
-        </div>
-        <div class="preview-item">
-          <a-progress :percent="72" style="width: 200px" />
-        </div>
-      </div>
-    </section>
-
-    <!-- 预设算法 -->
-    <section class="card">
-      <h2>4.5 预设算法（algorithm）</h2>
-      <p>
-        antdv 4.x 内置 <code>darkAlgorithm</code>（暗色模式）和
-        <code>compactAlgorithm</code>（紧凑模式），通过 <code>theme.algorithm</code>
-        即可组合启用，无需额外 CSS。
-      </p>
-
-      <div class="algorithm-controls">
-        <div class="algo-item">
-          <span class="algo-label">
-            <strong>暗色模式</strong>
-            <code>darkAlgorithm</code>
-          </span>
-          <a-switch
-            :checked="isDark"
-            checked-children="🌙"
-            un-checked-children="☀️"
-            @change="toggleDark"
-          />
-        </div>
-        <div class="algo-item">
-          <span class="algo-label">
-            <strong>紧凑模式</strong>
-            <code>compactAlgorithm</code>
-          </span>
-          <a-switch
-            :checked="isCompact"
-            checked-children="密"
-            un-checked-children="疏"
-            @change="toggleCompact"
-          />
-        </div>
-      </div>
-
-      <div class="code-preview" style="margin-top: 16px">
-        <pre class="code-sm">
+        <div class="code-preview" style="margin-top: 16px">
+          <pre class="code-sm">
 import {{ '{' }} theme {{ '}' }} from 'ant-design-vue'
 const {{ '{' }} darkAlgorithm, compactAlgorithm {{ '}' }} = theme
 
@@ -237,48 +229,49 @@ const themeConfig = computed(() => ({
     isCompact.value ? compactAlgorithm : undefined,
   ].filter(Boolean),
   token: {{ '{' }} colorPrimary: '#1677ff' {{ '}' }},
-}))</pre>
-      </div>
+}))</pre
+          >
+        </div>
 
-      <!-- 算法效果预览 -->
-      <div class="algo-preview">
-        <h3>效果对比</h3>
-        <div class="algo-preview-grid">
-          <div class="algo-preview-item">
-            <span class="algo-preview-label">按钮</span>
-            <a-space>
-              <a-button type="primary">Primary</a-button>
-              <a-button>Default</a-button>
-              <a-button type="dashed">Dashed</a-button>
-              <a-button type="text">Text</a-button>
-            </a-space>
-          </div>
-          <div class="algo-preview-item">
-            <span class="algo-preview-label">输入框</span>
-            <a-input placeholder="请输入内容" style="width: 200px" />
-          </div>
-          <div class="algo-preview-item">
-            <span class="algo-preview-label">选择器</span>
-            <a-select default-value="option1" style="width: 160px">
-              <a-select-option value="option1">选项一</a-select-option>
-              <a-select-option value="option2">选项二</a-select-option>
-              <a-select-option value="option3">选项三</a-select-option>
-            </a-select>
-          </div>
-          <div class="algo-preview-item">
-            <span class="algo-preview-label">表格</span>
-            <a-table
-              :columns="algoPreviewColumns"
-              :data-source="algoPreviewData"
-              :pagination="false"
-              size="small"
-              style="width: 100%"
-            />
+        <!-- 算法效果预览 -->
+        <div class="algo-preview">
+          <h3>效果对比</h3>
+          <div class="algo-preview-grid">
+            <div class="algo-preview-item">
+              <span class="algo-preview-label">按钮</span>
+              <a-space>
+                <a-button type="primary">Primary</a-button>
+                <a-button>Default</a-button>
+                <a-button type="dashed">Dashed</a-button>
+                <a-button type="text">Text</a-button>
+              </a-space>
+            </div>
+            <div class="algo-preview-item">
+              <span class="algo-preview-label">输入框</span>
+              <a-input placeholder="请输入内容" style="width: 200px" />
+            </div>
+            <div class="algo-preview-item">
+              <span class="algo-preview-label">选择器</span>
+              <a-select default-value="option1" style="width: 160px">
+                <a-select-option value="option1">选项一</a-select-option>
+                <a-select-option value="option2">选项二</a-select-option>
+                <a-select-option value="option3">选项三</a-select-option>
+              </a-select>
+            </div>
+            <div class="algo-preview-item">
+              <span class="algo-preview-label">表格</span>
+              <a-table
+                :columns="algoPreviewColumns"
+                :data-source="algoPreviewData"
+                :pagination="false"
+                size="small"
+                style="width: 100%"
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
+      </section>
+    </div>
   </a-config-provider>
 </template>
 

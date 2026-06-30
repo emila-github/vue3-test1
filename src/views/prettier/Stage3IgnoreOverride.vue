@@ -83,8 +83,8 @@ pnpm-lock.yaml
     <section class="card">
       <h2>.prettierignore — 排除不需要格式化的文件</h2>
       <p class="desc">
-        Prettier 默认排除 <code>node_modules/</code>，通过 <code>.prettierignore</code> 可以排除更多文件。
-        语法与 <code>.gitignore</code> 完全一致。
+        Prettier 默认排除 <code>node_modules/</code>，通过 <code>.prettierignore</code> 可以排除更多文件。 语法与
+        <code>.gitignore</code> 完全一致。
       </p>
       <div class="code-block">
         <pre><code>{{ ignoreFileExample }}</code></pre>
@@ -110,8 +110,8 @@ pnpm-lock.yaml
     <section class="card">
       <h2>overrides — 为不同文件类型定制配置</h2>
       <p class="desc">
-        使用 <code>overrides</code> 字段可以为特定文件或 glob 模式覆盖默认配置。
-        每个 override 包含 <code>files</code>（匹配规则）和 <code>options</code>（覆盖的选项）。
+        使用 <code>overrides</code> 字段可以为特定文件或 glob 模式覆盖默认配置。 每个 override 包含
+        <code>files</code>（匹配规则）和 <code>options</code>（覆盖的选项）。
       </p>
       <div class="code-block">
         <pre><code>{{ overrideFullExample }}</code></pre>

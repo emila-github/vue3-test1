@@ -235,7 +235,9 @@ function navigateTo(path: string) {
   border-radius: 10px;
   padding: 20px 16px;
   cursor: pointer;
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
 }
 
 .stage-card:hover {
@@ -315,7 +317,9 @@ function navigateTo(path: string) {
   margin-left: auto;
   font-size: 18px;
   color: #bbb;
-  transition: transform 0.2s, color 0.2s;
+  transition:
+    transform 0.2s,
+    color 0.2s;
 }
 
 .link-card:hover .link-arrow {

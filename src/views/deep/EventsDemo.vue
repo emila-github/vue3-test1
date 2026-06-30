@@ -6,16 +6,12 @@ const submitLog = ref<string[]>([])
 const counter = ref(0)
 
 function handleSubmit(email: string, password: string) {
-  submitLog.value.unshift(
-    `[${new Date().toLocaleTimeString()}] 提交：${email} / ${password}`
-  )
+  submitLog.value.unshift(`[${new Date().toLocaleTimeString()}] 提交：${email} / ${password}`)
   if (submitLog.value.length > 8) submitLog.value.pop()
 }
 
 function handleCancel() {
-  submitLog.value.unshift(
-    `[${new Date().toLocaleTimeString()}] 取消操作`
-  )
+  submitLog.value.unshift(`[${new Date().toLocaleTimeString()}] 取消操作`)
 }
 
 function handleUpdate(val: number) {
@@ -29,15 +25,13 @@ function handleUpdate(val: number) {
 
     <div class="result">
       <h4>子组件：</h4>
-      <EventsChild
-        @submit="handleSubmit"
-        @cancel="handleCancel"
-        @update="handleUpdate"
-      />
+      <EventsChild @submit="handleSubmit" @cancel="handleCancel" @update="handleUpdate" />
     </div>
 
     <div class="panel">
-      <p>计数器值：<strong>{{ counter }}</strong></p>
+      <p>
+        计数器值：<strong>{{ counter }}</strong>
+      </p>
     </div>
 
     <div class="log-area">
@@ -66,8 +60,14 @@ function handleUpdate(val: number) {
   border-left: 4px solid #722ed1;
 }
 
-h2 { margin: 0 0 16px 0; color: #333; }
-h4 { margin: 0 0 8px 0; color: #555; }
+h2 {
+  margin: 0 0 16px 0;
+  color: #333;
+}
+h4 {
+  margin: 0 0 8px 0;
+  color: #555;
+}
 
 .panel {
   background: #fff;
@@ -104,7 +104,10 @@ h4 { margin: 0 0 8px 0; color: #555; }
   border-bottom: 1px solid #333;
 }
 
-.hint { color: #999; font-size: 13px; }
+.hint {
+  color: #999;
+  font-size: 13px;
+}
 
 .info {
   background: #f9f0ff;
@@ -115,8 +118,13 @@ h4 { margin: 0 0 8px 0; color: #555; }
   margin-top: 12px;
 }
 
-.info ul { margin: 4px 0; padding-left: 20px; }
-.info li { margin: 4px 0; }
+.info ul {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+.info li {
+  margin: 4px 0;
+}
 .info code {
   background: #efdbff;
   padding: 1px 5px;

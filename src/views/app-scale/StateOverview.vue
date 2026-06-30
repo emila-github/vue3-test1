@@ -67,7 +67,8 @@ function goToPinia() {
         Pinia 是 Vue 官方推荐的状态管理库，支持 <strong>Setup Store</strong>（Composition API 风格）和
         <strong>Options Store</strong>（类 Vuex 风格）两种语法。
       </p>
-      <pre class="code-block">// Setup Store（推荐）
+      <pre class="code-block">
+// Setup Store（推荐）
 export const useCounterStore = defineStore('counter', () => {
   const count = ref(0)                       // state
   const double = computed(() => count * 2)   // getter
@@ -78,7 +79,8 @@ export const useCounterStore = defineStore('counter', () => {
 // 组件中使用
 const store = useCounterStore()
 const { count, double } = storeToRefs(store) // 保持响应式
-store.increment()                             // 调用 action</pre>
+store.increment()                             // 调用 action</pre
+      >
     </section>
 
     <!-- Pinia 特性 -->
@@ -123,11 +125,11 @@ store.increment()                             // 调用 action</pre>
       <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px">
         <div>
           <h2 style="margin: 0 0 4px">深入学习 Pinia</h2>
-          <p style="margin: 0; color: #888">5 阶段完整教程：Setup Store → State/Getter → Actions → 多Store协作 → 最佳实践</p>
+          <p style="margin: 0; color: #888">
+            5 阶段完整教程：Setup Store → State/Getter → Actions → 多Store协作 → 最佳实践
+          </p>
         </div>
-        <a-button type="primary" size="large" @click="goToPinia">
-          进入 Pinia 教程 →
-        </a-button>
+        <a-button type="primary" size="large" @click="goToPinia"> 进入 Pinia 教程 → </a-button>
       </div>
     </section>
   </div>

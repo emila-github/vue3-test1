@@ -437,9 +437,7 @@ identity(42)       // T = number</pre
     <section class="demo-section">
       <h2>2. 泛型约束 — extends 限制类型范围</h2>
       <p class="section-desc">
-        <code>T extends HasLength</code> 表示"T 可以是任何类型，<strong
-          >但它必须包含 length 属性</strong
-        >"。<br />
+        <code>T extends HasLength</code> 表示"T 可以是任何类型，<strong>但它必须包含 length 属性</strong>"。<br />
         没有约束时 T 可以是任意类型；有了约束后，T 被限定为满足条件的类型。
       </p>
       <pre class="code-block">{{ constraintCode }}</pre>

@@ -43,14 +43,13 @@ onUnmounted(() => {
 
     <!-- 返回顶部 -->
     <Transition name="back-top-fade">
-      <button
-        v-if="showBackTop"
-        class="back-top-btn"
-        title="返回顶部"
-        @click="scrollToTop"
-      >
+      <button v-if="showBackTop" class="back-top-btn" title="返回顶部" @click="scrollToTop">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M10 18a.75.75 0 0 1-.75-.75V5.612L5.78 9.08a.75.75 0 0 1-1.06-1.06l4.5-4.5a.75.75 0 0 1 1.06 0l4.5 4.5a.75.75 0 0 1-1.06 1.06l-3.47-3.47v11.64A.75.75 0 0 1 10 18Z" clip-rule="evenodd" />
+          <path
+            fill-rule="evenodd"
+            d="M10 18a.75.75 0 0 1-.75-.75V5.612L5.78 9.08a.75.75 0 0 1-1.06-1.06l4.5-4.5a.75.75 0 0 1 1.06 0l4.5 4.5a.75.75 0 0 1-1.06 1.06l-3.47-3.47v11.64A.75.75 0 0 1 10 18Z"
+            clip-rule="evenodd"
+          />
         </svg>
       </button>
     </Transition>

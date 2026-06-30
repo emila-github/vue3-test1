@@ -46,8 +46,8 @@ interface User {
   }
 }
 
-type UserName = User['name']            // string
-type UserAddress = User['address']      // { city: string; street: string }
+type UserName = User['name'] // string
+type UserAddress = User['address'] // { city: string; street: string }
 type UserCity = User['address']['city'] // string
 
 const indexedCode = `interface User {
@@ -113,7 +113,9 @@ Uncapitalize<'Hello'> // 'hello'`
   <div class="type-manipulation-page">
     <header class="page-header">
       <h1>TypeScript 类型操作</h1>
-      <p class="page-subtitle">掌握<strong>keyof</strong>、<strong>typeof</strong>、<strong>索引访问</strong>、<strong>映射类型</strong>和<strong>模板字面量类型</strong>，让你在类型层面"编程"。</p>
+      <p class="page-subtitle">
+        掌握<strong>keyof</strong>、<strong>typeof</strong>、<strong>索引访问</strong>、<strong>映射类型</strong>和<strong>模板字面量类型</strong>，让你在类型层面"编程"。
+      </p>
     </header>
 
     <!-- ==================== 引言 ==================== -->
@@ -121,7 +123,8 @@ Uncapitalize<'Hello'> // 'hello'`
       <h2 class="section-title">📖 什么是类型操作？为什么需要它？</h2>
       <div class="explain-box">
         <p>
-          <strong>一句话解释：</strong>类型操作让你<em>在类型层面做计算</em>——从已有类型中提取、遍历、变换出新类型，避免手动重复定义。
+          <strong>一句话解释：</strong
+          >类型操作让你<em>在类型层面做计算</em>——从已有类型中提取、遍历、变换出新类型，避免手动重复定义。
         </p>
         <h3>没有类型操作的痛苦 😫</h3>
         <pre class="code-block">
@@ -134,7 +137,8 @@ interface PartialPerson {
   age?: number
   city?: string
 }
-// 如果 Person 有 20 个属性，你就得手写 20 个 ?</pre>
+// 如果 Person 有 20 个属性，你就得手写 20 个 ?</pre
+        >
         <h3>有了类型操作之后 😎</h3>
         <pre class="code-block">
 // 用映射类型自动生成
@@ -143,7 +147,8 @@ type PartialPerson = { [K in keyof Person]?: Person[K] }
 
 // keyof Person    → 'name' | 'age' | 'city'（获取所有 key）
 // [K in keyof Person]  → 逐个遍历每个 key
-// Person[K]       → 获取每个 key 对应的 value 类型</pre>
+// Person[K]       → 获取每个 key 对应的 value 类型</pre
+        >
         <div class="key-points">
           <p>🔑 <strong>核心要点：</strong></p>
           <ul>
@@ -171,8 +176,12 @@ type PartialPerson = { [K in keyof Person]?: Person[K] }
       <h2>2. typeof — 从值推导类型</h2>
       <pre class="code-block">{{ typeofCode }}</pre>
       <div class="result-box">
-        <p>config 对象: {{ '{' }} host: '{{ config.host }}', port: {{ config.port }}, debug: {{ config.debug }} {{ '}' }}</p>
-        <p>Config 类型 = <code>{{ '{' }} host: string; port: number; debug: boolean {{ '}' }}</code></p>
+        <p>
+          config 对象: {{ '{' }} host: '{{ config.host }}', port: {{ config.port }}, debug: {{ config.debug }} {{ '}' }}
+        </p>
+        <p>
+          Config 类型 = <code>{{ '{' }} host: string; port: number; debug: boolean {{ '}' }}</code>
+        </p>
         <p class="hint">typeof 从实际值自动推导类型，避免手动声明</p>
       </div>
     </section>
@@ -183,7 +192,9 @@ type PartialPerson = { [K in keyof Person]?: Person[K] }
       <pre class="code-block">{{ indexedCode }}</pre>
       <div class="result-box">
         <p>User['name'] → <code>string</code></p>
-        <p>User['address'] → <code>{{ '{' }} city: string; street: string {{ '}' }}</code></p>
+        <p>
+          User['address'] → <code>{{ '{' }} city: string; street: string {{ '}' }}</code>
+        </p>
         <p>User['address']['city'] → <code>string</code></p>
       </div>
     </section>
