@@ -34,10 +34,7 @@ const columns = [
 async function fetchData(role: string) {
   loading.value = true
   try {
-    const [permInfo, userData] = await Promise.all([
-      getUserPermissions(role),
-      getUsersByRole(role),
-    ])
+    const [permInfo, userData] = await Promise.all([getUserPermissions(role), getUsersByRole(role)])
     permissions.value = permInfo.permissions
     users.value = userData.list
     dataPermissions.value = userData.permissions
@@ -70,7 +67,8 @@ onMounted(() => fetchData(currentRole.value))
           :key="r.key"
           :type="currentRole === r.key ? 'primary' : 'default'"
           @click="switchRole(r.key)"
-        >{{ r.label }}</a-button>
+          >{{ r.label }}</a-button
+        >
       </a-space>
     </section>
 
@@ -102,9 +100,8 @@ onMounted(() => fetchData(currentRole.value))
       <h2>用户数据表（后端已做权限过滤）</h2>
       <p class="desc">
         后端根据当前角色的数据权限自动过滤：
-        <strong>行级</strong>（仅返回有权限的行）、
-        <strong>字段级</strong>（敏感字段脱敏为 <code>****</code> 或 <code>***</code>）。
-        共 <strong>{{ users.length }}</strong> 条记录。
+        <strong>行级</strong>（仅返回有权限的行）、 <strong>字段级</strong>（敏感字段脱敏为 <code>****</code> 或
+        <code>***</code>）。 共 <strong>{{ users.length }}</strong> 条记录。
       </p>
       <a-spin :spinning="loading">
         <a-table
@@ -141,9 +138,27 @@ onMounted(() => fetchData(currentRole.value))
           { title: '推荐场景', dataIndex: 'scene', key: 'scene' },
         ]"
         :data-source="[
-          { plan: '后端过滤+脱敏', principle: '后端在 SQL/ORM 层面加 where 条件，返回脱敏数据', safety: '⭐⭐⭐ 最高', perf: '⭐⭐⭐', scene: '生产环境（推荐）' },
-          { plan: '前端 v-if 过滤', principle: '后端返回全量，前端根据权限 show/hide', safety: '⭐ 不安全', perf: '⭐', scene: 'Demo/原型（不推荐）' },
-          { plan: '后端分权限接口', principle: '不同接口返回不同字段集', safety: '⭐⭐⭐', perf: '⭐⭐', scene: '敏感系统（金融/医疗）' },
+          {
+            plan: '后端过滤+脱敏',
+            principle: '后端在 SQL/ORM 层面加 where 条件，返回脱敏数据',
+            safety: '⭐⭐⭐ 最高',
+            perf: '⭐⭐⭐',
+            scene: '生产环境（推荐）',
+          },
+          {
+            plan: '前端 v-if 过滤',
+            principle: '后端返回全量，前端根据权限 show/hide',
+            safety: '⭐ 不安全',
+            perf: '⭐',
+            scene: 'Demo/原型（不推荐）',
+          },
+          {
+            plan: '后端分权限接口',
+            principle: '不同接口返回不同字段集',
+            safety: '⭐⭐⭐',
+            perf: '⭐⭐',
+            scene: '敏感系统（金融/医疗）',
+          },
         ]"
         :pagination="false"
         size="small"
@@ -156,21 +171,91 @@ onMounted(() => fetchData(currentRole.value))
 </template>
 
 <style scoped>
-.stage-page { max-width: 960px; margin: 0 auto; padding: 24px; }
-.page-header { text-align: center; margin-bottom: 30px; }
-.page-header h1 { font-size: 24px; color: #1a1a1a; margin: 0 0 6px; }
-.page-header p { color: #999; font-size: 14px; }
-.card { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
-.card h2 { margin: 0 0 12px; font-size: 18px; color: #333; }
-.desc { color: #555; font-size: 14px; line-height: 1.8; margin: 0 0 12px; }
-.desc code { background: #f0f0f0; padding: 1px 6px; border-radius: 3px; }
-.perm-status-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.perm-status { display: flex; flex-direction: column; gap: 6px; padding: 16px; background: #fafafa; border-radius: 8px; text-align: center; border: 1px solid #f0f0f0; }
-.perm-status.active { background: #f6ffed; border-color: #b7eb8f; }
-.perm-status strong { font-size: 13px; }
-.perm-status span { font-size: 12px; color: #999; }
-.perm-status.active span { color: #52c41a; }
-.masked { color: #fa8c16; font-style: italic; }
-.tip-box { background: #fffbe6; border-left: 3px solid #faad14; padding: 12px 16px; border-radius: 4px; font-size: 13px; color: #333; }
-@media (max-width: 768px) { .perm-status-grid { grid-template-columns: repeat(2, 1fr); } }
+.stage-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.page-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.page-header h1 {
+  font-size: 24px;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+}
+.page-header p {
+  color: #999;
+  font-size: 14px;
+}
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: #333;
+}
+.desc {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0 0 12px;
+}
+.desc code {
+  background: #f0f0f0;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+.perm-status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.perm-status {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #f0f0f0;
+}
+.perm-status.active {
+  background: #f6ffed;
+  border-color: #b7eb8f;
+}
+.perm-status strong {
+  font-size: 13px;
+}
+.perm-status span {
+  font-size: 12px;
+  color: #999;
+}
+.perm-status.active span {
+  color: #52c41a;
+}
+.masked {
+  color: #fa8c16;
+  font-style: italic;
+}
+.tip-box {
+  background: #fffbe6;
+  border-left: 3px solid #faad14;
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #333;
+}
+@media (max-width: 768px) {
+  .perm-status-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 </style>

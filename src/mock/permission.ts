@@ -35,17 +35,27 @@ const userPermissions: Record<string, string[]> = {
     'data:user-view-sensitive',
     'data:report-view-own',
   ],
-  viewer: [
-    'menu:report',
-    'data:report-view-own',
-  ],
+  viewer: ['menu:report', 'data:report-view-own'],
 }
 
 // 所有可用的权限定义（供前端展示）
 const allPermissionsDefine = [
   { group: '菜单权限', items: ['menu:user-manage', 'menu:report', 'menu:settings', 'menu:admin'] },
-  { group: '按钮权限', items: ['btn:user-create', 'btn:user-edit', 'btn:user-delete', 'btn:user-export', 'btn:report-export', 'btn:settings-save'] },
-  { group: '数据权限', items: ['data:user-view-sensitive', 'data:user-view-salary', 'data:report-view-all', 'data:report-view-own'] },
+  {
+    group: '按钮权限',
+    items: [
+      'btn:user-create',
+      'btn:user-edit',
+      'btn:user-delete',
+      'btn:user-export',
+      'btn:report-export',
+      'btn:settings-save',
+    ],
+  },
+  {
+    group: '数据权限',
+    items: ['data:user-view-sensitive', 'data:user-view-salary', 'data:report-view-all', 'data:report-view-own'],
+  },
   { group: '超级权限', items: ['admin:full'] },
 ]
 
@@ -59,11 +69,51 @@ const allMenus = [
 
 // 模拟用户数据（含敏感和薪资字段）
 const mockUsers = [
-  { id: 1, name: '张三', dept: '技术部', phone: '13800001001', idCard: '110101199001011234', salary: 15000, email: 'zhangsan@example.com' },
-  { id: 2, name: '李四', dept: '产品部', phone: '13800001002', idCard: '110101199102022345', salary: 18000, email: 'lisi@example.com' },
-  { id: 3, name: '王五', dept: '市场部', phone: '13800001003', idCard: '110101199203033456', salary: 12000, email: 'wangwu@example.com' },
-  { id: 4, name: '赵六', dept: '技术部', phone: '13800001004', idCard: '110101199304044567', salary: 22000, email: 'zhaoliu@example.com' },
-  { id: 5, name: '钱七', dept: '产品部', phone: '13800001005', idCard: '110101199405055678', salary: 20000, email: 'qianqi@example.com' },
+  {
+    id: 1,
+    name: '张三',
+    dept: '技术部',
+    phone: '13800001001',
+    idCard: '110101199001011234',
+    salary: 15000,
+    email: 'zhangsan@example.com',
+  },
+  {
+    id: 2,
+    name: '李四',
+    dept: '产品部',
+    phone: '13800001002',
+    idCard: '110101199102022345',
+    salary: 18000,
+    email: 'lisi@example.com',
+  },
+  {
+    id: 3,
+    name: '王五',
+    dept: '市场部',
+    phone: '13800001003',
+    idCard: '110101199203033456',
+    salary: 12000,
+    email: 'wangwu@example.com',
+  },
+  {
+    id: 4,
+    name: '赵六',
+    dept: '技术部',
+    phone: '13800001004',
+    idCard: '110101199304044567',
+    salary: 22000,
+    email: 'zhaoliu@example.com',
+  },
+  {
+    id: 5,
+    name: '钱七',
+    dept: '产品部',
+    phone: '13800001005',
+    idCard: '110101199405055678',
+    salary: 20000,
+    email: 'qianqi@example.com',
+  },
 ]
 
 const routes: MockRoute[] = [
@@ -103,9 +153,7 @@ const routes: MockRoute[] = [
       const role = url.searchParams.get('role') || 'viewer'
       const permissions = (userPermissions[role] || userPermissions.viewer)!
       // 根据权限过滤菜单
-      const filteredMenus = allMenus.filter((menu) =>
-        menu.requiredPermissions.some((p) => permissions.includes(p)),
-      )
+      const filteredMenus = allMenus.filter((menu) => menu.requiredPermissions.some((p) => permissions.includes(p)))
       return {
         code: 200,
         data: { menus: filteredMenus, allMenus },
@@ -147,7 +195,11 @@ const routes: MockRoute[] = [
 
       return {
         code: 200,
-        data: { list: result, total: result.length, permissions: { canViewAll, canViewOwn, canViewSensitive, canViewSalary } },
+        data: {
+          list: result,
+          total: result.length,
+          permissions: { canViewAll, canViewOwn, canViewSensitive, canViewSalary },
+        },
         message: 'ok',
       }
     },

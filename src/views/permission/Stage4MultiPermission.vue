@@ -2,11 +2,7 @@
 import { ref, computed } from 'vue'
 
 // 模拟用户拥有的权限（通常从后端获取）
-const userPermissions = ref([
-  'btn:user-create',
-  'btn:user-edit',
-  'data:report-view-own',
-])
+const userPermissions = ref(['btn:user-create', 'btn:user-edit', 'data:report-view-own'])
 
 // 模拟另一个角色（更多权限）
 const userPermissionsB = ref([
@@ -19,7 +15,7 @@ const userPermissionsB = ref([
 ])
 
 const activeUser = ref<'A' | 'B'>('A')
-const currentPermissions = computed(() => activeUser.value === 'A' ? userPermissions.value : userPermissionsB.value)
+const currentPermissions = computed(() => (activeUser.value === 'A' ? userPermissions.value : userPermissionsB.value))
 
 function hasAny(...perms: string[]): boolean {
   return perms.some((p) => currentPermissions.value.includes(p))
@@ -93,7 +89,6 @@ const customResult = computed(() => {
   const allOk = hasAll(...customPerms.value)
   return { anyOk, allOk }
 })
-
 </script>
 
 <template>
@@ -107,8 +102,12 @@ const customResult = computed(() => {
     <section class="card">
       <h2>当前权限集</h2>
       <a-space style="margin-bottom: 12px">
-        <a-button :type="activeUser === 'A' ? 'primary' : 'default'" @click="activeUser = 'A'">用户 A（编辑权限）</a-button>
-        <a-button :type="activeUser === 'B' ? 'primary' : 'default'" @click="activeUser = 'B'">用户 B（管理权限）</a-button>
+        <a-button :type="activeUser === 'A' ? 'primary' : 'default'" @click="activeUser = 'A'"
+          >用户 A（编辑权限）</a-button
+        >
+        <a-button :type="activeUser === 'B' ? 'primary' : 'default'" @click="activeUser = 'B'"
+          >用户 B（管理权限）</a-button
+        >
       </a-space>
       <div style="display: flex; gap: 6px; flex-wrap: wrap">
         <a-tag v-for="p in currentPermissions" :key="p" color="blue">{{ p }}</a-tag>
@@ -152,14 +151,26 @@ const customResult = computed(() => {
           <p class="case-desc">{{ c.desc }}</p>
           <div class="case-resource">{{ c.resource }}</div>
           <div class="case-perms">
-            <a-tag v-for="p in c.perms" :key="p" :color="currentPermissions.includes(p) ? 'green' : 'default'" size="small">{{ p }}</a-tag>
+            <a-tag
+              v-for="p in c.perms"
+              :key="p"
+              :color="currentPermissions.includes(p) ? 'green' : 'default'"
+              size="small"
+              >{{ p }}</a-tag
+            >
           </div>
           <div class="case-logic">
             <span class="logic-label">{{ c.logic }}</span>
-            <span v-if="c.logic === 'hasAny'" :class="['result', hasAny(...(c.perms as [string, ...string[]])) ? 'pass' : 'fail']">
+            <span
+              v-if="c.logic === 'hasAny'"
+              :class="['result', hasAny(...(c.perms as [string, ...string[]])) ? 'pass' : 'fail']"
+            >
               {{ hasAny(...(c.perms as [string, ...string[]])) ? '✓ 通过' : '✗ 拒绝' }}
             </span>
-            <span v-else-if="c.logic === 'hasAll'" :class="['result', hasAll(...(c.perms as [string, ...string[]])) ? 'pass' : 'fail']">
+            <span
+              v-else-if="c.logic === 'hasAll'"
+              :class="['result', hasAll(...(c.perms as [string, ...string[]])) ? 'pass' : 'fail']"
+            >
               {{ hasAll(...(c.perms as [string, ...string[]])) ? '✓ 通过' : '✗ 拒绝' }}
             </span>
             <span v-else :class="['result', hasNone(...(c.perms as [string, ...string[]])) ? 'pass' : 'fail']">
@@ -177,7 +188,14 @@ const customResult = computed(() => {
       <a-input
         :value="customPerms.join(', ')"
         placeholder="如：btn:user-create, btn:user-edit, btn:user-delete"
-        @change="(e: any) => { customPerms = (e.target.value as string).split(',').map(s => s.trim()).filter(Boolean) }"
+        @change="
+          (e: any) => {
+            customPerms = (e.target.value as string)
+              .split(',')
+              .map((s) => s.trim())
+              .filter(Boolean)
+          }
+        "
         style="margin-bottom: 12px"
       />
       <div class="custom-result">
@@ -193,7 +211,8 @@ const customResult = computed(() => {
     <!-- 实现代码 -->
     <section class="card">
       <h2>核心实现代码</h2>
-      <div class="code-block"><pre><code>// hasAny — 任一满足（OR）
+      <div class="code-block">
+        <pre><code>// hasAny — 任一满足（OR）
 function hasAny(...perms: string[]): boolean {
   return perms.some(p => userPermissions.includes(p))
 }
@@ -206,47 +225,191 @@ function hasAll(...perms: string[]): boolean {
 // hasNone — 全部不满足（NAND）
 function hasNone(...perms: string[]): boolean {
   return perms.every(p => !userPermissions.includes(p))
-}</code></pre></div>
+}</code></pre>
+      </div>
     </section>
   </div>
 </template>
 
 <style scoped>
-.stage-page { max-width: 960px; margin: 0 auto; padding: 24px; }
-.page-header { text-align: center; margin-bottom: 30px; }
-.page-header h1 { font-size: 24px; color: #1a1a1a; margin: 0 0 6px; }
-.page-header p { color: #999; font-size: 14px; }
-.card { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
-.card h2 { margin: 0 0 12px; font-size: 18px; color: #333; }
-.card h4 { margin: 0 0 4px; font-size: 14px; color: #333; }
-.desc { color: #555; font-size: 14px; line-height: 1.8; margin: 0 0 12px; }
-.desc code { background: #f0f0f0; padding: 1px 6px; border-radius: 3px; }
-.small-desc { font-size: 12px; color: #999; margin: 0; }
-.logic-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.logic-card { padding: 16px; border-radius: 10px; border: 1px solid #f0f0f0; }
-.logic-card.or { background: #f6ffed; border-color: #b7eb8f; }
-.logic-card.and { background: #f0f5ff; border-color: #adc6ff; }
-.logic-card.none { background: #fff2f0; border-color: #ffccc7; }
-.logic-card p { font-size: 13px; color: #555; margin: 0 0 8px; }
-.mini-code { background: rgba(0,0,0,.05); padding: 6px 10px; border-radius: 4px; font-size: 12px; margin: 8px 0; overflow-x: auto; }
-.result-tag { font-size: 11px; color: #999; }
-.case-grid { display: flex; flex-direction: column; gap: 12px; }
-.case-card { padding: 14px 16px; border-radius: 8px; border: 1px solid #f0f0f0; background: #fafafa; }
-.case-card h4 { margin: 0 0 4px; font-size: 13px; }
-.case-desc { font-size: 12px; color: #999; margin: 0 0 8px; }
-.case-resource { font-size: 14px; margin-bottom: 8px; }
-.case-perms { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; }
-.case-logic { display: flex; align-items: center; gap: 8px; }
-.logic-label { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: #e6f4ff; color: #1677ff; }
-.result { font-size: 13px; font-weight: 600; }
-.result.pass { color: #52c41a; }
-.result.fail { color: #ff4d4f; }
-.custom-result { display: flex; flex-direction: column; gap: 8px; }
-.cr-item { padding: 10px 14px; border-radius: 6px; font-size: 13px; }
-.cr-item.pass { background: #f6ffed; color: #52c41a; }
-.cr-item.fail { background: #fff2f0; color: #ff4d4f; }
-.cr-item strong { margin-right: 8px; }
-.code-block { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 8px; overflow-x: auto; }
-.code-block code { font-size: 13px; line-height: 1.8; white-space: pre; }
-@media (max-width: 768px) { .logic-grid { grid-template-columns: 1fr; } }
+.stage-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.page-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.page-header h1 {
+  font-size: 24px;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+}
+.page-header p {
+  color: #999;
+  font-size: 14px;
+}
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: #333;
+}
+.card h4 {
+  margin: 0 0 4px;
+  font-size: 14px;
+  color: #333;
+}
+.desc {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0 0 12px;
+}
+.desc code {
+  background: #f0f0f0;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+.small-desc {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+}
+.logic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.logic-card {
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #f0f0f0;
+}
+.logic-card.or {
+  background: #f6ffed;
+  border-color: #b7eb8f;
+}
+.logic-card.and {
+  background: #f0f5ff;
+  border-color: #adc6ff;
+}
+.logic-card.none {
+  background: #fff2f0;
+  border-color: #ffccc7;
+}
+.logic-card p {
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 8px;
+}
+.mini-code {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin: 8px 0;
+  overflow-x: auto;
+}
+.result-tag {
+  font-size: 11px;
+  color: #999;
+}
+.case-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.case-card {
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+.case-card h4 {
+  margin: 0 0 4px;
+  font-size: 13px;
+}
+.case-desc {
+  font-size: 12px;
+  color: #999;
+  margin: 0 0 8px;
+}
+.case-resource {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.case-perms {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.case-logic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logic-label {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #e6f4ff;
+  color: #1677ff;
+}
+.result {
+  font-size: 13px;
+  font-weight: 600;
+}
+.result.pass {
+  color: #52c41a;
+}
+.result.fail {
+  color: #ff4d4f;
+}
+.custom-result {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cr-item {
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+.cr-item.pass {
+  background: #f6ffed;
+  color: #52c41a;
+}
+.cr-item.fail {
+  background: #fff2f0;
+  color: #ff4d4f;
+}
+.cr-item strong {
+  margin-right: 8px;
+}
+.code-block {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.code-block code {
+  font-size: 13px;
+  line-height: 1.8;
+  white-space: pre;
+}
+@media (max-width: 768px) {
+  .logic-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

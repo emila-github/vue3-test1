@@ -10,7 +10,10 @@ const menus = ref<MenuItem[]>([])
 const allMenus = ref<MenuItem[]>([])
 const users = ref<UserRecord[]>([])
 const dataPermissions = ref<UserListResult['permissions']>({
-  canViewAll: false, canViewOwn: false, canViewSensitive: false, canViewSalary: false,
+  canViewAll: false,
+  canViewOwn: false,
+  canViewSensitive: false,
+  canViewSalary: false,
 })
 const loading = ref(false)
 const activeMenu = ref('user-manage')
@@ -82,7 +85,9 @@ async function fetchAll(role: string) {
       reportData.value[1]!.avgSalary = '¥18,000'
       reportData.value[2]!.avgSalary = '¥12,000'
     } else {
-      reportData.value.forEach((r) => { r.avgSalary = '***' })
+      reportData.value.forEach((r) => {
+        r.avgSalary = '***'
+      })
     }
   } finally {
     loading.value = false
@@ -102,13 +107,33 @@ function addLog(msg: string) {
 }
 
 // 按钮操作（模拟）
-function handleCreate() { addLog('新建用户（权限通过）'); message.success('新建成功') }
-function handleEdit() { addLog('编辑用户（权限通过）'); message.success('编辑成功') }
-function handleDelete() { addLog('删除用户（权限通过）'); message.success('删除成功') }
-function handleExport() { addLog('导出数据（权限通过）'); message.success('导出成功') }
-function handleExportReport() { addLog('导出报表（权限通过）'); message.success('报表导出成功') }
-function handleSaveSettings() { addLog('保存设置（权限通过）'); message.success('保存成功') }
-function handleClearLogs() { logEntries.value = [] }
+function handleCreate() {
+  addLog('新建用户（权限通过）')
+  message.success('新建成功')
+}
+function handleEdit() {
+  addLog('编辑用户（权限通过）')
+  message.success('编辑成功')
+}
+function handleDelete() {
+  addLog('删除用户（权限通过）')
+  message.success('删除成功')
+}
+function handleExport() {
+  addLog('导出数据（权限通过）')
+  message.success('导出成功')
+}
+function handleExportReport() {
+  addLog('导出报表（权限通过）')
+  message.success('报表导出成功')
+}
+function handleSaveSettings() {
+  addLog('保存设置（权限通过）')
+  message.success('保存成功')
+}
+function handleClearLogs() {
+  logEntries.value = []
+}
 
 onMounted(() => fetchAll(currentRole.value))
 </script>
@@ -120,15 +145,8 @@ onMounted(() => fetchAll(currentRole.value))
       <h2>🛡️ 权限管理后台</h2>
       <div class="header-right">
         <span class="role-label">当前角色：</span>
-        <a-select
-          :value="currentRole"
-          style="width: 140px"
-          size="small"
-          @change="switchRole"
-        >
-          <a-select-option v-for="r in roles" :key="r.key" :value="r.key">
-            {{ r.icon }} {{ r.label }}
-          </a-select-option>
+        <a-select :value="currentRole" style="width: 140px" size="small" @change="switchRole">
+          <a-select-option v-for="r in roles" :key="r.key" :value="r.key"> {{ r.icon }} {{ r.label }} </a-select-option>
         </a-select>
         <span class="perm-count">{{ permissions.length }} 个权限</span>
       </div>
@@ -150,7 +168,7 @@ onMounted(() => fetchAll(currentRole.value))
         <div class="sidebar-section">
           <h4 style="margin-top: 16px">隐藏菜单（无权限）</h4>
           <div
-            v-for="m in allMenus.filter(am => !menus.some(m2 => m2.key === am.key))"
+            v-for="m in allMenus.filter((am) => !menus.some((m2) => m2.key === am.key))"
             :key="'hidden-' + m.key"
             class="nav-item hidden"
           >
@@ -162,7 +180,6 @@ onMounted(() => fetchAll(currentRole.value))
       <!-- 主内容 -->
       <main class="admin-content">
         <a-spin :spinning="loading">
-
           <!-- 用户管理页面 -->
           <template v-if="activeMenu === 'user-manage'">
             <section class="admin-card">
@@ -175,10 +192,21 @@ onMounted(() => fetchAll(currentRole.value))
                   <a-button v-permission="['btn:user-edit']" size="small" @click="handleEdit" style="margin-left: 8px">
                     编辑
                   </a-button>
-                  <a-button v-permission="['btn:user-delete']" size="small" danger @click="handleDelete" style="margin-left: 8px">
+                  <a-button
+                    v-permission="['btn:user-delete']"
+                    size="small"
+                    danger
+                    @click="handleDelete"
+                    style="margin-left: 8px"
+                  >
                     删除
                   </a-button>
-                  <a-button v-permission="['btn:user-export']" size="small" @click="handleExport" style="margin-left: 8px">
+                  <a-button
+                    v-permission="['btn:user-export']"
+                    size="small"
+                    @click="handleExport"
+                    style="margin-left: 8px"
+                  >
                     导出
                   </a-button>
                 </div>
@@ -217,18 +245,16 @@ onMounted(() => fetchAll(currentRole.value))
                   </template>
                   <template v-if="column.key === 'action'">
                     <a-button v-permission="['btn:user-edit']" size="small" type="link">编辑</a-button>
-                    <a-button
-                      v-permission="['btn:user-delete']"
-                      size="small"
-                      type="link"
-                      danger
-                    >删除</a-button>
+                    <a-button v-permission="['btn:user-delete']" size="small" type="link" danger>删除</a-button>
                   </template>
                 </template>
               </a-table>
               <div class="table-footer">
                 共 {{ users.length }} 条记录
-                <span v-if="!dataPermissions.canViewAll && dataPermissions.canViewOwn" style="color: #fa8c16; margin-left: 8px">
+                <span
+                  v-if="!dataPermissions.canViewAll && dataPermissions.canViewOwn"
+                  style="color: #fa8c16; margin-left: 8px"
+                >
                   （仅显示本部门数据）
                 </span>
               </div>
@@ -240,7 +266,11 @@ onMounted(() => fetchAll(currentRole.value))
             <section class="admin-card">
               <div class="card-header">
                 <h3>📊 数据报表</h3>
-                <a-button v-permission="['btn:report-export', 'data:report-view-all']" size="small" @click="handleExportReport">
+                <a-button
+                  v-permission="['btn:report-export', 'data:report-view-all']"
+                  size="small"
+                  @click="handleExportReport"
+                >
                   导出报表
                 </a-button>
               </div>
@@ -305,13 +335,12 @@ onMounted(() => fetchAll(currentRole.value))
               </div>
               <div style="padding: 16px">
                 <p style="color: #555; font-size: 13px">
-                  此面板通过 <strong>多权限 OR 逻辑</strong>控制访问：
-                  <code>hasAny('menu:admin', 'admin:full')</code> — 任一满足即可。
+                  此面板通过 <strong>多权限 OR 逻辑</strong>控制访问： <code>hasAny('menu:admin', 'admin:full')</code> —
+                  任一满足即可。
                 </p>
               </div>
             </section>
           </template>
-
         </a-spin>
       </main>
     </div>
@@ -322,37 +351,158 @@ onMounted(() => fetchAll(currentRole.value))
         <h4>操作日志</h4>
         <a-button size="small" @click="handleClearLogs">清除</a-button>
       </div>
-      <div v-if="logEntries.length === 0" style="color: #999; font-size: 13px; padding: 8px 0">点击上方按钮触发操作</div>
+      <div v-if="logEntries.length === 0" style="color: #999; font-size: 13px; padding: 8px 0">
+        点击上方按钮触发操作
+      </div>
       <div v-for="(l, i) in logEntries" :key="i" class="log-line">{{ l }}</div>
     </footer>
   </div>
 </template>
 
 <style scoped>
-.admin-layout { max-width: 1100px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
-.admin-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #fff; border-bottom: 1px solid #f0f0f0; }
-.admin-header h2 { margin: 0; font-size: 18px; color: #1a1a1a; }
-.header-right { display: flex; align-items: center; gap: 8px; }
-.role-label { font-size: 13px; color: #999; }
-.perm-count { font-size: 12px; color: #1677ff; background: #e6f4ff; padding: 2px 8px; border-radius: 10px; }
-.admin-body { display: flex; flex: 1; }
-.admin-sidebar { width: 200px; padding: 16px; background: #fafafa; border-right: 1px solid #f0f0f0; flex-shrink: 0; }
-.admin-sidebar h4 { margin: 0 0 8px; font-size: 12px; color: #999; text-transform: uppercase; }
-.nav-item { padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; margin-bottom: 2px; color: #555; transition: all .15s; }
-.nav-item:hover { background: #f0f0f0; }
-.nav-item.active { background: #e6f4ff; color: #1677ff; font-weight: 600; }
-.nav-item.hidden { opacity: .4; cursor: default; font-style: italic; }
-.sidebar-section h4 { margin-top: 20px; font-size: 11px; }
-.admin-content { flex: 1; padding: 20px; overflow-x: auto; }
-.admin-card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.06); margin-bottom: 16px; }
-.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.card-header h3 { margin: 0; font-size: 16px; }
-.card-actions { display: flex; align-items: center; }
-.perm-indicator { margin-bottom: 4px; }
-.table-footer { font-size: 12px; color: #999; margin-top: 8px; }
-.admin-footer { padding: 16px 20px; background: #fafafa; border-top: 1px solid #f0f0f0; }
-.log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.log-header h4 { margin: 0; font-size: 14px; }
-.log-line { padding: 4px 0; font-size: 12px; color: #555; font-family: monospace; border-bottom: 1px solid #f5f5f5; }
-@media (max-width: 768px) { .admin-body { flex-direction: column; } .admin-sidebar { width: 100%; border-right: none; border-bottom: 1px solid #f0f0f0; } }
+.admin-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+.admin-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #1a1a1a;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.role-label {
+  font-size: 13px;
+  color: #999;
+}
+.perm-count {
+  font-size: 12px;
+  color: #1677ff;
+  background: #e6f4ff;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.admin-body {
+  display: flex;
+  flex: 1;
+}
+.admin-sidebar {
+  width: 200px;
+  padding: 16px;
+  background: #fafafa;
+  border-right: 1px solid #f0f0f0;
+  flex-shrink: 0;
+}
+.admin-sidebar h4 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: #999;
+  text-transform: uppercase;
+}
+.nav-item {
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  margin-bottom: 2px;
+  color: #555;
+  transition: all 0.15s;
+}
+.nav-item:hover {
+  background: #f0f0f0;
+}
+.nav-item.active {
+  background: #e6f4ff;
+  color: #1677ff;
+  font-weight: 600;
+}
+.nav-item.hidden {
+  opacity: 0.4;
+  cursor: default;
+  font-style: italic;
+}
+.sidebar-section h4 {
+  margin-top: 20px;
+  font-size: 11px;
+}
+.admin-content {
+  flex: 1;
+  padding: 20px;
+  overflow-x: auto;
+}
+.admin-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.card-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+.card-actions {
+  display: flex;
+  align-items: center;
+}
+.perm-indicator {
+  margin-bottom: 4px;
+}
+.table-footer {
+  font-size: 12px;
+  color: #999;
+  margin-top: 8px;
+}
+.admin-footer {
+  padding: 16px 20px;
+  background: #fafafa;
+  border-top: 1px solid #f0f0f0;
+}
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.log-header h4 {
+  margin: 0;
+  font-size: 14px;
+}
+.log-line {
+  padding: 4px 0;
+  font-size: 12px;
+  color: #555;
+  font-family: monospace;
+  border-bottom: 1px solid #f5f5f5;
+}
+@media (max-width: 768px) {
+  .admin-body {
+    flex-direction: column;
+  }
+  .admin-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
 </style>

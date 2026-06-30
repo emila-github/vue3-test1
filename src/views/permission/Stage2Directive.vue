@@ -47,10 +47,7 @@ const roles = [
 async function fetchData(role: string) {
   loading.value = true
   try {
-    const [permInfo, menuData] = await Promise.all([
-      getUserPermissions(role),
-      getMenusByRole(role),
-    ])
+    const [permInfo, menuData] = await Promise.all([getUserPermissions(role), getMenusByRole(role)])
     permissions.value = permInfo.permissions
     menus.value = menuData.menus
     allMenus.value = menuData.allMenus
@@ -98,11 +95,12 @@ function handleClick(action: string) {
           :key="r.key"
           :type="currentRole === r.key ? 'primary' : 'default'"
           @click="switchRole(r.key)"
-        >{{ r.label }}</a-button>
+          >{{ r.label }}</a-button
+        >
       </a-space>
       <div style="margin-top: 12px; color: #999; font-size: 13px">
-        当前角色：<a-tag color="blue">{{ currentRole }}</a-tag>，
-        权限数：<a-tag>{{ permissions.length }}</a-tag>
+        当前角色：<a-tag color="blue">{{ currentRole }}</a-tag
+        >， 权限数：<a-tag>{{ permissions.length }}</a-tag>
       </div>
     </section>
 
@@ -110,8 +108,8 @@ function handleClick(action: string) {
     <section class="card">
       <h2>菜单权限控制</h2>
       <p class="desc">
-        左侧：完整菜单列表（无权限的置灰）；右侧：实际可见菜单（已过滤）。
-        菜单通过 <code>v-permission</code> 控制，多权限 OR 逻辑：任一个满足即可显示。
+        左侧：完整菜单列表（无权限的置灰）；右侧：实际可见菜单（已过滤）。 菜单通过
+        <code>v-permission</code> 控制，多权限 OR 逻辑：任一个满足即可显示。
       </p>
       <div class="menu-compare">
         <div class="menu-panel">
@@ -120,7 +118,7 @@ function handleClick(action: string) {
             v-for="m in allMenus"
             :key="m.key"
             class="menu-item"
-            :class="{ disabled: !menus.some(am => am.key === m.key) }"
+            :class="{ disabled: !menus.some((am) => am.key === m.key) }"
           >
             <span>{{ m.label }}</span>
             <span class="perm-tag">{{ m.requiredPermissions.join(' 或 ') }}</span>
@@ -153,7 +151,8 @@ function handleClick(action: string) {
               :type="btn.type as any"
               :danger="btn.danger"
               @click="handleClick(btn.label)"
-            >{{ btn.label }}</a-button>
+              >{{ btn.label }}</a-button
+            >
           </a-space>
         </div>
         <!-- 方式2: v-if 条件渲染 -->
@@ -161,8 +160,12 @@ function handleClick(action: string) {
           <h4>方式 2：v-if 条件渲染</h4>
           <p class="small-desc">权限不满足时不渲染 DOM 节点</p>
           <a-space>
-            <a-button v-if="hasPermission('btn:user-export')" type="primary" @click="handleClick('导出数据(v-if)')">导出数据</a-button>
-            <a-button v-if="hasPermission('btn:report-export')" @click="handleClick('导出报表(v-if)')">导出报表</a-button>
+            <a-button v-if="hasPermission('btn:user-export')" type="primary" @click="handleClick('导出数据(v-if)')"
+              >导出数据</a-button
+            >
+            <a-button v-if="hasPermission('btn:report-export')" @click="handleClick('导出报表(v-if)')"
+              >导出报表</a-button
+            >
           </a-space>
         </div>
         <!-- 方式3: :disabled 禁用模式 -->
@@ -211,26 +214,121 @@ function handleClick(action: string) {
 </template>
 
 <style scoped>
-.stage-page { max-width: 960px; margin: 0 auto; padding: 24px; }
-.page-header { text-align: center; margin-bottom: 30px; }
-.page-header h1 { font-size: 24px; color: #1a1a1a; margin: 0 0 6px; }
-.page-header p { color: #999; font-size: 14px; }
-.card { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
-.card h2 { margin: 0 0 12px; font-size: 18px; color: #333; }
-.card h4 { margin: 0 0 6px; font-size: 14px; color: #555; }
-.desc { color: #555; font-size: 14px; line-height: 1.8; margin: 0 0 12px; }
-.desc code { background: #f0f0f0; padding: 1px 6px; border-radius: 3px; }
-.small-desc { font-size: 12px; color: #999; margin: 0 0 8px; }
-.menu-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.menu-panel { background: #fafafa; border-radius: 8px; padding: 16px; border: 1px solid #f0f0f0; }
-.menu-panel h4 { margin: 0 0 10px; font-size: 13px; color: #999; }
-.menu-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 6px; margin-bottom: 4px; font-size: 13px; background: #fff; }
-.menu-item.disabled { opacity: 0.4; }
-.menu-item.active { background: #e6f4ff; color: #1677ff; }
-.perm-tag { font-size: 11px; color: #999; }
-.empty-hint { text-align: center; color: #bbb; padding: 20px; font-size: 13px; }
-.btn-demos { display: flex; flex-direction: column; gap: 20px; }
-.demo-block { padding: 16px; background: #fafafa; border-radius: 8px; border: 1px solid #f0f0f0; }
-.log-item { padding: 6px 0; border-bottom: 1px solid #f5f5f5; font-size: 13px; color: #555; font-family: monospace; }
-@media (max-width: 768px) { .menu-compare { grid-template-columns: 1fr; } }
+.stage-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.page-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.page-header h1 {
+  font-size: 24px;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+}
+.page-header p {
+  color: #999;
+  font-size: 14px;
+}
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: #333;
+}
+.card h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: #555;
+}
+.desc {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0 0 12px;
+}
+.desc code {
+  background: #f0f0f0;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+.small-desc {
+  font-size: 12px;
+  color: #999;
+  margin: 0 0 8px;
+}
+.menu-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.menu-panel {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #f0f0f0;
+}
+.menu-panel h4 {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: #999;
+}
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  background: #fff;
+}
+.menu-item.disabled {
+  opacity: 0.4;
+}
+.menu-item.active {
+  background: #e6f4ff;
+  color: #1677ff;
+}
+.perm-tag {
+  font-size: 11px;
+  color: #999;
+}
+.empty-hint {
+  text-align: center;
+  color: #bbb;
+  padding: 20px;
+  font-size: 13px;
+}
+.btn-demos {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.demo-block {
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+.log-item {
+  padding: 6px 0;
+  border-bottom: 1px solid #f5f5f5;
+  font-size: 13px;
+  color: #555;
+  font-family: monospace;
+}
+@media (max-width: 768px) {
+  .menu-compare {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

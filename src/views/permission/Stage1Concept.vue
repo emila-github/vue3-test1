@@ -18,10 +18,7 @@ const roles = [
 async function fetchPermissions(role: string) {
   loading.value = true
   try {
-    const [info, all] = await Promise.all([
-      getUserPermissions(role),
-      getAllPermissions(),
-    ])
+    const [info, all] = await Promise.all([getUserPermissions(role), getAllPermissions()])
     permissionInfo.value = info
     allPermissions.value = all
   } finally {
@@ -77,9 +74,7 @@ onMounted(() => {
     <!-- 权限码设计 -->
     <section class="card">
       <h2>权限码命名规范</h2>
-      <p class="desc">
-        采用 <code>类型:模块:操作</code> 三段式语义化命名，便于理解和维护。
-      </p>
+      <p class="desc">采用 <code>类型:模块:操作</code> 三段式语义化命名，便于理解和维护。</p>
       <a-table
         :columns="[
           { title: '前缀', dataIndex: 'prefix', key: 'prefix' },
@@ -101,16 +96,23 @@ onMounted(() => {
     <section class="card">
       <h2>后端获取权限流程</h2>
       <p class="desc">
-        前端登录成功后，调用 <code>GET /api/permission/user-permissions?role=xxx</code> 获取当前用户的权限列表，存入状态管理中。
+        前端登录成功后，调用
+        <code>GET /api/permission/user-permissions?role=xxx</code> 获取当前用户的权限列表，存入状态管理中。
       </p>
       <div class="flow">
         <div class="flow-step"><span class="step-num">1</span><strong>登录</strong><span>JWT/OAuth</span></div>
         <span class="flow-arrow">→</span>
-        <div class="flow-step"><span class="step-num">2</span><strong>获取权限</strong><span>API 返回权限数组</span></div>
+        <div class="flow-step">
+          <span class="step-num">2</span><strong>获取权限</strong><span>API 返回权限数组</span>
+        </div>
         <span class="flow-arrow">→</span>
-        <div class="flow-step"><span class="step-num">3</span><strong>存入 Store</strong><span>全局状态、持久化</span></div>
+        <div class="flow-step">
+          <span class="step-num">3</span><strong>存入 Store</strong><span>全局状态、持久化</span>
+        </div>
         <span class="flow-arrow">→</span>
-        <div class="flow-step"><span class="step-num">4</span><strong>指令/组件</strong><span>读取权限控制 UI</span></div>
+        <div class="flow-step">
+          <span class="step-num">4</span><strong>指令/组件</strong><span>读取权限控制 UI</span>
+        </div>
       </div>
     </section>
 
@@ -163,34 +165,164 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.stage-page { max-width: 960px; margin: 0 auto; padding: 24px; }
-.page-header { text-align: center; margin-bottom: 30px; }
-.page-header h1 { font-size: 24px; color: #1a1a1a; margin: 0 0 6px; }
-.page-header p { color: #999; font-size: 14px; }
-.card { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
-.card h2 { margin: 0 0 12px; font-size: 18px; color: #333; }
-.card h4 { margin: 0 0 6px; font-size: 14px; color: #555; }
-.desc { color: #555; font-size: 14px; line-height: 1.8; margin: 0 0 12px; }
-.desc code { background: #f0f0f0; padding: 1px 6px; border-radius: 3px; font-size: 13px; }
-.rbac-diagram { display: flex; align-items: center; gap: 12px; margin: 16px 0; flex-wrap: wrap; }
-.rbac-node { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; background: #fafafa; border-radius: 8px; border: 1px solid #eee; text-align: center; min-width: 120px; }
-.rbac-node strong { font-size: 14px; }
-.rbac-node span { font-size: 11px; color: #999; }
-.rbac-arrow { font-size: 20px; color: #bbb; }
-.tip-box { background: #e6f4ff; border-left: 3px solid #1677ff; padding: 12px 16px; border-radius: 4px; font-size: 13px; color: #333; margin-top: 12px; }
-.flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.flow-step { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 10px; background: #fafafa; border-radius: 8px; flex: 1; min-width: 80px; text-align: center; }
-.step-num { width: 26px; height: 26px; border-radius: 50%; background: #1677ff; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
-.flow-step strong { font-size: 12px; }
-.flow-step span { font-size: 11px; color: #999; }
-.flow-arrow { font-size: 18px; color: #bbb; }
-.perm-result { margin-top: 8px; }
-.perm-info { font-size: 13px; color: #555; margin-bottom: 8px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
-.role-item { padding: 8px 0; border-bottom: 1px solid #f5f5f5; font-size: 13px; color: #555; }
-.role-item:last-child { border-bottom: none; }
-.role-item strong { color: #333; }
+.stage-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.page-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.page-header h1 {
+  font-size: 24px;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+}
+.page-header p {
+  color: #999;
+  font-size: 14px;
+}
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: #333;
+}
+.card h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: #555;
+}
+.desc {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0 0 12px;
+}
+.desc code {
+  background: #f0f0f0;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+.rbac-diagram {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+.rbac-node {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  text-align: center;
+  min-width: 120px;
+}
+.rbac-node strong {
+  font-size: 14px;
+}
+.rbac-node span {
+  font-size: 11px;
+  color: #999;
+}
+.rbac-arrow {
+  font-size: 20px;
+  color: #bbb;
+}
+.tip-box {
+  background: #e6f4ff;
+  border-left: 3px solid #1677ff;
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #333;
+  margin-top: 12px;
+}
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.flow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 10px;
+  background: #fafafa;
+  border-radius: 8px;
+  flex: 1;
+  min-width: 80px;
+  text-align: center;
+}
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #1677ff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+.flow-step strong {
+  font-size: 12px;
+}
+.flow-step span {
+  font-size: 11px;
+  color: #999;
+}
+.flow-arrow {
+  font-size: 18px;
+  color: #bbb;
+}
+.perm-result {
+  margin-top: 8px;
+}
+.perm-info {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.role-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #f5f5f5;
+  font-size: 13px;
+  color: #555;
+}
+.role-item:last-child {
+  border-bottom: none;
+}
+.role-item strong {
+  color: #333;
+}
 @media (max-width: 768px) {
-  .rbac-diagram, .flow { flex-direction: column; }
-  .rbac-arrow, .flow-arrow { transform: rotate(90deg); }
+  .rbac-diagram,
+  .flow {
+    flex-direction: column;
+  }
+  .rbac-arrow,
+  .flow-arrow {
+    transform: rotate(90deg);
+  }
 }
 </style>
