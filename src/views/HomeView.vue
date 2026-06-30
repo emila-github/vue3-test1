@@ -68,6 +68,14 @@ const demos = [
     tags: ['核心', '进阶'],
   },
   {
+    path: '/permission',
+    title: '🛡️ 权限控制学习',
+    desc: 'RBAC 模型、指令控制、数据权限、多权限组合 — 后端获取权限完整实战',
+    color: '#1677ff',
+    icon: '🔒',
+    tags: ['核心', '实战'],
+  },
+  {
     path: '/typescript-demo',
     title: 'TypeScript 学习',
     desc: '基础类型、接口、泛型、类、枚举、工具类型、类型守卫',

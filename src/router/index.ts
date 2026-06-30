@@ -137,6 +137,37 @@ const router = createRouter({
       name: 'prettier-stage5',
       component: () => import('../views/prettier/Stage5Advanced.vue'),
     },
+    // ====== 权限控制学习 ======
+    {
+      path: '/permission',
+      name: 'permission',
+      component: () => import('../views/permission/PermissionIndex.vue'),
+    },
+    {
+      path: '/permission/stage1',
+      name: 'permission-stage1',
+      component: () => import('../views/permission/Stage1Concept.vue'),
+    },
+    {
+      path: '/permission/stage2',
+      name: 'permission-stage2',
+      component: () => import('../views/permission/Stage2Directive.vue'),
+    },
+    {
+      path: '/permission/stage3',
+      name: 'permission-stage3',
+      component: () => import('../views/permission/Stage3DataControl.vue'),
+    },
+    {
+      path: '/permission/stage4',
+      name: 'permission-stage4',
+      component: () => import('../views/permission/Stage4MultiPermission.vue'),
+    },
+    {
+      path: '/permission/stage5',
+      name: 'permission-stage5',
+      component: () => import('../views/permission/Stage5FullExample.vue'),
+    },
     // ====== ESLint 学习 ======
     {
       path: '/eslint',
