@@ -35,7 +35,7 @@ function increment() { count.value++ }
 
 &lt;template&gt;
   &lt;button @click="increment"&gt;
-    Count: {{ '{{ count }}' }}
+    Count: &#123;&#123; count &#125;&#125;
   &lt;/button&gt;
 &lt;/template&gt;
 
