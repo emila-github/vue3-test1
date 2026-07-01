@@ -168,6 +168,11 @@ const router = createRouter({
       name: 'permission-stage5',
       component: () => import('../views/permission/Stage5FullExample.vue'),
     },
+    {
+      path: '/permission/stage6',
+      name: 'permission-stage6',
+      component: () => import('../views/permission/Stage6SiteIntegration.vue'),
+    },
     // ====== ESLint 学习 ======
     {
       path: '/eslint',

@@ -45,6 +45,14 @@ const stages = ref([
     icon: '🛡️',
     color: '#eb2f96',
   },
+  {
+    id: 6,
+    title: '站点级权限整合',
+    desc: '全局 Composable、首页卡片、路由守卫、全局指令 — 整站应用',
+    path: '/permission/stage6',
+    icon: '🌐',
+    color: '#13c2c2',
+  },
 ])
 
 function navigateTo(path: string) {
@@ -57,7 +65,7 @@ function navigateTo(path: string) {
     <header class="page-header">
       <h1>🛡️ 权限控制学习教程</h1>
       <p class="subtitle">
-        涵盖 RBAC 模型、后端获取权限、指令控制（菜单/按钮/组件）、数据级权限、多权限组合逻辑，5 阶段系统学习。
+        涵盖 RBAC 模型、后端获取权限、指令控制（菜单/按钮/组件）、数据级权限、多权限组合逻辑、站点级整合，6 阶段系统学习。
       </p>
     </header>
 
@@ -102,7 +110,7 @@ function navigateTo(path: string) {
 
     <!-- 学习阶段 -->
     <section class="stages">
-      <h2>学习阶段（共 5 个）</h2>
+      <h2>学习阶段（共 6 个）</h2>
       <div class="stage-grid">
         <div
           v-for="s in stages"

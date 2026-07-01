@@ -1,8 +1,21 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import { shallowRef, computed } from 'vue'
+import { shallowRef, computed, onMounted } from 'vue'
+import { usePermission } from '@/composables/usePermission'
 
-const demos = [
+const { currentRole, hasAny, setRole, loadPermissions } = usePermission()
+
+interface DemoItem {
+  path: string
+  title: string
+  desc: string
+  color: string
+  icon: string
+  tags: string[]
+  requiredPermissions: string[]
+}
+
+const demos: DemoItem[] = [
   {
     path: '/vue-basics',
     title: 'Vue 3 基础',
@@ -10,6 +23,7 @@ const demos = [
     color: '#1890ff',
     icon: 'V',
     tags: ['基础'],
+    requiredPermissions: ['demo:vue-basics'],
   },
   {
     path: '/deep-components',
@@ -18,6 +32,7 @@ const demos = [
     color: '#cf1322',
     icon: '◆',
     tags: ['进阶'],
+    requiredPermissions: ['demo:deep-components'],
   },
   {
     path: '/logic-reuse',
@@ -26,6 +41,7 @@ const demos = [
     color: '#597ef7',
     icon: '⚙',
     tags: ['进阶'],
+    requiredPermissions: ['demo:logic-reuse'],
   },
   {
     path: '/builtin-components',
@@ -34,6 +50,7 @@ const demos = [
     color: '#13c2c2',
     icon: '⊞',
     tags: ['进阶'],
+    requiredPermissions: ['demo:builtin-components'],
   },
   {
     path: '/app-scale',
@@ -42,6 +59,7 @@ const demos = [
     color: '#4ecdc4',
     icon: '📐',
     tags: ['核心', '进阶'],
+    requiredPermissions: ['demo:app-scale'],
   },
   {
     path: '/vite',
@@ -50,6 +68,7 @@ const demos = [
     color: '#646cff',
     icon: 'V',
     tags: ['核心', '进阶'],
+    requiredPermissions: ['demo:vite'],
   },
   {
     path: '/eslint',
@@ -58,6 +77,7 @@ const demos = [
     color: '#4b32c3',
     icon: 'ES',
     tags: ['核心', '进阶'],
+    requiredPermissions: ['demo:eslint'],
   },
   {
     path: '/prettier',
@@ -66,6 +86,7 @@ const demos = [
     color: '#1a2b5a',
     icon: 'PR',
     tags: ['核心', '进阶'],
+    requiredPermissions: ['demo:prettier'],
   },
   {
     path: '/permission',
@@ -74,6 +95,7 @@ const demos = [
     color: '#1677ff',
     icon: '🔒',
     tags: ['核心', '实战'],
+    requiredPermissions: ['demo:permission'],
   },
   {
     path: '/typescript-demo',
@@ -82,6 +104,7 @@ const demos = [
     color: '#3178c6',
     icon: 'TS',
     tags: ['基础', '进阶'],
+    requiredPermissions: ['demo:typescript'],
   },
   {
     path: '/user-crud',
@@ -90,6 +113,7 @@ const demos = [
     color: '#4096ff',
     icon: '▦',
     tags: ['实战'],
+    requiredPermissions: ['demo:user-crud'],
   },
   {
     path: '/api-demo',
@@ -98,6 +122,7 @@ const demos = [
     color: '#4096ff',
     icon: '▦',
     tags: ['实战'],
+    requiredPermissions: ['demo:api-demo'],
   },
   {
     path: '/antd',
@@ -106,6 +131,7 @@ const demos = [
     color: '#1677ff',
     icon: '🐜',
     tags: ['实战'],
+    requiredPermissions: ['demo:antd'],
   },
   {
     path: '/vue-request',
@@ -114,6 +140,7 @@ const demos = [
     color: '#52c41a',
     icon: '⚡',
     tags: ['实战', '库'],
+    requiredPermissions: ['demo:vue-request'],
   },
   {
     path: '/vue-router',
@@ -122,6 +149,7 @@ const demos = [
     color: '#e74c3c',
     icon: '🗺',
     tags: ['核心', '实战'],
+    requiredPermissions: ['demo:vue-router'],
   },
   {
     path: '/pinia',
@@ -130,6 +158,7 @@ const demos = [
     color: '#ffd700',
     icon: '🍍',
     tags: ['核心', '实战'],
+    requiredPermissions: ['demo:pinia'],
   },
 ]
 
@@ -140,9 +169,27 @@ const allTags = computed(() => {
   return Array.from(set)
 })
 
+// 权限过滤：仅显示当前角色有权限的卡片
+const permittedDemos = computed(() =>
+  demos.filter((d) => hasAny(...d.requiredPermissions)),
+)
+
 const filteredDemos = computed(() => {
-  if (!tagFilter.value) return demos
-  return demos.filter((d) => d.tags.includes(tagFilter.value!))
+  const base = permittedDemos.value
+  if (!tagFilter.value) return base
+  return base.filter((d) => d.tags.includes(tagFilter.value!))
+})
+
+const roleOptions = ['admin', 'manager', 'editor', 'viewer']
+const roleLabels: Record<string, string> = {
+  admin: '管理员',
+  manager: '经理',
+  editor: '编辑者',
+  viewer: '查看者',
+}
+
+onMounted(() => {
+  loadPermissions()
 })
 </script>
 
@@ -165,6 +212,22 @@ const filteredDemos = computed(() => {
         <span class="stat-item"> 涵盖 <strong>Vue 3 + TS</strong> </span>
       </div>
     </section>
+
+    <!-- 角色切换（权限控制演示） -->
+    <div class="role-bar">
+      <span class="role-label">当前角色：</span>
+      <div class="role-tabs">
+        <button
+          v-for="role in roleOptions"
+          :key="role"
+          :class="['role-btn', { active: currentRole === role }]"
+          @click="setRole(role)"
+        >
+          {{ roleLabels[role] || role }}
+        </button>
+      </div>
+      <span class="role-hint">← 切换角色，下方卡片将根据权限动态显示/隐藏</span>
+    </div>
 
     <!-- 标签筛选 -->
     <div class="filter-bar">
@@ -261,6 +324,51 @@ const filteredDemos = computed(() => {
 
 .stat-divider {
   color: #ddd;
+}
+
+/* ===== 角色切换栏 ===== */
+.role-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  background: #fafafa;
+  border-radius: 10px;
+  border: 1px dashed #e0e0e0;
+}
+.role-label {
+  font-size: 13px;
+  color: #888;
+  font-weight: 600;
+}
+.role-tabs {
+  display: flex;
+  gap: 6px;
+}
+.role-btn {
+  padding: 4px 16px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 16px;
+  background: #fff;
+  font-size: 13px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.role-btn:hover { border-color: #1677ff; color: #1677ff; }
+.role-btn.active {
+  background: #1677ff;
+  color: #fff;
+  border-color: #1677ff;
+  font-weight: 600;
+}
+.role-hint {
+  font-size: 12px;
+  color: #bbb;
+  margin-left: 4px;
 }
 
 /* ===== 筛选栏 ===== */
