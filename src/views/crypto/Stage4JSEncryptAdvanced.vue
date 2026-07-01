@@ -32,9 +32,7 @@ function doVerify() {
   const verify = new JSEncrypt()
   verify.setPublicKey(signPubKey.value)
   const valid = verify.verify(signMessage.value, signature.value, CryptoJS.SHA256)
-  signVerifyResult.value = valid
-    ? '✅ 验签通过 — 签名有效，消息未被篡改'
-    : '❌ 验签失败 — 签名无效或消息已被篡改'
+  signVerifyResult.value = valid ? '✅ 验签通过 — 签名有效，消息未被篡改' : '❌ 验签失败 — 签名无效或消息已被篡改'
 }
 
 // 防篡改演示
@@ -67,7 +65,8 @@ function genLongTextKeys() {
   longSegEncrypted.value = ''
   longSegDecrypted.value = ''
   segmentInfo.value = ''
-  longText.value = '这是一段比较长的文本数据，用于测试 RSA 分段加密。由于 RSA 1024 位密钥每次最多只能加密 117 字节的数据，超过这个长度就需要分段处理。实际生产环境中，推荐使用混合加密方案（RSA 加密 AES 密钥 + AES 加密数据）来处理大量数据，这样既安全又高效。'
+  longText.value =
+    '这是一段比较长的文本数据，用于测试 RSA 分段加密。由于 RSA 1024 位密钥每次最多只能加密 117 字节的数据，超过这个长度就需要分段处理。实际生产环境中，推荐使用混合加密方案（RSA 加密 AES 密钥 + AES 加密数据）来处理大量数据，这样既安全又高效。'
 }
 
 function chunkString(str: string, size: number): string[] {
@@ -149,7 +148,8 @@ function doOAEPDecrypt() {
     <section class="card">
       <h2>1. RSA 数字签名与验签</h2>
       <p class="desc">
-        <strong>签名</strong>：用私钥对数据摘要签名 → <strong>验签</strong>：用公钥验证签名。保证数据来源可信、未被篡改。
+        <strong>签名</strong>：用私钥对数据摘要签名 →
+        <strong>验签</strong>：用公钥验证签名。保证数据来源可信、未被篡改。
       </p>
       <div class="demo-row">
         <a-radio-group v-model:value="signKeySize">
@@ -158,7 +158,7 @@ function doOAEPDecrypt() {
         </a-radio-group>
         <a-button @click="genSignKeys">生成签名密钥对</a-button>
       </div>
-      <div v-if="signPrivKey" style="margin-top:12px">
+      <div v-if="signPrivKey" style="margin-top: 12px">
         <div>
           <label>待签名消息</label>
           <a-textarea v-model:value="signMessage" :rows="2" />
@@ -168,18 +168,20 @@ function doOAEPDecrypt() {
           <a-button :disabled="!signature" @click="doVerify">🔍 公钥验签</a-button>
         </div>
         <div v-if="signature" class="result-box">
-          <div><span class="label">签名（Base64）：</span><code class="break-all">{{ signature }}</code></div>
-          <div v-if="signVerifyResult" v-html="signVerifyResult" style="font-size:14px"></div>
+          <div>
+            <span class="label">签名（Base64）：</span><code class="break-all">{{ signature }}</code>
+          </div>
+          <div v-if="signVerifyResult" v-html="signVerifyResult" style="font-size: 14px"></div>
         </div>
 
         <!-- 防篡改演示 -->
-        <div v-if="signature" style="margin-top:16px">
+        <div v-if="signature" style="margin-top: 16px">
           <h3>🛡️ 防篡改演示</h3>
           <div class="demo-row">
-            <a-input v-model:value="tamperedMsg" placeholder="输入篡改后的消息" style="flex:1" />
+            <a-input v-model:value="tamperedMsg" placeholder="输入篡改后的消息" style="flex: 1" />
             <a-button type="primary" danger @click="doTamperDemo">验证篡改</a-button>
           </div>
-          <div v-if="tamperResult" class="result-box" style="margin-top:8px" v-html="tamperResult"></div>
+          <div v-if="tamperResult" class="result-box" style="margin-top: 8px" v-html="tamperResult"></div>
         </div>
       </div>
       <details class="code-details">
@@ -204,24 +206,27 @@ const isValid = verify.verify(message, signature, CryptoJS.SHA256)
     <section class="card">
       <h2>2. 长文本分段加密</h2>
       <p class="desc">
-        RSA 单次加密有长度限制（1024 位密钥最长 117 字节）。超出时需<strong>分段加密</strong>，但更推荐使用混合加密（Stage 5）。
+        RSA 单次加密有长度限制（1024 位密钥最长 117
+        字节）。超出时需<strong>分段加密</strong>，但更推荐使用混合加密（Stage 5）。
       </p>
       <div class="btn-group">
         <a-button @click="genLongTextKeys">生成密钥对（1024）</a-button>
       </div>
       <div v-if="longSegPubKey">
-        <a-textarea v-model:value="longText" :rows="3" placeholder="输入长文本..." style="margin-top:12px" />
+        <a-textarea v-model:value="longText" :rows="3" placeholder="输入长文本..." style="margin-top: 12px" />
         <div class="btn-group">
           <a-button type="primary" @click="doLongTextEncrypt">分段加密</a-button>
           <a-button :disabled="!longSegEncrypted" @click="doLongTextDecrypt">分段解密</a-button>
         </div>
         <div v-if="segmentInfo" class="result-box">
-          <p style="font-size:13px; color:#888">{{ segmentInfo }}</p>
+          <p style="font-size: 13px; color: #888">{{ segmentInfo }}</p>
         </div>
         <div v-if="longSegEncrypted" class="result-box">
           <div>
             <span class="label">分段密文（用 |||SEGMENT||| 分隔）：</span>
-            <pre style="max-height:120px; overflow:auto; font-size:12px; word-break:break-all">{{ longSegEncrypted }}</pre>
+            <pre style="max-height: 120px; overflow: auto; font-size: 12px; word-break: break-all">{{
+              longSegEncrypted
+            }}</pre>
           </div>
           <div v-if="longSegDecrypted">
             <span class="label">解密结果：</span><code>{{ longSegDecrypted }}</code>
@@ -246,7 +251,8 @@ const encrypted = chunks.map(ch => encrypt.encrypt(ch))
 const decrypted = encryptedChunks.map(ch => decrypt.decrypt(ch)).join('')</code></pre>
       </details>
       <p class="tip-box">
-        ⚠️ <strong>分段加密的缺点</strong>：RSA 很慢，每段都要做一次大数运算。对大量数据，推荐使用 Stage 5 的<strong>混合加密</strong>方案。
+        ⚠️ <strong>分段加密的缺点</strong>：RSA 很慢，每段都要做一次大数运算。对大量数据，推荐使用 Stage 5
+        的<strong>混合加密</strong>方案。
       </p>
     </section>
 
@@ -259,7 +265,7 @@ const decrypted = encryptedChunks.map(ch => decrypt.decrypt(ch)).join('')</code>
       <div class="demo-row">
         <a-button @click="genOAEPKeys">生成密钥对（1024）</a-button>
       </div>
-      <div v-if="oaepPubKey" style="margin-top:12px">
+      <div v-if="oaepPubKey" style="margin-top: 12px">
         <div>
           <label>明文</label>
           <a-textarea v-model:value="oaepInput" :rows="2" />
@@ -269,8 +275,12 @@ const decrypted = encryptedChunks.map(ch => decrypt.decrypt(ch)).join('')</code>
           <a-button :disabled="!oaepEncrypted" @click="doOAEPDecrypt">解密</a-button>
         </div>
         <div v-if="oaepEncrypted" class="result-box">
-          <div><span class="label">密文（PKCS#1 v1.5）：</span><code class="break-all">{{ oaepEncrypted }}</code></div>
-          <div v-if="oaepDecrypted"><span class="label">解密：</span><code>{{ oaepDecrypted }}</code></div>
+          <div>
+            <span class="label">密文（PKCS#1 v1.5）：</span><code class="break-all">{{ oaepEncrypted }}</code>
+          </div>
+          <div v-if="oaepDecrypted">
+            <span class="label">解密：</span><code>{{ oaepDecrypted }}</code>
+          </div>
         </div>
       </div>
       <a-table
@@ -289,7 +299,7 @@ const decrypted = encryptedChunks.map(ch => decrypt.decrypt(ch)).join('')</code>
         :pagination="false"
         size="small"
         bordered
-        style="margin-top:12px"
+        style="margin-top: 12px"
       />
     </section>
 
@@ -318,24 +328,111 @@ const decrypted = encryptedChunks.map(ch => decrypt.decrypt(ch)).join('')</code>
 </template>
 
 <style scoped>
-.stage-page { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
-.page-header { text-align: center; margin-bottom: 32px; }
-.page-header h1 { font-size: 26px; margin-bottom: 6px; }
-.page-header p { font-size: 14px; color: #888; }
-.card { background: #fff; border: 1px solid #f0f0f0; border-radius: 10px; padding: 24px; margin-bottom: 24px; }
-.card h2 { font-size: 18px; margin-bottom: 4px; }
-.card h3 { font-size: 16px; margin-bottom: 8px; }
-.desc { font-size: 14px; color: #888; margin-bottom: 16px; line-height: 1.6; }
-.demo-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 12px 0; }
-.demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
-.demo-grid label, label { display: block; font-size: 13px; color: #666; margin-bottom: 4px; }
-.btn-group { display: flex; gap: 10px; margin: 12px 0; }
-.result-box { margin: 12px 0; padding: 12px; background: #fafafa; border-radius: 6px; border: 1px solid #f0f0f0; }
-.result-box .label { font-size: 13px; color: #666; font-weight: 600; }
-.result-box code { font-size: 13px; word-break: break-all; }
-.break-all { word-break: break-all; }
-.tip-box { margin-top: 12px; padding: 10px 14px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 6px; font-size: 13px; color: #9a6e00; }
-.code-details { margin-top: 12px; }
-.code-details summary { font-size: 13px; color: #1677ff; cursor: pointer; }
-.code-details pre { margin-top: 8px; padding: 12px; background: #f6f8fa; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+.stage-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+.page-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.page-header h1 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+.page-header p {
+  font-size: 14px;
+  color: #888;
+}
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.card h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.desc {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+.demo-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.demo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0;
+}
+.demo-grid label,
+label {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+}
+.result-box {
+  margin: 12px 0;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+}
+.result-box .label {
+  font-size: 13px;
+  color: #666;
+  font-weight: 600;
+}
+.result-box code {
+  font-size: 13px;
+  word-break: break-all;
+}
+.break-all {
+  word-break: break-all;
+}
+.tip-box {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #9a6e00;
+}
+.code-details {
+  margin-top: 12px;
+}
+.code-details summary {
+  font-size: 13px;
+  color: #1677ff;
+  cursor: pointer;
+}
+.code-details pre {
+  margin-top: 8px;
+  padding: 12px;
+  background: #f6f8fa;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 13px;
+}
 </style>

@@ -88,10 +88,8 @@ function checkPEM() {
     <!-- 背景知识 -->
     <section class="card">
       <h2>📖 RSA 非对称加密原理</h2>
-      <p class="desc">
-        RSA 基于大整数因子分解的数学难题。通信双方：
-      </p>
-      <ol style="font-size:14px; color:#666; line-height:2">
+      <p class="desc">RSA 基于大整数因子分解的数学难题。通信双方：</p>
+      <ol style="font-size: 14px; color: #666; line-height: 2">
         <li>服务端生成<strong>公钥 + 私钥</strong>对</li>
         <li>公钥<strong>公开发送</strong>给前端（可内嵌在页面中）</li>
         <li>前端用<strong>公钥加密</strong>敏感数据（如密码）发送给服务端</li>
@@ -119,7 +117,7 @@ function checkPEM() {
         <a-button type="primary" @click="generateKeyPair">生成密钥对</a-button>
         <a-button @click="usePresetKeys">使用预设密钥</a-button>
       </div>
-      <div v-if="publicKey" style="margin-top:16px">
+      <div v-if="publicKey" style="margin-top: 16px">
         <div class="key-box">
           <p class="key-title">📋 公钥（可公开）：</p>
           <pre><code>{{ publicKey }}</code></pre>
@@ -143,9 +141,7 @@ const privateKey = encrypt.getPrivateKey()</code></pre>
     <!-- 加密解密 -->
     <section class="card">
       <h2>2. RSA 公钥加密 / 私钥解密</h2>
-      <p class="desc">
-        前端使用公钥加密数据 → 传输密文 → 服务端使用私钥解密。即使传输被拦截，没有私钥也无法解密。
-      </p>
+      <p class="desc">前端使用公钥加密数据 → 传输密文 → 服务端使用私钥解密。即使传输被拦截，没有私钥也无法解密。</p>
       <div>
         <label>原文</label>
         <a-textarea v-model:value="rsaInput" :rows="2" />
@@ -155,8 +151,12 @@ const privateKey = encrypt.getPrivateKey()</code></pre>
         <a-button :disabled="!rsaEncrypted" @click="doRSADecrypt">🔓 私钥解密</a-button>
       </div>
       <div v-if="rsaEncrypted" class="result-box">
-        <div><span class="label">密文（Base64）：</span><code class="break-all">{{ rsaEncrypted }}</code></div>
-        <div v-if="rsaDecrypted"><span class="label">解密结果：</span><code>{{ rsaDecrypted }}</code></div>
+        <div>
+          <span class="label">密文（Base64）：</span><code class="break-all">{{ rsaEncrypted }}</code>
+        </div>
+        <div v-if="rsaDecrypted">
+          <span class="label">解密结果：</span><code>{{ rsaDecrypted }}</code>
+        </div>
       </div>
       <details class="code-details">
         <summary>查看代码</summary>
@@ -175,15 +175,13 @@ const plaintext = decrypt.decrypt(ciphertext)</code></pre>
     <!-- PEM 格式 -->
     <section class="card">
       <h2>3. PEM 密钥格式</h2>
-      <p class="desc">
-        PEM（Privacy Enhanced Mail）是密钥的标准文本格式，以 <code>-----BEGIN ...-----</code> 开头。
-      </p>
+      <p class="desc">PEM（Privacy Enhanced Mail）是密钥的标准文本格式，以 <code>-----BEGIN ...-----</code> 开头。</p>
       <a-textarea v-model:value="pemCheck" :rows="4" placeholder="粘贴 PEM 格式的公钥或私钥..." />
       <div class="btn-group">
         <a-button type="primary" @click="checkPEM">识别格式</a-button>
       </div>
       <div v-if="pemResult" class="result-box">
-        <p v-html="pemResult" style="font-size:14px"></p>
+        <p v-html="pemResult" style="font-size: 14px"></p>
       </div>
       <details class="code-details">
         <summary>PEM 格式说明</summary>
@@ -230,25 +228,117 @@ MIIEvQIBADANBgkqhkiG9w0B...
 </template>
 
 <style scoped>
-.stage-page { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
-.page-header { text-align: center; margin-bottom: 32px; }
-.page-header h1 { font-size: 26px; margin-bottom: 6px; }
-.page-header p { font-size: 14px; color: #888; }
-.card { background: #fff; border: 1px solid #f0f0f0; border-radius: 10px; padding: 24px; margin-bottom: 24px; }
-.card h2 { font-size: 18px; margin-bottom: 4px; }
-.desc { font-size: 14px; color: #888; margin-bottom: 16px; line-height: 1.6; }
-.demo-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 12px 0; }
-.demo-row label { font-size: 13px; color: #666; }
-.btn-group { display: flex; gap: 10px; margin: 12px 0; }
-.result-box { margin: 12px 0; padding: 12px; background: #fafafa; border-radius: 6px; border: 1px solid #f0f0f0; }
-.result-box .label { font-size: 13px; color: #666; font-weight: 600; }
-.result-box code { font-size: 13px; word-break: break-all; }
-.break-all { word-break: break-all; }
-.tip-box { margin-top: 12px; padding: 10px 14px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 6px; font-size: 13px; color: #9a6e00; }
-.key-box { margin: 10px 0; padding: 12px; background: #f6f8fa; border-radius: 6px; border: 1px solid #e8e8e8; }
-.key-title { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px; }
-.key-box pre { margin: 0; font-size: 11px; max-height: 100px; overflow: auto; }
-.code-details { margin-top: 12px; }
-.code-details summary { font-size: 13px; color: #1677ff; cursor: pointer; }
-.code-details pre { margin-top: 8px; padding: 12px; background: #f6f8fa; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+.stage-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+.page-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.page-header h1 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+.page-header p {
+  font-size: 14px;
+  color: #888;
+}
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.desc {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+.demo-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.demo-row label {
+  font-size: 13px;
+  color: #666;
+}
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+}
+.result-box {
+  margin: 12px 0;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+}
+.result-box .label {
+  font-size: 13px;
+  color: #666;
+  font-weight: 600;
+}
+.result-box code {
+  font-size: 13px;
+  word-break: break-all;
+}
+.break-all {
+  word-break: break-all;
+}
+.tip-box {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #9a6e00;
+}
+.key-box {
+  margin: 10px 0;
+  padding: 12px;
+  background: #f6f8fa;
+  border-radius: 6px;
+  border: 1px solid #e8e8e8;
+}
+.key-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+.key-box pre {
+  margin: 0;
+  font-size: 11px;
+  max-height: 100px;
+  overflow: auto;
+}
+.code-details {
+  margin-top: 12px;
+}
+.code-details summary {
+  font-size: 13px;
+  color: #1677ff;
+  cursor: pointer;
+}
+.code-details pre {
+  margin-top: 8px;
+  padding: 12px;
+  background: #f6f8fa;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 13px;
+}
 </style>

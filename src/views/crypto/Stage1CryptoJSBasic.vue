@@ -27,28 +27,20 @@ const aesIv = ref('1234567890abcdef')
 const aesEncrypted = ref('')
 const aesDecrypted = ref('')
 function doAESEncrypt() {
-  const encrypted = CryptoJS.AES.encrypt(
-    aesInput.value,
-    CryptoJS.enc.Utf8.parse(aesKey.value),
-    {
-      iv: CryptoJS.enc.Utf8.parse(aesIv.value),
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-    },
-  )
+  const encrypted = CryptoJS.AES.encrypt(aesInput.value, CryptoJS.enc.Utf8.parse(aesKey.value), {
+    iv: CryptoJS.enc.Utf8.parse(aesIv.value),
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  })
   aesEncrypted.value = encrypted.toString()
   aesDecrypted.value = ''
 }
 function doAESDecrypt() {
-  const decrypted = CryptoJS.AES.decrypt(
-    aesEncrypted.value,
-    CryptoJS.enc.Utf8.parse(aesKey.value),
-    {
-      iv: CryptoJS.enc.Utf8.parse(aesIv.value),
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-    },
-  )
+  const decrypted = CryptoJS.AES.decrypt(aesEncrypted.value, CryptoJS.enc.Utf8.parse(aesKey.value), {
+    iv: CryptoJS.enc.Utf8.parse(aesIv.value),
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  })
   aesDecrypted.value = decrypted.toString(CryptoJS.enc.Utf8)
 }
 
@@ -58,28 +50,20 @@ const desKey = ref('my-desk8')
 const desEncrypted = ref('')
 const desDecrypted = ref('')
 function doDESEncrypt() {
-  const encrypted = CryptoJS.DES.encrypt(
-    desInput.value,
-    CryptoJS.enc.Utf8.parse(desKey.value),
-    {
-      iv: CryptoJS.enc.Utf8.parse(desKey.value),
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-    },
-  )
+  const encrypted = CryptoJS.DES.encrypt(desInput.value, CryptoJS.enc.Utf8.parse(desKey.value), {
+    iv: CryptoJS.enc.Utf8.parse(desKey.value),
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  })
   desEncrypted.value = encrypted.toString()
   desDecrypted.value = ''
 }
 function doDESDecrypt() {
-  const decrypted = CryptoJS.DES.decrypt(
-    desEncrypted.value,
-    CryptoJS.enc.Utf8.parse(desKey.value),
-    {
-      iv: CryptoJS.enc.Utf8.parse(desKey.value),
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-    },
-  )
+  const decrypted = CryptoJS.DES.decrypt(desEncrypted.value, CryptoJS.enc.Utf8.parse(desKey.value), {
+    iv: CryptoJS.enc.Utf8.parse(desKey.value),
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  })
   desDecrypted.value = decrypted.toString(CryptoJS.enc.Utf8)
 }
 
@@ -120,7 +104,7 @@ function showWordArray() {
       <h2>1. MD5 哈希（Message Digest 5）</h2>
       <p class="desc">生成 128 位（32 字符 Hex）的固定长度摘要。不可逆，常用于校验文件完整性。</p>
       <div class="demo-row">
-        <a-input v-model:value="md5Input" placeholder="输入文本" style="flex:1" />
+        <a-input v-model:value="md5Input" placeholder="输入文本" style="flex: 1" />
         <a-button type="primary" @click="doMD5">计算 MD5</a-button>
       </div>
       <div v-if="md5Result" class="result-box">
@@ -140,13 +124,19 @@ const hash = CryptoJS.MD5('Hello World').toString()
       <h2>2. SHA 系列哈希</h2>
       <p class="desc">SHA-1（160位）、SHA-256（256位）、SHA-512（512位），安全性递增，速度递减。</p>
       <div class="demo-row">
-        <a-input v-model:value="shaInput" placeholder="输入文本" style="flex:1" />
+        <a-input v-model:value="shaInput" placeholder="输入文本" style="flex: 1" />
         <a-button type="primary" @click="doSHA">计算 SHA</a-button>
       </div>
       <div v-if="sha1Result" class="result-box">
-        <div><span class="label">SHA-1（40 Hex）：</span><code>{{ sha1Result }}</code></div>
-        <div><span class="label">SHA-256（64 Hex）：</span><code>{{ sha256Result }}</code></div>
-        <div><span class="label">SHA-512（128 Hex）：</span><code>{{ sha512Result }}</code></div>
+        <div>
+          <span class="label">SHA-1（40 Hex）：</span><code>{{ sha1Result }}</code>
+        </div>
+        <div>
+          <span class="label">SHA-256（64 Hex）：</span><code>{{ sha256Result }}</code>
+        </div>
+        <div>
+          <span class="label">SHA-512（128 Hex）：</span><code>{{ sha512Result }}</code>
+        </div>
       </div>
       <details class="code-details">
         <summary>查看代码</summary>
@@ -181,8 +171,12 @@ const sha512 = CryptoJS.SHA512('Hello World').toString()</code></pre>
         <a-button @click="doAESDecrypt" :disabled="!aesEncrypted">解密</a-button>
       </div>
       <div v-if="aesEncrypted" class="result-box">
-        <div><span class="label">密文：</span><code class="break-all">{{ aesEncrypted }}</code></div>
-        <div v-if="aesDecrypted"><span class="label">解密：</span><code>{{ aesDecrypted }}</code></div>
+        <div>
+          <span class="label">密文：</span><code class="break-all">{{ aesEncrypted }}</code>
+        </div>
+        <div v-if="aesDecrypted">
+          <span class="label">解密：</span><code>{{ aesDecrypted }}</code>
+        </div>
       </div>
       <details class="code-details">
         <summary>查看代码</summary>
@@ -200,7 +194,10 @@ const decrypted = CryptoJS.AES.decrypt(
   { iv: CryptoJS.enc.Utf8.parse(iv), mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 }
 ).toString(CryptoJS.enc.Utf8)</code></pre>
       </details>
-      <p class="tip-box">⚠️ <strong>注意</strong>：密钥和 IV 必须用 <code>CryptoJS.enc.Utf8.parse()</code> 转换成 WordArray，否则默认为 Base64 编码的密码短语模式。</p>
+      <p class="tip-box">
+        ⚠️ <strong>注意</strong>：密钥和 IV 必须用 <code>CryptoJS.enc.Utf8.parse()</code> 转换成 WordArray，否则默认为
+        Base64 编码的密码短语模式。
+      </p>
     </section>
 
     <!-- DES -->
@@ -208,14 +205,18 @@ const decrypted = CryptoJS.AES.decrypt(
       <h2>4. DES 对称加密</h2>
       <p class="desc">DES 使用 56 位密钥，现已被认为不安全，仅用于兼容旧系统。新项目应使用 AES。</p>
       <div class="demo-row">
-        <a-input v-model:value="desInput" placeholder="明文" style="flex:1" />
-        <a-input v-model:value="desKey" placeholder="密钥（8字节）" style="max-width:200px" />
+        <a-input v-model:value="desInput" placeholder="明文" style="flex: 1" />
+        <a-input v-model:value="desKey" placeholder="密钥（8字节）" style="max-width: 200px" />
         <a-button type="primary" @click="doDESEncrypt">加密</a-button>
         <a-button @click="doDESDecrypt" :disabled="!desEncrypted">解密</a-button>
       </div>
       <div v-if="desEncrypted" class="result-box">
-        <div><span class="label">密文：</span><code class="break-all">{{ desEncrypted }}</code></div>
-        <div v-if="desDecrypted"><span class="label">解密：</span><code>{{ desDecrypted }}</code></div>
+        <div>
+          <span class="label">密文：</span><code class="break-all">{{ desEncrypted }}</code>
+        </div>
+        <div v-if="desDecrypted">
+          <span class="label">解密：</span><code>{{ desDecrypted }}</code>
+        </div>
       </div>
     </section>
 
@@ -224,14 +225,20 @@ const decrypted = CryptoJS.AES.decrypt(
       <h2>5. 编码转换（Hex / Base64 / Utf8）</h2>
       <p class="desc">crypto-js 内部使用 <strong>WordArray</strong> 作为核心数据结构，通过编码方法在不同格式间转换。</p>
       <div class="demo-row">
-        <a-input v-model:value="encodeInput" placeholder="输入文本" style="flex:1" />
+        <a-input v-model:value="encodeInput" placeholder="输入文本" style="flex: 1" />
         <a-button type="primary" @click="doEncode">编码转换</a-button>
         <a-button @click="showWordArray">查看 WordArray</a-button>
       </div>
       <div v-if="encodeHex" class="result-box">
-        <div><span class="label">UTF-8 字节数：</span><code>{{ encodeUtf8Len }}</code></div>
-        <div><span class="label">Hex：</span><code class="break-all">{{ encodeHex }}</code></div>
-        <div><span class="label">Base64：</span><code class="break-all">{{ encodeBase64 }}</code></div>
+        <div>
+          <span class="label">UTF-8 字节数：</span><code>{{ encodeUtf8Len }}</code>
+        </div>
+        <div>
+          <span class="label">Hex：</span><code class="break-all">{{ encodeHex }}</code>
+        </div>
+        <div>
+          <span class="label">Base64：</span><code class="break-all">{{ encodeBase64 }}</code>
+        </div>
       </div>
       <div v-if="waDemo" class="result-box">
         <pre><code>{{ waDemo }}</code></pre>
@@ -264,10 +271,18 @@ wa2.toString(CryptoJS.enc.Utf8) // 'Hello'</code></pre>
           { title: '示例', dataIndex: 'example', key: 'example' },
         ]"
         :data-source="[
-          { name: 'WordArray', desc: 'crypto-js 核心数据结构，{words, sigBytes}', example: 'CryptoJS.enc.Utf8.parse(str)' },
+          {
+            name: 'WordArray',
+            desc: 'crypto-js 核心数据结构，{words, sigBytes}',
+            example: 'CryptoJS.enc.Utf8.parse(str)',
+          },
           { name: 'mode.CBC', desc: '密码块链接模式，需要 IV，安全性好', example: 'CryptoJS.mode.CBC' },
           { name: 'pad.Pkcs7', desc: 'PKCS7 填充标准，最常用的填充方式', example: 'CryptoJS.pad.Pkcs7' },
-          { name: 'IV', desc: '初始化向量，CBC 模式必需，需与密钥一起传递', example: 'iv: CryptoJS.enc.Utf8.parse(ivStr)' },
+          {
+            name: 'IV',
+            desc: '初始化向量，CBC 模式必需，需与密钥一起传递',
+            example: 'iv: CryptoJS.enc.Utf8.parse(ivStr)',
+          },
           { name: 'MD5/SHA', desc: '单向哈希，不可逆，用于完整性校验', example: 'CryptoJS.MD5(data)' },
         ]"
         :pagination="false"

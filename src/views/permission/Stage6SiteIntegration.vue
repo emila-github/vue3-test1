@@ -118,9 +118,7 @@ const roleDesc: Record<string, string> = {
 }
 
 // 可见模块
-const visibleModules = computed(() =>
-  siteModules.filter((m) => hasAny(...m.perms)),
-)
+const visibleModules = computed(() => siteModules.filter((m) => hasAny(...m.perms)))
 
 // ===== 代码块内容 =====
 const permsStoreCode = `// src/composables/usePermission.ts
@@ -210,9 +208,7 @@ function logMsg(msg: string) {
   <div class="stage6">
     <header class="page-header">
       <h1>Stage 6：站点级权限整合</h1>
-      <p class="subtitle">
-        将权限控制应用到整个站点：导航菜单、首页示例卡片、路由守卫、全局指令 — 全维度覆盖。
-      </p>
+      <p class="subtitle">将权限控制应用到整个站点：导航菜单、首页示例卡片、路由守卫、全局指令 — 全维度覆盖。</p>
     </header>
 
     <!-- 角色切换 -->
@@ -223,7 +219,10 @@ function logMsg(msg: string) {
           v-for="role in roleOptions"
           :key="role"
           :class="['role-btn', { active: currentRole === role }]"
-          @click="setRole(role); logMsg(`切换角色为 ${role}`)"
+          @click="
+            setRole(role)
+            logMsg(`切换角色为 ${role}`)
+          "
         >
           {{ role }}
         </button>
@@ -237,7 +236,10 @@ function logMsg(msg: string) {
     <!-- 站点模块权限矩阵 -->
     <section class="card">
       <h2>站点模块权限矩阵</h2>
-      <p class="card-tip">当前角色 <strong>{{ currentRole }}</strong> 可访问 <strong>{{ visibleModules.length }}</strong> / {{ siteModules.length }} 个模块</p>
+      <p class="card-tip">
+        当前角色 <strong>{{ currentRole }}</strong> 可访问 <strong>{{ visibleModules.length }}</strong> /
+        {{ siteModules.length }} 个模块
+      </p>
       <a-table
         :columns="[
           { title: '模块名称', dataIndex: 'name', key: 'name', width: 180 },
@@ -246,18 +248,20 @@ function logMsg(msg: string) {
           { title: '可访问角色', dataIndex: 'roles', key: 'roles' },
           { title: '当前状态', dataIndex: 'status', key: 'status', width: 120 },
         ]"
-        :data-source="siteModules.map(m => ({
-          key: m.name,
-          name: m.name,
-          desc: m.desc,
-          permissions: m.perms.join(', '),
-          roles: m.roles.join(' / '),
-          status: hasAny(...m.perms) ? '✅ 可见' : '❌ 隐藏',
-          visible: hasAny(...m.perms),
-        }))"
+        :data-source="
+          siteModules.map((m) => ({
+            key: m.name,
+            name: m.name,
+            desc: m.desc,
+            permissions: m.perms.join(', '),
+            roles: m.roles.join(' / '),
+            status: hasAny(...m.perms) ? '✅ 可见' : '❌ 隐藏',
+            visible: hasAny(...m.perms),
+          }))
+        "
         :pagination="false"
         size="small"
-        :row-class-name="(r: any) => r.visible ? '' : 'row-hidden'"
+        :row-class-name="(r: any) => (r.visible ? '' : 'row-hidden')"
       />
     </section>
 
@@ -285,7 +289,10 @@ function logMsg(msg: string) {
 
       <div class="key-point">
         <strong>4. 全局 v-permission 指令</strong>
-        <p>注册为 Vue 全局指令，任意页面/组件直接使用 <code>v-permission="'btn:delete'"</code> 或 <code>v-permission="['menu:admin', 'admin:full']"</code>。</p>
+        <p>
+          注册为 Vue 全局指令，任意页面/组件直接使用 <code>v-permission="'btn:delete'"</code> 或
+          <code>v-permission="['menu:admin', 'admin:full']"</code>。
+        </p>
         <pre class="code-block">{{ globalDirectiveCode }}</pre>
       </div>
 
@@ -338,7 +345,7 @@ function logMsg(msg: string) {
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 20px;
-  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 .card h2 {
   margin: 0 0 16px;
@@ -355,7 +362,9 @@ function logMsg(msg: string) {
 }
 
 /* 角色切换 */
-.role-section { padding-bottom: 20px; }
+.role-section {
+  padding-bottom: 20px;
+}
 .role-tabs {
   display: flex;
   gap: 8px;
@@ -370,10 +379,13 @@ function logMsg(msg: string) {
   font-weight: 600;
   color: #666;
   cursor: pointer;
-  transition: all .2s;
+  transition: all 0.2s;
   text-transform: capitalize;
 }
-.role-btn:hover { border-color: #1677ff; color: #1677ff; }
+.role-btn:hover {
+  border-color: #1677ff;
+  color: #1677ff;
+}
 .role-btn.active {
   background: #1677ff;
   color: #fff;
@@ -407,7 +419,11 @@ function logMsg(msg: string) {
   padding-bottom: 20px;
   border-bottom: 1px solid #f5f5f5;
 }
-.key-point:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.key-point:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
 .key-point strong {
   display: block;
   font-size: 15px;
@@ -459,8 +475,15 @@ function logMsg(msg: string) {
 }
 
 @media (max-width: 768px) {
-  .stage6 { padding: 16px; }
-  .role-tabs { flex-wrap: wrap; }
-  .role-btn { padding: 6px 16px; font-size: 13px; }
+  .stage6 {
+    padding: 16px;
+  }
+  .role-tabs {
+    flex-wrap: wrap;
+  }
+  .role-btn {
+    padding: 6px 16px;
+    font-size: 13px;
+  }
 }
 </style>

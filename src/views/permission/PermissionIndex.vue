@@ -65,7 +65,8 @@ function navigateTo(path: string) {
     <header class="page-header">
       <h1>🛡️ 权限控制学习教程</h1>
       <p class="subtitle">
-        涵盖 RBAC 模型、后端获取权限、指令控制（菜单/按钮/组件）、数据级权限、多权限组合逻辑、站点级整合，6 阶段系统学习。
+        涵盖 RBAC 模型、后端获取权限、指令控制（菜单/按钮/组件）、数据级权限、多权限组合逻辑、站点级整合，6
+        阶段系统学习。
       </p>
     </header>
 

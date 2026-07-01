@@ -179,9 +179,7 @@ const allTags = computed(() => {
 })
 
 // 权限过滤：仅显示当前角色有权限的卡片
-const permittedDemos = computed(() =>
-  demos.filter((d) => hasAny(...d.requiredPermissions)),
-)
+const permittedDemos = computed(() => demos.filter((d) => hasAny(...d.requiredPermissions)))
 
 const filteredDemos = computed(() => {
   const base = permittedDemos.value
@@ -367,7 +365,10 @@ onMounted(() => {
   cursor: pointer;
   transition: all 0.2s;
 }
-.role-btn:hover { border-color: #1677ff; color: #1677ff; }
+.role-btn:hover {
+  border-color: #1677ff;
+  color: #1677ff;
+}
 .role-btn.active {
   background: #1677ff;
   color: #fff;

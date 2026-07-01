@@ -54,11 +54,11 @@ function doHybridEncrypt() {
   stepLog.value.push(`[2/5] 生成随机 IV：${aesIv.value}`)
 
   // Step 2: AES 加密数据
-  const encrypted = CryptoJS.AES.encrypt(
-    plainText.value,
-    CryptoJS.enc.Hex.parse(aesKey.value),
-    { iv: CryptoJS.enc.Hex.parse(aesIv.value), mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 },
-  ).toString()
+  const encrypted = CryptoJS.AES.encrypt(plainText.value, CryptoJS.enc.Hex.parse(aesKey.value), {
+    iv: CryptoJS.enc.Hex.parse(aesIv.value),
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  }).toString()
   stepLog.value.push(`[3/5] AES-256-CBC 加密数据（密文长度：${encrypted.length} 字符）`)
 
   // Step 3: RSA 加密 AES 密钥
@@ -101,11 +101,11 @@ function doHybridDecrypt() {
     stepLog.value.push(`[3/4] AES 密钥：${key.substring(0, 32)}...  IV：${iv}`)
 
     // Step 3: AES 解密数据
-    const decrypted = CryptoJS.AES.decrypt(
-      pkg.data,
-      CryptoJS.enc.Hex.parse(key),
-      { iv: CryptoJS.enc.Hex.parse(iv), mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 },
-    ).toString(CryptoJS.enc.Utf8)
+    const decrypted = CryptoJS.AES.decrypt(pkg.data, CryptoJS.enc.Hex.parse(key), {
+      iv: CryptoJS.enc.Hex.parse(iv),
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    }).toString(CryptoJS.enc.Utf8)
     decryptedText.value = decrypted || '解密失败'
     stepLog.value.push(`[4/4] AES 解密数据完成 ✓→ ${decryptedText.value}`)
   } catch (e) {
@@ -146,7 +146,9 @@ function doPerfCompare() {
   const aesKey1 = CryptoJS.lib.WordArray.random(32).toString()
   const aesIv1 = CryptoJS.lib.WordArray.random(16).toString()
   const aesEnc = CryptoJS.AES.encrypt(testData, CryptoJS.enc.Hex.parse(aesKey1), {
-    iv: CryptoJS.enc.Hex.parse(aesIv1), mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7,
+    iv: CryptoJS.enc.Hex.parse(aesIv1),
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
   }).toString()
   const keyEnc = rsa.encrypt(aesKey1 + '::' + aesIv1) || ''
   const pkg = JSON.stringify({ ek: keyEnc, data: aesEnc })
@@ -168,9 +170,7 @@ useDemoKeys()
     <!-- 方案原理 -->
     <section class="card">
       <h2>📖 混合加密方案原理</h2>
-      <p class="desc">
-        取 RSA（安全密钥交换）和 AES（高效数据加密）两者的优势：
-      </p>
+      <p class="desc">取 RSA（安全密钥交换）和 AES（高效数据加密）两者的优势：</p>
       <div class="flow-diagram">
         <div class="flow-step flow-sender">
           <h4>🔒 加密（前端）</h4>
@@ -189,7 +189,8 @@ useDemoKeys()
         </div>
       </div>
       <p class="tip-box">
-        💡 <strong>为什么这样设计？</strong> RSA 很慢但能安全交换密钥，AES 很快但不能安全分发密钥。两者结合：RSA 只加密 32 字节的 AES 密钥（很快），AES 处理任意大小的数据（也很快）。
+        💡 <strong>为什么这样设计？</strong> RSA 很慢但能安全交换密钥，AES 很快但不能安全分发密钥。两者结合：RSA 只加密
+        32 字节的 AES 密钥（很快），AES 处理任意大小的数据（也很快）。
       </p>
     </section>
 
@@ -200,7 +201,7 @@ useDemoKeys()
       <div class="btn-group">
         <a-button type="primary" @click="useDemoKeys">加载演示密钥</a-button>
       </div>
-      <div v-if="rsaPubKey" style="margin-top:12px">
+      <div v-if="rsaPubKey" style="margin-top: 12px">
         <div>
           <label>明文（可包含密码、身份证号等敏感信息）</label>
           <a-textarea v-model:value="plainText" :rows="3" />
@@ -217,16 +218,18 @@ useDemoKeys()
         </div>
 
         <!-- 密文包 -->
-        <div v-if="encryptedPackage" class="result-box" style="margin-top:12px">
+        <div v-if="encryptedPackage" class="result-box" style="margin-top: 12px">
           <details>
-            <summary style="font-size:13px; color:#1677ff; cursor:pointer">查看密文包（JSON）</summary>
-            <pre style="max-height:150px; overflow:auto; font-size:12px">{{ encryptedPackage }}</pre>
+            <summary style="font-size: 13px; color: #1677ff; cursor: pointer">查看密文包（JSON）</summary>
+            <pre style="max-height: 150px; overflow: auto; font-size: 12px">{{ encryptedPackage }}</pre>
           </details>
         </div>
 
         <!-- 解密结果 -->
         <div v-if="decryptedText" class="result-box">
-          <div><span class="label">解密结果：</span><code>{{ decryptedText }}</code></div>
+          <div>
+            <span class="label">解密结果：</span><code>{{ decryptedText }}</code>
+          </div>
         </div>
       </div>
       <details class="code-details">
@@ -272,8 +275,8 @@ const plainText = CryptoJS.AES.decrypt(
       <div class="btn-group">
         <a-button type="primary" @click="doPerfCompare" :disabled="!rsaPubKey">开始对比</a-button>
       </div>
-      <div v-if="perfData" class="result-box" style="margin-top:12px">
-        <div style="font-size:13px; color:#888; margin-bottom:8px">{{ perfData }}</div>
+      <div v-if="perfData" class="result-box" style="margin-top: 12px">
+        <div style="font-size: 13px; color: #888; margin-bottom: 8px">{{ perfData }}</div>
         <a-table
           :columns="[
             { title: '方案', dataIndex: 'scheme' },
@@ -317,39 +320,164 @@ const plainText = CryptoJS.AES.decrypt(
 </template>
 
 <style scoped>
-.stage-page { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
-.page-header { text-align: center; margin-bottom: 32px; }
-.page-header h1 { font-size: 26px; margin-bottom: 6px; }
-.page-header p { font-size: 14px; color: #888; }
-.card { background: #fff; border: 1px solid #f0f0f0; border-radius: 10px; padding: 24px; margin-bottom: 24px; }
-.card h2 { font-size: 18px; margin-bottom: 4px; }
-.card h3 { font-size: 16px; margin-bottom: 8px; }
-.desc { font-size: 14px; color: #888; margin-bottom: 16px; line-height: 1.6; }
-.demo-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 12px 0; }
-label { display: block; font-size: 13px; color: #666; margin-bottom: 4px; }
-.btn-group { display: flex; gap: 10px; margin: 12px 0; }
-.result-box { margin: 12px 0; padding: 12px; background: #fafafa; border-radius: 6px; border: 1px solid #f0f0f0; }
-.result-box .label { font-size: 13px; color: #666; font-weight: 600; }
-.result-box code { font-size: 13px; word-break: break-all; }
-.tip-box { margin-top: 12px; padding: 10px 14px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 6px; font-size: 13px; color: #9a6e00; }
-.code-details { margin-top: 12px; }
-.code-details summary { font-size: 13px; color: #1677ff; cursor: pointer; }
-.code-details pre { margin-top: 8px; padding: 12px; background: #f6f8fa; border-radius: 6px; overflow-x: auto; font-size: 13px; }
-.log-box { margin: 12px 0; padding: 12px; background: #1e1e1e; border-radius: 6px; color: #d4d4d4; font-family: monospace; font-size: 13px; }
-.log-line { padding: 2px 0; word-break: break-all; }
-.log-timing { margin-top: 8px; color: #6a9955; font-weight: 600; }
+.stage-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+.page-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.page-header h1 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+.page-header p {
+  font-size: 14px;
+  color: #888;
+}
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.card h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.desc {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+.demo-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+label {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+}
+.result-box {
+  margin: 12px 0;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+}
+.result-box .label {
+  font-size: 13px;
+  color: #666;
+  font-weight: 600;
+}
+.result-box code {
+  font-size: 13px;
+  word-break: break-all;
+}
+.tip-box {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #9a6e00;
+}
+.code-details {
+  margin-top: 12px;
+}
+.code-details summary {
+  font-size: 13px;
+  color: #1677ff;
+  cursor: pointer;
+}
+.code-details pre {
+  margin-top: 8px;
+  padding: 12px;
+  background: #f6f8fa;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 13px;
+}
+.log-box {
+  margin: 12px 0;
+  padding: 12px;
+  background: #1e1e1e;
+  border-radius: 6px;
+  color: #d4d4d4;
+  font-family: monospace;
+  font-size: 13px;
+}
+.log-line {
+  padding: 2px 0;
+  word-break: break-all;
+}
+.log-timing {
+  margin-top: 8px;
+  color: #6a9955;
+  font-weight: 600;
+}
 
 /* ===== 流程图 ===== */
-.flow-diagram { display: flex; align-items: flex-start; gap: 16px; margin: 16px 0; }
-.flow-step { flex: 1; padding: 16px; border-radius: 8px; }
-.flow-sender { background: #e6f7ff; border: 1px solid #91d5ff; }
-.flow-receiver { background: #f6ffed; border: 1px solid #b7eb8f; }
-.flow-step h4 { margin: 0 0 8px; font-size: 14px; }
-.flow-item { font-size: 13px; color: #555; padding: 3px 0; }
-.flow-arrow { font-size: 28px; color: #1890ff; padding-top: 40px; flex-shrink: 0; }
+.flow-diagram {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin: 16px 0;
+}
+.flow-step {
+  flex: 1;
+  padding: 16px;
+  border-radius: 8px;
+}
+.flow-sender {
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+}
+.flow-receiver {
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+}
+.flow-step h4 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+.flow-item {
+  font-size: 13px;
+  color: #555;
+  padding: 3px 0;
+}
+.flow-arrow {
+  font-size: 28px;
+  color: #1890ff;
+  padding-top: 40px;
+  flex-shrink: 0;
+}
 
 @media (max-width: 640px) {
-  .flow-diagram { flex-direction: column; }
-  .flow-arrow { display: none; }
+  .flow-diagram {
+    flex-direction: column;
+  }
+  .flow-arrow {
+    display: none;
+  }
 }
 </style>

@@ -24,16 +24,16 @@ function doAesModeCompare() {
     { name: 'CTR', mode: CryptoJS.mode.CTR },
   ]
   for (const m of modes) {
-    const encrypted = CryptoJS.AES.encrypt(
-      aesModeInput.value,
-      CryptoJS.enc.Utf8.parse(aesModeKey.value),
-      { iv: CryptoJS.enc.Utf8.parse(aesModeIv.value), mode: m.mode, padding: CryptoJS.pad.Pkcs7 },
-    ).toString()
-    const decrypted = CryptoJS.AES.decrypt(
-      encrypted,
-      CryptoJS.enc.Utf8.parse(aesModeKey.value),
-      { iv: CryptoJS.enc.Utf8.parse(aesModeIv.value), mode: m.mode, padding: CryptoJS.pad.Pkcs7 },
-    ).toString(CryptoJS.enc.Utf8)
+    const encrypted = CryptoJS.AES.encrypt(aesModeInput.value, CryptoJS.enc.Utf8.parse(aesModeKey.value), {
+      iv: CryptoJS.enc.Utf8.parse(aesModeIv.value),
+      mode: m.mode,
+      padding: CryptoJS.pad.Pkcs7,
+    }).toString()
+    const decrypted = CryptoJS.AES.decrypt(encrypted, CryptoJS.enc.Utf8.parse(aesModeKey.value), {
+      iv: CryptoJS.enc.Utf8.parse(aesModeIv.value),
+      mode: m.mode,
+      padding: CryptoJS.pad.Pkcs7,
+    }).toString(CryptoJS.enc.Utf8)
     aesModeResults.value.push({ mode: m.name, encrypted, decrypted })
   }
 }
@@ -48,11 +48,10 @@ function doEcbDemo() {
   const names = ['明文1 (AAAA)', '明文2 (AAAA)', '明文3 (BBBB)']
   const inputs = [ecbInput1.value, ecbInput2.value, ecbInput3.value]
   ecbResults.value = names.map((name, i) => {
-    const encrypted = CryptoJS.AES.encrypt(
-      inputs[i],
-      CryptoJS.enc.Utf8.parse(ecbKey.value),
-      { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 },
-    ).toString()
+    const encrypted = CryptoJS.AES.encrypt(inputs[i], CryptoJS.enc.Utf8.parse(ecbKey.value), {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7,
+    }).toString()
     // 取加密结果中间部分展示
     const short = encrypted.substring(20, 40)
     return { name, encrypted, short }
@@ -74,11 +73,11 @@ function doPadCompare() {
   ]
   for (const p of pads) {
     try {
-      const encrypted = CryptoJS.AES.encrypt(
-        padInput.value,
-        CryptoJS.enc.Utf8.parse(padKey.value),
-        { iv: CryptoJS.enc.Utf8.parse(padIv.value), mode: CryptoJS.mode.CBC, padding: p.pad },
-      ).toString()
+      const encrypted = CryptoJS.AES.encrypt(padInput.value, CryptoJS.enc.Utf8.parse(padKey.value), {
+        iv: CryptoJS.enc.Utf8.parse(padIv.value),
+        mode: CryptoJS.mode.CBC,
+        padding: p.pad,
+      }).toString()
       padResults.value.push({ name: p.name, encrypted })
     } catch {
       padResults.value.push({ name: p.name, encrypted: '加密失败（可能是输入长度不对齐）' })
@@ -104,9 +103,10 @@ const hmacVerifyResult = ref('')
 function doHMACVerify() {
   const original = CryptoJS.HmacSHA256(hmacInput.value, hmacSecret.value).toString()
   const tampered = CryptoJS.HmacSHA256(hmacVerifyMsg.value, hmacSecret.value).toString()
-  hmacVerifyResult.value = original === tampered
-    ? '✅ HMAC 匹配 — 消息未被篡改'
-    : `❌ HMAC 不匹配 — 消息已被篡改！
+  hmacVerifyResult.value =
+    original === tampered
+      ? '✅ HMAC 匹配 — 消息未被篡改'
+      : `❌ HMAC 不匹配 — 消息已被篡改！
   原始 HMAC: ${original.substring(0, 32)}...
   篡改后 HMAC: ${tampered.substring(0, 32)}...`
 }
@@ -119,16 +119,14 @@ const pbkdf2Key256 = ref('')
 const pbkdf2Iterations = ref(10000)
 
 function doPBKDF2() {
-  pbkdf2Key128.value = CryptoJS.PBKDF2(
-    pbkdf2Password.value,
-    CryptoJS.enc.Hex.parse(pbkdf2Salt.value),
-    { keySize: 128 / 32, iterations: pbkdf2Iterations.value },
-  ).toString()
-  pbkdf2Key256.value = CryptoJS.PBKDF2(
-    pbkdf2Password.value,
-    CryptoJS.enc.Hex.parse(pbkdf2Salt.value),
-    { keySize: 256 / 32, iterations: pbkdf2Iterations.value },
-  ).toString()
+  pbkdf2Key128.value = CryptoJS.PBKDF2(pbkdf2Password.value, CryptoJS.enc.Hex.parse(pbkdf2Salt.value), {
+    keySize: 128 / 32,
+    iterations: pbkdf2Iterations.value,
+  }).toString()
+  pbkdf2Key256.value = CryptoJS.PBKDF2(pbkdf2Password.value, CryptoJS.enc.Hex.parse(pbkdf2Salt.value), {
+    keySize: 256 / 32,
+    iterations: pbkdf2Iterations.value,
+  }).toString()
 }
 
 function genNewSalt() {
@@ -163,8 +161,8 @@ function genNewSalt() {
           <a-input v-model:value="aesModeIv" />
         </div>
       </div>
-      <a-button type="primary" @click="doAesModeCompare" style="margin-top:12px">对比所有模式</a-button>
-      <div v-if="aesModeResults.length" class="result-box" style="margin-top:12px">
+      <a-button type="primary" @click="doAesModeCompare" style="margin-top: 12px">对比所有模式</a-button>
+      <div v-if="aesModeResults.length" class="result-box" style="margin-top: 12px">
         <a-table
           :columns="[
             { title: '模式', dataIndex: 'mode', width: 70 },
@@ -188,29 +186,31 @@ CryptoJS.AES.encrypt(data, key, { mode: CryptoJS.mode.ECB })
 // CTR（计数器模式，可并行，转流密码）
 CryptoJS.AES.encrypt(data, key, { iv, mode: CryptoJS.mode.CTR })</code></pre>
       </details>
-      <p class="tip-box">⚠️ <strong>ECB 模式</strong>：相同明文块产生相同密文块，可被统计分析攻击。只要可能，应避免使用 ECB。</p>
+      <p class="tip-box">
+        ⚠️ <strong>ECB 模式</strong>：相同明文块产生相同密文块，可被统计分析攻击。只要可能，应避免使用 ECB。
+      </p>
     </section>
 
     <!-- ECB 安全性演示 -->
     <section class="card">
       <h2>2. ECB 模式安全性演示</h2>
-      <p class="desc">
-        输入两段相同的明文（AAAA），观察 ECB 模式下密文是否也相同，从而理解为何 ECB 不安全。
-      </p>
+      <p class="desc">输入两段相同的明文（AAAA），观察 ECB 模式下密文是否也相同，从而理解为何 ECB 不安全。</p>
       <div class="demo-row">
-        <a-input v-model:value="ecbInput1" placeholder="明文1" style="max-width:120px" />
-        <a-input v-model:value="ecbInput2" placeholder="明文2" style="max-width:120px" />
-        <a-input v-model:value="ecbInput3" placeholder="明文3" style="max-width:120px" />
+        <a-input v-model:value="ecbInput1" placeholder="明文1" style="max-width: 120px" />
+        <a-input v-model:value="ecbInput2" placeholder="明文2" style="max-width: 120px" />
+        <a-input v-model:value="ecbInput3" placeholder="明文3" style="max-width: 120px" />
         <a-button type="primary" @click="doEcbDemo">加密对比</a-button>
       </div>
-      <div v-if="ecbResults.length" class="result-box" style="margin-top:12px">
-        <div v-for="r in ecbResults" :key="r.name" style="margin-bottom:6px">
+      <div v-if="ecbResults.length" class="result-box" style="margin-top: 12px">
+        <div v-for="r in ecbResults" :key="r.name" style="margin-bottom: 6px">
           <span class="label">{{ r.name }}：</span>
           <code class="break-all">{{ r.encrypted }}</code>
           <br />
-          <span style="color:#888; font-size:12px">中间片段：<code>{{ r.short }}</code></span>
+          <span style="color: #888; font-size: 12px"
+            >中间片段：<code>{{ r.short }}</code></span
+          >
         </div>
-        <p style="font-size:13px; color:#cf1322; margin-top:8px">
+        <p style="font-size: 13px; color: #cf1322; margin-top: 8px">
           👆 注意：明文1 和 明文2 都是 "AAAA"，它们的密文<strong>完全相同</strong>！这就是 ECB 的安全隐患。
         </p>
       </div>
@@ -221,11 +221,11 @@ CryptoJS.AES.encrypt(data, key, { iv, mode: CryptoJS.mode.CTR })</code></pre>
       <h2>3. 填充策略对比</h2>
       <p class="desc">分组密码要求输入是块大小的整数倍，不足时需要填充。Pkcs7 最常用，NoPadding 要求数据长度对齐。</p>
       <div class="demo-row">
-        <a-input v-model:value="padInput" placeholder="输入文本" style="max-width:200px" />
+        <a-input v-model:value="padInput" placeholder="输入文本" style="max-width: 200px" />
         <a-button type="primary" @click="doPadCompare">对比所有填充</a-button>
       </div>
-      <div v-if="padResults.length" class="result-box" style="margin-top:12px">
-        <div v-for="r in padResults" :key="r.name" style="margin-bottom:6px">
+      <div v-if="padResults.length" class="result-box" style="margin-top: 12px">
+        <div v-for="r in padResults" :key="r.name" style="margin-bottom: 6px">
           <span class="label">{{ r.name }}：</span>
           <code class="break-all">{{ r.encrypted }}</code>
         </div>
@@ -263,14 +263,20 @@ CryptoJS.AES.encrypt(data, key, { padding: CryptoJS.pad.NoPadding })</code></pre
         <a-button type="primary" @click="doHMAC">生成 HMAC</a-button>
       </div>
       <div v-if="hmacSHA256" class="result-box">
-        <div><span class="label">HmacSHA256：</span><code class="break-all">{{ hmacSHA256 }}</code></div>
-        <div><span class="label">HmacSHA512：</span><code class="break-all">{{ hmacSHA512 }}</code></div>
-        <div><span class="label">HmacMD5（不推荐）：</span><code class="break-all">{{ hmacMD5 }}</code></div>
+        <div>
+          <span class="label">HmacSHA256：</span><code class="break-all">{{ hmacSHA256 }}</code>
+        </div>
+        <div>
+          <span class="label">HmacSHA512：</span><code class="break-all">{{ hmacSHA512 }}</code>
+        </div>
+        <div>
+          <span class="label">HmacMD5（不推荐）：</span><code class="break-all">{{ hmacMD5 }}</code>
+        </div>
       </div>
 
-      <h3 style="margin-top:20px">验证完整性（防篡改演示）</h3>
+      <h3 style="margin-top: 20px">验证完整性（防篡改演示）</h3>
       <div class="demo-row">
-        <a-input v-model:value="hmacVerifyMsg" placeholder="输入「被篡改」的消息" style="flex:1" />
+        <a-input v-model:value="hmacVerifyMsg" placeholder="输入「被篡改」的消息" style="flex: 1" />
         <a-button type="primary" @click="doHMACVerify">验证</a-button>
       </div>
       <div v-if="hmacVerifyResult" class="result-box">
@@ -294,7 +300,8 @@ const isValid = serverHMAC === clientHMAC
     <section class="card">
       <h2>5. PBKDF2 密钥派生</h2>
       <p class="desc">
-        PBKDF2 从密码 + 随机盐 + 多轮迭代派生安全密钥。用于<strong>密码哈希存储</strong>和<strong>密钥材质生成</strong>。
+        PBKDF2 从密码 + 随机盐 +
+        多轮迭代派生安全密钥。用于<strong>密码哈希存储</strong>和<strong>密钥材质生成</strong>。
       </p>
       <div class="demo-grid">
         <div>
@@ -303,23 +310,27 @@ const isValid = serverHMAC === clientHMAC
         </div>
         <div>
           <label>随机盐 (Hex)</label>
-          <div class="demo-row" style="gap:6px; margin:0">
-            <a-input v-model:value="pbkdf2Salt" style="flex:1; font-family:monospace; font-size:12px" />
+          <div class="demo-row" style="gap: 6px; margin: 0">
+            <a-input v-model:value="pbkdf2Salt" style="flex: 1; font-family: monospace; font-size: 12px" />
             <a-button size="small" @click="genNewSalt">生成新盐</a-button>
           </div>
         </div>
         <div>
           <label>迭代次数</label>
-          <a-input-number v-model:value="pbkdf2Iterations" :min="1000" :max="100000" :step="1000" style="width:100%" />
+          <a-input-number v-model:value="pbkdf2Iterations" :min="1000" :max="100000" :step="1000" style="width: 100%" />
         </div>
       </div>
       <div class="btn-group">
         <a-button type="primary" @click="doPBKDF2">派生密钥</a-button>
       </div>
       <div v-if="pbkdf2Key128" class="result-box">
-        <div><span class="label">128 位密钥：</span><code class="break-all">{{ pbkdf2Key128 }}</code></div>
-        <div><span class="label">256 位密钥：</span><code class="break-all">{{ pbkdf2Key256 }}</code></div>
-        <div style="font-size:12px; color:#888; margin-top:8px">
+        <div>
+          <span class="label">128 位密钥：</span><code class="break-all">{{ pbkdf2Key128 }}</code>
+        </div>
+        <div>
+          <span class="label">256 位密钥：</span><code class="break-all">{{ pbkdf2Key256 }}</code>
+        </div>
+        <div style="font-size: 12px; color: #888; margin-top: 8px">
           💡 相同密码 + 相同盐 + 相同迭代次数 → 始终产生相同密钥
         </div>
       </div>
@@ -364,24 +375,110 @@ const derived = CryptoJS.PBKDF2(
 </template>
 
 <style scoped>
-.stage-page { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
-.page-header { text-align: center; margin-bottom: 32px; }
-.page-header h1 { font-size: 26px; margin-bottom: 6px; }
-.page-header p { font-size: 14px; color: #888; }
-.card { background: #fff; border: 1px solid #f0f0f0; border-radius: 10px; padding: 24px; margin-bottom: 24px; }
-.card h2 { font-size: 18px; margin-bottom: 4px; }
-.card h3 { font-size: 16px; margin-bottom: 8px; }
-.desc { font-size: 14px; color: #888; margin-bottom: 16px; line-height: 1.6; }
-.demo-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 12px 0; }
-.demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
-.demo-grid label { display: block; font-size: 13px; color: #666; margin-bottom: 4px; }
-.btn-group { display: flex; gap: 10px; margin: 12px 0; }
-.result-box { margin: 12px 0; padding: 12px; background: #fafafa; border-radius: 6px; border: 1px solid #f0f0f0; }
-.result-box .label { font-size: 13px; color: #666; font-weight: 600; }
-.result-box code { font-size: 13px; word-break: break-all; }
-.break-all { word-break: break-all; }
-.tip-box { margin-top: 12px; padding: 10px 14px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 6px; font-size: 13px; color: #9a6e00; }
-.code-details { margin-top: 12px; }
-.code-details summary { font-size: 13px; color: #1677ff; cursor: pointer; }
-.code-details pre { margin-top: 8px; padding: 12px; background: #f6f8fa; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+.stage-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+.page-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.page-header h1 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+.page-header p {
+  font-size: 14px;
+  color: #888;
+}
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.card h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.desc {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+.demo-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.demo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0;
+}
+.demo-grid label {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+}
+.result-box {
+  margin: 12px 0;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+}
+.result-box .label {
+  font-size: 13px;
+  color: #666;
+  font-weight: 600;
+}
+.result-box code {
+  font-size: 13px;
+  word-break: break-all;
+}
+.break-all {
+  word-break: break-all;
+}
+.tip-box {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #9a6e00;
+}
+.code-details {
+  margin-top: 12px;
+}
+.code-details summary {
+  font-size: 13px;
+  color: #1677ff;
+  cursor: pointer;
+}
+.code-details pre {
+  margin-top: 8px;
+  padding: 12px;
+  background: #f6f8fa;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 13px;
+}
 </style>

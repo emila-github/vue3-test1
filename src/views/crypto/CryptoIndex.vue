@@ -88,9 +88,7 @@ function navigateTo(path: string) {
     <!-- Header -->
     <header class="page-header">
       <h1>🔐 加密技术学习教程</h1>
-      <p class="subtitle">
-        涵盖 crypto-js 对称加密与哈希、jsencrypt RSA 非对称加密、混合加密方案，5 阶段系统学习。
-      </p>
+      <p class="subtitle">涵盖 crypto-js 对称加密与哈希、jsencrypt RSA 非对称加密、混合加密方案，5 阶段系统学习。</p>
     </header>
 
     <!-- 核心概念 -->
@@ -139,7 +137,12 @@ function navigateTo(path: string) {
           { feature: '适用数据量', crypto: '任意大小', jsencrypt: '受密钥长度限制', hybrid: '任意大小' },
           { feature: '密钥分发', crypto: '需安全信道', jsencrypt: '公钥可公开', hybrid: '公钥可公开' },
           { feature: '安全级别', crypto: '依赖密钥长度', jsencrypt: '高（2048位+）', hybrid: '高' },
-          { feature: '典型场景', crypto: '本地存储加密、文件加密', jsencrypt: '登录密码加密、数字签名', hybrid: 'HTTPS通信、API安全' },
+          {
+            feature: '典型场景',
+            crypto: '本地存储加密、文件加密',
+            jsencrypt: '登录密码加密、数字签名',
+            hybrid: 'HTTPS通信、API安全',
+          },
         ]"
         :pagination="false"
         size="small"
