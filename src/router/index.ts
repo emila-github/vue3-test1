@@ -173,6 +173,37 @@ const router = createRouter({
       name: 'permission-stage6',
       component: () => import('../views/permission/Stage6SiteIntegration.vue'),
     },
+    // ====== 加密技术学习 ======
+    {
+      path: '/crypto',
+      name: 'crypto',
+      component: () => import('../views/crypto/CryptoIndex.vue'),
+    },
+    {
+      path: '/crypto/stage1',
+      name: 'crypto-stage1',
+      component: () => import('../views/crypto/Stage1CryptoJSBasic.vue'),
+    },
+    {
+      path: '/crypto/stage2',
+      name: 'crypto-stage2',
+      component: () => import('../views/crypto/Stage2CryptoJSAdvanced.vue'),
+    },
+    {
+      path: '/crypto/stage3',
+      name: 'crypto-stage3',
+      component: () => import('../views/crypto/Stage3JSEncryptBasic.vue'),
+    },
+    {
+      path: '/crypto/stage4',
+      name: 'crypto-stage4',
+      component: () => import('../views/crypto/Stage4JSEncryptAdvanced.vue'),
+    },
+    {
+      path: '/crypto/stage5',
+      name: 'crypto-stage5',
+      component: () => import('../views/crypto/Stage5HybridEncryption.vue'),
+    },
     // ====== ESLint 学习 ======
     {
       path: '/eslint',

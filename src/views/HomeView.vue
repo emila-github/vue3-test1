@@ -160,6 +160,15 @@ const demos: DemoItem[] = [
     tags: ['核心', '实战'],
     requiredPermissions: ['demo:pinia'],
   },
+  {
+    path: '/crypto',
+    title: '🔐 加密技术学习',
+    desc: 'crypto-js 对称加密/MD5/AES、jsencrypt RSA 非对称加密、签名验签、混合加密 — 5 阶段系统学习',
+    color: '#fa8c16',
+    icon: '🔐',
+    tags: ['核心', '实战'],
+    requiredPermissions: ['demo:crypto'],
+  },
 ]
 
 const tagFilter = shallowRef<string | null>(null)
