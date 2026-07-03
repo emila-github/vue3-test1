@@ -14,6 +14,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AAlert: typeof import('ant-design-vue/es')['Alert']
     AAvatar: typeof import('ant-design-vue/es')['Avatar']
+    ABadge: typeof import('ant-design-vue/es')['Badge']
     AButton: typeof import('ant-design-vue/es')['Button']
     ACard: typeof import('ant-design-vue/es')['Card']
     ACascader: typeof import('ant-design-vue/es')['Cascader']
@@ -75,6 +76,7 @@ declare module 'vue' {
 declare global {
   const AAlert: typeof import('ant-design-vue/es')['Alert']
   const AAvatar: typeof import('ant-design-vue/es')['Avatar']
+  const ABadge: typeof import('ant-design-vue/es')['Badge']
   const AButton: typeof import('ant-design-vue/es')['Button']
   const ACard: typeof import('ant-design-vue/es')['Card']
   const ACascader: typeof import('ant-design-vue/es')['Cascader']

@@ -10,9 +10,9 @@ export default defineConfig({
 })
 
 // 服务端入口 server.js
-import { createSSRApp } from 'vue'
-import { renderToString } from 'vue/server-renderer'
-import App from './App.vue'
+${'import'} { createSSRApp } from 'vue'
+${'import'} { renderToString } from 'vue/server-renderer'
+${'import'} App from './App.vue'
 
 export async function render() {
   const app = createSSRApp(App)
@@ -57,7 +57,7 @@ worker.onmessage = (e) => {
 worker.postMessage({ data: [1, 2, 3] })
 
 // 3. 使用 ?worker 导入
-import MyWorker from './my.worker?worker'
+${'import'} MyWorker from './my.worker?worker'
 const w = new MyWorker()`)
 
 const preBundleCode = ref(`// vite.config.ts

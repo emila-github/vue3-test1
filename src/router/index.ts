@@ -400,6 +400,37 @@ const router = createRouter({
       name: 'antd-stage6',
       component: () => import('../views/antd/Stage6TableDemo.vue'),
     },
+    // ====== Axios 学习 ======
+    {
+      path: '/axios',
+      name: 'axios',
+      component: () => import('../views/axios/AxiosIndex.vue'),
+    },
+    {
+      path: '/axios/stage1',
+      name: 'axios-stage1',
+      component: () => import('../views/axios/Stage1QuickStart.vue'),
+    },
+    {
+      path: '/axios/stage2',
+      name: 'axios-stage2',
+      component: () => import('../views/axios/Stage2Interceptors.vue'),
+    },
+    {
+      path: '/axios/stage3',
+      name: 'axios-stage3',
+      component: () => import('../views/axios/Stage3CancelUpload.vue'),
+    },
+    {
+      path: '/axios/stage4',
+      name: 'axios-stage4',
+      component: () => import('../views/axios/Stage4Advanced.vue'),
+    },
+    {
+      path: '/axios/stage5',
+      name: 'axios-stage5',
+      component: () => import('../views/axios/Stage5Production.vue'),
+    },
     ...routes,
   ],
 })

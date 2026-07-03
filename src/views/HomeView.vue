@@ -169,6 +169,15 @@ const demos: DemoItem[] = [
     tags: ['核心', '实战'],
     requiredPermissions: ['demo:crypto'],
   },
+  {
+    path: '/axios',
+    title: '📡 Axios 学习教程',
+    desc: '快速上手、拦截器与封装、取消请求与上传下载、高级特性、实战封装 — 5 阶段系统学习',
+    color: '#5a67d8',
+    icon: 'AX',
+    tags: ['核心', '实战'],
+    requiredPermissions: ['demo:axios'],
+  },
 ]
 
 const tagFilter = shallowRef<string | null>(null)

@@ -39,19 +39,19 @@ const scrollCode = `const router = createRouter({
 
 // ===== 懒加载 =====
 const lazyCode = `// ❌ 同步导入：所有页面打包在一起
-import HomeView from '../views/HomeView.vue'
+${'import'} HomeView from '../views/HomeView.vue'
 
 // ✅ 懒加载：按路由拆包，访问时才下载
-const HomeView = () => import('../views/HomeView.vue')
+const HomeView = () => ${'import'}('../views/HomeView.vue')
 
 // 命名 chunk（方便调试）
-const Admin = () => import(
+const Admin = () => ${'import'}(
   /* webpackChunkName: "admin" */
   '../views/Admin.vue'
 )
 
 // 分组打包（相同 chunkName 合并）
-const Stage1 = () => import(
+const Stage1 = () => ${'import'}(
   /* webpackChunkName: "vue-router-demo" */
   '../views/vue-router/Stage1.vue'
 )`

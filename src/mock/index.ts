@@ -14,9 +14,16 @@ import usersRoutes from './users'
 import employeesRoutes from './employees'
 import vueRequestDemoRoutes from './vue-request-demo'
 import permissionRoutes from './permission'
+import axiosRoutes from './axios'
 
 // ===== 合并所有 mock 路由（新增文件后在这里加 import 并展开） =====
-const allRoutes: MockRoute[] = [...usersRoutes, ...employeesRoutes, ...vueRequestDemoRoutes, ...permissionRoutes]
+const allRoutes: MockRoute[] = [
+  ...usersRoutes,
+  ...employeesRoutes,
+  ...vueRequestDemoRoutes,
+  ...permissionRoutes,
+  ...axiosRoutes,
+]
 
 // ===== 匹配并返回响应 =====
 function matchRoute(url: string, method: string | undefined) {

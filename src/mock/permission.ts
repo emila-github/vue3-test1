@@ -34,6 +34,7 @@ const userPermissions: Record<string, string[]> = {
     'demo:vue-router',
     'demo:pinia',
     'demo:crypto',
+    'demo:axios',
   ],
   manager: [
     'menu:user-manage',
@@ -60,6 +61,7 @@ const userPermissions: Record<string, string[]> = {
     'demo:vue-router',
     'demo:pinia',
     'demo:crypto',
+    'demo:axios',
   ],
   editor: [
     'menu:user-manage',
@@ -84,6 +86,7 @@ const userPermissions: Record<string, string[]> = {
     'demo:vue-router',
     'demo:pinia',
     'demo:crypto',
+    'demo:axios',
   ],
   viewer: [
     'menu:report',
@@ -92,6 +95,7 @@ const userPermissions: Record<string, string[]> = {
     'demo:permission',
     'demo:typescript',
     'demo:crypto',
+    'demo:axios',
   ],
 }
 
