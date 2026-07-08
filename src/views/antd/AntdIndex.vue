@@ -10,6 +10,7 @@ import {
   BgColorsOutlined,
   ThunderboltOutlined,
   TableOutlined,
+  FormOutlined,
 } from '@ant-design/icons-vue'
 
 const stages = [
@@ -54,6 +55,13 @@ const stages = [
     icon: TableOutlined,
     route: '/antd/stage6',
     color: '#eb2f96',
+  },
+  {
+    title: '阶段七：表单校验进阶',
+    description: '内置规则、自定义校验、动态校验、异步校验、表单联动、computed rules',
+    icon: FormOutlined,
+    route: '/antd/stage7',
+    color: '#2f54eb',
   },
 ]
 </script>

@@ -400,6 +400,11 @@ const router = createRouter({
       name: 'antd-stage6',
       component: () => import('../views/antd/Stage6TableDemo.vue'),
     },
+    {
+      path: '/antd/stage7',
+      name: 'antd-stage7',
+      component: () => import('../views/antd/Stage7FormValidation.vue'),
+    },
     // ====== Axios 学习 ======
     {
       path: '/axios',
@@ -430,6 +435,80 @@ const router = createRouter({
       path: '/axios/stage5',
       name: 'axios-stage5',
       component: () => import('../views/axios/Stage5Production.vue'),
+    },
+    // ====== VueUse 工具库 ======
+    {
+      path: '/vueuse',
+      name: 'vueuse',
+      component: () => import('../views/vueuse/VueUseIndex.vue'),
+    },
+    {
+      path: '/vueuse/stage1',
+      name: 'vueuse-stage1',
+      component: () => import('../views/vueuse/Stage1State.vue'),
+    },
+    {
+      path: '/vueuse/stage2',
+      name: 'vueuse-stage2',
+      component: () => import('../views/vueuse/Stage2Browser.vue'),
+    },
+    {
+      path: '/vueuse/stage3',
+      name: 'vueuse-stage3',
+      component: () => import('../views/vueuse/Stage3Timing.vue'),
+    },
+    {
+      path: '/vueuse/stage4',
+      name: 'vueuse-stage4',
+      component: () => import('../views/vueuse/Stage4Practical.vue'),
+    },
+    // ====== Pinia 持久化 ======
+    {
+      path: '/pinia-persist',
+      name: 'pinia-persist',
+      component: () => import('../views/pinia-persist/PiniaPersistIndex.vue'),
+    },
+    {
+      path: '/pinia-persist/stage1',
+      name: 'pinia-persist-stage1',
+      component: () => import('../views/pinia-persist/Stage1Basic.vue'),
+    },
+    {
+      path: '/pinia-persist/stage2',
+      name: 'pinia-persist-stage2',
+      component: () => import('../views/pinia-persist/Stage2Advanced.vue'),
+    },
+    // ====== Day.js 日期库 ======
+    {
+      path: '/dayjs',
+      name: 'dayjs',
+      component: () => import('../views/dayjs/DayjsIndex.vue'),
+    },
+    {
+      path: '/dayjs/stage1',
+      name: 'dayjs-stage1',
+      component: () => import('../views/dayjs/Stage1Basic.vue'),
+    },
+    {
+      path: '/dayjs/stage2',
+      name: 'dayjs-stage2',
+      component: () => import('../views/dayjs/Stage2Advanced.vue'),
+    },
+    // ====== Vue I18n 国际化 ======
+    {
+      path: '/i18n',
+      name: 'i18n',
+      component: () => import('../views/i18n/I18nIndex.vue'),
+    },
+    {
+      path: '/i18n/stage1',
+      name: 'i18n-stage1',
+      component: () => import('../views/i18n/Stage1Basic.vue'),
+    },
+    {
+      path: '/i18n/stage2',
+      name: 'i18n-stage2',
+      component: () => import('../views/i18n/Stage2Advanced.vue'),
     },
     // ====== 响应式系统深入 ======
     {

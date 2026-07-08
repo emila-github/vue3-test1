@@ -36,6 +36,10 @@ const userPermissions: Record<string, string[]> = {
     'demo:crypto',
     'demo:axios',
     'demo:reactivity-deep',
+    'demo:vueuse',
+    'demo:pinia-persist',
+    'demo:dayjs',
+    'demo:i18n',
   ],
   manager: [
     'menu:user-manage',
@@ -64,6 +68,10 @@ const userPermissions: Record<string, string[]> = {
     'demo:crypto',
     'demo:axios',
     'demo:reactivity-deep',
+    'demo:vueuse',
+    'demo:pinia-persist',
+    'demo:dayjs',
+    'demo:i18n',
   ],
   editor: [
     'menu:user-manage',
@@ -90,6 +98,10 @@ const userPermissions: Record<string, string[]> = {
     'demo:crypto',
     'demo:axios',
     'demo:reactivity-deep',
+    'demo:vueuse',
+    'demo:pinia-persist',
+    'demo:dayjs',
+    'demo:i18n',
   ],
   viewer: [
     'menu:report',
@@ -142,6 +154,10 @@ const allPermissionsDefine = [
       'demo:vue-router',
       'demo:pinia',
       'demo:crypto',
+      'demo:vueuse',
+      'demo:pinia-persist',
+      'demo:dayjs',
+      'demo:i18n',
     ],
   },
 ]
