@@ -181,6 +181,9 @@ function handleDrawerOk() {
               {{ tag }}
             </a-tag>
           </template>
+          <template v-else>
+            {{ text }}
+          </template>
         </template>
       </a-table>
     </section>
