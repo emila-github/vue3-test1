@@ -40,6 +40,10 @@ const userPermissions: Record<string, string[]> = {
     'demo:pinia-persist',
     'demo:dayjs',
     'demo:i18n',
+    'demo:element',
+    'demo:vant',
+    'demo:nuxt',
+    'demo:echarts',
   ],
   manager: [
     'menu:user-manage',
@@ -72,6 +76,10 @@ const userPermissions: Record<string, string[]> = {
     'demo:pinia-persist',
     'demo:dayjs',
     'demo:i18n',
+    'demo:element',
+    'demo:vant',
+    'demo:nuxt',
+    'demo:echarts',
   ],
   editor: [
     'menu:user-manage',
@@ -102,6 +110,10 @@ const userPermissions: Record<string, string[]> = {
     'demo:pinia-persist',
     'demo:dayjs',
     'demo:i18n',
+    'demo:element',
+    'demo:vant',
+    'demo:nuxt',
+    'demo:echarts',
   ],
   viewer: [
     'menu:report',
@@ -112,6 +124,9 @@ const userPermissions: Record<string, string[]> = {
     'demo:crypto',
     'demo:axios',
     'demo:reactivity-deep',
+    'demo:element',
+    'demo:echarts',
+    'demo:nuxt',
   ],
 }
 
@@ -158,6 +173,10 @@ const allPermissionsDefine = [
       'demo:pinia-persist',
       'demo:dayjs',
       'demo:i18n',
+      'demo:element',
+      'demo:vant',
+      'demo:nuxt',
+      'demo:echarts',
     ],
   },
 ]

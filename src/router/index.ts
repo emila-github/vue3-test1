@@ -510,6 +510,90 @@ const router = createRouter({
       name: 'i18n-stage2',
       component: () => import('../views/i18n/Stage2Advanced.vue'),
     },
+    // ====== Element Plus 学习 ======
+    {
+      path: '/element',
+      name: 'element',
+      component: () => import('../views/element/ElementIndex.vue'),
+    },
+    {
+      path: '/element/stage1',
+      name: 'element-stage1',
+      component: () => import('../views/element/Stage1Basic.vue'),
+    },
+    {
+      path: '/element/stage2',
+      name: 'element-stage2',
+      component: () => import('../views/element/Stage2CoreComponents.vue'),
+    },
+    {
+      path: '/element/stage3',
+      name: 'element-stage3',
+      component: () => import('../views/element/Stage3Theme.vue'),
+    },
+    // ====== Vant 移动端 UI 学习 ======
+    {
+      path: '/vant',
+      name: 'vant',
+      component: () => import('../views/vant/VantIndex.vue'),
+    },
+    {
+      path: '/vant/stage1',
+      name: 'vant-stage1',
+      component: () => import('../views/vant/Stage1Basic.vue'),
+    },
+    {
+      path: '/vant/stage2',
+      name: 'vant-stage2',
+      component: () => import('../views/vant/Stage2Form.vue'),
+    },
+    {
+      path: '/vant/stage3',
+      name: 'vant-stage3',
+      component: () => import('../views/vant/Stage3Feedback.vue'),
+    },
+    // ====== Nuxt 3 / SSR 学习 ======
+    {
+      path: '/nuxt',
+      name: 'nuxt',
+      component: () => import('../views/nuxt/NuxtIndex.vue'),
+    },
+    {
+      path: '/nuxt/stage1',
+      name: 'nuxt-stage1',
+      component: () => import('../views/nuxt/Stage1SSR.vue'),
+    },
+    {
+      path: '/nuxt/stage2',
+      name: 'nuxt-stage2',
+      component: () => import('../views/nuxt/Stage2Core.vue'),
+    },
+    {
+      path: '/nuxt/stage3',
+      name: 'nuxt-stage3',
+      component: () => import('../views/nuxt/Stage3Advanced.vue'),
+    },
+    // ====== ECharts 数据可视化学习 ======
+    {
+      path: '/echarts',
+      name: 'echarts',
+      component: () => import('../views/echarts/EchartsIndex.vue'),
+    },
+    {
+      path: '/echarts/stage1',
+      name: 'echarts-stage1',
+      component: () => import('../views/echarts/Stage1Basic.vue'),
+    },
+    {
+      path: '/echarts/stage2',
+      name: 'echarts-stage2',
+      component: () => import('../views/echarts/Stage2Advanced.vue'),
+    },
+    {
+      path: '/echarts/stage3',
+      name: 'echarts-stage3',
+      component: () => import('../views/echarts/Stage3Interaction.vue'),
+    },
     // ====== 响应式系统深入 ======
     {
       path: '/reactivity-deep',

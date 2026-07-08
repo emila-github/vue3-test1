@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import VueRouter from 'vue-router/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import Components from 'unplugin-vue-components/vite'
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+import { AntDesignVueResolver, ElementPlusResolver, VantResolver } from 'unplugin-vue-components/resolvers'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { mockPlugin } from './src/mock'
@@ -71,7 +71,7 @@ export default defineConfig(({ mode, command }) => {
       vue(),
       vueJsx(),
       Components({
-        resolvers: [AntDesignVueResolver({ importStyle: false })],
+        resolvers: [AntDesignVueResolver({ importStyle: false }), ElementPlusResolver(), VantResolver()],
       }),
       vueDevTools(),
       visualizer({
