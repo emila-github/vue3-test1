@@ -56,12 +56,8 @@ const basicFormRules: Record<string, FormItemRule[]> = {
     { min: 3, max: 20, message: '用户名长度 3-20 个字符', trigger: 'blur' },
     { pattern: /^[a-zA-Z0-9_]+$/, message: '用户名只能包含字母、数字和下划线', trigger: 'blur' },
   ],
-  password: [
-    { required: true, validator: validatePassword, trigger: 'blur' },
-  ],
-  confirmPassword: [
-    { required: true, validator: validateConfirmPassword, trigger: 'blur' },
-  ],
+  password: [{ required: true, validator: validatePassword, trigger: 'blur' }],
+  confirmPassword: [{ required: true, validator: validateConfirmPassword, trigger: 'blur' }],
   email: [
     { required: true, message: '请输入邮箱', trigger: 'blur' },
     { type: 'email', message: '邮箱格式不正确', trigger: 'blur' },
@@ -86,13 +82,16 @@ const basicFormRules: Record<string, FormItemRule[]> = {
 }
 
 function handleBasicSubmit() {
-  basicFormRef.value?.validate().then(() => {
-    message.success('表单校验通过！')
-    addLog('基础表单校验通过: ' + JSON.stringify(basicForm))
-  }).catch((err) => {
-    message.error('表单校验失败，请检查红色提示')
-    addLog('表单校验失败')
-  })
+  basicFormRef.value
+    ?.validate()
+    .then(() => {
+      message.success('表单校验通过！')
+      addLog('基础表单校验通过: ' + JSON.stringify(basicForm))
+    })
+    .catch((err) => {
+      message.error('表单校验失败，请检查红色提示')
+      addLog('表单校验失败')
+    })
 }
 
 function handleBasicReset() {
@@ -107,27 +106,30 @@ interface DynamicItem {
 }
 
 const dynamicFormRef = ref<FormInstance>()
-const dynamicItems = reactive<DynamicItem[]>([
-  { name: '', value: '' },
-])
+const dynamicModel = reactive<{ items: DynamicItem[] }>({
+  items: [{ name: '', value: '' }],
+})
 
 function addItem() {
-  dynamicItems.push({ name: '', value: '' })
+  dynamicModel.items.push({ name: '', value: '' })
   addLog('添加表单项（动态校验规则自动生效）')
 }
 
 function removeItem(index: number) {
-  dynamicItems.splice(index, 1)
+  dynamicModel.items.splice(index, 1)
   addLog('移除表单项')
 }
 
 function handleDynamicSubmit() {
-  dynamicFormRef.value?.validate().then(() => {
-    message.success('动态表单校验通过！')
-    addLog('动态表单校验通过')
-  }).catch(() => {
-    message.error('动态表单校验失败')
-  })
+  dynamicFormRef.value
+    ?.validate()
+    .then(() => {
+      message.success('动态表单校验通过！')
+      addLog('动态表单校验通过')
+    })
+    .catch(() => {
+      message.error('动态表单校验失败')
+    })
 }
 
 // ============ 3. 异步校验 ============
@@ -138,7 +140,7 @@ const asyncForm = reactive({
 
 // 模拟后端校验用户名是否已存在
 const validateUsernameUnique = async (_rule: FormItemRule, value: string) => {
-  if (!value) return Promise.reject('请输入用户名')
+  if (!value) return Promise.resolve()
   // 模拟异步请求（300-800ms 延迟）
   await new Promise((r) => setTimeout(r, 500 + Math.random() * 500))
   const existingNames = ['admin', 'root', 'test', 'user']
@@ -156,12 +158,15 @@ const asyncFormRules: Record<string, FormItemRule[]> = {
 }
 
 function handleAsyncSubmit() {
-  asyncFormRef.value?.validate().then(() => {
-    message.success('用户名可用！')
-    addLog(`异步校验通过：${asyncForm.username} 可用`)
-  }).catch(() => {
-    addLog('异步校验失败')
-  })
+  asyncFormRef.value
+    ?.validate()
+    .then(() => {
+      message.success('用户名可用！')
+      addLog(`异步校验通过：${asyncForm.username} 可用`)
+    })
+    .catch(() => {
+      addLog('异步校验失败')
+    })
 }
 
 // ============ 4. 表单联动校验 ============
@@ -201,12 +206,15 @@ function handleTypeChange() {
 }
 
 function handleLinkedSubmit() {
-  linkedFormRef.value?.validate().then(() => {
-    message.success('联动表单校验通过！')
-    addLog('联动表单校验通过')
-  }).catch(() => {
-    message.error('联动表单校验失败')
-  })
+  linkedFormRef.value
+    ?.validate()
+    .then(() => {
+      message.success('联动表单校验通过！')
+      addLog('联动表单校验通过')
+    })
+    .catch(() => {
+      message.error('联动表单校验失败')
+    })
 }
 </script>
 
@@ -241,13 +249,17 @@ const rules = {
     // 6. 长度/数值范围
     { type: 'number', min: 1, max: 100, message: '范围 1-100', trigger: 'blur' },
   ],
-}</pre>
+}</pre
+      >
       <div class="tip-box">
         <strong>要点：</strong>
         <ul>
           <li>每个字段的校验规则是一个<strong>数组</strong>，按顺序执行</li>
           <li><code>trigger</code> 可设为 <code>'blur'</code>（失焦）或 <code>'change'</code>（变化时）</li>
-          <li>自定义 <code>validator</code> 返回 <code>Promise.resolve()</code> 表示通过，<code>Promise.reject(msg)</code> 表示失败</li>
+          <li>
+            自定义 <code>validator</code> 返回 <code>Promise.resolve()</code> 表示通过，<code>Promise.reject(msg)</code>
+            表示失败
+          </li>
           <li>使用 <code>computed</code> 可实现动态校验规则（见 7.5）</li>
         </ul>
       </div>
@@ -257,7 +269,7 @@ const rules = {
     <section class="card">
       <h2>7.2 基础表单校验（内置规则 + 自定义）</h2>
       <div class="demo-box">
-        <a-form ref="basicFormRef" :model="basicForm" :rules="basicFormRules" layout="vertical">
+        <a-form ref="basicFormRef" name="basic_form" :model="basicForm" :rules="basicFormRules" layout="vertical">
           <div class="form-grid">
             <a-form-item label="用户名" name="username">
               <a-input v-model:value="basicForm.username" placeholder="3-20个字符，字母/数字/下划线" />
@@ -275,7 +287,13 @@ const rules = {
               <a-input v-model:value="basicForm.phone" placeholder="11位大陆手机号" />
             </a-form-item>
             <a-form-item label="年龄" name="age">
-              <a-input-number v-model:value="basicForm.age" :min="1" :max="150" placeholder="1-150" style="width: 100%" />
+              <a-input-number
+                v-model:value="basicForm.age"
+                :min="1"
+                :max="150"
+                placeholder="1-150"
+                style="width: 100%"
+              />
             </a-form-item>
           </div>
           <a-form-item name="agree">
@@ -298,15 +316,22 @@ const rules = {
       <h2>7.3 动态表单校验</h2>
       <p>动态增加/删除表单项，校验规则自动应用。<code>v-for</code> 配合 <code>:name</code> 索引绑定。</p>
       <div class="demo-box">
-        <a-form ref="dynamicFormRef" layout="vertical">
-          <div v-for="(item, i) in dynamicItems" :key="i" class="dynamic-row">
-            <a-form-item :label="`配置项 #${i + 1}`" :name="['items', i, 'name']" :rules="[{ required: true, message: `请输入名称`, trigger: 'blur' }]">
+        <a-form ref="dynamicFormRef" :model="dynamicModel" layout="inline">
+          <div v-for="(item, i) in dynamicModel.items" :key="i" class="dynamic-row">
+            <a-form-item
+              :label="`配置项 #${i + 1}`"
+              :name="['items', i, 'name']"
+              :rules="[{ required: true, message: `请输入名称`, trigger: 'blur' }]"
+            >
               <a-input v-model:value="item.name" placeholder="名称" />
             </a-form-item>
-            <a-form-item :name="['items', i, 'value']" :rules="[{ required: true, message: '请输入值', trigger: 'blur' }]">
+            <a-form-item
+              :name="['items', i, 'value']"
+              :rules="[{ required: true, message: '请输入值', trigger: 'blur' }]"
+            >
               <a-input v-model:value="item.value" placeholder="值" />
             </a-form-item>
-            <a-button v-if="dynamicItems.length > 1" danger size="small" @click="removeItem(i)">删除</a-button>
+            <a-button v-if="dynamicModel.items.length > 1" danger size="small" @click="removeItem(i)">删除</a-button>
           </div>
         </a-form>
         <div class="btn-row mt8">
@@ -327,11 +352,16 @@ const validateUnique = async (_rule, value) => {
   const exists = await api.checkUsername(value)
   if (exists) return Promise.reject('用户名已被占用')
   return Promise.resolve()
-}</pre>
+}</pre
+      >
       <div class="demo-box">
-        <a-form ref="asyncFormRef" :model="asyncForm" :rules="asyncFormRules" layout="inline">
+        <a-form ref="asyncFormRef" name="async_form" :model="asyncForm" :rules="asyncFormRules" layout="inline">
           <a-form-item label="用户名" name="username">
-            <a-input v-model:value="asyncForm.username" placeholder="输入 admin/root/test 会失败" style="width: 280px" />
+            <a-input
+              v-model:value="asyncForm.username"
+              placeholder="输入 admin/root/test 会失败"
+              style="width: 280px"
+            />
           </a-form-item>
           <a-form-item>
             <a-button type="primary" @click="handleAsyncSubmit">校验</a-button>
@@ -351,9 +381,16 @@ const rules = computed(() => ({
     required: form.type === 'company',  // 动态 required
     message: '公司名称必填', trigger: 'blur',
   }]
-}))</pre>
+}))</pre
+      >
       <div class="demo-box">
-        <a-form ref="linkedFormRef" :model="linkedForm" :rules="linkedFormRules" layout="vertical" style="max-width: 400px">
+        <a-form
+          ref="linkedFormRef"
+          :model="linkedForm"
+          :rules="linkedFormRules"
+          layout="vertical"
+          style="max-width: 400px"
+        >
           <a-form-item label="类型" name="type">
             <a-radio-group v-model:value="linkedForm.type" @change="handleTypeChange">
               <a-radio value="individual">个人</a-radio>
@@ -400,9 +437,21 @@ const rules = computed(() => ({
   text-align: center;
   margin-bottom: 32px;
 }
-.page-header h1 { font-size: 26px; color: #1a1a1a; margin: 0 0 8px; }
-.page-header p { color: #666; font-size: 14px; }
-.page-header code { background: #f0f0f0; padding: 1px 6px; border-radius: 3px; font-size: 13px; }
+.page-header h1 {
+  font-size: 26px;
+  color: #1a1a1a;
+  margin: 0 0 8px;
+}
+.page-header p {
+  color: #666;
+  font-size: 14px;
+}
+.page-header code {
+  background: #f0f0f0;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}
 
 .card {
   background: #fff;
@@ -411,8 +460,17 @@ const rules = computed(() => ({
   margin-bottom: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
-.card h2 { margin: 0 0 12px; font-size: 18px; color: #333; }
-.card p { font-size: 14px; color: #666; line-height: 1.6; margin: 0 0 12px; }
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: #333;
+}
+.card p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
 
 .code-block {
   background: #1e1e2e;
@@ -434,9 +492,17 @@ const rules = computed(() => ({
   font-size: 13px;
   color: #389e0d;
 }
-.tip-box strong { display: block; margin-bottom: 4px; }
-.tip-box ul { margin: 4px 0 0; padding-left: 18px; }
-.tip-box li { margin-bottom: 2px; }
+.tip-box strong {
+  display: block;
+  margin-bottom: 4px;
+}
+.tip-box ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+.tip-box li {
+  margin-bottom: 2px;
+}
 
 .demo-box {
   background: #fafafa;
@@ -445,7 +511,9 @@ const rules = computed(() => ({
   padding: 20px;
 }
 
-.mt8 { margin-top: 8px; }
+.mt8 {
+  margin-top: 8px;
+}
 
 .form-grid {
   display: grid;
@@ -472,13 +540,31 @@ const rules = computed(() => ({
   margin-bottom: 8px;
 }
 
-.log-area { max-height: 200px; overflow-y: auto; font-size: 13px; }
-.log-item { padding: 4px 0; color: #555; border-bottom: 1px dashed #f0f0f0; }
-.log-empty { color: #ccc; text-align: center; padding: 20px; }
+.log-area {
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 13px;
+}
+.log-item {
+  padding: 4px 0;
+  color: #555;
+  border-bottom: 1px dashed #f0f0f0;
+}
+.log-empty {
+  color: #ccc;
+  text-align: center;
+  padding: 20px;
+}
 
 @media (max-width: 640px) {
-  .stage-page { padding: 16px; }
-  .form-grid { grid-template-columns: 1fr; }
-  .dynamic-row { flex-direction: column; }
+  .stage-page {
+    padding: 16px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .dynamic-row {
+    flex-direction: column;
+  }
 }
 </style>
