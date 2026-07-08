@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 
 // trigger 事件触发示例
 const triggerCode = ref(`import { mount } from '@vue/test-utils'
-import LoginForm from '@/components/LoginForm.vue'
+import LoginForm from ${"'@/components/LoginForm.vue'"}
 
 describe('LoginForm', () => {
   it('填写表单并提交', async () => {

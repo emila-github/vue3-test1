@@ -8,7 +8,7 @@ function addLog(msg: string) {
 
 const mountVsShallowCode = `// mount() — 完整挂载，渲染所有子组件
 import { mount } from '@vue/test-utils'
-import Parent from './Parent.vue'
+import Parent from ${"'./Parent.vue'"}
 
 const wrapper = mount(Parent)
 // Parent + 所有子组件都会完整渲染
@@ -49,7 +49,7 @@ const findCode = `// 推荐：使用 data-testid 查找元素
 
 // 测试代码
 import { mount } from '@vue/test-utils'
-import Form from './Form.vue'
+import Form from ${"'./Form.vue'"}
 
 const wrapper = mount(Form)
 
@@ -120,7 +120,7 @@ function decrement() { demoCounter.value-- }
         </div>
         <pre class="code-block" style="margin-top: 16px;"><code>// 编写测试
 import { mount } from '@vue/test-utils'
-import Counter from './Counter.vue'
+import Counter from ${"'./Counter.vue'"}
 
 describe('Counter', () => {
   it('renders initial count', () => {

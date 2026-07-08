@@ -114,7 +114,7 @@ describe('vi.mock() 模块模拟', () => {
 // 异步组件测试
 const asyncTestCode = ref(`import { describe, it, expect, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import UserProfile from '@/components/UserProfile.vue'
+import UserProfile from ${"'@/components/UserProfile.vue'"}
 
 // 模拟 API
 vi.mock('@/api/user', () => ({
