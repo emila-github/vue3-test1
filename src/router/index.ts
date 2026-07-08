@@ -431,6 +431,37 @@ const router = createRouter({
       name: 'axios-stage5',
       component: () => import('../views/axios/Stage5Production.vue'),
     },
+    // ====== 响应式系统深入 ======
+    {
+      path: '/reactivity-deep',
+      name: 'reactivity-deep',
+      component: () => import('../views/reactivity-deep/ReactivityIndex.vue'),
+    },
+    {
+      path: '/reactivity-deep/stage1',
+      name: 'reactivity-deep-stage1',
+      component: () => import('../views/reactivity-deep/Stage1RefsApi.vue'),
+    },
+    {
+      path: '/reactivity-deep/stage2',
+      name: 'reactivity-deep-stage2',
+      component: () => import('../views/reactivity-deep/Stage2ComputedWatch.vue'),
+    },
+    {
+      path: '/reactivity-deep/stage3',
+      name: 'reactivity-deep-stage3',
+      component: () => import('../views/reactivity-deep/Stage3EffectScope.vue'),
+    },
+    {
+      path: '/reactivity-deep/stage4',
+      name: 'reactivity-deep-stage4',
+      component: () => import('../views/reactivity-deep/Stage4CustomRef.vue'),
+    },
+    {
+      path: '/reactivity-deep/stage5',
+      name: 'reactivity-deep-stage5',
+      component: () => import('../views/reactivity-deep/Stage5PerfOptimization.vue'),
+    },
     ...routes,
   ],
 })

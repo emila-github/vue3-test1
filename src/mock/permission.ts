@@ -35,6 +35,7 @@ const userPermissions: Record<string, string[]> = {
     'demo:pinia',
     'demo:crypto',
     'demo:axios',
+    'demo:reactivity-deep',
   ],
   manager: [
     'menu:user-manage',
@@ -62,6 +63,7 @@ const userPermissions: Record<string, string[]> = {
     'demo:pinia',
     'demo:crypto',
     'demo:axios',
+    'demo:reactivity-deep',
   ],
   editor: [
     'menu:user-manage',
@@ -87,6 +89,7 @@ const userPermissions: Record<string, string[]> = {
     'demo:pinia',
     'demo:crypto',
     'demo:axios',
+    'demo:reactivity-deep',
   ],
   viewer: [
     'menu:report',
@@ -96,6 +99,7 @@ const userPermissions: Record<string, string[]> = {
     'demo:typescript',
     'demo:crypto',
     'demo:axios',
+    'demo:reactivity-deep',
   ],
 }
 

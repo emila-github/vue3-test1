@@ -219,10 +219,7 @@ function logMsg(msg: string) {
           v-for="role in roleOptions"
           :key="role"
           :class="['role-btn', { active: currentRole === role }]"
-          @click="
-            setRole(role)
-            logMsg(`切换角色为 ${role}`)
-          "
+          @click="setRole(role); logMsg(`切换角色为 ${role}`)"
         >
           {{ role }}
         </button>

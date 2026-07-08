@@ -178,6 +178,15 @@ const demos: DemoItem[] = [
     tags: ['核心', '实战'],
     requiredPermissions: ['demo:axios'],
   },
+  {
+    path: '/reactivity-deep',
+    title: '响应式系统深入',
+    desc: 'ref/reactive API 家族、computed/watch 进阶、effectScope、customRef、性能优化 — 5 阶段彻底掌握 Vue 3 响应式',
+    color: '#1890ff',
+    icon: '⚛',
+    tags: ['核心', '进阶'],
+    requiredPermissions: ['demo:reactivity-deep'],
+  },
 ]
 
 const tagFilter = shallowRef<string | null>(null)
