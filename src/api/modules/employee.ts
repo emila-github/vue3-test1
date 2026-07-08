@@ -18,6 +18,7 @@ export interface Employee {
   isFullTime: boolean
   email: string
   phone: string
+  avatar: string
   remark: string
   createdAt: string
 }
@@ -37,6 +38,7 @@ export interface CreateEmployeeParams {
   isFullTime: boolean
   email: string
   phone: string
+  avatar?: string
   remark?: string
 }
 

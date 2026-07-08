@@ -185,6 +185,7 @@ interface FormState {
   isFullTime: boolean
   email: string
   phone: string
+  avatar: string
   remark: string
 }
 
@@ -203,6 +204,7 @@ const defaultForm: FormState = {
   isFullTime: true,
   email: '',
   phone: '',
+  avatar: '',
   remark: '',
 }
 
@@ -222,6 +224,46 @@ const formRules = {
   hireDate: [{ required: true, message: '请选择入职日期', trigger: 'change' }],
   status: [{ required: true, message: '请选择状态', trigger: 'change' }],
 }
+
+// ===== 头像上传 =====
+const uploadFileList = ref<any[]>([])
+
+function beforeUpload(file: File) {
+  const isImage = file.type.startsWith('image/')
+  if (!isImage) {
+    message.error('只能上传图片文件！')
+    return false
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2
+  if (!isLt2M) {
+    message.error('图片大小不能超过 2MB！')
+    return false
+  }
+  // 转 base64 存入表单
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    formState.avatar = (e.target?.result as string) || ''
+  }
+  reader.readAsDataURL(file)
+  return false // 阻止自动上传，手动处理
+}
+
+function handleRemoveAvatar() {
+  formState.avatar = ''
+  uploadFileList.value = []
+}
+
+// 编辑回显时同步 fileList
+watch(
+  () => formState.avatar,
+  (val) => {
+    if (val) {
+      uploadFileList.value = [{ uid: '-1', name: 'avatar.png', status: 'done', url: val }]
+    } else {
+      uploadFileList.value = []
+    }
+  },
+)
 
 function openCreate() {
   isEdit.value = false
@@ -251,6 +293,7 @@ function openEdit(record: Employee) {
     isFullTime: record.isFullTime,
     email: record.email,
     phone: record.phone,
+    avatar: record.avatar || '',
     remark: record.remark || '',
   })
   drawerOpen.value = true
@@ -363,6 +406,7 @@ const skillNameMap: Record<string, string> = {
 const _columnDefs: TableProps['columns'] = [
   { title: '工号', dataIndex: 'employeeNo', key: 'employeeNo', width: 100 },
   { title: '姓名', dataIndex: 'name', key: 'name', width: 100 },
+  { title: '头像', dataIndex: 'avatar', key: 'avatar', width: 80 },
   { title: '性别', dataIndex: 'gender', key: 'gender', width: 70 },
   { title: '年龄', dataIndex: 'age', key: 'age', width: 70, sorter: (a: Employee, b: Employee) => a.age - b.age },
   { title: '部门', dataIndex: 'orgPath', key: 'orgPath', width: 150, ellipsis: true },
@@ -599,8 +643,13 @@ onUnmounted(() => {
         @change="handleTableChange"
       >
         <template #bodyCell="{ column, record }">
+          <!-- 头像 -->
+          <template v-if="column.key === 'avatar'">
+            <a-avatar v-if="record.avatar" :src="record.avatar" :size="36" />
+            <a-avatar v-else :size="36">{{ record.name?.charAt(0) }}</a-avatar>
+          </template>
           <!-- 性别 -->
-          <template v-if="column.key === 'gender'">
+          <template v-else-if="column.key === 'gender'">
             {{ record.gender === 'male' ? '男' : '女' }}
           </template>
           <!-- 部门 -->
@@ -651,6 +700,10 @@ onUnmounted(() => {
               </a-popconfirm>
             </a-space>
           </template>
+          <!-- 其他列：兜底渲染原始值 -->
+          <template v-else>
+            {{ record[column.dataIndex!] ?? '' }}
+          </template>
         </template>
       </a-table>
     </section>
@@ -683,6 +736,22 @@ onUnmounted(() => {
       >
         <!-- 基本信息 -->
         <a-divider orientation="left">基本信息</a-divider>
+
+        <a-form-item label="头像">
+          <a-upload
+            v-model:file-list="uploadFileList"
+            list-type="picture-card"
+            :max-count="1"
+            accept="image/*"
+            :before-upload="beforeUpload"
+            @remove="handleRemoveAvatar"
+          >
+            <div v-if="uploadFileList.length < 1">
+              <PlusOutlined />
+              <div style="margin-top: 8px">上传图片</div>
+            </div>
+          </a-upload>
+        </a-form-item>
 
         <a-form-item label="姓名" name="name">
           <a-input v-model:value="formState.name" placeholder="请输入姓名" :maxlength="20" />
