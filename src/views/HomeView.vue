@@ -35,6 +35,15 @@ const demos: DemoItem[] = [
     tags: ['基础', '进阶'],
     requiredPermissions: ['demo:typescript'],
   },
+  {
+    path: '/vue3-features',
+    title: '⭐ Vue 3.4/3.5 新特性',
+    desc: 'defineModel、useTemplateRef、Props 响应式解构、useId、v-bind 同名简写、defineOptions、toValue — 5 阶段掌握最新 API',
+    color: '#38bdf8',
+    icon: '⭐',
+    tags: ['基础', '核心'],
+    requiredPermissions: ['demo:vue3-features'],
+  },
   // ══════════════════════ 第二层：核心机制 ══════════════════════
   {
     path: '/reactivity-deep',
@@ -71,6 +80,15 @@ const demos: DemoItem[] = [
     icon: '⚙',
     tags: ['进阶'],
     requiredPermissions: ['demo:logic-reuse'],
+  },
+  {
+    path: '/vue-perf',
+    title: '⚡ Vue 3 性能优化',
+    desc: 'shallowRef、v-memo/v-once、异步组件懒加载、KeepAlive 缓存、虚拟滚动、Bundle 分析 — 5 阶段系统掌握',
+    color: '#52c41a',
+    icon: '⚡',
+    tags: ['核心', '进阶'],
+    requiredPermissions: ['demo:vue-perf'],
   },
   // ══════════════════════ 第三层：路由与状态管理 ══════════════════════
   {
@@ -264,6 +282,15 @@ const demos: DemoItem[] = [
     icon: 'PR',
     tags: ['核心', '进阶'],
     requiredPermissions: ['demo:prettier'],
+  },
+  {
+    path: '/unit-test',
+    title: '🧪 单元测试学习',
+    desc: 'Vitest + Vue Test Utils：快速上手、组件测试、trigger/emitted、异步 Mock、TDD 最佳实践 — 5 阶段系统学习',
+    color: '#52c41a',
+    icon: '🧪',
+    tags: ['核心', '进阶'],
+    requiredPermissions: ['demo:unit-test'],
   },
 ]
 

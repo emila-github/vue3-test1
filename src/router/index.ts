@@ -594,6 +594,99 @@ const router = createRouter({
       name: 'echarts-stage3',
       component: () => import('../views/echarts/Stage3Interaction.vue'),
     },
+    // ====== Vue 3.4/3.5 新特性 ======
+    {
+      path: '/vue3-features',
+      name: 'vue3-features',
+      component: () => import('../views/vue3-features/Vue3FeaturesIndex.vue'),
+    },
+    {
+      path: '/vue3-features/stage1',
+      name: 'vue3-features-stage1',
+      component: () => import('../views/vue3-features/Stage1DefineModel.vue'),
+    },
+    {
+      path: '/vue3-features/stage2',
+      name: 'vue3-features-stage2',
+      component: () => import('../views/vue3-features/Stage2TemplateRef.vue'),
+    },
+    {
+      path: '/vue3-features/stage3',
+      name: 'vue3-features-stage3',
+      component: () => import('../views/vue3-features/Stage3PropsDestructure.vue'),
+    },
+    {
+      path: '/vue3-features/stage4',
+      name: 'vue3-features-stage4',
+      component: () => import('../views/vue3-features/Stage4ShorthandOptions.vue'),
+    },
+    {
+      path: '/vue3-features/stage5',
+      name: 'vue3-features-stage5',
+      component: () => import('../views/vue3-features/Stage5ToValue.vue'),
+    },
+    // ====== 单元测试学习 ======
+    {
+      path: '/unit-test',
+      name: 'unit-test',
+      component: () => import('../views/unit-test/UnitTestIndex.vue'),
+    },
+    {
+      path: '/unit-test/stage1',
+      name: 'unit-test-stage1',
+      component: () => import('../views/unit-test/Stage1VitestQuickStart.vue'),
+    },
+    {
+      path: '/unit-test/stage2',
+      name: 'unit-test-stage2',
+      component: () => import('../views/unit-test/Stage2TestUtils.vue'),
+    },
+    {
+      path: '/unit-test/stage3',
+      name: 'unit-test-stage3',
+      component: () => import('../views/unit-test/Stage3ComponentTest.vue'),
+    },
+    {
+      path: '/unit-test/stage4',
+      name: 'unit-test-stage4',
+      component: () => import('../views/unit-test/Stage4AsyncMock.vue'),
+    },
+    {
+      path: '/unit-test/stage5',
+      name: 'unit-test-stage5',
+      component: () => import('../views/unit-test/Stage5TDD.vue'),
+    },
+    // ====== Vue 3 性能优化 ======
+    {
+      path: '/vue-perf',
+      name: 'vue-perf',
+      component: () => import('../views/vue-perf/VuePerfIndex.vue'),
+    },
+    {
+      path: '/vue-perf/stage1',
+      name: 'vue-perf-stage1',
+      component: () => import('../views/vue-perf/Stage1ShallowRef.vue'),
+    },
+    {
+      path: '/vue-perf/stage2',
+      name: 'vue-perf-stage2',
+      component: () => import('../views/vue-perf/Stage2MemoOnce.vue'),
+    },
+    {
+      path: '/vue-perf/stage3',
+      name: 'vue-perf-stage3',
+      component: () => import('../views/vue-perf/Stage3LazyLoad.vue'),
+    },
+    {
+      path: '/vue-perf/stage4',
+      name: 'vue-perf-stage4',
+      component: () => import('../views/vue-perf/Stage4KeepAlive.vue'),
+    },
+    {
+      path: '/vue-perf/stage5',
+      name: 'vue-perf-stage5',
+      component: () => import('../views/vue-perf/Stage5VirtualScroll.vue'),
+    },
     // ====== 响应式系统深入 ======
     {
       path: '/reactivity-deep',

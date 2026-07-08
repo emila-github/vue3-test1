@@ -44,6 +44,9 @@ const userPermissions: Record<string, string[]> = {
     'demo:vant',
     'demo:nuxt',
     'demo:echarts',
+    'demo:vue3-features',
+    'demo:unit-test',
+    'demo:vue-perf',
   ],
   manager: [
     'menu:user-manage',
@@ -80,6 +83,9 @@ const userPermissions: Record<string, string[]> = {
     'demo:vant',
     'demo:nuxt',
     'demo:echarts',
+    'demo:vue3-features',
+    'demo:unit-test',
+    'demo:vue-perf',
   ],
   editor: [
     'menu:user-manage',
@@ -114,6 +120,9 @@ const userPermissions: Record<string, string[]> = {
     'demo:vant',
     'demo:nuxt',
     'demo:echarts',
+    'demo:vue3-features',
+    'demo:unit-test',
+    'demo:vue-perf',
   ],
   viewer: [
     'menu:report',
@@ -177,6 +186,9 @@ const allPermissionsDefine = [
       'demo:vant',
       'demo:nuxt',
       'demo:echarts',
+      'demo:vue3-features',
+      'demo:unit-test',
+      'demo:vue-perf',
     ],
   },
 ]
