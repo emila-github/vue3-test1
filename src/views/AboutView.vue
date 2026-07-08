@@ -68,7 +68,7 @@
         <div class="dependency-card">
           <div class="card-header">
             <span class="package-name">vue-request</span>
-            <a href="https://vue-request.netlify.app/" target="_blank" rel="noopener" class="link-btn">官网</a>
+            <a href="https://www.attojs.com/" target="_blank" rel="noopener" class="link-btn">官网</a>
           </div>
           <p class="description">Vue 3 的请求库，基于 Composition API，支持自动缓存、重试、防抖等特性。</p>
         </div>

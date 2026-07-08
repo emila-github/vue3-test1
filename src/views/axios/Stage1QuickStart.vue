@@ -88,12 +88,12 @@ import { getAxiosDemoList } from '@/api/modules/axios-demo'
 async function fetchUsers() {
   // 返回值自动推断为 AxiosPageResult<AxiosUser>
   const result = await getAxiosDemoList({ page: 1 })
-  
+
   result.list.forEach(user => {
     console.log(user.name)    // ✅ TypeScript 知道有 name 属性
     console.log(user.age)     // ❌ 编译错误: AxiosUser 没有 age
   })
-  
+
   return result.total  // ✅ number
 }`)
 </script>
