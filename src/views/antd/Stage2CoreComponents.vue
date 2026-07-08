@@ -6,6 +6,7 @@
 import { ref, reactive } from 'vue'
 import { message } from 'ant-design-vue'
 import type { FormInstance, TableColumnsType } from 'ant-design-vue'
+import type { Rule } from 'ant-design-vue/es/form'
 
 // ===== Form 表单 =====
 interface UserForm {
@@ -27,7 +28,7 @@ const formState = reactive<UserForm>({
   bio: '',
 })
 
-const formRules = {
+const formRules: Record<string, Rule[]> = {
   name: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
   email: [
     { required: true, message: '请输入邮箱', trigger: 'blur' },
