@@ -82,6 +82,110 @@
           </div>
           <p class="description">Vue 组件自动按需引入插件，无需手动 import，自动扫描并注册组件。</p>
         </div>
+
+        <div class="dependency-card">
+          <div class="card-header">
+            <span class="package-name">@vueuse/core</span>
+            <a href="https://vueuse.org/" target="_blank" rel="noopener" class="link-btn">官网</a>
+          </div>
+          <p class="description">
+            Vue Composition API 工具集，提供大量实用的组合式函数（如 useStorage、useMouse、useDark 等），简化常见开发场景。
+          </p>
+        </div>
+
+        <div class="dependency-card">
+          <div class="card-header">
+            <span class="package-name">element-plus</span>
+            <a href="https://element-plus.org/zh-CN/" target="_blank" rel="noopener" class="link-btn">中文官网</a>
+          </div>
+          <p class="description">
+            Vue 3 桌面端 UI 组件库，提供丰富的组件和主题定制能力，是国内最流行的 Vue UI 框架之一。
+          </p>
+        </div>
+
+        <div class="dependency-card">
+          <div class="card-header">
+            <span class="package-name">vant</span>
+            <a href="https://vant-ui.github.io/vant/#/zh-CN" target="_blank" rel="noopener" class="link-btn">中文官网</a>
+          </div>
+          <p class="description">轻量、可靠的移动端 Vue 组件库，提供 70+ 高质量组件，支持按需引入和主题定制。</p>
+        </div>
+
+        <div class="dependency-card">
+          <div class="card-header">
+            <span class="package-name">echarts</span>
+            <a href="https://echarts.apache.org/zh/index.html" target="_blank" rel="noopener" class="link-btn">中文官网</a>
+          </div>
+          <p class="description">
+            Apache 开源的数据可视化图表库，基于 Canvas，支持海量图表类型和丰富的交互效果，在数据可视化领域广泛使用。
+          </p>
+        </div>
+
+        <div class="dependency-card">
+          <div class="card-header">
+            <span class="package-name">vue-echarts</span>
+            <a href="https://github.com/ecomfe/vue-echarts" target="_blank" rel="noopener" class="link-btn">GitHub</a>
+          </div>
+          <p class="description">
+            ECharts 的 Vue 3 封装组件，通过 provide/inject 灵活传递 ECharts 实例，支持按需引入和响应式配置。
+          </p>
+        </div>
+
+        <div class="dependency-card">
+          <div class="card-header">
+            <span class="package-name">dayjs</span>
+            <a href="https://day.js.org/zh-CN/" target="_blank" rel="noopener" class="link-btn">中文官网</a>
+          </div>
+          <p class="description">
+            Moment.js 的轻量替代品，仅 2KB 大小，提供相同的 API，支持插件扩展（国际化、相对时间等）。
+          </p>
+        </div>
+
+        <div class="dependency-card">
+          <div class="card-header">
+            <span class="package-name">crypto-js</span>
+            <a href="https://www.npmjs.com/package/crypto-js" target="_blank" rel="noopener" class="link-btn">npm</a>
+          </div>
+          <p class="description">
+            纯 JavaScript 实现的加密算法库，支持 AES、SHA256、MD5、HMAC 等多种加密哈希算法。
+          </p>
+        </div>
+
+        <div class="dependency-card">
+          <div class="card-header">
+            <span class="package-name">jsencrypt</span>
+            <a href="https://www.npmjs.com/package/jsencrypt" target="_blank" rel="noopener" class="link-btn">npm</a>
+          </div>
+          <p class="description">
+            客户端 RSA 加密库，用于前端数据加密场景，支持公私钥生成、加密、解密、签名和验签。
+          </p>
+        </div>
+
+        <div class="dependency-card">
+          <div class="card-header">
+            <span class="package-name">vue-i18n</span>
+            <a href="https://vue-i18n.intlify.dev/zh/" target="_blank" rel="noopener" class="link-btn">中文官网</a>
+          </div>
+          <p class="description">
+            Vue 官方国际化插件，支持多语言切换、复数处理、日期/数字格式化，兼容 Vue 3 Composition API。
+          </p>
+        </div>
+
+        <div class="dependency-card">
+          <div class="card-header">
+            <span class="package-name">pinia-plugin-persistedstate</span>
+            <a
+              href="https://prazdevs.github.io/pinia-plugin-persistedstate/"
+              target="_blank"
+              rel="noopener"
+              class="link-btn"
+              >官网</a
+            >
+          </div>
+          <p class="description">
+            Pinia 持久化插件，自动将 Store 状态同步到 localStorage/sessionStorage，支持自定义序列化。
+          </p>
+        </div>
       </div>
     </section>
 
@@ -310,6 +414,14 @@
             <a href="https://www.npmjs.com/package/@types/jsdom" target="_blank" rel="noopener" class="link-btn">npm</a>
           </div>
           <p class="description">jsdom 的 TypeScript 类型定义包，支持在 TypeScript 中使用 jsdom。</p>
+        </div>
+
+        <div class="dependency-card">
+          <div class="card-header">
+            <span class="package-name">@types/crypto-js</span>
+            <a href="https://www.npmjs.com/package/@types/crypto-js" target="_blank" rel="noopener" class="link-btn">npm</a>
+          </div>
+          <p class="description">crypto-js 的 TypeScript 类型定义包，支持在 TypeScript 中使用加密库。</p>
         </div>
 
         <div class="dependency-card">
