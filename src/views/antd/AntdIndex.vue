@@ -11,6 +11,7 @@ import {
   ThunderboltOutlined,
   TableOutlined,
   FormOutlined,
+  CloudUploadOutlined,
 } from '@ant-design/icons-vue'
 
 const stages = [
@@ -62,6 +63,13 @@ const stages = [
     icon: FormOutlined,
     route: '/antd/stage7',
     color: '#2f54eb',
+  },
+  {
+    title: '阶段八：文件上传实战',
+    description: '图片上传、文件拖拽上传、身份证正反面、Excel 导入解析，封装可复用组件',
+    icon: CloudUploadOutlined,
+    route: '/antd/stage8',
+    color: '#ff4d4f',
   },
 ]
 </script>

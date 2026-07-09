@@ -405,6 +405,11 @@ const router = createRouter({
       name: 'antd-stage7',
       component: () => import('../views/antd/Stage7FormValidation.vue'),
     },
+    {
+      path: '/antd/stage8',
+      name: 'antd-stage8',
+      component: () => import('../views/antd/Stage8FileUpload.vue'),
+    },
     // ====== Axios 学习 ======
     {
       path: '/axios',
