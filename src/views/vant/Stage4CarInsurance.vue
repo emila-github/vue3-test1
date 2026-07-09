@@ -554,32 +554,6 @@ watch(showDeleteDialog, (v) => {
       </van-search>
     </div>
 
-    <!-- 保险期间快捷筛选 -->
-    <div class="ci-date-filter">
-      <van-row :gutter="8">
-        <van-col :span="6" @click="onDateFilterClick('startFrom')">
-          <div :class="['ci-date-chip', filterStartFrom && 'ci-date-chip--active']">
-            {{ filterStartFrom || '起期从' }}
-          </div>
-        </van-col>
-        <van-col :span="6" @click="onDateFilterClick('startTo')">
-          <div :class="['ci-date-chip', filterStartTo && 'ci-date-chip--active']">
-            {{ filterStartTo || '起期至' }}
-          </div>
-        </van-col>
-        <van-col :span="6" @click="onDateFilterClick('endFrom')">
-          <div :class="['ci-date-chip', filterEndFrom && 'ci-date-chip--active']">
-            {{ filterEndFrom || '止期从' }}
-          </div>
-        </van-col>
-        <van-col :span="6" @click="onDateFilterClick('endTo')">
-          <div :class="['ci-date-chip', filterEndTo && 'ci-date-chip--active']">
-            {{ filterEndTo || '止期至' }}
-          </div>
-        </van-col>
-      </van-row>
-    </div>
-
     <!-- 状态筛选标签 -->
     <van-tabs :active="activeStatus" animated swipeable sticky @change="onStatusChange">
       <van-tab v-for="tab in statusTabs" :key="tab.value" :title="tab.name" :name="tab.value" />
@@ -596,6 +570,24 @@ watch(showDeleteDialog, (v) => {
         <van-icon :name="showMoreFilter ? 'arrow-up' : 'arrow-down'" size="14" color="#999" />
       </div>
       <div class="ci-more-filter-body" v-show="showMoreFilter">
+        <!-- 保险期间 -->
+        <div class="ci-filter-row">
+          <span class="ci-filter-label">保险期间</span>
+          <div class="ci-date-filter-inline">
+            <div :class="['ci-date-chip', filterStartFrom && 'ci-date-chip--active']" @click="onDateFilterClick('startFrom')">
+              {{ filterStartFrom || '起期从' }}
+            </div>
+            <div :class="['ci-date-chip', filterStartTo && 'ci-date-chip--active']" @click="onDateFilterClick('startTo')">
+              {{ filterStartTo || '起期至' }}
+            </div>
+            <div :class="['ci-date-chip', filterEndFrom && 'ci-date-chip--active']" @click="onDateFilterClick('endFrom')">
+              {{ filterEndFrom || '止期从' }}
+            </div>
+            <div :class="['ci-date-chip', filterEndTo && 'ci-date-chip--active']" @click="onDateFilterClick('endTo')">
+              {{ filterEndTo || '止期至' }}
+            </div>
+          </div>
+        </div>
         <!-- 险种 -->
         <div class="ci-filter-row">
           <span class="ci-filter-label">险种</span>
@@ -1139,18 +1131,19 @@ watch(showDeleteDialog, (v) => {
 .ci-page {
   min-height: 100vh;
   background: #f7f8fa;
-  padding-bottom: 80px;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
 }
 
 /* ===== FAB ===== */
 .ci-fab {
   position: fixed;
-  right: 20px;
-  bottom: 32px;
+  left: 16px;
+  right: 16px;
+  margin: 0 auto;
+  max-width: 480px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   z-index: 999;
-  width: 90%;
   height: 44px;
-  padding: 0 22px;
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 1px;
@@ -1162,7 +1155,7 @@ watch(showDeleteDialog, (v) => {
 }
 
 .ci-fab:active {
-  transform: scale(0.95);
+  transform: scale(0.97);
   box-shadow: 0 3px 10px rgba(25, 137, 250, 0.3);
 }
 
@@ -1172,9 +1165,10 @@ watch(showDeleteDialog, (v) => {
 }
 
 /* ===== Date Filter Chips ===== */
-.ci-date-filter {
-  padding: 0 12px 8px;
-  background: #fff;
+.ci-date-filter-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .ci-date-chip {
@@ -1183,7 +1177,7 @@ watch(showDeleteDialog, (v) => {
   color: #969799;
   background: #f7f8fa;
   border-radius: 6px;
-  padding: 6px 4px;
+  padding: 6px 12px;
   cursor: pointer;
   transition: all 0.2s;
   overflow: hidden;
