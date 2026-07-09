@@ -9,12 +9,26 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import type { MockRoute } from './types'
 import type { Plugin } from 'vite'
+import fs from 'node:fs'
+import path from 'node:path'
 
 import usersRoutes from './users'
 import employeesRoutes from './employees'
 import vueRequestDemoRoutes from './vue-request-demo'
 import permissionRoutes from './permission'
 import axiosRoutes from './axios'
+
+// ===== 上传文件目录（相对于项目根目录） =====
+const UPLOAD_DIR = path.resolve('src/assets/upload')
+const MIME_MAP: Record<string, string> = {
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.gif': 'image/gif',
+  '.webp': 'image/webp',
+  '.svg': 'image/svg+xml',
+  '.bmp': 'image/bmp',
+}
 
 // ===== 合并所有 mock 路由（新增文件后在这里加 import 并展开） =====
 const allRoutes: MockRoute[] = [
@@ -59,6 +73,31 @@ export function mockPlugin(): Plugin {
     configureServer(server) {
       console.log('[mock] 插件已加载，共 %d 条路由', allRoutes.length)
       allRoutes.forEach((r) => console.log('  %s %s', r.method, r.url))
+
+      // ===== 静态文件服务：映射 /upload/xxx → src/assets/upload/xxx =====
+      server.middlewares.use('/upload', (req, res, next) => {
+        const filePath = path.join(UPLOAD_DIR, req.url!)
+        // 安全检查：防止路径穿越
+        if (!filePath.startsWith(UPLOAD_DIR)) {
+          res.statusCode = 403
+          res.end('Forbidden')
+          return
+        }
+        try {
+          const stat = fs.statSync(filePath)
+          if (stat.isFile()) {
+            const ext = path.extname(filePath).toLowerCase()
+            res.setHeader('Content-Type', MIME_MAP[ext] || 'application/octet-stream')
+            res.setHeader('Content-Length', stat.size)
+            res.setHeader('Cache-Control', 'public, max-age=31536000')
+            fs.createReadStream(filePath).pipe(res)
+            return
+          }
+        } catch {
+          // 文件不存在，放行到下一个中间件
+        }
+        next()
+      })
 
       server.middlewares.use('/api', async (req, res, next) => {
         try {

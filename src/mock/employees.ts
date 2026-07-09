@@ -1,4 +1,9 @@
 import type { MockRoute } from './types'
+import fs from 'node:fs'
+import path from 'node:path'
+
+// ===== 上传文件目录 =====
+const UPLOAD_DIR = path.resolve('src/assets/upload')
 
 // ===== 字典数据 =====
 const skillOptions = [
@@ -156,6 +161,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'zhangsan@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138001',
     remark: '前端技术专家',
     createdAt: '2024-03-15 09:00:00',
@@ -176,6 +183,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'lisi@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138002',
     remark: '',
     createdAt: '2024-06-01 09:00:00',
@@ -196,6 +205,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'wangwu@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138003',
     remark: '后端架构师',
     createdAt: '2023-09-10 09:00:00',
@@ -216,6 +227,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'zhaoliu@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138004',
     remark: '实习转正中',
     createdAt: '2024-01-20 09:00:00',
@@ -236,6 +249,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'sunqi@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138005',
     remark: '运维负责人',
     createdAt: '2022-05-18 09:00:00',
@@ -256,6 +271,8 @@ let employeeStore: any[] = [
     isFullTime: false,
     email: 'zhouba@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138006',
     remark: '',
     createdAt: '2024-08-01 09:00:00',
@@ -276,6 +293,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'wujiu@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138007',
     remark: '测试主管',
     createdAt: '2023-11-05 09:00:00',
@@ -296,6 +315,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'zhengshi@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138008',
     remark: '',
     createdAt: '2025-02-10 09:00:00',
@@ -316,6 +337,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'qian11@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138009',
     remark: '财务总监',
     createdAt: '2021-07-01 09:00:00',
@@ -336,6 +359,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'feng12@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138010',
     remark: '',
     createdAt: '2025-04-01 09:00:00',
@@ -356,6 +381,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'chen13@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138011',
     remark: '',
     createdAt: '2023-06-20 09:00:00',
@@ -376,6 +403,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'chu14@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138012',
     remark: '产假中',
     createdAt: '2024-09-15 09:00:00',
@@ -396,6 +425,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'wei15@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138013',
     remark: '全栈倾向',
     createdAt: '2024-05-10 09:00:00',
@@ -416,6 +447,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'jiang16@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138014',
     remark: '',
     createdAt: '2024-11-01 09:00:00',
@@ -436,6 +469,8 @@ let employeeStore: any[] = [
     isFullTime: true,
     email: 'shen17@example.com',
     avatar: '',
+    idCardFront: '',
+    idCardBack: '',
     phone: '13800138015',
     remark: '架构总监',
     createdAt: '2020-03-01 09:00:00',
@@ -443,6 +478,34 @@ let employeeStore: any[] = [
 ]
 
 let nextId = 16
+
+/** 确保上传目录存在 */
+function ensureUploadDir() {
+  if (!fs.existsSync(UPLOAD_DIR)) {
+    fs.mkdirSync(UPLOAD_DIR, { recursive: true })
+  }
+}
+
+/** 将 base64 data URI 解码为 Buffer */
+function base64ToBuffer(base64: string): { buffer: Buffer; ext: string } {
+  // 格式：data:image/png;base64,iVBORw0KGgo...
+  const match = base64.match(/^data:(image\/\w+);base64,(.+)$/)
+  let mime = 'image/png'
+  let data = base64
+  if (match) {
+    mime = match[1]!
+    data = match[2]!
+  }
+  const extMap: Record<string, string> = {
+    'image/png': '.png',
+    'image/jpeg': '.jpg',
+    'image/gif': '.gif',
+    'image/webp': '.webp',
+    'image/bmp': '.bmp',
+    'image/svg+xml': '.svg',
+  }
+  return { buffer: Buffer.from(data, 'base64'), ext: extMap[mime] || '.png' }
+}
 
 function parseBody(req: any): Promise<any> {
   return new Promise((resolve) => {
@@ -461,6 +524,26 @@ function parseBody(req: any): Promise<any> {
 }
 
 const routes: MockRoute[] = [
+  // ===== 文件上传接口（URL 方式） =====
+  {
+    url: '/upload',
+    method: 'POST',
+    response: async (req: any) => {
+      const body = await parseBody(req)
+      ensureUploadDir()
+      // 将 base64 解码为二进制文件写入磁盘
+      const { buffer, ext } = base64ToBuffer(body.base64 || '')
+      const timestamp = Date.now()
+      const filename = `idcard-${timestamp}${ext}`
+      const filePath = path.join(UPLOAD_DIR, filename)
+      fs.writeFileSync(filePath, buffer)
+      // 返回可访问的 URL（由 mock 中间件提供静态文件服务）
+      const fileUrl = `/upload/${filename}`
+      console.log('[mock] 文件已保存:', filePath)
+      return { code: 200, data: { url: fileUrl, fileName: body.fileName }, message: '上传成功' }
+    },
+  },
+
   // ===== 字典接口 =====
   { url: '/employees/skills', method: 'GET', response: { code: 200, data: skillOptions, message: 'ok' } },
   { url: '/employees/cities', method: 'GET', response: { code: 200, data: cityTree, message: 'ok' } },

@@ -19,6 +19,10 @@ export interface Employee {
   email: string
   phone: string
   avatar: string
+  /** 身份证正面 URL */
+  idCardFront: string
+  /** 身份证反面 URL */
+  idCardBack: string
   remark: string
   createdAt: string
 }
@@ -39,7 +43,20 @@ export interface CreateEmployeeParams {
   email: string
   phone: string
   avatar?: string
+  idCardFront?: string
+  idCardBack?: string
   remark?: string
+}
+
+/** 上传文件参数 */
+export interface UploadParams {
+  fileName: string
+  base64: string
+}
+
+/** 上传文件返回 */
+export interface UploadResult {
+  url: string
 }
 
 export interface UpdateEmployeeParams extends Partial<CreateEmployeeParams> {
@@ -113,4 +130,9 @@ export function deleteEmployee(id: number) {
 /** 批量删除 */
 export function batchDeleteEmployees(ids: number[]) {
   return del<void>('/employees/batch', { data: { ids } } as any)
+}
+
+/** 上传文件（mock 方式：传 base64 返回 URL） */
+export function uploadFile(data: UploadParams) {
+  return post<UploadResult>('/upload', data as Record<string, any>)
 }

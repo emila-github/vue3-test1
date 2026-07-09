@@ -31,6 +31,7 @@ import {
   getCityTree,
   getOrgTree,
   getDepartmentOptions,
+  uploadFile,
 } from '@/api/modules/employee'
 import type { Employee, EmployeeQueryParams, CreateEmployeeParams, DictOption } from '@/api/modules/employee'
 
@@ -186,6 +187,10 @@ interface FormState {
   email: string
   phone: string
   avatar: string
+  /** 身份证正面 URL */
+  idCardFront: string
+  /** 身份证反面 URL */
+  idCardBack: string
   remark: string
 }
 
@@ -205,6 +210,8 @@ const defaultForm: FormState = {
   email: '',
   phone: '',
   avatar: '',
+  idCardFront: '',
+  idCardBack: '',
   remark: '',
 }
 
@@ -265,6 +272,97 @@ watch(
   },
 )
 
+// ===== 身份证正反面上传（URL 方式） =====
+const idCardFrontFileList = ref<any[]>([])
+const idCardBackFileList = ref<any[]>([])
+const idCardUploading = ref<'front' | 'back' | null>(null)
+
+/** 通用上传：FileReader → base64 → POST /upload → 返回 url，存入对应字段 */
+async function uploadIdCard(type: 'front' | 'back', file: File) {
+  const isImage = file.type.startsWith('image/')
+  if (!isImage) {
+    message.error('只能上传图片文件！')
+    return false
+  }
+  const isLt5M = file.size / 1024 / 1024 < 5
+  if (!isLt5M) {
+    message.error('身份证图片大小不能超过 5MB！')
+    return false
+  }
+
+  idCardUploading.value = type
+  try {
+    // 1. 前端先转 base64
+    const base64 = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = (e) => resolve((e.target?.result as string) || '')
+      reader.onerror = () => reject(new Error('文件读取失败'))
+      reader.readAsDataURL(file)
+    })
+
+    // 2. 调用上传接口拿到 URL
+    const result = await uploadFile({ fileName: file.name, base64 })
+
+    // 3. 将 URL 存入表单
+    if (type === 'front') {
+      formState.idCardFront = result.url
+    } else {
+      formState.idCardBack = result.url
+    }
+    message.success(`${type === 'front' ? '正面' : '反面'}上传成功`)
+  } catch {
+    message.error('上传失败，请重试')
+  } finally {
+    idCardUploading.value = null
+  }
+  return false // 阻止自动上传
+}
+
+function beforeUploadIdCardFront(file: File) {
+  // 同步记录 fileList（用于展示缩略图）
+  idCardFrontFileList.value = [file]
+  uploadIdCard('front', file)
+  return false
+}
+
+function beforeUploadIdCardBack(file: File) {
+  idCardBackFileList.value = [file]
+  uploadIdCard('back', file)
+  return false
+}
+
+function handleRemoveIdCardFront() {
+  formState.idCardFront = ''
+  idCardFrontFileList.value = []
+}
+
+function handleRemoveIdCardBack() {
+  formState.idCardBack = ''
+  idCardBackFileList.value = []
+}
+
+// 编辑回显身份证 fileList（用 url 本身作为 src 即可回显缩略图）
+watch(
+  () => formState.idCardFront,
+  (val) => {
+    if (val) {
+      idCardFrontFileList.value = [{ uid: '-2', name: 'idcard-front.png', status: 'done', url: val }]
+    } else {
+      idCardFrontFileList.value = []
+    }
+  },
+)
+watch(
+  () => formState.idCardBack,
+  (val) => {
+    if (val) {
+      idCardBackFileList.value = [{ uid: '-3', name: 'idcard-back.png', status: 'done', url: val }]
+    } else {
+      idCardBackFileList.value = []
+    }
+  },
+)
+
 function openCreate() {
   isEdit.value = false
   editingId.value = null
@@ -294,6 +392,8 @@ function openEdit(record: Employee) {
     email: record.email,
     phone: record.phone,
     avatar: record.avatar || '',
+    idCardFront: record.idCardFront || '',
+    idCardBack: record.idCardBack || '',
     remark: record.remark || '',
   })
   drawerOpen.value = true
@@ -407,6 +507,7 @@ const _columnDefs: TableProps['columns'] = [
   { title: '工号', dataIndex: 'employeeNo', key: 'employeeNo', width: 100 },
   { title: '姓名', dataIndex: 'name', key: 'name', width: 100 },
   { title: '头像', dataIndex: 'avatar', key: 'avatar', width: 80 },
+  { title: '身份证', key: 'idCard', width: 80 },
   { title: '性别', dataIndex: 'gender', key: 'gender', width: 70 },
   { title: '年龄', dataIndex: 'age', key: 'age', width: 70, sorter: (a: Employee, b: Employee) => a.age - b.age },
   { title: '部门', dataIndex: 'orgPath', key: 'orgPath', width: 150, ellipsis: true },
@@ -437,7 +538,7 @@ const columns = computed<TableProps['columns']>(() => {
 })
 
 // 表格横向滚动宽度
-const scrollX = computed(() => (isMobile.value ? 1000 : 1400))
+const scrollX = computed(() => (isMobile.value ? 1100 : 1500))
 
 const hasSelected = computed(() => selectedRowKeys.value.length > 0)
 
@@ -648,6 +749,30 @@ onUnmounted(() => {
             <a-avatar v-if="record.avatar" :src="record.avatar" :size="36" />
             <a-avatar v-else :size="36">{{ record.name?.charAt(0) }}</a-avatar>
           </template>
+          <!-- 身份证 -->
+          <template v-else-if="column.key === 'idCard'">
+            <span v-if="record.idCardFront || record.idCardBack" style="display: flex; gap: 4px; align-items: center">
+              <a-tooltip title="点击查看正面">
+                <a-image
+                  v-if="record.idCardFront"
+                  :src="record.idCardFront"
+                  :width="28"
+                  :height="20"
+                  style="object-fit: cover; border-radius: 2px; cursor: pointer"
+                />
+              </a-tooltip>
+              <a-tooltip title="点击查看反面">
+                <a-image
+                  v-if="record.idCardBack"
+                  :src="record.idCardBack"
+                  :width="28"
+                  :height="20"
+                  style="object-fit: cover; border-radius: 2px; cursor: pointer"
+                />
+              </a-tooltip>
+            </span>
+            <span v-else style="color: #ccc; font-size: 12px">—</span>
+          </template>
           <!-- 性别 -->
           <template v-else-if="column.key === 'gender'">
             {{ record.gender === 'male' ? '男' : '女' }}
@@ -751,6 +876,65 @@ onUnmounted(() => {
               <div style="margin-top: 8px">上传图片</div>
             </div>
           </a-upload>
+        </a-form-item>
+
+        <a-form-item label="身份证正面">
+          <a-upload
+            v-model:file-list="idCardFrontFileList"
+            list-type="picture-card"
+            :max-count="1"
+            accept="image/*"
+            :before-upload="beforeUploadIdCardFront"
+            @remove="handleRemoveIdCardFront"
+          >
+            <div v-if="idCardFrontFileList.length < 1" class="idcard-upload-btn idcard-front-btn">
+              <div class="idcard-card">
+                <div class="idcard-photo">
+                  <div class="idcard-photo-icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="idcard-lines">
+                  <span class="idcard-line" style="width: 70%"></span>
+                  <span class="idcard-line" style="width: 55%"></span>
+                  <span class="idcard-line" style="width: 80%"></span>
+                  <span class="idcard-line" style="width: 45%"></span>
+                </div>
+              </div>
+              <span class="idcard-label">身份证正面</span>
+            </div>
+          </a-upload>
+          <span v-if="idCardUploading === 'front'" style="color: #1677ff; font-size: 12px; margin-left: 8px">上传中...</span>
+        </a-form-item>
+
+        <a-form-item label="身份证反面">
+          <a-upload
+            v-model:file-list="idCardBackFileList"
+            list-type="picture-card"
+            :max-count="1"
+            accept="image/*"
+            :before-upload="beforeUploadIdCardBack"
+            @remove="handleRemoveIdCardBack"
+          >
+            <div v-if="idCardBackFileList.length < 1" class="idcard-upload-btn idcard-back-btn">
+              <div class="idcard-card idcard-card-back">
+                <div class="idcard-emblem">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  </svg>
+                </div>
+                <div class="idcard-lines">
+                  <span class="idcard-line" style="width: 85%"></span>
+                  <span class="idcard-line" style="width: 60%"></span>
+                  <span class="idcard-line" style="width: 75%"></span>
+                </div>
+              </div>
+              <span class="idcard-label">身份证反面</span>
+            </div>
+          </a-upload>
+          <span v-if="idCardUploading === 'back'" style="color: #1677ff; font-size: 12px; margin-left: 8px">上传中...</span>
         </a-form-item>
 
         <a-form-item label="姓名" name="name">
@@ -1000,5 +1184,131 @@ h1 {
 /* 移动端 drawer header extra 按钮撑满 */
 .drawer-extra-mobile {
   width: 100%;
+}
+
+/* ===== 身份证上传按钮自定义样式 ===== */
+.idcard-upload-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+}
+
+.idcard-card {
+  width: 72px;
+  height: 46px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 7px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 正面：蓝色渐变背景 */
+.idcard-front-btn .idcard-card {
+  background: linear-gradient(135deg, #d6e4ff 0%, #e6f0ff 50%, #d0e1ff 100%);
+  border: 1px solid #adc6ff;
+}
+
+/* 反面：暖色渐变背景 */
+.idcard-back-btn .idcard-card {
+  background: linear-gradient(135deg, #fffbe6 0%, #fff1b8 50%, #ffe7ba 100%);
+  border: 1px solid #ffd591;
+  border-radius: 4px;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+/* 照片区域（正面左侧） */
+.idcard-photo {
+  width: 20px;
+  height: 24px;
+  min-width: 20px;
+  background: linear-gradient(135deg, #91caff 0%, #4096ff 100%);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.idcard-photo-icon {
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 国徽区域（反面顶部） */
+.idcard-emblem {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #ff9c6e 0%, #fa8c16 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.85);
+  flex-shrink: 0;
+}
+
+/* 文字线条 */
+.idcard-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.idcard-card-back .idcard-lines {
+  width: 100%;
+  align-items: center;
+}
+
+.idcard-line {
+  display: block;
+  height: 3px;
+  border-radius: 1.5px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.idcard-front-btn .idcard-line {
+  background: rgba(64, 150, 255, 0.25);
+}
+
+.idcard-back-btn .idcard-line {
+  background: rgba(250, 140, 22, 0.25);
+}
+
+/* 底部标签文字 */
+.idcard-label {
+  font-size: 11px;
+  color: #8c8c8c;
+  line-height: 1;
+}
+
+/* hover 时卡片微交互 */
+.idcard-upload-btn:hover .idcard-card {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
+.idcard-front-btn:hover .idcard-card {
+  border-color: #597ef7;
+  box-shadow: 0 2px 6px rgba(24, 144, 255, 0.2);
+}
+
+.idcard-back-btn:hover .idcard-card {
+  border-color: #fa8c16;
+  box-shadow: 0 2px 6px rgba(250, 140, 22, 0.2);
 }
 </style>
