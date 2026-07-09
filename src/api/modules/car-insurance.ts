@@ -34,6 +34,14 @@ export interface CarInsurance {
 export interface CarInsuranceQuery {
   keyword?: string
   status?: string
+  insuranceType?: string
+  insuranceStartFrom?: string
+  insuranceStartTo?: string
+  insuranceEndFrom?: string
+  insuranceEndTo?: string
+  carBrand?: string
+  priceMin?: number
+  priceMax?: number
   page?: number
   pageSize?: number
 }

@@ -39,6 +39,22 @@ const statusTabs = [
   { name: '已过期', value: '已过期' },
 ]
 
+// ==================== 更多筛选 ====================
+const showMoreFilter = ref(false)
+const filterInsuranceType = ref('')
+const filterCarBrand = ref('')
+const filterPriceMin = ref<number | ''>('')
+const filterPriceMax = ref<number | ''>('')
+
+// 保险期间筛选
+const filterStartFrom = ref('')
+const filterStartTo = ref('')
+const filterEndFrom = ref('')
+const filterEndTo = ref('')
+const dateStartPickerVisible = ref(false)
+const dateEndPickerVisible = ref(false)
+const datePickerMode = ref<'startFrom' | 'startTo' | 'endFrom' | 'endTo'>('startFrom')
+
 // ==================== 表单编辑状态 ====================
 const isEdit = ref(false)
 const editId = ref(0)
@@ -87,6 +103,26 @@ const carBrandOptions = [
   { text: '比亚迪', value: '比亚迪' },
   { text: '蔚来', value: '蔚来' },
   { text: '其他', value: '其他' },
+]
+
+// 更多筛选选项（基于上面的选项扩展）
+const insuranceTypeFilterOptions = [
+  { text: '不限险种', value: '' },
+  ...insuranceTypeOptions,
+]
+
+const carBrandFilterOptions = [
+  { text: '不限品牌', value: '' },
+  ...carBrandOptions,
+]
+
+const priceRangeOptions = [
+  { text: '不限', value: '' },
+  { text: '10万以下', value: '0-100000' },
+  { text: '10-30万', value: '100000-300000' },
+  { text: '30-50万', value: '300000-500000' },
+  { text: '50-100万', value: '500000-1000000' },
+  { text: '100万以上', value: '1000000-99999999' },
 ]
 
 // ==================== Picker 弹出控制 ====================
@@ -210,12 +246,23 @@ async function onLoad() {
 
 async function fetchList(reset = false) {
   try {
-    const result = await getCarInsuranceList({
+    const params: Record<string, any> = {
       keyword: keyword.value,
       status: activeStatus.value,
       page: page.value,
       pageSize,
-    })
+    }
+    // 更多筛选参数
+    if (filterInsuranceType.value) params.insuranceType = filterInsuranceType.value
+    if (filterCarBrand.value) params.carBrand = filterCarBrand.value
+    if (filterStartFrom.value) params.insuranceStartFrom = filterStartFrom.value
+    if (filterStartTo.value) params.insuranceStartTo = filterStartTo.value
+    if (filterEndFrom.value) params.insuranceEndFrom = filterEndFrom.value
+    if (filterEndTo.value) params.insuranceEndTo = filterEndTo.value
+    if (filterPriceMin.value !== '') params.priceMin = Number(filterPriceMin.value)
+    if (filterPriceMax.value !== '') params.priceMax = Number(filterPriceMax.value)
+
+    const result = await getCarInsuranceList(params)
     if (reset) {
       list.value = result.list
     } else {
@@ -241,6 +288,67 @@ function onSearch() {
 function onStatusChange(tab: { name: string; value: string }) {
   activeStatus.value = tab.value
   onSearch()
+}
+
+// ==================== 更多筛选 ====================
+function onDateFilterClick(mode: 'startFrom' | 'startTo' | 'endFrom' | 'endTo') {
+  datePickerMode.value = mode
+  const targetMode = mode.startsWith('start') ? 'start' : 'end'
+  if (targetMode === 'start') {
+    dateStartPickerVisible.value = true
+  } else {
+    dateEndPickerVisible.value = true
+  }
+}
+
+function onDatePickerConfirm({ selectedValues }: { selectedValues: string[] }) {
+  const dateStr = selectedValues.join('-')
+  if (dateStartPickerVisible.value) {
+    if (datePickerMode.value === 'startFrom') filterStartFrom.value = dateStr
+    if (datePickerMode.value === 'startTo') filterStartTo.value = dateStr
+    dateStartPickerVisible.value = false
+  } else if (dateEndPickerVisible.value) {
+    if (datePickerMode.value === 'endFrom') filterEndFrom.value = dateStr
+    if (datePickerMode.value === 'endTo') filterEndTo.value = dateStr
+    dateEndPickerVisible.value = false
+  }
+}
+
+function onPriceRangeChange(val: string) {
+  if (!val) {
+    filterPriceMin.value = ''
+    filterPriceMax.value = ''
+  } else {
+    const [min, max] = val.split('-')
+    filterPriceMin.value = Number(min)
+    filterPriceMax.value = Number(max)
+  }
+}
+
+// 当前激活的筛选数量
+const activeFilterCount = computed(() => {
+  let count = 0
+  if (filterInsuranceType.value) count++
+  if (filterCarBrand.value) count++
+  if (filterStartFrom.value || filterStartTo.value || filterEndFrom.value || filterEndTo.value) count++
+  if (filterPriceMin.value !== '' || filterPriceMax.value !== '') count++
+  return count
+})
+
+function onMoreFilterApply() {
+  showMoreFilter.value = false
+  onSearch()
+}
+
+function onMoreFilterReset() {
+  filterInsuranceType.value = ''
+  filterCarBrand.value = ''
+  filterStartFrom.value = ''
+  filterStartTo.value = ''
+  filterEndFrom.value = ''
+  filterEndTo.value = ''
+  filterPriceMin.value = ''
+  filterPriceMax.value = ''
 }
 
 // ==================== 新增/编辑 ====================
@@ -446,10 +554,102 @@ watch(showDeleteDialog, (v) => {
       </van-search>
     </div>
 
+    <!-- 保险期间快捷筛选 -->
+    <div class="ci-date-filter">
+      <van-row :gutter="8">
+        <van-col :span="6" @click="onDateFilterClick('startFrom')">
+          <div :class="['ci-date-chip', filterStartFrom && 'ci-date-chip--active']">
+            {{ filterStartFrom || '起期从' }}
+          </div>
+        </van-col>
+        <van-col :span="6" @click="onDateFilterClick('startTo')">
+          <div :class="['ci-date-chip', filterStartTo && 'ci-date-chip--active']">
+            {{ filterStartTo || '起期至' }}
+          </div>
+        </van-col>
+        <van-col :span="6" @click="onDateFilterClick('endFrom')">
+          <div :class="['ci-date-chip', filterEndFrom && 'ci-date-chip--active']">
+            {{ filterEndFrom || '止期从' }}
+          </div>
+        </van-col>
+        <van-col :span="6" @click="onDateFilterClick('endTo')">
+          <div :class="['ci-date-chip', filterEndTo && 'ci-date-chip--active']">
+            {{ filterEndTo || '止期至' }}
+          </div>
+        </van-col>
+      </van-row>
+    </div>
+
     <!-- 状态筛选标签 -->
     <van-tabs :active="activeStatus" animated swipeable sticky @change="onStatusChange">
       <van-tab v-for="tab in statusTabs" :key="tab.value" :title="tab.name" :name="tab.value" />
     </van-tabs>
+
+    <!-- 更多查询方案（可展开） -->
+    <div class="ci-more-filter-wrap">
+      <div class="ci-more-filter-bar" @click="showMoreFilter = !showMoreFilter">
+        <span>
+          <van-icon name="filter-o" size="15" />
+          更多查询方案
+          <van-badge v-if="activeFilterCount" :content="activeFilterCount" style="margin-left: 6px" />
+        </span>
+        <van-icon :name="showMoreFilter ? 'arrow-up' : 'arrow-down'" size="14" color="#999" />
+      </div>
+      <div class="ci-more-filter-body" v-show="showMoreFilter">
+        <!-- 险种 -->
+        <div class="ci-filter-row">
+          <span class="ci-filter-label">险种</span>
+          <van-radio-group v-model="filterInsuranceType" direction="horizontal">
+            <van-radio v-for="opt in insuranceTypeFilterOptions" :key="opt.value" :name="opt.value" icon-size="14px">
+              {{ opt.text }}
+            </van-radio>
+          </van-radio-group>
+        </div>
+        <!-- 车辆品牌 -->
+        <div class="ci-filter-row">
+          <span class="ci-filter-label">品牌</span>
+          <van-radio-group v-model="filterCarBrand" direction="horizontal">
+            <van-radio v-for="opt in carBrandFilterOptions" :key="opt.value" :name="opt.value" icon-size="14px">
+              {{ opt.text }}
+            </van-radio>
+          </van-radio-group>
+        </div>
+        <!-- 估值区间 -->
+        <div class="ci-filter-row">
+          <span class="ci-filter-label">估值</span>
+          <van-radio-group :model-value="filterPriceMin === '' && filterPriceMax === '' ? '' : `${filterPriceMin}-${filterPriceMax}`" direction="horizontal" @update:model-value="onPriceRangeChange">
+            <van-radio v-for="opt in priceRangeOptions" :key="opt.value" :name="opt.value" icon-size="14px">
+              {{ opt.text }}
+            </van-radio>
+          </van-radio-group>
+        </div>
+        <!-- 操作按钮 -->
+        <div class="ci-filter-actions">
+          <van-button size="small" plain type="default" @click="onMoreFilterReset">重置</van-button>
+          <van-button size="small" type="primary" @click="onMoreFilterApply">应用筛选</van-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 保险期间日期选择器 -->
+    <van-popup v-model:show="dateStartPickerVisible" position="bottom" round>
+      <van-date-picker
+        title="选择起始日期"
+        :min-date="new Date(2020, 0, 1)"
+        :max-date="new Date(2030, 11, 31)"
+        @confirm="onDatePickerConfirm"
+        @cancel="dateStartPickerVisible = false"
+      />
+    </van-popup>
+    <van-popup v-model:show="dateEndPickerVisible" position="bottom" round>
+      <van-date-picker
+        title="选择截止日期"
+        :min-date="new Date(2020, 0, 1)"
+        :max-date="new Date(2030, 11, 31)"
+        @confirm="onDatePickerConfirm"
+        @cancel="dateEndPickerVisible = false"
+      />
+    </van-popup>
 
     <!-- 投保列表 -->
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
@@ -969,6 +1169,80 @@ watch(showDeleteDialog, (v) => {
 /* ===== Search ===== */
 .search-wrap {
   padding: 0 4px;
+}
+
+/* ===== Date Filter Chips ===== */
+.ci-date-filter {
+  padding: 0 12px 8px;
+  background: #fff;
+}
+
+.ci-date-chip {
+  text-align: center;
+  font-size: 12px;
+  color: #969799;
+  background: #f7f8fa;
+  border-radius: 6px;
+  padding: 6px 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ci-date-chip--active {
+  color: #1989fa;
+  background: #ecf5ff;
+  font-weight: 600;
+}
+
+/* ===== More Filter ===== */
+.ci-more-filter-wrap {
+  background: #fff;
+}
+
+.ci-more-filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: #646566;
+  cursor: pointer;
+  border-top: 1px solid #f5f5f5;
+}
+
+.ci-more-filter-body {
+  padding: 0 16px 12px;
+  border-top: 1px solid #f5f5f5;
+}
+
+.ci-filter-row {
+  padding: 10px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.ci-filter-row:last-child {
+  border-bottom: none;
+}
+
+.ci-filter-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #323233;
+  margin-bottom: 8px;
+}
+
+.ci-filter-actions {
+  display: flex;
+  gap: 10px;
+  padding-top: 12px;
+}
+
+.ci-filter-actions .van-button {
+  flex: 1;
 }
 
 /* ===== Card ===== */

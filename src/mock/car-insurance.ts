@@ -139,6 +139,30 @@ const routes: MockRoute[] = [
         filtered = filtered.filter((d) => d.status === status)
       }
 
+      // 保险期间查询
+      const startFrom = u.searchParams.get('insuranceStartFrom') || ''
+      const startTo = u.searchParams.get('insuranceStartTo') || ''
+      const endFrom = u.searchParams.get('insuranceEndFrom') || ''
+      const endTo = u.searchParams.get('insuranceEndTo') || ''
+      if (startFrom) filtered = filtered.filter((d) => d.insuranceStart >= startFrom)
+      if (startTo) filtered = filtered.filter((d) => d.insuranceStart <= startTo)
+      if (endFrom) filtered = filtered.filter((d) => d.insuranceEnd >= endFrom)
+      if (endTo) filtered = filtered.filter((d) => d.insuranceEnd <= endTo)
+
+      // 险种筛选
+      const insuranceType = u.searchParams.get('insuranceType') || ''
+      if (insuranceType) filtered = filtered.filter((d) => d.insuranceType === insuranceType)
+
+      // 车品牌筛选
+      const carBrand = u.searchParams.get('carBrand') || ''
+      if (carBrand) filtered = filtered.filter((d) => d.carBrand === carBrand)
+
+      // 估值区间筛选
+      const priceMin = u.searchParams.get('priceMin')
+      const priceMax = u.searchParams.get('priceMax')
+      if (priceMin) filtered = filtered.filter((d) => d.estimatedValue >= Number(priceMin))
+      if (priceMax) filtered = filtered.filter((d) => d.estimatedValue <= Number(priceMax))
+
       // 按创建时间倒序
       filtered.sort((a, b) => new Date(b.createTime).getTime() - new Date(a.createTime).getTime())
 
