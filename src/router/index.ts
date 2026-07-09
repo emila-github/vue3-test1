@@ -543,6 +543,11 @@ const router = createRouter({
       component: () => import('../views/vant/VantIndex.vue'),
     },
     {
+      path: '/vant/stage5-picc-skin-demo',
+      name: 'vant-stage5-picc-skin-demo',
+      component: () => import('../views/vant/Stage5PiccSkinDemo.vue'),
+    },
+    {
       path: '/vant/stage1',
       name: 'vant-stage1',
       component: () => import('../views/vant/Stage1Basic.vue'),

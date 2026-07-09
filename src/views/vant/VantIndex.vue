@@ -37,6 +37,14 @@ const stages = ref([
     icon: '🚗',
     color: '#ff976a',
   },
+  {
+    id: 5,
+    title: 'PICC 品牌皮肤演示',
+    desc: 'PILL 主按钮、NavBar 红色变体、页面级辅助类的完整套用示例，可一键开关',
+    path: '/vant/stage5-picc-skin-demo',
+    icon: '🎨',
+    color: '#d71920',
+  },
 ])
 
 function navigateTo(path: string) {

@@ -1,6 +1,10 @@
 import './assets/main.css'
+import { initSkin } from './composables/usePiccSkin'
+
 import 'element-plus/dist/index.css'
 import 'vant/lib/index.css'
+import './styles/vant-picc.css'
+
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -22,4 +26,5 @@ app.use(pinia)
 app.use(router)
 app.use(i18n)
 
+initSkin(true)
 app.mount('#app')
