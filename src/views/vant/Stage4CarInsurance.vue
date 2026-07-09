@@ -502,7 +502,7 @@ watch(showDeleteDialog, (v) => {
     </van-pull-refresh>
 
     <!-- 新增按钮（悬浮） -->
-    <van-button class="ci-fab" type="primary" icon="plus" round size="large" @click="openAdd"> 新增投保 </van-button>
+    <van-button class="ci-fab" type="primary" icon="plus" round @click="openAdd">新增投保</van-button>
 
     <!-- ==================== 新增/编辑 Popup ==================== -->
     <van-popup v-model:show="formPopupVisible" position="right" :style="{ width: '100%', height: '100%' }">
@@ -945,9 +945,25 @@ watch(showDeleteDialog, (v) => {
 /* ===== FAB ===== */
 .ci-fab {
   position: fixed;
-  bottom: 24px;
+  right: 20px;
+  bottom: 32px;
   z-index: 999;
-  box-shadow: 0 4px 12px rgba(25, 137, 250, 0.4);
+  width: 90%;
+  height: 44px;
+  padding: 0 22px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border: none;
+  box-shadow: 0 6px 20px rgba(25, 137, 250, 0.45);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.ci-fab:active {
+  transform: scale(0.95);
+  box-shadow: 0 3px 10px rgba(25, 137, 250, 0.3);
 }
 
 /* ===== Search ===== */
