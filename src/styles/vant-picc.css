@@ -295,17 +295,59 @@ html.picc-skin .van-stepper__minus {
   border-radius: 6px;
 }
 
-/* --- Tag：主色红 / 浅红软底 --- */
+/* --- Tag：按 PICC 风格重写，保证清晰可辨识 ---
+ * 规则：
+ *  - 实色标签：品牌红/语义色底 + 白字（高对比，主色红用法）
+ *  - 描边(hollow)标签：浅色底 + 同色字 + 同色描边，符合 PICC「浅红底标签用品牌红字、禁止白字」
+ *    且各语义类型底色互不串色（success=浅绿 / warning=浅橙 / primary/danger=浅红）
+ */
 html.picc-skin {
   --van-tag-primary-color: #d71920;
   --van-tag-success-color: #18a058;
   --van-tag-warning-color: #f59e0b;
   --van-tag-danger-color: #d71920;
-  --van-tag-text-color: #4a4a4a;
+  --van-tag-text-color: #ffffff; /* 实色标签默认白字，保证红/绿/橙底上清晰可读 */
   --van-tag-default-color: #4a4a4a;
-  --van-tag-plain-background: #fcebec;
+  --van-tag-plain-background: #fcebec; /* 默认描边底（primary/danger 使用），下方按类型覆盖 */
   --van-tag-radius: 6px;
   --van-tag-round-radius: 9999px;
+}
+
+/* 实色标签：品牌红/语义色底 + 白字 */
+html.picc-skin .van-tag--primary,
+html.picc-skin .van-tag--danger {
+  background: #d71920;
+  color: #fff;
+}
+html.picc-skin .van-tag--success {
+  background: #18a058;
+  color: #fff;
+}
+html.picc-skin .van-tag--warning {
+  background: #f59e0b;
+  color: #fff;
+}
+html.picc-skin .van-tag--default {
+  background: #f2f2f2;
+  color: #4a4a4a;
+}
+
+/* 描边(hollow)标签：浅色底 + 同色字 + 同色描边，清晰可辨 */
+html.picc-skin .van-tag--primary.van-tag--plain,
+html.picc-skin .van-tag--danger.van-tag--plain {
+  background: #fcebec; /* 品牌红浅 */
+  color: #d71920;      /* 品牌红字（禁止白字） */
+  border-color: #d71920;
+}
+html.picc-skin .van-tag--success.van-tag--plain {
+  background: #e8f5ec; /* 成功浅绿 */
+  color: #18a058;
+  border-color: #18a058;
+}
+html.picc-skin .van-tag--warning.van-tag--plain {
+  background: #fef3e2; /* 警告浅橙 */
+  color: #b45309;
+  border-color: #f59e0b;
 }
 
 /* --- Badge：品牌红角标 --- */

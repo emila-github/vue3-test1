@@ -106,15 +106,9 @@ const carBrandOptions = [
 ]
 
 // 更多筛选选项（基于上面的选项扩展）
-const insuranceTypeFilterOptions = [
-  { text: '不限险种', value: '' },
-  ...insuranceTypeOptions,
-]
+const insuranceTypeFilterOptions = [{ text: '不限险种', value: '' }, ...insuranceTypeOptions]
 
-const carBrandFilterOptions = [
-  { text: '不限品牌', value: '' },
-  ...carBrandOptions,
-]
+const carBrandFilterOptions = [{ text: '不限品牌', value: '' }, ...carBrandOptions]
 
 const priceRangeOptions = [
   { text: '不限', value: '' },
@@ -503,8 +497,8 @@ const canSubmit = computed(() => formErrors.value.length === 0)
 // ==================== 状态标签颜色 ====================
 function statusColor(status: string) {
   const map: Record<string, string> = {
-    待审核: '#ff976a',
-    已生效: '#07c160',
+    待审核: '#f59e0b',
+    已生效: '#18a058',
     已过期: '#999',
   }
   return map[status] || '#999'
@@ -530,13 +524,18 @@ watch(showDeleteDialog, (v) => {
 </script>
 
 <template>
-  <div class="ci-page">
+  <div class="ci-page picc-page">
     <!-- 导航栏 -->
-    <van-nav-bar title="车险投保管理" fixed placeholder>
-      <template #right>
-        <van-button type="primary" size="small" @click="openAdd">新增</van-button>
-      </template>
-    </van-nav-bar>
+    <van-nav-bar title="PICC 车险" class="van-nav-bar--picc-primary" left-text="返回" left-arrow> </van-nav-bar>
+
+    <!-- 红色渐变英雄头图（技能 .picc-header-gradient） -->
+    <div class="picc-header-gradient">
+      <p class="header-title">车险投保管理</p>
+      <p class="header-sub">实时掌握保单状态 · 在线投保更便捷</p>
+    </div>
+
+    <!-- 暖色合规提示（技能 .picc-notice-warm） -->
+    <div class="picc-notice-warm">温馨提示：保单信息变更请及时更新，确保理赔与续保顺畅无忧。</div>
 
     <!-- 搜索栏 -->
     <div class="search-wrap">
@@ -549,7 +548,7 @@ watch(showDeleteDialog, (v) => {
         @clear="onSearch"
       >
         <template #action>
-          <div @click="onSearch" style="color: #1989fa; padding: 0 4px">搜索</div>
+          <div @click="onSearch" style="color: #d71920; padding: 0 4px">搜索</div>
         </template>
       </van-search>
     </div>
@@ -574,13 +573,22 @@ watch(showDeleteDialog, (v) => {
         <div class="ci-filter-row">
           <span class="ci-filter-label">保险期间</span>
           <div class="ci-date-filter-inline">
-            <div :class="['ci-date-chip', filterStartFrom && 'ci-date-chip--active']" @click="onDateFilterClick('startFrom')">
+            <div
+              :class="['ci-date-chip', filterStartFrom && 'ci-date-chip--active']"
+              @click="onDateFilterClick('startFrom')"
+            >
               {{ filterStartFrom || '起期从' }}
             </div>
-            <div :class="['ci-date-chip', filterStartTo && 'ci-date-chip--active']" @click="onDateFilterClick('startTo')">
+            <div
+              :class="['ci-date-chip', filterStartTo && 'ci-date-chip--active']"
+              @click="onDateFilterClick('startTo')"
+            >
               {{ filterStartTo || '起期至' }}
             </div>
-            <div :class="['ci-date-chip', filterEndFrom && 'ci-date-chip--active']" @click="onDateFilterClick('endFrom')">
+            <div
+              :class="['ci-date-chip', filterEndFrom && 'ci-date-chip--active']"
+              @click="onDateFilterClick('endFrom')"
+            >
               {{ filterEndFrom || '止期从' }}
             </div>
             <div :class="['ci-date-chip', filterEndTo && 'ci-date-chip--active']" @click="onDateFilterClick('endTo')">
@@ -609,7 +617,11 @@ watch(showDeleteDialog, (v) => {
         <!-- 估值区间 -->
         <div class="ci-filter-row">
           <span class="ci-filter-label">估值</span>
-          <van-radio-group :model-value="filterPriceMin === '' && filterPriceMax === '' ? '' : `${filterPriceMin}-${filterPriceMax}`" direction="horizontal" @update:model-value="onPriceRangeChange">
+          <van-radio-group
+            :model-value="filterPriceMin === '' && filterPriceMax === '' ? '' : `${filterPriceMin}-${filterPriceMax}`"
+            direction="horizontal"
+            @update:model-value="onPriceRangeChange"
+          >
             <van-radio v-for="opt in priceRangeOptions" :key="opt.value" :name="opt.value" icon-size="14px">
               {{ opt.text }}
             </van-radio>
@@ -646,7 +658,7 @@ watch(showDeleteDialog, (v) => {
     <!-- 投保列表 -->
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <div v-for="item in list" :key="item.id" class="ci-card" @click="openDetail(item)">
+        <div v-for="item in list" :key="item.id" class="ci-card picc-card" @click="openDetail(item)">
           <div class="ci-card-header">
             <span class="ci-plate">{{ item.plateNo }}</span>
             <van-tag :color="statusColor(item.status)" text-color="#fff" size="medium">
@@ -671,7 +683,9 @@ watch(showDeleteDialog, (v) => {
               <span class="ci-label">险种</span>
               <van-tag type="primary" plain>{{ item.insuranceType }}</van-tag>
               <span class="ci-label" style="margin-left: 16px">保额</span>
-              <span class="ci-value ci-price">{{ item.estimatedValue.toLocaleString() }} 元</span>
+              <span class="ci-value ci-price picc-price"
+                >¥<span class="picc-number-display">{{ item.estimatedValue.toLocaleString() }}</span> 元</span
+              >
             </div>
             <div class="ci-info-row">
               <span class="ci-label">保险期间</span>
@@ -706,9 +720,10 @@ watch(showDeleteDialog, (v) => {
         </template>
       </van-nav-bar>
 
-      <div class="form-scroll">
+      <div class="form-scroll picc-page">
         <!-- ===== 1. 车辆信息 ===== -->
-        <van-cell-group title="车辆信息">
+        <div class="picc-section-title">车辆信息</div>
+        <van-cell-group class="picc-card">
           <van-field
             v-model="form.plateNo"
             label="车牌号"
@@ -743,7 +758,8 @@ watch(showDeleteDialog, (v) => {
         </van-cell-group>
 
         <!-- ===== 2. 车主信息 ===== -->
-        <van-cell-group title="车主信息">
+        <div class="picc-section-title">车主信息</div>
+        <van-cell-group class="picc-card">
           <van-field v-model="form.ownerName" label="车主姓名" placeholder="请输入姓名" required left-icon="user-o" />
           <van-field
             v-model="form.ownerPhone"
@@ -762,7 +778,8 @@ watch(showDeleteDialog, (v) => {
         </van-cell-group>
 
         <!-- ===== 3. 投保信息 ===== -->
-        <van-cell-group title="投保信息">
+        <div class="picc-section-title">投保信息</div>
+        <van-cell-group class="picc-card">
           <van-field
             v-model="form.insuranceType"
             is-link
@@ -825,7 +842,7 @@ watch(showDeleteDialog, (v) => {
           <div class="ci-slider-cell">
             <div class="ci-slider-label">
               <span>估值调整</span>
-              <span class="ci-slider-value">{{ form.estimatedValue.toLocaleString() }} 元</span>
+              <span class="ci-slider-value picc-number-display">{{ form.estimatedValue.toLocaleString() }} 元</span>
             </div>
             <van-slider
               :model-value="Number(form.estimatedValue) || 0"
@@ -834,14 +851,13 @@ watch(showDeleteDialog, (v) => {
               :max="2000000"
               :step="10000"
               bar-height="4px"
-              active-color="#1989fa"
             />
           </div>
 
           <!-- Rate 车况评分 -->
           <div class="ci-rate-cell">
             <span class="ci-rate-label">车况评分</span>
-            <van-rate v-model="carConditionRate" :size="20" color="#ee0a24" void-color="#eee" void-icon="star" />
+            <van-rate v-model="carConditionRate" :size="20" void-color="#eee" void-icon="star" />
           </div>
 
           <!-- 投保区域 -->
@@ -856,7 +872,8 @@ watch(showDeleteDialog, (v) => {
         </van-cell-group>
 
         <!-- ===== 4. 证件图片上传 ===== -->
-        <van-cell-group title="证件资料">
+        <div class="picc-section-title">证件资料</div>
+        <van-cell-group class="picc-card">
           <div class="ci-upload-item">
             <span class="ci-upload-title">驾驶证正面</span>
             <div class="ci-upload-area">
@@ -902,7 +919,8 @@ watch(showDeleteDialog, (v) => {
         </van-cell-group>
 
         <!-- ===== 5. 协议与备注 ===== -->
-        <van-cell-group title="其他">
+        <div class="picc-section-title">其他</div>
+        <van-cell-group class="picc-card">
           <!-- Switch 开关 -->
           <van-cell title="同意投保协议" center>
             <template #right-icon>
@@ -946,15 +964,7 @@ watch(showDeleteDialog, (v) => {
 
         <!-- ===== 表单校验提示 ===== -->
         <div v-if="formErrors.length" class="ci-form-errors">
-          <van-notice-bar
-            v-for="err in formErrors"
-            :key="err"
-            :text="err"
-            mode="closeable"
-            color="#ee0a24"
-            background="#fff2f0"
-            left-icon="warning-o"
-          />
+          <van-notice-bar v-for="err in formErrors" :key="err" :text="err" mode="closeable" left-icon="warning-o" />
         </div>
 
         <!-- 底部提交按钮 -->
@@ -1102,7 +1112,6 @@ watch(showDeleteDialog, (v) => {
       message="删除后将无法恢复，确定要删除该投保记录吗？"
       show-cancel-button
       confirm-button-text="删除"
-      confirm-button-color="#ee0a24"
       @confirm="doDelete"
     />
 
@@ -1129,11 +1138,20 @@ watch(showDeleteDialog, (v) => {
 
 <style scoped>
 .ci-page {
-  min-height: 100vh;
-  background: #f7f8fa;
   padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
 }
 
+.header-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+}
+.header-sub {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+}
 /* ===== FAB ===== */
 .ci-fab {
   position: fixed;
@@ -1148,7 +1166,7 @@ watch(showDeleteDialog, (v) => {
   font-weight: 600;
   letter-spacing: 1px;
   border: none;
-  box-shadow: 0 6px 20px rgba(25, 137, 250, 0.45);
+  box-shadow: 0 6px 20px rgba(215, 25, 32, 0.35);
   transition:
     transform 0.2s,
     box-shadow 0.2s;
@@ -1156,7 +1174,23 @@ watch(showDeleteDialog, (v) => {
 
 .ci-fab:active {
   transform: scale(0.97);
-  box-shadow: 0 3px 10px rgba(25, 137, 250, 0.3);
+  box-shadow: 0 3px 10px rgba(215, 25, 32, 0.25);
+}
+
+/* ===== NavBar 红色变体下的幽灵「新增」按钮 ===== */
+.ci-nav-add {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  border-radius: 9999px !important;
+  height: 30px !important;
+  padding: 0 14px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+.ci-nav-add:active {
+  background: rgba(255, 255, 255, 0.28) !important;
 }
 
 /* ===== Search ===== */
@@ -1186,8 +1220,8 @@ watch(showDeleteDialog, (v) => {
 }
 
 .ci-date-chip--active {
-  color: #1989fa;
-  background: #ecf5ff;
+  color: #d71920;
+  background: #fcebec;
   font-weight: 600;
 }
 
@@ -1240,11 +1274,12 @@ watch(showDeleteDialog, (v) => {
 }
 
 /* ===== Card ===== */
-.ci-card {
+/* 外层卡片盒：皮肤开启时由 .picc-card 提供白卡 12px 圆角；关闭时退回本页自定义盒（保证可一键撤销） */
+:global(html:not(.picc-skin)) .ci-card {
   margin: 8px 12px;
   padding: 12px 16px;
   background: #fff;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -1287,8 +1322,12 @@ watch(showDeleteDialog, (v) => {
 }
 
 .ci-price {
-  color: #ee0a24;
   font-weight: 600;
+}
+
+/* 价格文字：皮肤开启时由 .picc-price 提供品牌红 + DIN 数字体；关闭时退回本页红色 */
+:global(html:not(.picc-skin)) .ci-price {
+  color: #d71920;
 }
 
 .ci-card-actions {
@@ -1308,7 +1347,7 @@ watch(showDeleteDialog, (v) => {
 
 /* ===== Upload ===== */
 .ci-upload-item {
-  padding: 12px 16px;
+  padding: 12px 0;
   border-bottom: 1px solid #f0f0f0;
 }
 
@@ -1325,7 +1364,7 @@ watch(showDeleteDialog, (v) => {
 
 /* ===== Slider ===== */
 .ci-slider-cell {
-  padding: 12px 16px;
+  padding: 12px 0;
   border-bottom: 1px solid #f0f0f0;
 }
 
@@ -1338,7 +1377,7 @@ watch(showDeleteDialog, (v) => {
 }
 
 .ci-slider-value {
-  color: #ee0a24;
+  color: #d71920;
   font-weight: 600;
 }
 
@@ -1347,7 +1386,7 @@ watch(showDeleteDialog, (v) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
+  padding: 10px 0;
   border-bottom: 1px solid #f0f0f0;
 }
 
@@ -1359,7 +1398,7 @@ watch(showDeleteDialog, (v) => {
 /* ===== Checkbox & Radio ===== */
 .ci-checkbox-cell,
 .ci-radio-cell {
-  padding: 12px 16px;
+  padding: 12px 0;
   border-bottom: 1px solid #f0f0f0;
 }
 
@@ -1387,7 +1426,7 @@ watch(showDeleteDialog, (v) => {
 
 .ci-submit-hint {
   text-align: center;
-  color: #ee0a24;
+  color: #d71920;
   font-size: 12px;
   margin-top: 6px;
 }

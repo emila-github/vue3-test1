@@ -14,12 +14,7 @@ const showPrice = ref(true)
 <template>
   <div class="picc-page">
     <!-- NavBar 红色渐变变体（首页风格） -->
-    <van-nav-bar
-      class="van-nav-bar--picc-primary"
-      title="PICC 车险投保"
-      left-text="返回"
-      left-arrow
-    />
+    <van-nav-bar class="van-nav-bar--picc-primary" title="PICC 车险投保" left-text="返回" left-arrow />
 
     <!-- 红色渐变头部 -->
     <div class="picc-header-gradient">
@@ -28,9 +23,7 @@ const showPrice = ref(true)
     </div>
 
     <!-- 暖色合规提示 -->
-    <div class="picc-notice-warm">
-      为保障您的权益，投保前请完成实名认证与条款确认。
-    </div>
+    <div class="picc-notice-warm">为保障您的权益，投保前请完成实名认证与条款确认。</div>
 
     <div class="picc-section-title">保费测算</div>
 
@@ -48,12 +41,7 @@ const showPrice = ref(true)
 
     <!-- 白卡：表单 -->
     <div class="picc-card">
-      <van-field
-        v-model="phone"
-        label="手机号"
-        placeholder="请输入投保手机号"
-        type="tel"
-      />
+      <van-field v-model="phone" label="手机号" placeholder="请输入投保手机号" type="tel" />
       <van-cell title="已阅读并同意《投保须知》" center>
         <template #right-icon>
           <van-switch v-model="agreed" />
@@ -63,17 +51,8 @@ const showPrice = ref(true)
 
     <!-- 主 CTA：PILL 全圆角 + 48px + 红色投影（皮肤默认生效） -->
     <div class="cta-wrap">
-      <van-button type="primary" block round @click="showPrice = !showPrice">
-        立即报价
-      </van-button>
-      <van-button
-        class="mt-btn"
-        plain
-        type="primary"
-        block
-        round
-        @click="toggle"
-      >
+      <van-button type="primary" block round @click="showPrice = !showPrice"> 立即报价 </van-button>
+      <van-button class="mt-btn" plain type="primary" block round @click="toggle">
         切换皮肤：{{ active ? '已开启 PICC' : '已关闭' }}
       </van-button>
     </div>
