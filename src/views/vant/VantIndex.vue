@@ -29,6 +29,14 @@ const stages = ref([
     icon: '💬',
     color: '#ee0a24',
   },
+  {
+    id: 4,
+    title: '综合实战：车险投保列表页',
+    desc: '列表展示+搜索筛选+新增编辑+图片上传，覆盖 Vant 4 全部表单控件',
+    path: '/vant/stage4',
+    icon: '🚗',
+    color: '#ff976a',
+  },
 ])
 
 function navigateTo(path: string) {
