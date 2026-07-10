@@ -69,13 +69,7 @@ function onAction(payload: { key: string; item: Renewal }) {
 }
 
 function statusColor(status: string) {
-  return status === '已续保'
-    ? '#18a058'
-    : status === '待跟进'
-      ? '#f59e0b'
-      : status === '已流失'
-        ? '#969799'
-        : '#1989fa'
+  return status === '已续保' ? '#18a058' : status === '待跟进' ? '#f59e0b' : status === '已流失' ? '#969799' : '#1989fa'
 }
 
 // ==================== 附件上传：先上传图片，回传预览地址，再随表单提交地址 ====================
@@ -104,6 +98,13 @@ async function uploadRenewalFile(file: File): Promise<Record<string, any>> {
     :api="api"
     title="保源信息维护"
     permission-prefix="car"
+    :row-permission="
+      (item) => ({
+        edit: item.status !== '已续保', // 已续保的不允许编辑
+        delete: item.editable !== false, // 标记为不可删的不显示删除
+        view: true, // 详情始终按角色权限
+      })
+    "
     :initial-query="initialQuery"
     :initial-form="initialForm"
     :enable-log="true"
@@ -127,12 +128,7 @@ async function uploadRenewalFile(file: File): Promise<Record<string, any>> {
 
       <van-cell-group inset class="f-group">
         <!-- 原生 van-field 文本 -->
-        <van-field
-          v-model="query.policyNo"
-          label="保单号"
-          placeholder="按保单号精确/模糊查询"
-          clearable
-        />
+        <van-field v-model="query.policyNo" label="保单号" placeholder="按保单号精确/模糊查询" clearable />
 
         <!-- VantSearchField：表单内可搜索下拉（承保公司） -->
         <VantSearchField
@@ -337,12 +333,7 @@ async function uploadRenewalFile(file: File): Promise<Record<string, any>> {
           title="选择标签"
           placeholder="选择业务标签"
         />
-        <VantCalendarField
-          v-model="form.expireDate"
-          label="到期日"
-          title="选择到期日"
-          placeholder="选择保单到期日"
-        />
+        <VantCalendarField v-model="form.expireDate" label="到期日" title="选择到期日" placeholder="选择保单到期日" />
         <van-field label="保费（元）">
           <template #input>
             <van-stepper v-model="form.premium" :min="0" :step="100" />
@@ -360,14 +351,7 @@ async function uploadRenewalFile(file: File): Promise<Record<string, any>> {
             <van-radio name="已续保">已续保</van-radio>
           </van-radio-group>
         </div>
-        <van-field
-          v-model="form.remark"
-          label="备注"
-          type="textarea"
-          rows="2"
-          autosize
-          placeholder="填写跟进备注"
-        />
+        <van-field v-model="form.remark" label="备注" type="textarea" rows="2" autosize placeholder="填写跟进备注" />
       </van-cell-group>
 
       <!-- VantUpload：附件上传（证件/凭证），先上传图片拿回预览地址，再随表单提交地址 -->

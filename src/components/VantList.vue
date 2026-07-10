@@ -15,6 +15,16 @@
  *   filters        — 筛选配置数组，统一进入「更多查询」面板
  *   actions        — 自定义扩展操作（ActionSheet 内），可带 perm 进行权限门禁
  *   initialQuery / pageSize / enableLog
+ *   rowPermission   — 行级自定义权限：在角色权限(v-permission)之上，再按 item 自身
+ *                     标记决定 详情/编辑/删除 是否可用。返回对象中**未指定的项**沿用角色
+ *                     权限结果；指定项与角色权限做「与」运算（两者皆通过才显示）。
+ *                     函数签名： (item) => ({ view?, edit?, delete? })
+ *                     例：仅当 item.status !== '已续保' 才允许编辑；标记为不可删时隐藏删除
+ *                       rowPermission = (item) => ({
+ *                         edit:   item.status !== '已续保',
+ *                         delete: item.editable !== false,
+ *                         view:   true,   // 不指定也可，缺省沿用角色权限
+ *                       })
  *
  * Slots:
  *   #item(item,index)  — 列表行内容（必填）
@@ -24,6 +34,16 @@
  *   #row-actions(item) — 行内额外操作按钮
  *
  * Events: create / edit(item) / detail(item) / action({key,item})
+ *
+ * 使用示例（行级权限）：
+ *   <VantList
+ *     :api="api"
+ *     permission-prefix="renewal"
+ *     :row-permission="(item) => ({
+ *       edit:   item.status !== '已续保',
+ *       delete: item.editable !== false,
+ *     })"
+ *   />
  */
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
@@ -77,6 +97,12 @@ const props = withDefaults(
     actions?: ListAction[]
     moreFilterTitle?: string
     finishedText?: string
+    /**
+     * 行级自定义权限：在 v-permission（角色权限）基础上，再根据 item 自身的标记
+     * 决定 详情/编辑/删除 是否可用。返回对象中未指定的项沿用角色权限结果。
+     * 例：(item) => ({ edit: item.status !== '已续保', delete: item.editable })
+     */
+    rowPermission?: (item: any) => { view?: boolean; edit?: boolean; delete?: boolean }
   }>(),
   {
     rowKey: 'id',
@@ -147,6 +173,15 @@ const {
 
 // ==================== 筛选配置 ====================
 const panelFilters = computed(() => props.filters)
+
+// 行级按钮权限：角色权限(v-permission) 与 item 自定义标记(rolePermission) 做「与」运算
+function rowCan(item: any, action: 'view' | 'edit' | 'delete'): boolean {
+  const base = hasPerm(permCodes.value[action])
+  const custom = props.rowPermission?.(item)
+  // 未提供自定义标记时，仅按角色权限决定
+  if (!custom || custom[action] === undefined) return base
+  return base && !!custom[action]
+}
 
 const showMoreFilter = ref(false)
 // 激活筛选计数：统计 query 中非保留字段的有效值（同时覆盖 config 筛选与 #filters 插槽字段）
@@ -360,16 +395,31 @@ function onBack() {
             <div class="vl-card-actions-right">
               <van-button
                 v-permission="permCodes.delete"
+                v-if="rowCan(item, 'delete')"
                 size="small"
                 icon="delete-o"
                 type="danger"
                 @click="confirmDelete(item)"
                 >删除</van-button
               >
-              <van-button v-permission="permCodes.view" size="small" icon="eye-o" type="default" @click="onDetail(item)"
+              <van-button
+                v-permission="permCodes.view"
+                v-if="rowCan(item, 'view')"
+                size="small"
+                icon="eye-o"
+                type="default"
+                @click="onDetail(item)"
                 >详情</van-button
               >
-              <van-button v-permission="permCodes.edit" size="small" icon="edit" @click="onEdit(item)">编辑</van-button>
+              <van-button
+                v-permission="permCodes.edit"
+                v-if="rowCan(item, 'edit')"
+                size="small"
+                icon="edit"
+                color="#18a058"
+                @click="onEdit(item)"
+                >编辑</van-button
+              >
               <slot name="row-actions" :item="item" />
             </div>
           </div>
