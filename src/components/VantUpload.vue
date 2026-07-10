@@ -30,6 +30,8 @@ export type IdCardVariant = 'front' | 'back'
 
 interface UploadItem {
   url?: string
+  /** 实际保存/回显给表单的值（由 resultField 决定，默认与 url 相同） */
+  value?: string
   name?: string
   status?: 'uploading' | 'done' | 'failed'
   message?: string
@@ -46,7 +48,9 @@ const props = withDefaults(
     maxCount?: number
     maxSize?: number
     accept?: string
-    upload?: (file: File) => Promise<{ url: string }>
+    upload?: (file: File) => Promise<Record<string, any>>
+    /** 上传成功后回写到表单的字段（默认 'url'，可配 'base64' / 'fileName' 等返回结果中的任意键） */
+    resultField?: string
     disabled?: boolean
     readonly?: boolean
     required?: boolean
@@ -61,6 +65,7 @@ const props = withDefaults(
     maxSize: 0,
     accept: '',
     upload: undefined,
+    resultField: 'url',
     disabled: false,
     readonly: false,
     required: false,
@@ -99,26 +104,26 @@ function nameFromUrl(url: string): string {
 }
 function toItems(val: string | string[]): UploadItem[] {
   const arr = Array.isArray(val) ? val : val ? [val] : []
-  return arr.map((url) => ({ url, name: nameFromUrl(url), status: 'done' }))
+  return arr.map((url) => ({ url, value: url, name: nameFromUrl(url), status: 'done' }))
 }
 watch(
   () => props.modelValue,
   (val) => {
     const arr = Array.isArray(val) ? val : val ? [val] : []
-    const cur = fileList.value.map((i) => i.url).filter(Boolean) as string[]
+    const cur = fileList.value.map((i) => i.value).filter(Boolean) as string[]
     if (JSON.stringify(cur) !== JSON.stringify(arr)) fileList.value = toItems(val)
   },
   { immediate: true },
 )
 
 function syncModel() {
-  const items = fileList.value.filter((i) => i.url)
-  const urls = items.map((i) => i.url as string)
+  const items = fileList.value.filter((i) => i.value)
+  const urls = items.map((i) => i.value as string)
   if (props.multiple) emit('update:modelValue', urls)
   else emit('update:modelValue', urls[0] ?? '')
   const first = items[0] ?? null
   emit('change', urls[0] ?? '', first)
-  if (first?.url) emit('success', first.url, first)
+  if (first?.value) emit('success', first.value, first)
 }
 
 // ===== 校验 =====
@@ -135,6 +140,19 @@ function beforeRead(file: File): boolean {
   return true
 }
 
+// 由上传结果推导「预览地址」与「回写表单的值」
+function applyUploadResult(it: UploadItem, result: Record<string, any> | null, file: File) {
+  const preview =
+    result?.url ||
+    (typeof result?.base64 === 'string' && result.base64.startsWith('data:') ? result.base64 : '') ||
+    URL.createObjectURL(file)
+  it.url = preview
+  // 保存字段：默认 url，可配置为 base64 / fileName 等返回结果中的任意键
+  it.value = (result && (result[props.resultField] ?? result.url)) || preview
+  it.status = 'done'
+  it.message = ''
+}
+
 // ===== 图片类（van-uploader）=====
 function afterRead(item: any) {
   const items: UploadItem[] = Array.isArray(item) ? item : [item]
@@ -142,10 +160,8 @@ function afterRead(item: any) {
     it.status = 'uploading'
     it.message = '上传中...'
     try {
-      const url = props.upload ? (await props.upload(it.file as File)).url : URL.createObjectURL(it.file as File)
-      it.url = url
-      it.status = 'done'
-      it.message = ''
+      const result = props.upload ? await props.upload(it.file as File) : null
+      applyUploadResult(it, result, it.file as File)
     } catch {
       it.status = 'failed'
       it.message = '上传失败'
@@ -177,10 +193,8 @@ function onFileChange(e: Event) {
 }
 async function uploadItem(it: UploadItem) {
   try {
-    const url = props.upload ? (await props.upload(it.file as File)).url : URL.createObjectURL(it.file as File)
-    it.url = url
-    it.status = 'done'
-    it.message = ''
+    const result = props.upload ? await props.upload(it.file as File) : null
+    applyUploadResult(it, result, it.file as File)
   } catch {
     it.status = 'failed'
     it.message = '上传失败'

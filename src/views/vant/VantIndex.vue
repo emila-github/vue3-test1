@@ -125,6 +125,14 @@ const stages = ref([
     icon: '🖼️',
     color: '#1989fa',
   },
+  {
+    id: 'list',
+    title: '通用列表控件 VantList',
+    desc: '下拉筛选/查询/更多查询 + 增删改 + 自定义扩展操作 + 权限门禁，复用 useCrudList',
+    path: '/vant/vant-list-demo',
+    icon: '📑',
+    color: '#07c160',
+  },
 ])
 
 function navigateTo(path: string) {

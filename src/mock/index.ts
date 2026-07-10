@@ -19,6 +19,7 @@ import permissionRoutes from './permission'
 import axiosRoutes from './axios'
 import uploadRoutes from './upload'
 import carInsuranceRoutes from './car-insurance'
+import renewalRoutes from './renewal'
 
 // ===== 上传文件目录（相对于项目根目录） =====
 const UPLOAD_DIR = path.resolve('src/assets/upload')
@@ -41,6 +42,7 @@ const allRoutes: MockRoute[] = [
   ...axiosRoutes,
   ...uploadRoutes,
   ...carInsuranceRoutes,
+  ...renewalRoutes,
 ]
 
 // ===== 匹配并返回响应 =====

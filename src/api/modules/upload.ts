@@ -10,6 +10,8 @@ export interface UploadParams {
 export interface UploadResult {
   url: string
   fileName: string
+  /** 原始 base64（上传时回传，便于按需选择保存 base64 而非 url） */
+  base64: string
 }
 
 export interface ExcelParseResult {

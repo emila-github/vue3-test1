@@ -182,11 +182,25 @@ export function useCrudList<T extends { id: number }, F, Q extends Record<string
     }
   }
 
-  // ==================== 列表加载 ====================
-  async function fetchList(reset = false) {
-    try {
-      const params = { ...query, page: page.value, pageSize } as Q & PageParams
-      const result = await options.api.list(params)
+// ==================== 工具：过滤空值属性 ====================
+/** 过滤掉空值（'' / null / undefined / 空数组），保留 0 / false 等有效值；page/pageSize 恒保留 */
+function omitEmptyParams<T extends Record<string, any>>(params: T): Partial<T> {
+  const result: Record<string, any> = {}
+  for (const [k, v] of Object.entries(params)) {
+    if (v === '' || v === null || v === undefined) continue
+    if (Array.isArray(v) && v.length === 0) continue
+    result[k] = v
+  }
+  return result as Partial<T>
+}
+
+// ==================== 列表加载 ====================
+async function fetchList(reset = false) {
+  try {
+    const params = { ...query, page: page.value, pageSize } as Q & PageParams
+    // 查询时过滤空值属性再发送后端
+    const cleaned = omitEmptyParams(params) as Q & PageParams
+    const result = await options.api.list(cleaned)
       if (reset) {
         list.value = result.list as T[]
       } else {

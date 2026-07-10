@@ -82,7 +82,7 @@ const routes: MockRoute[] = [
       fs.writeFileSync(filePath, buffer)
       const fileUrl = `/upload/${filename}`
       console.log('[mock] 文件已保存:', filePath)
-      return { code: 200, data: { url: fileUrl, fileName: body.fileName }, message: '上传成功' }
+      return { code: 200, data: { url: fileUrl, fileName: body.fileName, base64: body.base64 }, message: '上传成功' }
     },
   },
 
@@ -100,7 +100,7 @@ const routes: MockRoute[] = [
       fs.writeFileSync(filePath, buffer)
       const fileUrl = `/upload/${filename}`
       console.log('[mock] 图片已保存:', filePath)
-      return { code: 200, data: { url: fileUrl, fileName: body.fileName }, message: '上传成功' }
+      return { code: 200, data: { url: fileUrl, fileName: body.fileName, base64: body.base64 }, message: '上传成功' }
     },
   },
 
@@ -118,7 +118,7 @@ const routes: MockRoute[] = [
       fs.writeFileSync(filePath, buffer)
       const fileUrl = `/upload/${filename}`
       console.log('[mock] 身份证已保存:', filePath)
-      return { code: 200, data: { url: fileUrl, fileName: body.fileName }, message: '上传成功' }
+      return { code: 200, data: { url: fileUrl, fileName: body.fileName, base64: body.base64 }, message: '上传成功' }
     },
   },
 
@@ -136,7 +136,7 @@ const routes: MockRoute[] = [
       fs.writeFileSync(filePath, buffer)
       const fileUrl = `/upload/${filename}`
       console.log('[mock] Excel 已保存:', filePath)
-      return { code: 200, data: { url: fileUrl, fileName: body.fileName }, message: '上传成功' }
+      return { code: 200, data: { url: fileUrl, fileName: body.fileName, base64: body.base64 }, message: '上传成功' }
     },
   },
 

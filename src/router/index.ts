@@ -617,6 +617,11 @@ const router = createRouter({
       name: 'vant-upload-field-demo',
       component: () => import('../views/vant/VantUploadDemo.vue'),
     },
+    {
+      path: '/vant/vant-list-demo',
+      name: 'vant-list-demo',
+      component: () => import('../views/vant/VantListDemo.vue'),
+    },
     // ====== Nuxt 3 / SSR 学习 ======
     {
       path: '/nuxt',
