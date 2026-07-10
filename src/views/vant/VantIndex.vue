@@ -61,6 +61,22 @@ const stages = ref([
     icon: '🔽',
     color: '#07c160',
   },
+  {
+    id: 'select-multiple',
+    title: '通用下拉多选组件 VantSelectMultiple',
+    desc: '基于 Checkbox 列表的多选下拉，数据格式可配置，支持最多可选数量限制',
+    path: '/vant/vant-select-multiple-demo',
+    icon: '☑️',
+    color: '#ff976a',
+  },
+  {
+    id: 'time-picker',
+    title: '通用下拉时间选择组件 VantTimePicker',
+    desc: '基于 DatetimePicker 的时间/日期选择，支持 time/date/datetime/year-month 与范围限制',
+    path: '/vant/vant-time-picker-demo',
+    icon: '⏰',
+    color: '#ee0a24',
+  },
 ])
 
 function navigateTo(path: string) {
