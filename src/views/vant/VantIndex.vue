@@ -53,6 +53,14 @@ const stages = ref([
     icon: '🎨',
     color: '#d71920',
   },
+  {
+    id: 'select',
+    title: '通用下拉单选组件 VantSelect',
+    desc: '可配置数据格式（字符串/对象/自定义字段/format），演示清空、禁用、只读、必填等用法',
+    path: '/vant/vant-select-demo',
+    icon: '🔽',
+    color: '#07c160',
+  },
 ])
 
 function navigateTo(path: string) {

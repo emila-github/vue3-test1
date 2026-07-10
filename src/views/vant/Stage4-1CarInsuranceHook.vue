@@ -23,6 +23,7 @@ import {
 } from '@/api/modules/car-insurance'
 import type { CarInsurance, CarInsuranceForm, CarInsuranceQuery } from '@/api/modules/car-insurance'
 import { useCrudList } from '@/composables/useCrudList'
+import VantSelect from '@/components/VantSelect.vue'
 
 // ==================== 通用 CRUD Hook ====================
 // 查询初始条件（含自定义筛选），统一走 hook.query
@@ -149,7 +150,6 @@ const priceRangeOptions = [
 
 // Picker 弹出控制（车险特有，保留本地）
 const insuranceTypeVisible = ref(false)
-const carBrandVisible = ref(false)
 const insuranceStartVisible = ref(false)
 const insuranceEndVisible = ref(false)
 const coverageAreaVisible = ref(false)
@@ -234,10 +234,6 @@ function onPreviewImage(fileOrEvent: any) {
 function onPickType(values: any) {
   form.insuranceType = values.selectedOptions[0].value
   insuranceTypeVisible.value = false
-}
-function onPickBrand(values: any) {
-  form.carBrand = values.selectedOptions[0].value
-  carBrandVisible.value = false
 }
 function confirmDatePicker(type: 'start' | 'end', val: { selectedValues: string[] }) {
   const [y, m, d] = val.selectedValues
@@ -599,14 +595,14 @@ watch(showDeleteDialog, (v) => {
             clearable
             left-icon="guide-o"
           />
-          <van-field
+          <VantSelect
             v-model="form.carBrand"
-            is-link
-            readonly
+            :options="carBrandOptions"
             label="车辆品牌"
+            title="选择品牌"
             placeholder="请选择品牌"
             left-icon="label-o"
-            @click="carBrandVisible = true"
+            clearable
           />
           <van-field v-model="form.carModel" label="车型" placeholder="如 X5、C260L" left-icon="smile-o" />
           <van-field label="车龄（年）" left-icon="clock-o">
@@ -907,14 +903,7 @@ watch(showDeleteDialog, (v) => {
         title="选择险种"
       />
     </van-popup>
-    <van-popup v-model:show="carBrandVisible" position="bottom" round>
-      <van-picker
-        :columns="carBrandOptions"
-        @confirm="onPickBrand"
-        @cancel="carBrandVisible = false"
-        title="选择品牌"
-      />
-    </van-popup>
+
     <van-popup v-model:show="insuranceStartVisible" position="bottom" round>
       <van-date-picker
         title="选择保险起期"

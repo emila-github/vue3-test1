@@ -572,6 +572,11 @@ const router = createRouter({
       name: 'vant-stage4-1',
       component: () => import('../views/vant/Stage4-1CarInsuranceHook.vue'),
     },
+    {
+      path: '/vant/vant-select-demo',
+      name: 'vant-select-demo',
+      component: () => import('../views/vant/VantSelectDemo.vue'),
+    },
     // ====== Nuxt 3 / SSR 学习 ======
     {
       path: '/nuxt',
