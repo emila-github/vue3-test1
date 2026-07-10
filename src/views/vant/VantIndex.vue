@@ -38,6 +38,14 @@ const stages = ref([
     color: '#ff976a',
   },
   {
+    id: '4-1',
+    title: '车险投保列表页（Hook 版）',
+    desc: '基于 useCrudList 通用 Hook 重写，增删改查/权限/日志逻辑复用，快速搭列表页',
+    path: '/vant/stage4-1',
+    icon: '🧩',
+    color: '#1989fa',
+  },
+  {
     id: 5,
     title: 'PICC 品牌皮肤演示',
     desc: 'PILL 主按钮、NavBar 红色变体、页面级辅助类的完整套用示例，可一键开关',
