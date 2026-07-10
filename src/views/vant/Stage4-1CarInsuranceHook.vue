@@ -99,6 +99,9 @@ const {
     coverageArea: '',
     agreeTerms: false,
     notes: '',
+    extraInsurance: [],
+    accidentRecord: '0',
+    carConditionRate: 4,
   },
   initialQuery,
   permissionPrefix: 'car',
@@ -153,10 +156,6 @@ const coverageAreaVisible = ref(false)
 const imagePreviewVisible = ref(false)
 const previewImages = ref<string[]>([])
 const previewIndex = ref(0)
-
-const extraInsurance = ref<string[]>([])
-const accidentRecord = ref('0')
-const carConditionRate = ref(4)
 
 // 更多筛选：日期区间
 const filterStartFrom = computed({
@@ -718,7 +717,7 @@ watch(showDeleteDialog, (v) => {
 
           <div class="ci-rate-cell">
             <span class="ci-rate-label">车况评分</span>
-            <van-rate v-model="carConditionRate" :size="20" void-color="#eee" void-icon="star" />
+            <van-rate v-model="form.carConditionRate" :size="20" void-color="#eee" void-icon="star" />
           </div>
 
           <van-field
@@ -789,7 +788,7 @@ watch(showDeleteDialog, (v) => {
           </van-cell>
           <div class="ci-checkbox-cell">
             <span class="ci-checkbox-label">附加险种</span>
-            <van-checkbox-group v-model="extraInsurance" direction="horizontal">
+            <van-checkbox-group v-model="form.extraInsurance" direction="horizontal">
               <van-checkbox name="glass" shape="square">玻璃险</van-checkbox>
               <van-checkbox name="scratch" shape="square">划痕险</van-checkbox>
               <van-checkbox name="water" shape="square">涉水险</van-checkbox>
@@ -798,7 +797,7 @@ watch(showDeleteDialog, (v) => {
           </div>
           <div class="ci-radio-cell">
             <span class="ci-radio-label">上年出险记录</span>
-            <van-radio-group v-model="accidentRecord" direction="horizontal">
+            <van-radio-group v-model="form.accidentRecord" direction="horizontal">
               <van-radio name="0">无出险</van-radio>
               <van-radio name="1">1次</van-radio>
               <van-radio name="2">2次及以上</van-radio>

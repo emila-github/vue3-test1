@@ -97,6 +97,9 @@ const form = reactive<CarInsuranceForm>({
   coverageArea: '',
   agreeTerms: false,
   notes: '',
+  extraInsurance: [],
+  accidentRecord: '0',
+  carConditionRate: 4,
 })
 
 // ==================== Picker 选项 ====================
@@ -142,11 +145,6 @@ const coverageAreaVisible = ref(false)
 const imagePreviewVisible = ref(false)
 const previewImages = ref<string[]>([])
 const previewIndex = ref(0)
-
-// 附加险种、出险记录、车况评分（用于展示 Radio/Checkbox/Rate）
-const extraInsurance = ref<string[]>([])
-const accidentRecord = ref('0')
-const carConditionRate = ref(4)
 
 // ==================== 图片上传 ====================
 const uploadLoading = reactive({
@@ -389,6 +387,9 @@ function openEdit(item: CarInsurance) {
   form.coverageArea = item.coverageArea
   form.agreeTerms = item.agreeTerms
   form.notes = item.notes
+  form.extraInsurance = item.extraInsurance || []
+  form.accidentRecord = item.accidentRecord || '0'
+  form.carConditionRate = item.carConditionRate ?? 4
   formPopupVisible.value = true
 }
 
@@ -412,6 +413,9 @@ function resetForm() {
   form.coverageArea = ''
   form.agreeTerms = false
   form.notes = ''
+  form.extraInsurance = []
+  form.accidentRecord = '0'
+  form.carConditionRate = 4
 }
 
 function closeFormPopup() {
@@ -874,7 +878,7 @@ watch(showDeleteDialog, (v) => {
           <!-- Rate 车况评分 -->
           <div class="ci-rate-cell">
             <span class="ci-rate-label">车况评分</span>
-            <van-rate v-model="carConditionRate" :size="20" void-color="#eee" void-icon="star" />
+            <van-rate v-model="form.carConditionRate" :size="20" void-color="#eee" void-icon="star" />
           </div>
 
           <!-- 投保区域 -->
@@ -899,7 +903,7 @@ watch(showDeleteDialog, (v) => {
                 :max-count="1"
                 accept="image/*"
                 :before-read="() => true"
-                :after-read="(f) => onUploadFile('front', f)"
+                :after-read="(f: any) => onUploadFile('front', f)"
                 :preview-full-image="false"
                 @delete="deleteImage('front')"
                 @click-preview="onPreviewImage"
@@ -914,7 +918,7 @@ watch(showDeleteDialog, (v) => {
                 :max-count="1"
                 accept="image/*"
                 :before-read="() => true"
-                :after-read="(f) => onUploadFile('back', f)"
+                :after-read="(f: any) => onUploadFile('back', f)"
                 :preview-full-image="false"
                 @delete="deleteImage('back')"
                 @click-preview="onPreviewImage"
@@ -929,7 +933,7 @@ watch(showDeleteDialog, (v) => {
                 :max-count="1"
                 accept="image/*"
                 :before-read="() => true"
-                :after-read="(f) => onUploadFile('car', f)"
+                :after-read="(f: any) => onUploadFile('car', f)"
                 :preview-full-image="false"
                 @delete="deleteImage('car')"
                 @click-preview="onPreviewImage"
@@ -951,7 +955,7 @@ watch(showDeleteDialog, (v) => {
           <!-- Checkbox 附加险种 -->
           <div class="ci-checkbox-cell">
             <span class="ci-checkbox-label">附加险种</span>
-            <van-checkbox-group v-model="extraInsurance" direction="horizontal">
+            <van-checkbox-group v-model="form.extraInsurance" direction="horizontal">
               <van-checkbox name="glass" shape="square">玻璃险</van-checkbox>
               <van-checkbox name="scratch" shape="square">划痕险</van-checkbox>
               <van-checkbox name="water" shape="square">涉水险</van-checkbox>
@@ -962,7 +966,7 @@ watch(showDeleteDialog, (v) => {
           <!-- Radio 出险记录 -->
           <div class="ci-radio-cell">
             <span class="ci-radio-label">上年出险记录</span>
-            <van-radio-group v-model="accidentRecord" direction="horizontal">
+            <van-radio-group v-model="form.accidentRecord" direction="horizontal">
               <van-radio name="0">无出险</van-radio>
               <van-radio name="1">1次</van-radio>
               <van-radio name="2">2次及以上</van-radio>
@@ -1094,7 +1098,7 @@ watch(showDeleteDialog, (v) => {
       <van-date-picker
         title="选择保险起期"
         :min-date="new Date()"
-        @confirm="(v) => onPickDate('start', v)"
+        @confirm="(v: any) => onPickDate('start', v)"
         @cancel="insuranceStartVisible = false"
       />
     </van-popup>
@@ -1104,7 +1108,7 @@ watch(showDeleteDialog, (v) => {
       <van-date-picker
         title="选择保险止期"
         :min-date="new Date()"
-        @confirm="(v) => onPickDate('end', v)"
+        @confirm="(v: any) => onPickDate('end', v)"
         @cancel="insuranceEndVisible = false"
       />
     </van-popup>

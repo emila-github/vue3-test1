@@ -27,6 +27,9 @@ export interface CarInsurance {
   coverageArea: string
   agreeTerms: boolean
   notes: string
+  extraInsurance: string[]
+  accidentRecord: string
+  carConditionRate: number
   createTime: string
   updateTime: string
 }
@@ -68,6 +71,9 @@ export interface CarInsuranceForm {
   coverageArea: string
   agreeTerms: boolean
   notes: string
+  extraInsurance: string[]
+  accidentRecord: string
+  carConditionRate: number
 }
 
 export interface UploadImageResult {
