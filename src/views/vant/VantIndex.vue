@@ -117,6 +117,14 @@ const stages = ref([
     icon: '📋',
     color: '#00a078',
   },
+  {
+    id: 'upload',
+    title: '通用文件上传组件 VantUpload',
+    desc: '头像/身份证正反面/图片上传 + 证件上传自定义 UI，支持自定义上传函数与大小校验',
+    path: '/vant/vant-upload-field-demo',
+    icon: '🖼️',
+    color: '#1989fa',
+  },
 ])
 
 function navigateTo(path: string) {

@@ -612,6 +612,11 @@ const router = createRouter({
       name: 'vant-search-field-demo',
       component: () => import('../views/vant/VantSearchFieldDemo.vue'),
     },
+    {
+      path: '/vant/vant-upload-field-demo',
+      name: 'vant-upload-field-demo',
+      component: () => import('../views/vant/VantUploadDemo.vue'),
+    },
     // ====== Nuxt 3 / SSR 学习 ======
     {
       path: '/nuxt',

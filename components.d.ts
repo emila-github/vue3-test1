@@ -129,6 +129,7 @@ declare module 'vue' {
     VanImage: typeof import('vant/es')['Image']
     VanImagePreview: typeof import('vant/es')['ImagePreview']
     VanList: typeof import('vant/es')['List']
+    VanLoading: typeof import('vant/es')['Loading']
     VanNavBar: typeof import('vant/es')['NavBar']
     VanNoticeBar: typeof import('vant/es')['NoticeBar']
     VanPicker: typeof import('vant/es')['Picker']
@@ -159,6 +160,7 @@ declare module 'vue' {
     VantTimePickerField: typeof import('./src/components/VantTimePickerField.vue')['default']
     VantTreeSelectField: typeof import('./src/components/VantTreeSelectField.vue')['default']
     VantTreeTagsField: typeof import('./src/components/VantTreeTagsField.vue')['default']
+    VantUpload: typeof import('./src/components/VantUpload.vue')['default']
     VanUploader: typeof import('vant/es')['Uploader']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
@@ -283,6 +285,7 @@ declare global {
   const VanImage: typeof import('vant/es')['Image']
   const VanImagePreview: typeof import('vant/es')['ImagePreview']
   const VanList: typeof import('vant/es')['List']
+  const VanLoading: typeof import('vant/es')['Loading']
   const VanNavBar: typeof import('vant/es')['NavBar']
   const VanNoticeBar: typeof import('vant/es')['NoticeBar']
   const VanPicker: typeof import('vant/es')['Picker']
@@ -313,6 +316,7 @@ declare global {
   const VantTimePickerField: typeof import('./src/components/VantTimePickerField.vue')['default']
   const VantTreeSelectField: typeof import('./src/components/VantTreeSelectField.vue')['default']
   const VantTreeTagsField: typeof import('./src/components/VantTreeTagsField.vue')['default']
+  const VantUpload: typeof import('./src/components/VantUpload.vue')['default']
   const VanUploader: typeof import('vant/es')['Uploader']
   const WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
 }
