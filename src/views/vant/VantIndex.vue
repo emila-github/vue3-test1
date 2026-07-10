@@ -93,6 +93,14 @@ const stages = ref([
     icon: '🏷️',
     color: '#7232dd',
   },
+  {
+    id: 'calendar',
+    title: '通用下拉日历组件 VantCalendar',
+    desc: '基于 van-calendar 的单选/区间/多选日期，支持范围限制、默认定位、快速选择与清空',
+    path: '/vant/vant-calendar-demo',
+    icon: '📅',
+    color: '#1989fa',
+  },
 ])
 
 function navigateTo(path: string) {

@@ -597,6 +597,11 @@ const router = createRouter({
       name: 'vant-tree-tags-demo',
       component: () => import('../views/vant/VantTreeTagsDemo.vue'),
     },
+    {
+      path: '/vant/vant-calendar-demo',
+      name: 'vant-calendar-demo',
+      component: () => import('../views/vant/VantCalendarDemo.vue'),
+    },
     // ====== Nuxt 3 / SSR 学习 ======
     {
       path: '/nuxt',
