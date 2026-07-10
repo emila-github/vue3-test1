@@ -126,10 +126,10 @@ html.picc-skin {
 /* --- Button：v2.0 主 CTA 改为 PILL 全圆角 + 48px 高 --- */
 html.picc-skin {
   /* 核心：全圆角药丸形按钮（参考官方 APP 所有主操作按钮） */
-  --van-button-radius: 9999px;
+  /* --van-button-radius: 9999px;
   --van-button-round-radius: 9999px;
   --van-button-height: 48px;
-  --van-button-line-height: 46px;
+  --van-button-line-height: 46px; */
 
   /* 主按钮：品牌红实心 */
   --van-button-primary-background: #d71920;
@@ -336,7 +336,7 @@ html.picc-skin .van-tag--default {
 html.picc-skin .van-tag--primary.van-tag--plain,
 html.picc-skin .van-tag--danger.van-tag--plain {
   background: #fcebec; /* 品牌红浅 */
-  color: #d71920;      /* 品牌红字（禁止白字） */
+  color: #d71920; /* 品牌红字（禁止白字） */
   border-color: #d71920;
 }
 html.picc-skin .van-tag--success.van-tag--plain {
@@ -444,12 +444,21 @@ html.picc-skin {
   --van-empty-description-color: #8a8a8a;
 }
 
-/* Toast 元素同时带 van-popup 类，会被上方 Popup 的白色背景变量覆盖底色，
-   导致「白底 + 白字」看不见。这里用更高优先级强制保留「深灰底 + 白字」。 */
-html.picc-skin .van-toast {
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
+/* Toast 元素同时带 van-popup 类，会被 Vant 自身的 .van-popup 白色背景规则（按 CSS 加载顺序）
+   覆盖底色，导致「白底 + 白字」看不见——皮肤开启或关闭都可能出现。
+   因此做成全局 + !important，强制保留「深灰底 + 白字」，无论皮肤开关状态都清晰可见。 */
+.van-toast {
+  background: rgba(0, 0, 0, 0.7) !important;
+  color: #fff !important;
 }
+
+/* Notify 同样基于 Popup 渲染，元素同时带 van-popup 类，其彩色底会被 .van-popup 的白色
+   背景规则（按 CSS 加载顺序）覆盖成白底。用 .van-notify.van-notify--xxx（0,2,0）提升优先级，
+   强制按类型使用对应彩色底；变量在皮肤开启时取 PICC 色、关闭时取 Vant 默认色，两者都生效。 */
+.van-notify.van-notify--primary { background: var(--van-notify-primary-background, #d71920); }
+.van-notify.van-notify--success { background: var(--van-notify-success-background, #18a058); }
+.van-notify.van-notify--danger  { background: var(--van-notify-danger-background, #d71920); }
+.van-notify.van-notify--warning { background: var(--van-notify-warning-background, #f59e0b); }
 
 /* --- Loading / Spinner --- */
 html.picc-skin {
@@ -523,7 +532,9 @@ html.picc-skin {
 /* --- 主 CTA 按钮增强阴影（参考截图中按钮的立体感） --- */
 html.picc-skin .van-button--primary:not(.van-button--disabled):not(.van-button--small):not(.van-button--mini) {
   box-shadow: 0 4px 14px rgba(215, 25, 32, 0.35);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
   font-weight: 500;
 }
 html.picc-skin .van-button--primary:not(.van-button--disabled):not(.van-button--small):not(.van-button--mini):active {
@@ -532,7 +543,7 @@ html.picc-skin .van-button--primary:not(.van-button--disabled):not(.van-button--
 }
 
 /* --- 描边次级按钮（outline style，参考「新投保车辆 点击算费」） --- */
-html.picc-skin .van-button--default:not(.van-button--plain):not([class*="ghost"]) {
+html.picc-skin .van-button--default:not(.van-button--plain):not([class*='ghost']) {
   border-width: 1.5px;
 }
 

@@ -5,7 +5,6 @@ import 'element-plus/dist/index.css'
 import 'vant/lib/index.css'
 import './styles/vant-picc.css'
 
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
