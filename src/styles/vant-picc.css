@@ -160,11 +160,18 @@ html.picc-skin {
   --van-button-mini-padding: 0 10px;
   --van-button-small-height: 32px;
 }
-/* 主按钮按下态加深 */
-html.picc-skin .van-button--primary:active,
-html.picc-skin .van-button--danger:active {
+/* 主按钮按下态加深（仅实色按钮，排除 plain 描边按钮） */
+html.picc-skin .van-button--primary:not(.van-button--plain):active,
+html.picc-skin .van-button--danger:not(.van-button--plain):active {
   background-color: #a91218 !important;
   border-color: #a91218 !important;
+}
+/* 描边(plain)按钮按下态：浅红底 + 品牌红字（红字保持清晰可读，避免红底红字） */
+html.picc-skin .van-button--primary.van-button--plain:active,
+html.picc-skin .van-button--danger.van-button--plain:active {
+  background-color: #fcebec !important;
+  border-color: #d71920 !important;
+  color: #d71920 !important;
 }
 /* 主按钮禁用态：浅红底 + 红字（保证可见） */
 html.picc-skin .van-button--primary.van-button--disabled,
