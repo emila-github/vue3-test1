@@ -112,6 +112,7 @@ declare module 'vue' {
     VanActionSheet: typeof import('vant/es')['ActionSheet']
     VanBadge: typeof import('vant/es')['Badge']
     VanButton: typeof import('vant/es')['Button']
+    VanCascader: typeof import('vant/es')['Cascader']
     VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanCheckbox: typeof import('vant/es')['Checkbox']
@@ -151,6 +152,7 @@ declare module 'vue' {
     VantSelect: typeof import('./src/components/VantSelect.vue')['default']
     VantSelectMultiple: typeof import('./src/components/VantSelectMultiple.vue')['default']
     VantTimePicker: typeof import('./src/components/VantTimePicker.vue')['default']
+    VantTreeSelect: typeof import('./src/components/VantTreeSelect.vue')['default']
     VanUploader: typeof import('vant/es')['Uploader']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
@@ -258,6 +260,7 @@ declare global {
   const VanActionSheet: typeof import('vant/es')['ActionSheet']
   const VanBadge: typeof import('vant/es')['Badge']
   const VanButton: typeof import('vant/es')['Button']
+  const VanCascader: typeof import('vant/es')['Cascader']
   const VanCell: typeof import('vant/es')['Cell']
   const VanCellGroup: typeof import('vant/es')['CellGroup']
   const VanCheckbox: typeof import('vant/es')['Checkbox']
@@ -297,6 +300,7 @@ declare global {
   const VantSelect: typeof import('./src/components/VantSelect.vue')['default']
   const VantSelectMultiple: typeof import('./src/components/VantSelectMultiple.vue')['default']
   const VantTimePicker: typeof import('./src/components/VantTimePicker.vue')['default']
+  const VantTreeSelect: typeof import('./src/components/VantTreeSelect.vue')['default']
   const VanUploader: typeof import('vant/es')['Uploader']
   const WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
 }

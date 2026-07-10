@@ -587,6 +587,11 @@ const router = createRouter({
       name: 'vant-time-picker-demo',
       component: () => import('../views/vant/VantTimePickerDemo.vue'),
     },
+    {
+      path: '/vant/vant-tree-select-demo',
+      name: 'vant-tree-select-demo',
+      component: () => import('../views/vant/VantTreeSelectDemo.vue'),
+    },
     // ====== Nuxt 3 / SSR 学习 ======
     {
       path: '/nuxt',

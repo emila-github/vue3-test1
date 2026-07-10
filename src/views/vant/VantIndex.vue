@@ -77,6 +77,14 @@ const stages = ref([
     icon: '⏰',
     color: '#ee0a24',
   },
+  {
+    id: 'tree-select',
+    title: '通用下拉树型选择组件 VantTreeSelect',
+    desc: '基于 Cascader 的树型级联选择，数据字段可配置，选中叶子回显完整路径',
+    path: '/vant/vant-tree-select-demo',
+    icon: '🌳',
+    color: '#1989fa',
+  },
 ])
 
 function navigateTo(path: string) {
