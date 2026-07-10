@@ -294,7 +294,11 @@ function onBack() {
           <span class="vl-filter-label">{{ f.label }}</span>
 
           <!-- radio 单选 -->
-          <van-radio-group v-if="f.type === 'radio'" v-model="(query as Record<string, any>)[f.key]" direction="horizontal">
+          <van-radio-group
+            v-if="f.type === 'radio'"
+            v-model="(query as Record<string, any>)[f.key]"
+            direction="horizontal"
+          >
             <van-radio v-for="opt in f.options" :key="opt.value" :name="opt.value" icon-size="14px">
               {{ opt.text }}
             </van-radio>
@@ -340,43 +344,34 @@ function onBack() {
           <slot name="item" :item="item" :index="index" />
 
           <div class="vl-card-actions">
-            <van-button
-              v-permission="permCodes.view"
-              size="small"
-              icon="eye-o"
-              plain
-              type="primary"
-              @click="onDetail(item)"
-              >详情</van-button
-            >
-            <van-button
-              v-permission="permCodes.edit"
-              size="small"
-              icon="edit"
-              plain
-              type="primary"
-              @click="onEdit(item)"
-              >编辑</van-button
-            >
-            <van-button
-              v-permission="permCodes.delete"
-              size="small"
-              icon="delete-o"
-              plain
-              type="danger"
-              @click="confirmDelete(item)"
-              >删除</van-button
-            >
-            <slot name="row-actions" :item="item" />
-            <van-button
-              v-if="showMore"
-              size="small"
-              icon="ellipsis"
-              plain
-              type="default"
-              @click="openActionSheet(item)"
-              >更多</van-button
-            >
+            <!-- 左侧：更多 -->
+            <div class="vl-card-actions-left">
+              <van-button
+                v-if="showMore"
+                size="small"
+                icon="ellipsis"
+                plain
+                type="default"
+                @click="openActionSheet(item)"
+                >更多</van-button
+              >
+            </div>
+            <!-- 右侧：删除 详情 编辑 -->
+            <div class="vl-card-actions-right">
+              <van-button
+                v-permission="permCodes.delete"
+                size="small"
+                icon="delete-o"
+                type="danger"
+                @click="confirmDelete(item)"
+                >删除</van-button
+              >
+              <van-button v-permission="permCodes.view" size="small" icon="eye-o" type="default" @click="onDetail(item)"
+                >详情</van-button
+              >
+              <van-button v-permission="permCodes.edit" size="small" icon="edit" @click="onEdit(item)">编辑</van-button>
+              <slot name="row-actions" :item="item" />
+            </div>
           </div>
         </div>
 
@@ -407,7 +402,12 @@ function onBack() {
     />
 
     <!-- 更多操作 ActionSheet -->
-    <van-action-sheet v-model:show="showActionSheet" :actions="sheetActions" cancel-text="取消" @select="onActionSelect" />
+    <van-action-sheet
+      v-model:show="showActionSheet"
+      :actions="sheetActions"
+      cancel-text="取消"
+      @select="onActionSelect"
+    />
 
     <!-- 新增 / 编辑 弹层 -->
     <van-popup v-model:show="formVisible" position="right" :style="{ width: '100%', height: '100%' }">
@@ -536,11 +536,23 @@ function onBack() {
 }
 .vl-card-actions {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 8px;
-  flex-wrap: wrap;
   padding-top: 8px;
   margin-top: 8px;
   border-top: 1px solid #f5f5f5;
+}
+.vl-card-actions-left,
+.vl-card-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.vl-card-actions-right {
+  margin-left: auto;
+  justify-content: flex-end;
 }
 .vl-empty {
   text-align: center;
