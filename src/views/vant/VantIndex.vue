@@ -101,6 +101,22 @@ const stages = ref([
     icon: '📅',
     color: '#1989fa',
   },
+  {
+    id: 'search',
+    title: '通用动态搜索组件 VantSearch',
+    desc: '基于 van-search 的联想搜索，内置防抖与竞态保护，支持自定义数据字段与键盘导航',
+    path: '/vant/vant-search-demo',
+    icon: '🔍',
+    color: '#7232dd',
+  },
+  {
+    id: 'search-field',
+    title: '表单内动态搜索组件 VantSearchField',
+    desc: '渲染为 van-field 的表单搜索项，弹层内防抖远程/本地搜索，可直接放入 van-form',
+    path: '/vant/vant-search-field-demo',
+    icon: '📋',
+    color: '#00a078',
+  },
 ])
 
 function navigateTo(path: string) {

@@ -602,6 +602,16 @@ const router = createRouter({
       name: 'vant-calendar-demo',
       component: () => import('../views/vant/VantCalendarDemo.vue'),
     },
+    {
+      path: '/vant/vant-search-demo',
+      name: 'vant-search-demo',
+      component: () => import('../views/vant/VantSearchDemo.vue'),
+    },
+    {
+      path: '/vant/vant-search-field-demo',
+      name: 'vant-search-field-demo',
+      component: () => import('../views/vant/VantSearchFieldDemo.vue'),
+    },
     // ====== Nuxt 3 / SSR 学习 ======
     {
       path: '/nuxt',
