@@ -153,6 +153,7 @@ declare module 'vue' {
     VantSelectMultiple: typeof import('./src/components/VantSelectMultiple.vue')['default']
     VantTimePicker: typeof import('./src/components/VantTimePicker.vue')['default']
     VantTreeSelect: typeof import('./src/components/VantTreeSelect.vue')['default']
+    VantTreeTags: typeof import('./src/components/VantTreeTags.vue')['default']
     VanUploader: typeof import('vant/es')['Uploader']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
@@ -301,6 +302,7 @@ declare global {
   const VantSelectMultiple: typeof import('./src/components/VantSelectMultiple.vue')['default']
   const VantTimePicker: typeof import('./src/components/VantTimePicker.vue')['default']
   const VantTreeSelect: typeof import('./src/components/VantTreeSelect.vue')['default']
+  const VantTreeTags: typeof import('./src/components/VantTreeTags.vue')['default']
   const VanUploader: typeof import('vant/es')['Uploader']
   const WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
 }

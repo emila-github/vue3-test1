@@ -85,6 +85,14 @@ const stages = ref([
     icon: '🌳',
     color: '#1989fa',
   },
+  {
+    id: 'tree-tags',
+    title: '通用树型分类打标签组件 VantTreeTags',
+    desc: '树型多选 + 标签回显，可将分类节点选为可删除标签，支持最多可选数量限制',
+    path: '/vant/vant-tree-tags-demo',
+    icon: '🏷️',
+    color: '#7232dd',
+  },
 ])
 
 function navigateTo(path: string) {

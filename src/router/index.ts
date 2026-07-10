@@ -592,6 +592,11 @@ const router = createRouter({
       name: 'vant-tree-select-demo',
       component: () => import('../views/vant/VantTreeSelectDemo.vue'),
     },
+    {
+      path: '/vant/vant-tree-tags-demo',
+      name: 'vant-tree-tags-demo',
+      component: () => import('../views/vant/VantTreeTagsDemo.vue'),
+    },
     // ====== Nuxt 3 / SSR 学习 ======
     {
       path: '/nuxt',
