@@ -12,7 +12,7 @@
  *   - 详情查看：Popup 展示全部字段
  */
 
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, reactive, computed, watch, onMounted } from 'vue'
 import {
   createCarInsurance,
   updateCarInsurance,
@@ -21,6 +21,7 @@ import {
   uploadCarInsuranceImage,
 } from '@/api/modules/car-insurance'
 import type { CarInsurance, CarInsuranceForm } from '@/api/modules/car-insurance'
+import { usePermission } from '@/composables/usePermission'
 
 // ==================== 列表状态 ====================
 const loading = ref(false)
@@ -38,6 +39,19 @@ const statusTabs = [
   { name: '已生效', value: '已生效' },
   { name: '已过期', value: '已过期' },
 ]
+
+// ==================== 权限控制（与 Stage6 共享全局单例） ====================
+// 车险模块权限码：car:create / car:edit / car:view / car:delete
+// 列表操作按钮通过 v-permission 指令控制可见性（见模板）。
+const { currentRole, hasAny, permissions, loaded, loadPermissions } = usePermission()
+
+onMounted(() => {
+  // 首次直接访问本页时，确保已按当前角色加载权限（在 Stage6 切换过角色则沿用）
+  if (!loaded.value) loadPermissions()
+})
+
+// 权限或角色变化时触发根组件重渲染，使 v-permission 指令的 updated 重新求值
+const permTick = computed(() => `${currentRole.value}|${permissions.value.join(',')}`)
 
 // ==================== 更多筛选 ====================
 const showMoreFilter = ref(false)
@@ -460,11 +474,14 @@ function openDetail(item: CarInsurance) {
 // ==================== ActionSheet 批量操作 ====================
 const showActionSheet = ref(false)
 const actionSheetItem = ref<CarInsurance | null>(null)
-const actionSheetActions = [
-  { name: '查看详情', value: 'detail' },
-  { name: '编辑', value: 'edit' },
-  { name: '删除', value: 'delete' },
-]
+// 按当前角色权限动态过滤 ActionSheet 选项
+const actionSheetActions = computed(() =>
+  [
+    { name: '查看详情', value: 'detail', perm: 'car:view' },
+    { name: '编辑', value: 'edit', perm: 'car:edit' },
+    { name: '删除', value: 'delete', perm: 'car:delete' },
+  ].filter((a) => hasAny(a.perm)),
+)
 
 function openActionSheet(item: CarInsurance) {
   actionSheetItem.value = item
@@ -524,7 +541,7 @@ watch(showDeleteDialog, (v) => {
 </script>
 
 <template>
-  <div class="ci-page picc-page">
+  <div class="ci-page picc-page" :data-perm="permTick">
     <!-- 导航栏 -->
     <van-nav-bar title="PICC 车险" class="van-nav-bar--picc-primary" left-text="返回" left-arrow> </van-nav-bar>
 
@@ -694,12 +711,12 @@ watch(showDeleteDialog, (v) => {
           </div>
 
           <div class="ci-card-actions">
-            <van-button size="small" icon="eye-o" plain type="primary" @click.stop="openDetail(item)">详情</van-button>
-            <van-button size="small" icon="edit" plain type="primary" @click.stop="openEdit(item)">编辑</van-button>
-            <van-button size="small" icon="delete-o" plain type="danger" @click.stop="confirmDelete(item)"
+            <van-button size="small" icon="eye-o" plain type="primary" v-permission="'car:view'" @click.stop="openDetail(item)">详情</van-button>
+            <van-button size="small" icon="edit" plain type="primary" v-permission="'car:edit'" @click.stop="openEdit(item)">编辑</van-button>
+            <van-button size="small" icon="delete-o" plain type="danger" v-permission="'car:delete'" @click.stop="confirmDelete(item)"
               >删除</van-button
             >
-            <van-button size="small" icon="ellipsis" plain type="default" @click.stop="openActionSheet(item)"
+            <van-button size="small" icon="ellipsis" plain type="default" v-permission="['car:view', 'car:edit', 'car:delete']" @click.stop="openActionSheet(item)"
               >更多</van-button
             >
           </div>
@@ -708,7 +725,7 @@ watch(showDeleteDialog, (v) => {
     </van-pull-refresh>
 
     <!-- 新增按钮（悬浮） -->
-    <van-button class="ci-fab" type="primary" icon="plus" round @click="openAdd">新增投保</van-button>
+    <van-button class="ci-fab" type="primary" icon="plus" round v-permission="'car:create'" @click="openAdd">新增投保</van-button>
 
     <!-- ==================== 新增/编辑 Popup ==================== -->
     <van-popup v-model:show="formPopupVisible" position="right" :style="{ width: '100%', height: '100%' }">

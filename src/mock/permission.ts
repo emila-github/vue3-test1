@@ -4,6 +4,10 @@ import type { MockRoute } from './types'
 const userPermissions: Record<string, string[]> = {
   admin: [
     'admin:full',
+    'car:create',
+    'car:edit',
+    'car:view',
+    'car:delete',
     'menu:user-manage',
     'menu:report',
     'menu:settings',
@@ -50,6 +54,10 @@ const userPermissions: Record<string, string[]> = {
   ],
   manager: [
     'menu:user-manage',
+    'car:create',
+    'car:edit',
+    'car:view',
+    'car:delete',
     'menu:report',
     'btn:user-create',
     'btn:user-edit',
@@ -89,6 +97,9 @@ const userPermissions: Record<string, string[]> = {
   ],
   editor: [
     'menu:user-manage',
+    'car:create',
+    'car:edit',
+    'car:view',
     'menu:report',
     'btn:user-edit',
     'btn:report-export',
@@ -126,6 +137,7 @@ const userPermissions: Record<string, string[]> = {
   ],
   viewer: [
     'menu:report',
+    'car:view',
     'data:report-view-own',
     'demo:vue-basics',
     'demo:permission',
@@ -153,6 +165,7 @@ const allPermissionsDefine = [
       'btn:settings-save',
     ],
   },
+  { group: '车险模块权限（Stage4）', items: ['car:create', 'car:edit', 'car:view', 'car:delete'] },
   {
     group: '数据权限',
     items: ['data:user-view-sensitive', 'data:user-view-salary', 'data:report-view-all', 'data:report-view-own'],
