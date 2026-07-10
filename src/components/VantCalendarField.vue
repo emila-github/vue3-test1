@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * VantCalendar —— 通用 Vant4 下拉日历选择组件
+ * VantCalendarField —— 通用 Vant4 下拉日历选择组件
  *
  * 基于 van-field（只读触发）+ van-calendar（底部弹出）封装。
  * 支持三种模式：single（单选）/ range（区间）/ multiple（多选）。
@@ -11,9 +11,9 @@
  * 字段右侧提供清空「x」，可编辑且有值即显示。
  *
  * 用法：
- *   <VantCalendar v-model="date" label="日期" title="选择日期" />
- *   <VantCalendar v-model="range" type="range" label="区间" />
- *   <VantCalendar v-model="days" type="multiple" label="日期（可多选）" />
+ *   <VantCalendarField v-model="date" label="日期" title="选择日期" />
+ *   <VantCalendarField v-model="range" type="range" label="区间" />
+ *   <VantCalendarField v-model="days" type="multiple" label="日期（可多选）" />
  */
 import { ref, computed } from 'vue'
 

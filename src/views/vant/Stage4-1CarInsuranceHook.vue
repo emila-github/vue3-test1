@@ -23,7 +23,7 @@ import {
 } from '@/api/modules/car-insurance'
 import type { CarInsurance, CarInsuranceForm, CarInsuranceQuery } from '@/api/modules/car-insurance'
 import { useCrudList } from '@/composables/useCrudList'
-import VantSelect from '@/components/VantSelect.vue'
+import VantSelectField from '@/components/VantSelectField.vue'
 
 // ==================== 通用 CRUD Hook ====================
 // 查询初始条件（含自定义筛选），统一走 hook.query
@@ -595,7 +595,7 @@ watch(showDeleteDialog, (v) => {
             clearable
             left-icon="guide-o"
           />
-          <VantSelect
+          <VantSelectField
             v-model="form.carBrand"
             :options="carBrandOptions"
             label="车辆品牌"

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 /**
- * VantCalendar 示例页
+ * VantCalendarField 示例页
  * 演示：单选 / 区间 / 多选 / 限制范围 / 默认选中 / 快速选择 / 禁用只读 / 必填图标 / change 回显
  */
 import { ref, nextTick } from 'vue'
-import VantCalendar from '../../components/VantCalendar.vue'
+import VantCalendarField from '../../components/VantCalendarField.vue'
 
 function pad(n: number) {
   return String(n).padStart(2, '0')
@@ -61,12 +61,12 @@ function onChange(value: any, raw: unknown) {
 
 <template>
   <div class="demo-page">
-    <van-nav-bar title="VantCalendar 下拉日历" left-text="返回" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="VantCalendarField 下拉日历" left-text="返回" left-arrow @click-left="$router.back()" />
 
     <div class="container">
       <div class="section-title">① 单选日期（single）</div>
       <div class="card">
-        <VantCalendar
+        <VantCalendarField
           v-model="single"
           label="日期"
           title="选择日期"
@@ -78,7 +78,7 @@ function onChange(value: any, raw: unknown) {
 
       <div class="section-title">② 日期区间（range）</div>
       <div class="card">
-        <VantCalendar
+        <VantCalendarField
           v-model="range"
           type="range"
           label="区间"
@@ -91,7 +91,7 @@ function onChange(value: any, raw: unknown) {
 
       <div class="section-title">③ 多选日期（multiple）</div>
       <div class="card">
-        <VantCalendar
+        <VantCalendarField
           v-model="multiple"
           type="multiple"
           label="日期"
@@ -104,7 +104,7 @@ function onChange(value: any, raw: unknown) {
 
       <div class="section-title">④ 限制可选范围（min ~ max 30 天）</div>
       <div class="card">
-        <VantCalendar
+        <VantCalendarField
           v-model="limited"
           label="日期"
           title="仅可选近 30 天"
@@ -118,7 +118,7 @@ function onChange(value: any, raw: unknown) {
 
       <div class="section-title">⑤ 默认选中 / 打开定位（default-date）</div>
       <div class="card">
-        <VantCalendar
+        <VantCalendarField
           v-model="withDefault"
           label="日期"
           title="打开定位到指定日期"
@@ -131,7 +131,7 @@ function onChange(value: any, raw: unknown) {
 
       <div class="section-title">⑥ 快速选择（show-confirm=false，点选即确定）</div>
       <div class="card">
-        <VantCalendar
+        <VantCalendarField
           v-model="quick"
           label="日期"
           title="点选即确定"
@@ -144,13 +144,13 @@ function onChange(value: any, raw: unknown) {
 
       <div class="section-title">⑦ 禁用 / 只读</div>
       <div class="card">
-        <VantCalendar
+        <VantCalendarField
           v-model="disabledVal"
           label="禁用"
           title="选择日期"
           disabled
         />
-        <VantCalendar
+        <VantCalendarField
           v-model="readonlyVal"
           label="只读"
           title="选择日期"
@@ -160,7 +160,7 @@ function onChange(value: any, raw: unknown) {
 
       <div class="section-title">⑧ 必填 + 图标（required + left-icon）</div>
       <div class="card">
-        <VantCalendar
+        <VantCalendarField
           v-model="requiredVal"
           label="日期"
           title="选择日期"

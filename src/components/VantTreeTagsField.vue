@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * VantTreeTags —— 通用 Vant4 下拉树型「分类打标签」多选组件
+ * VantTreeTagsField —— 通用 Vant4 下拉树型「分类打标签」多选组件
  *
  * 基于 van-field（只读触发）+ van-popup（底部弹出）+ 自定义可展开树（checkbox 多选）封装。
  * 选中的节点以 van-tag 标签形式回显，每个标签可单独删除。
@@ -11,9 +11,9 @@
  *      设为 false 时仅叶子节点可勾选，含子级的父节点置灰不可选，但仍可展开下钻。
  *
  * 用法：
- *   <VantTreeTags v-model="regions" :options="regionTree" label="地区" title="选择地区" />
- *   <VantTreeTags v-model="tags" :options="tree" value-key="id" label-key="name" children-key="subs" show-path />
- *   <VantTreeTags v-model="tags" :options="tree" :select-parent="false" />
+ *   <VantTreeTagsField v-model="regions" :options="regionTree" label="地区" title="选择地区" />
+ *   <VantTreeTagsField v-model="tags" :options="tree" value-key="id" label-key="name" children-key="subs" show-path />
+ *   <VantTreeTagsField v-model="tags" :options="tree" :select-parent="false" />
  *
  * 清空：字段右侧 clearable 图标一键清空；弹层内底部「清空」按钮重置当前勾选。
  */

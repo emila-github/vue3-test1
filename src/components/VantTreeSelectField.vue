@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * VantTreeSelect —— 通用 Vant4 下拉树型（级联）选择组件
+ * VantTreeSelectField —— 通用 Vant4 下拉树型（级联）选择组件
  *
  * 基于 van-field（只读触发）+ van-popup（底部弹出）+ van-cascader（树型滚轮）封装。
  * 数据格式可配置：
@@ -14,10 +14,10 @@
  *   - select-parent：父节点（含子级）也可直接选中，级联面板内为每级父节点追加「选择本级」虚拟项
  *
  * 用法：
- *   <VantTreeSelect v-model="region" :options="regionTree" label="地区" title="选择地区" />
- *   <VantTreeSelect v-model="org" :options="orgTree" value-key="id" label-key="name" children-key="subs" />
- *   <VantTreeSelect v-model="area" :options="tree" :max-depth="2" />
- *   <VantTreeSelect v-model="area" :options="tree" select-parent />
+ *   <VantTreeSelectField v-model="region" :options="regionTree" label="地区" title="选择地区" />
+ *   <VantTreeSelectField v-model="org" :options="orgTree" value-key="id" label-key="name" children-key="subs" />
+ *   <VantTreeSelectField v-model="area" :options="tree" :max-depth="2" />
+ *   <VantTreeSelectField v-model="area" :options="tree" select-parent />
  */
 import { ref, computed } from 'vue'
 

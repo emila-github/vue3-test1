@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * VantSelect —— 通用 Vant4 下拉单选组件
+ * VantSelectField —— 通用 Vant4 下拉单选组件
  *
  * 基于 van-field（只读触发）+ van-popup（底部弹出）+ van-picker（滚轮单选）封装。
  * 数据格式可配置：
@@ -10,9 +10,9 @@
  *   4) 完全自定义：通过 format(opt) => { text, value } 归一化
  *
  * 用法：
- *   <VantSelect v-model="form.carBrand" :options="carBrandOptions" label="车辆品牌" title="选择品牌" />
- *   <VantSelect v-model="cat" :options="cats" value-key="id" label-key="name" />
- *   <VantSelect v-model="x" :options="raw" :format="(o) => ({ text: o.label, value: o.code })" />
+ *   <VantSelectField v-model="form.carBrand" :options="carBrandOptions" label="车辆品牌" title="选择品牌" />
+ *   <VantSelectField v-model="cat" :options="cats" value-key="id" label-key="name" />
+ *   <VantSelectField v-model="x" :options="raw" :format="(o) => ({ text: o.label, value: o.code })" />
  */
 import { ref, computed } from 'vue'
 

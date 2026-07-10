@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import VantSelectMultiple from '@/components/VantSelectMultiple.vue'
-import type { NormalizedOption } from '@/components/VantSelectMultiple.vue'
+import VantSelectField from '@/components/VantSelectField.vue'
+import type { NormalizedOption } from '@/components/VantSelectField.vue'
 
 // 1) 字符串数组
-const extra = ref<string[]>(['玻璃', '自燃'])
-const extraOptions = ['玻璃破碎险', '自燃损失险', '涉水险', '划痕险', '不计免赔', '车上人员']
+const brand = ref('')
+const brandOptions = ['宝马', '奔驰', '奥迪', '丰田', '本田', '大众', '比亚迪', '蔚来']
 
-// 2) 默认对象数组 { text, value }
-const city = ref<string[]>([])
+// 2) Vant 默认对象数组 { text, value }
+const city = ref('')
 const cityOptions = [
   { text: '北京', value: 'bj' },
   { text: '上海', value: 'sh' },
@@ -17,7 +17,7 @@ const cityOptions = [
 ]
 
 // 3) 自定义字段（valueKey / labelKey）
-const channel = ref<string[]>([])
+const channel = ref('')
 const channelOptions = [
   { id: 'agent', name: '保险代理人' },
   { id: 'online', name: '官网直营' },
@@ -26,7 +26,7 @@ const channelOptions = [
 ]
 
 // 4) 完全自定义 format 函数
-const raw = ref<Array<string | number>>([])
+const raw = ref<number | string>('')
 const rawOptions = [
   { code: 'A', label: '方案 A（基础版）' },
   { code: 'B', label: '方案 B（标准版）' },
@@ -34,136 +34,120 @@ const rawOptions = [
 ]
 
 // 5) 可清空
-const clearableVal = ref<string[]>(['玻璃破碎险'])
+const clearableVal = ref('宝马')
 
-// 6) 限制最多可选数量（max=2）
-const limited = ref<string[]>([])
+// 6) 禁用 / 只读
+const disabledVal = ref('只读预填值')
+const readonlyVal = ref('已锁定值')
 
-// 7) 禁用 / 只读
-const disabledVal = ref<string[]>(['划痕险'])
-const readonlyVal = ref<string[]>(['涉水险'])
+// 7) 必填 + 图标
+const requiredVal = ref('')
 
-// 8) 必填 + 图标
-const requiredVal = ref<string[]>([])
-
-// change 事件回显
-const log = reactive<{ value: Array<string | number>; text: string }>({
-  value: [],
+// 当前选中回显（演示 change 事件）
+const log = reactive<{ value: string | number | null; text: string }>({
+  value: '',
   text: '',
 })
-function onChange(value: Array<string | number>, options: NormalizedOption[]) {
+function onChange(value: string | number, option: NormalizedOption | null) {
   log.value = value
-  log.text = options.map((o) => o.text).join('、')
+  log.text = option?.text ?? ''
 }
 </script>
 
 <template>
   <div class="sel-demo">
-    <van-nav-bar title="VantSelectMultiple 示例" left-text="返回" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="VantSelectField 示例" left-text="返回" left-arrow @click-left="$router.back()" />
 
-    <div class="section-title">① 字符串数组</div>
+    <div class="section-title">① 字符串数组（最简单）</div>
     <div class="card">
-      <VantSelectMultiple
-        v-model="extra"
-        :options="extraOptions"
-        label="附加险种"
-        title="选择险种"
-        placeholder="请选择附加险种"
+      <VantSelectField
+        v-model="brand"
+        :options="brandOptions"
+        label="车辆品牌"
+        title="选择品牌"
+        placeholder="请选择品牌"
         left-icon="label-o"
         clearable
         @change="onChange"
       />
-      <p class="hint">当前值：<code>{{ extra.join(', ') || '（空）' }}</code></p>
+      <p class="hint">当前值：<code>{{ brand || '（空）' }}</code></p>
     </div>
 
     <div class="section-title">② 默认对象数组 { text, value }</div>
     <div class="card">
-      <VantSelectMultiple
+      <VantSelectField
         v-model="city"
         :options="cityOptions"
         label="投保城市"
         title="选择城市"
-        placeholder="可多选城市"
+        placeholder="请选择城市"
         clearable
       />
-      <p class="hint">当前值（取 value）：<code>{{ city.join(', ') || '（空）' }}</code></p>
+      <p class="hint">当前值：<code>{{ city || '（空）' }}</code></p>
     </div>
 
     <div class="section-title">③ 自定义字段（value-key / label-key）</div>
     <div class="card">
-      <VantSelectMultiple
+      <VantSelectField
         v-model="channel"
         :options="channelOptions"
         value-key="id"
         label-key="name"
         label="投保渠道"
         title="选择渠道"
-        placeholder="可多渠道"
+        placeholder="请选择渠道"
         clearable
       />
-      <p class="hint">当前值（取 id）：<code>{{ channel.join(', ') || '（空）' }}</code></p>
+      <p class="hint">当前值（取 id）：<code>{{ channel || '（空）' }}</code></p>
     </div>
 
     <div class="section-title">④ 完全自定义（format 函数）</div>
     <div class="card">
-      <VantSelectMultiple
+      <VantSelectField
         v-model="raw"
         :options="rawOptions"
         :format="(o: any) => ({ text: o.label, value: o.code })"
         label="保险方案"
         title="选择方案"
-        placeholder="可多选方案"
+        placeholder="请选择方案"
         clearable
       />
-      <p class="hint">当前值（取 code）：<code>{{ raw.join(', ') || '（空）' }}</code></p>
+      <p class="hint">当前值（取 code）：<code>{{ raw || '（空）' }}</code></p>
     </div>
 
     <div class="section-title">⑤ 可清空（clearable）</div>
     <div class="card">
-      <VantSelectMultiple
+      <VantSelectField
         v-model="clearableVal"
-        :options="extraOptions"
+        :options="brandOptions"
         label="可清空示例"
         title="可清空"
         clearable
       />
-      <p class="hint">右侧出现清除图标，点击即清空全部。</p>
+      <p class="hint">右侧出现清除图标，点击即清空。</p>
     </div>
 
-    <div class="section-title">⑥ 限制最多可选（max=2）</div>
+    <div class="section-title">⑥ 禁用 / 只读</div>
     <div class="card">
-      <VantSelectMultiple
-        v-model="limited"
-        :options="extraOptions"
-        label="最多选 2 项"
-        title="最多选 2 项"
-        :max="2"
-        clearable
-      />
-      <p class="hint">达到上限后其余项自动禁用，顶部显示「已选 x / 2」。</p>
-    </div>
-
-    <div class="section-title">⑦ 禁用 / 只读</div>
-    <div class="card">
-      <VantSelectMultiple
+      <VantSelectField
         v-model="disabledVal"
-        :options="extraOptions"
+        :options="brandOptions"
         label="禁用"
         disabled
       />
-      <VantSelectMultiple
+      <VantSelectField
         v-model="readonlyVal"
-        :options="extraOptions"
+        :options="brandOptions"
         label="只读"
         readonly
       />
     </div>
 
-    <div class="section-title">⑧ 必填 + 图标</div>
+    <div class="section-title">⑦ 必填 + 图标</div>
     <div class="card">
-      <VantSelectMultiple
+      <VantSelectField
         v-model="requiredVal"
-        :options="extraOptions"
+        :options="brandOptions"
         label="必填项"
         title="请选择"
         placeholder="此项为必填"
@@ -173,12 +157,11 @@ function onChange(value: Array<string | number>, options: NormalizedOption[]) {
       />
     </div>
 
-    <div class="section-title">⑨ change 事件回显</div>
+    <div class="section-title">⑧ change 事件回显</div>
     <div class="card">
       <p class="hint">
         最近一次 change：<br />
-        值 = <code>{{ log.value.join(', ') || '（空）' }}</code><br />
-        文本 = <code>{{ log.text || '（空）' }}</code>
+        值 = <code>{{ log.value || '（空）' }}</code> ，文本 = <code>{{ log.text || '（空）' }}</code>
       </p>
     </div>
   </div>

@@ -12,7 +12,7 @@
  *   - 数据来源二选一：
  *       1) fetch：传入异步函数 (kw) => Promise<OptionItem[]>，远程联想搜索
  *       2) options：传入本地静态数组，按关键词本地过滤
- *   - 数据格式可配置（与 VantSelect 同约定）：
+ *   - 数据格式可配置（与 VantSelectField 同约定）：
  *       字符串/数字数组 | 默认 {text,value} | 自定义 labelKey/valueKey | format()
  *   - 键盘上下 + 回车选择；选中项显示勾选图标
  *

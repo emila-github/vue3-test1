@@ -1,10 +1,10 @@
 <script setup lang="ts">
 /**
- * VantTreeSelect 示例页
+ * VantTreeSelectField 示例页
  * 演示树型下拉选择的多种用法：默认结构、自定义字段、可清空、禁用/只读、必填+图标、change 回显
  */
 import { ref } from 'vue'
-import VantTreeSelect from '../../components/VantTreeSelect.vue'
+import VantTreeSelectField from '../../components/VantTreeSelectField.vue'
 
 // ① 默认树结构（省 / 市 / 区）
 const region = ref('')
@@ -128,12 +128,12 @@ const parentVal = ref('')
 
 <template>
   <div class="demo-page">
-    <van-nav-bar title="VantTreeSelect 下拉树型选择" left-text="返回" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="VantTreeSelectField 下拉树型选择" left-text="返回" left-arrow @click-left="$router.back()" />
 
     <div class="container">
       <div class="section-title">① 默认树结构（省 / 市 / 区，单选叶子）</div>
       <div class="card">
-        <VantTreeSelect
+        <VantTreeSelectField
           v-model="region"
           :options="regionTree"
           label="地区"
@@ -146,7 +146,7 @@ const parentVal = ref('')
 
       <div class="section-title">② 自定义字段（valueKey / labelKey / childrenKey）</div>
       <div class="card">
-        <VantTreeSelect
+        <VantTreeSelectField
           v-model="org"
           :options="orgTree"
           value-key="id"
@@ -162,7 +162,7 @@ const parentVal = ref('')
 
       <div class="section-title">③ 可清空（clearable）</div>
       <div class="card">
-        <VantTreeSelect
+        <VantTreeSelectField
           v-model="clearableVal"
           :options="regionTree"
           label="地区"
@@ -176,14 +176,14 @@ const parentVal = ref('')
 
       <div class="section-title">④ 禁用 / 只读</div>
       <div class="card">
-        <VantTreeSelect
+        <VantTreeSelectField
           v-model="disabledVal"
           :options="regionTree"
           label="禁用"
           title="选择地区"
           disabled
         />
-        <VantTreeSelect
+        <VantTreeSelectField
           v-model="readonlyVal"
           :options="regionTree"
           label="只读"
@@ -195,7 +195,7 @@ const parentVal = ref('')
 
       <div class="section-title">⑤ 必填 + 图标（required + left-icon）</div>
       <div class="card">
-        <VantTreeSelect
+        <VantTreeSelectField
           v-model="requiredVal"
           :options="regionTree"
           label="地区"
@@ -216,7 +216,7 @@ const parentVal = ref('')
 
       <div class="section-title">⑦ 自定义路径分隔符（separator）</div>
       <div class="card">
-        <VantTreeSelect
+        <VantTreeSelectField
           v-model="sepVal"
           :options="regionTree"
           label="地区"
@@ -230,7 +230,7 @@ const parentVal = ref('')
 
       <div class="section-title">⑧ 树型深度控制（max-depth=2，最多可选到「市」）</div>
       <div class="card">
-        <VantTreeSelect
+        <VantTreeSelectField
           v-model="maxDepthVal"
           :options="regionTree"
           :max-depth="2"
@@ -244,7 +244,7 @@ const parentVal = ref('')
 
       <div class="section-title">⑨ 深度不一致时浅叶节点可选（北京/上海可直接选）</div>
       <div class="card">
-        <VantTreeSelect
+        <VantTreeSelectField
           v-model="unevenVal"
           :options="unevenTree"
           label="地区"
@@ -257,7 +257,7 @@ const parentVal = ref('')
 
       <div class="section-title">⑩ 父节点可选（select-parent）</div>
       <div class="card">
-        <VantTreeSelect
+        <VantTreeSelectField
           v-model="parentVal"
           :options="regionTree"
           select-parent

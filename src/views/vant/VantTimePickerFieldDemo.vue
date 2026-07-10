@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import VantTimePicker from '@/components/VantTimePicker.vue'
+import VantTimePickerField from '@/components/VantTimePickerField.vue'
 
 // ① 时间选择
 const time = ref('09:30')
@@ -30,11 +30,11 @@ function onChange(v: string) {
 
 <template>
   <div class="tp-demo">
-    <van-nav-bar title="VantTimePicker 示例" left-text="返回" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="VantTimePickerField 示例" left-text="返回" left-arrow @click-left="$router.back()" />
 
     <div class="section-title">① 时间选择（type=time）</div>
     <div class="card">
-      <VantTimePicker
+      <VantTimePickerField
         v-model="time"
         type="time"
         label="起保时间"
@@ -48,7 +48,7 @@ function onChange(v: string) {
 
     <div class="section-title">② 日期选择（type=date）</div>
     <div class="card">
-      <VantTimePicker
+      <VantTimePickerField
         v-model="date"
         type="date"
         label="投保日期"
@@ -62,7 +62,7 @@ function onChange(v: string) {
 
     <div class="section-title">③ 年月（type=year-month）</div>
     <div class="card">
-      <VantTimePicker
+      <VantTimePickerField
         v-model="yearMonth"
         type="year-month"
         label="账期"
@@ -76,7 +76,7 @@ function onChange(v: string) {
 
     <div class="section-title">④ 可清空（clearable）</div>
     <div class="card">
-      <VantTimePicker
+      <VantTimePickerField
         v-model="clearableVal"
         type="time"
         label="可清空示例"
@@ -88,7 +88,7 @@ function onChange(v: string) {
 
     <div class="section-title">⑥ 范围限制</div>
     <div class="card">
-      <VantTimePicker
+      <VantTimePickerField
         v-model="limitedTime"
         type="time"
         label="工作时段"
@@ -97,7 +97,7 @@ function onChange(v: string) {
         :max-hour="18"
         clearable
       />
-      <VantTimePicker
+      <VantTimePickerField
         v-model="limitedDate"
         type="date"
         label="2026 年内"
@@ -110,13 +110,13 @@ function onChange(v: string) {
 
     <div class="section-title">⑦ 禁用 / 只读</div>
     <div class="card">
-      <VantTimePicker v-model="disabledVal" type="time" label="禁用" disabled />
-      <VantTimePicker v-model="readonlyVal" type="time" label="只读" readonly />
+      <VantTimePickerField v-model="disabledVal" type="time" label="禁用" disabled />
+      <VantTimePickerField v-model="readonlyVal" type="time" label="只读" readonly />
     </div>
 
     <div class="section-title">⑧ 必填 + 图标</div>
     <div class="card">
-      <VantTimePicker
+      <VantTimePickerField
         v-model="requiredVal"
         type="time"
         label="必填项"

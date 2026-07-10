@@ -1,10 +1,10 @@
 <script setup lang="ts">
 /**
- * VantTreeTags 示例页
+ * VantTreeTagsField 示例页
  * 演示树型分类打标签多选：默认树、自定义字段、标签显示路径、最多可选数量、可清空、禁用/只读、必填+图标、父级不可选、大数据量多选、change 回显
  */
 import { ref, nextTick } from 'vue'
-import VantTreeTags from '../../components/VantTreeTags.vue'
+import VantTreeTagsField from '../../components/VantTreeTagsField.vue'
 
 // ① 默认树多选打标签（省 / 市 / 区）—— 扩充为多个省，便于测试多选
 const regions = ref<string[]>([])
@@ -304,12 +304,12 @@ const interestTree = [
 
 <template>
   <div class="demo-page">
-    <van-nav-bar title="VantTreeTags 树型打标签多选" left-text="返回" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="VantTreeTagsField 树型打标签多选" left-text="返回" left-arrow @click-left="$router.back()" />
 
     <div class="container">
       <div class="section-title">① 默认树多选打标签（省 / 市 / 区，可多选）</div>
       <div class="card">
-        <VantTreeTags
+        <VantTreeTagsField
           v-model="regions"
           :options="regionTree"
           label="地区"
@@ -324,7 +324,7 @@ const interestTree = [
 
       <div class="section-title">② 自定义字段（valueKey / labelKey / childrenKey）</div>
       <div class="card">
-        <VantTreeTags
+        <VantTreeTagsField
           v-model="orgs"
           :options="orgTree"
           value-key="id"
@@ -342,7 +342,7 @@ const interestTree = [
 
       <div class="section-title">③ 标签显示完整路径（show-path）</div>
       <div class="card">
-        <VantTreeTags
+        <VantTreeTagsField
           v-model="pathTags"
           :options="regionTree"
           show-path
@@ -359,7 +359,7 @@ const interestTree = [
 
       <div class="section-title">④ 最多可选数量（max=3）</div>
       <div class="card">
-        <VantTreeTags
+        <VantTreeTagsField
           v-model="limited"
           :options="regionTree"
           :max="3"
@@ -375,7 +375,7 @@ const interestTree = [
 
       <div class="section-title">⑤ 可清空（clearable）</div>
       <div class="card">
-        <VantTreeTags
+        <VantTreeTagsField
           v-model="clearableVal"
           :options="regionTree"
           label="地区"
@@ -391,13 +391,13 @@ const interestTree = [
 
       <div class="section-title">⑥ 禁用 / 只读</div>
       <div class="card">
-        <VantTreeTags v-model="disabledVal" :options="regionTree" label="禁用" title="选择地区" disabled />
-        <VantTreeTags v-model="readonlyVal" :options="regionTree" label="只读" title="选择地区" readonly />
+        <VantTreeTagsField v-model="disabledVal" :options="regionTree" label="禁用" title="选择地区" disabled />
+        <VantTreeTagsField v-model="readonlyVal" :options="regionTree" label="只读" title="选择地区" readonly />
       </div>
 
       <div class="section-title">⑦ 必填 + 图标（required + left-icon）</div>
       <div class="card">
-        <VantTreeTags
+        <VantTreeTagsField
           v-model="requiredVal"
           :options="regionTree"
           label="地区"
@@ -414,7 +414,7 @@ const interestTree = [
 
       <div class="section-title">⑨ 父级不可选（select-parent=false，只能选叶子）</div>
       <div class="card">
-        <VantTreeTags
+        <VantTreeTagsField
           v-model="parentOnly"
           :options="regionTree"
           :select-parent="false"
@@ -431,7 +431,7 @@ const interestTree = [
 
       <div class="section-title">⑩ 大数据量多选（测试标签换行 / 滚动）</div>
       <div class="card">
-        <VantTreeTags
+        <VantTreeTagsField
           v-model="bigTags"
           :options="interestTree"
           value-key="id"

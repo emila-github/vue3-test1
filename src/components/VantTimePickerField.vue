@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * VantTimePicker —— 通用 Vant4 下拉时间/日期选择组件
+ * VantTimePickerField —— 通用 Vant4 下拉时间/日期选择组件
  *
  * 基于 van-field（只读触发）+ van-popup（底部）+ van-time-picker / van-date-picker 封装。
  * 通过 type 支持多种模式：
@@ -9,9 +9,9 @@
  *   - 'year-month' 年月，返回默认 YYYY-MM
  *
  * 用法：
- *   <VantTimePicker v-model="form.startTime" type="time" label="起保时间" />
- *   <VantTimePicker v-model="day" type="date" label="投保日期" />
- *   <VantTimePicker v-model="ym" type="year-month" label="账期" />
+ *   <VantTimePickerField v-model="form.startTime" type="time" label="起保时间" />
+ *   <VantTimePickerField v-model="day" type="date" label="投保日期" />
+ *   <VantTimePickerField v-model="ym" type="year-month" label="账期" />
  *
  * 注：Vant 4.9 已将原 van-datetime-picker 拆分为 van-time-picker 与 van-date-picker，
  *     本组件对内自动选择对应底层组件，对外仍保持统一的字符串 v-model。

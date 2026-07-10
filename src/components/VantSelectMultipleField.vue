@@ -1,18 +1,18 @@
 <script setup lang="ts">
 /**
- * VantSelectMultiple —— 通用 Vant4 下拉多选组件
+ * VantSelectMultipleField —— 通用 Vant4 下拉多选组件
  *
  * 基于 van-field（只读触发）+ van-popup（底部弹出）+ van-checkbox-group（勾选列表）封装。
- * 数据格式可配置（与 VantSelect 一致）：
+ * 数据格式可配置（与 VantSelectField 一致）：
  *   1) 字符串 / 数字数组：['玻璃', '自燃'] / [1, 2]
  *   2) Vant 默认对象数组：[{ text: '玻璃', value: 'glass' }]
  *   3) 自定义对象数组：通过 valueKey / labelKey 指定取值字段
  *   4) 完全自定义：通过 format(opt) => { text, value } 归一化
  *
  * 用法：
- *   <VantSelectMultiple v-model="form.extraInsurance" :options="extraOptions" label="附加险种" />
- *   <VantSelectMultiple v-model="cats" :options="cats" value-key="id" label-key="name" />
- *   <VantSelectMultiple v-model="x" :options="raw" :format="(o) => ({ text: o.label, value: o.code })" />
+ *   <VantSelectMultipleField v-model="form.extraInsurance" :options="extraOptions" label="附加险种" />
+ *   <VantSelectMultipleField v-model="cats" :options="cats" value-key="id" label-key="name" />
+ *   <VantSelectMultipleField v-model="x" :options="raw" :format="(o) => ({ text: o.label, value: o.code })" />
  */
 import { ref, computed } from 'vue'
 
