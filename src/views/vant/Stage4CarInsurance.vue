@@ -900,6 +900,7 @@ watch(showDeleteDialog, (v) => {
                 accept="image/*"
                 :before-read="() => true"
                 :after-read="(f) => onUploadFile('front', f)"
+                :preview-full-image="false"
                 @delete="deleteImage('front')"
                 @click-preview="onPreviewImage"
               />
@@ -914,6 +915,7 @@ watch(showDeleteDialog, (v) => {
                 accept="image/*"
                 :before-read="() => true"
                 :after-read="(f) => onUploadFile('back', f)"
+                :preview-full-image="false"
                 @delete="deleteImage('back')"
                 @click-preview="onPreviewImage"
               />
@@ -928,6 +930,7 @@ watch(showDeleteDialog, (v) => {
                 accept="image/*"
                 :before-read="() => true"
                 :after-read="(f) => onUploadFile('car', f)"
+                :preview-full-image="false"
                 @delete="deleteImage('car')"
                 @click-preview="onPreviewImage"
               />
