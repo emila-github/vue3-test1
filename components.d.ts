@@ -146,6 +146,7 @@ declare module 'vue' {
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
     VanTabs: typeof import('vant/es')['Tabs']
     VanTag: typeof import('vant/es')['Tag']
+    VantSelect: typeof import('./src/components/VantSelect.vue')['default']
     VanUploader: typeof import('vant/es')['Uploader']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
@@ -287,6 +288,7 @@ declare global {
   const VanTabbarItem: typeof import('vant/es')['TabbarItem']
   const VanTabs: typeof import('vant/es')['Tabs']
   const VanTag: typeof import('vant/es')['Tag']
+  const VantSelect: typeof import('./src/components/VantSelect.vue')['default']
   const VanUploader: typeof import('vant/es')['Uploader']
   const WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
 }
