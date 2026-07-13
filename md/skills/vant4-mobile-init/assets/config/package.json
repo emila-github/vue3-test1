@@ -59,7 +59,6 @@
     "eslint-plugin-oxlint": "~1.60.0",
     "eslint-plugin-playwright": "^2.10.1",
     "eslint-plugin-vue": "~10.8.0",
-    "happy-dom": "^20.10.6",
     "jiti": "^2.6.1",
     "jsdom": "^29.0.2",
     "npm-run-all2": "^8.0.4",

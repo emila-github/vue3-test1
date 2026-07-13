@@ -622,6 +622,11 @@ const router = createRouter({
       name: 'vant-list-demo',
       component: () => import('../views/vant/VantListDemo.vue'),
     },
+    {
+      path: '/vant/vant-permission-demo',
+      name: 'vant-permission-demo',
+      component: () => import('../views/vant/VantPermissionDemo.vue'),
+    },
     // ====== Nuxt 3 / SSR 学习 ======
     {
       path: '/nuxt',

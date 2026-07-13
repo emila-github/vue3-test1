@@ -6,54 +6,6 @@ const router = useRouter()
 
 const stages = ref([
   {
-    id: 1,
-    title: '快速上手：移动端适配与基础组件',
-    desc: '安装配置、Rem 适配、Button、Icon、Cell、NavBar、Tabbar 等基础组件',
-    path: '/vant/stage1',
-    icon: '📱',
-    color: '#1989fa',
-  },
-  {
-    id: 2,
-    title: '表单与数据展示',
-    desc: 'Form 表单、Field 输入、Picker 选择器、DatetimePicker、Uploader、List、Swipe 等',
-    path: '/vant/stage2',
-    icon: '📝',
-    color: '#07c160',
-  },
-  {
-    id: 3,
-    title: '反馈与交互组件',
-    desc: 'Dialog 弹窗、Toast 轻提示、Notify 通知、ActionSheet、PullRefresh、Lazyload 等',
-    path: '/vant/stage3',
-    icon: '💬',
-    color: '#ee0a24',
-  },
-  {
-    id: 4,
-    title: '综合实战：车险投保列表页',
-    desc: '列表展示+搜索筛选+新增编辑+图片上传，覆盖 Vant 4 全部表单控件',
-    path: '/vant/stage4',
-    icon: '🚗',
-    color: '#ff976a',
-  },
-  {
-    id: '4-1',
-    title: '车险投保列表页（Hook 版）',
-    desc: '基于 useCrudList 通用 Hook 重写，增删改查/权限/日志逻辑复用，快速搭列表页',
-    path: '/vant/stage4-1',
-    icon: '🧩',
-    color: '#1989fa',
-  },
-  {
-    id: 5,
-    title: 'PICC 品牌皮肤演示',
-    desc: 'PILL 主按钮、NavBar 红色变体、页面级辅助类的完整套用示例，可一键开关',
-    path: '/vant/stage5-picc-skin-demo',
-    icon: '🎨',
-    color: '#d71920',
-  },
-  {
     id: 'select',
     title: '通用下拉单选组件 VantSelectField',
     desc: '可配置数据格式（字符串/对象/自定义字段/format），演示清空、禁用、只读、必填等用法',
@@ -181,7 +133,7 @@ function navigateTo(path: string) {
 
     <!-- 学习阶段 -->
     <section class="stages">
-      <h2>学习阶段（共 3 个）</h2>
+      <h2>组件演示（共 11 个）</h2>
       <div class="stage-grid">
         <div
           v-for="s in stages"
@@ -227,9 +179,21 @@ function navigateTo(path: string) {
   text-align: center;
   margin-bottom: 32px;
 }
-.page-header h1 { font-size: 28px; color: #1a1a1a; margin: 0 0 8px; }
-.subtitle { color: #666; font-size: 14px; }
-.subtitle code { background: #f0f0f0; padding: 1px 6px; border-radius: 3px; font-size: 13px; }
+.page-header h1 {
+  font-size: 28px;
+  color: #1a1a1a;
+  margin: 0 0 8px;
+}
+.subtitle {
+  color: #666;
+  font-size: 14px;
+}
+.subtitle code {
+  background: #f0f0f0;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}
 
 .card {
   background: #fff;
@@ -238,7 +202,11 @@ function navigateTo(path: string) {
   margin-bottom: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
-.card h2 { margin: 0 0 16px; font-size: 18px; color: #333; }
+.card h2 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  color: #333;
+}
 
 .api-grid {
   display: grid;
@@ -255,10 +223,21 @@ function navigateTo(path: string) {
   border-radius: 8px;
   border: 1px solid #f0f0f0;
 }
-.api-item code { font-size: 13px; color: #1989fa; font-weight: 500; }
-.api-item span { font-size: 12px; color: #999; }
+.api-item code {
+  font-size: 13px;
+  color: #1989fa;
+  font-weight: 500;
+}
+.api-item span {
+  font-size: 12px;
+  color: #999;
+}
 
-.stages h2 { margin: 0 0 16px; font-size: 18px; color: #333; }
+.stages h2 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  color: #333;
+}
 .stage-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -274,19 +253,54 @@ function navigateTo(path: string) {
   border-radius: 10px;
   padding: 20px 16px;
   cursor: pointer;
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
 }
-.stage-card:hover { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); transform: translateY(-2px); }
-.stage-icon { font-size: 28px; }
-.stage-card h3 { margin: 10px 0 6px; font-size: 15px; color: #333; }
-.stage-desc { font-size: 12px; color: #999; line-height: 1.5; margin: 0; }
-.stage-badge { position: absolute; top: 10px; right: 10px; font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+.stage-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+.stage-icon {
+  font-size: 28px;
+}
+.stage-card h3 {
+  margin: 10px 0 6px;
+  font-size: 15px;
+  color: #333;
+}
+.stage-desc {
+  font-size: 12px;
+  color: #999;
+  line-height: 1.5;
+  margin: 0;
+}
+.stage-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
 
-.why-list { list-style: none; padding: 0; }
-.why-list li { padding: 6px 0; font-size: 14px; color: #555; line-height: 1.6; }
+.why-list {
+  list-style: none;
+  padding: 0;
+}
+.why-list li {
+  padding: 6px 0;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
 
 @media (max-width: 768px) {
-  .api-grid { grid-template-columns: repeat(3, 1fr); }
-  .stage-grid { grid-template-columns: 1fr; }
+  .api-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .stage-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

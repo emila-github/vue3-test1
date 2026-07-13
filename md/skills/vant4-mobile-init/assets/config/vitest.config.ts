@@ -23,11 +23,8 @@ export default mergeConfig(
     test: {
       // VantUpload 在脚本中 import { showToast } from 'vant'，全局 mock 即可
       setupFiles: [fileURLToPath(new URL('./src/test/setup.ts', import.meta.url))],
-      // 本环境 registry 仅提供 jsdom@29.1.1，其发布包缺失 lib/api.js（入口文件），
-      // vitest worker 无法启动。改用自包含、无需构建步骤的 happy-dom 作为测试环境。
-      environment: 'happy-dom',
-      // 排除技能包内自带（assets 模板）的 spec，避免被当成项目测试误跑
-      exclude: [...configDefaults.exclude, 'e2e/**', '**/.codebuddy/**'],
+      environment: 'jsdom',
+      exclude: [...configDefaults.exclude, 'e2e/**'],
       root: fileURLToPath(new URL('./', import.meta.url)),
     },
   }),
