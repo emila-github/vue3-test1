@@ -71,6 +71,9 @@ function buildRecord(i: number): Renewal {
 
 const data: Renewal[] = Array.from({ length: 42 }, (_, i) => buildRecord(i))
 
+/** 已建档投保人集合（用于「投保人核验」快速命中） */
+const APPLICANTS = new Set(data.map((d) => d.applicant))
+
 // ==================== 查询参数解析 ====================
 function getStr(sp: URLSearchParams, key: string): string {
   return sp.get(key) || ''
@@ -183,6 +186,22 @@ const routes: MockRoute[] = [
       const kw = (u.searchParams.get('keyword') || '').toLowerCase()
       const list = INSURERS.filter((n) => n.toLowerCase().includes(kw)).map((n) => ({ text: n, value: n }))
       return { code: 200, data: list, message: 'ok' }
+    },
+  },
+
+  // 投保人核验：提交前校验投保人是否已建档
+  {
+    url: '/renewal/verify-applicant',
+    method: 'GET',
+    response: (req) => {
+      const u = new URL(req.url!, 'http://localhost')
+      const name = (u.searchParams.get('name') || '').trim()
+      const verified = !!name && APPLICANTS.has(name)
+      return {
+        code: 200,
+        data: { verified, applicant: verified ? name : undefined },
+        message: verified ? '投保人已核验' : '未找到该投保人，请确认姓名',
+      }
     },
   },
 

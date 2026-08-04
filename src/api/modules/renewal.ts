@@ -218,3 +218,13 @@ export function deleteRenewal(id: number) {
 export function searchInsurers(keyword: string) {
   return get<Array<{ text: string; value: string }>>('/renewal/insurers', { keyword } as Record<string, any>)
 }
+
+/**
+ * 投保人核验：提交前校验投保人是否已建档（演示「投保人验证」门禁）。
+ * 返回 { verified, applicant? }；未建档时 verified=false，需先确认姓名或新建客户。
+ */
+export function verifyApplicant(name: string) {
+  return get<{ verified: boolean; applicant?: string }>('/renewal/verify-applicant', {
+    name,
+  } as Record<string, any>)
+}
