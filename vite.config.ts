@@ -90,6 +90,7 @@ export default defineConfig(({ mode, command }) => {
     define: defineEnv,
     // 有后端时启用
     server: {
+      port: 5178,
       host: '0.0.0.0', // 允许通过本机 IP 访问（默认仅 localhost）
       ...(isMock ? {} : { proxy }),
     },
