@@ -469,15 +469,18 @@ onMounted(() => {
   border-radius: 10px;
   border: 1px dashed #e0e0e0;
 }
+
 .role-label {
   font-size: 13px;
   color: #888;
   font-weight: 600;
 }
+
 .role-tabs {
   display: flex;
   gap: 6px;
 }
+
 .role-btn {
   padding: 4px 16px;
   border: 1.5px solid #e0e0e0;
@@ -488,16 +491,19 @@ onMounted(() => {
   cursor: pointer;
   transition: all 0.2s;
 }
+
 .role-btn:hover {
   border-color: #1677ff;
   color: #1677ff;
 }
+
 .role-btn.active {
   background: #1677ff;
   color: #fff;
   border-color: #1677ff;
   font-weight: 600;
 }
+
 .role-hint {
   font-size: 12px;
   color: #bbb;

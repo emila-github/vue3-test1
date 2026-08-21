@@ -625,14 +625,20 @@ app.mount('#app')
     pageSize: 5,
     total: 0,
     showSizeChanger: true,
-    showQuickJumper: false,
+    showQuickJumper: true,
     showTotal: (total) => `共 ${total} 条`,
     pageSizeOptions: ['5', '10', '20', '50'],
   })
 
   const columns = [
-    { title: 'ID', dataIndex: 'id', key: 'id', width: 80, sorter: true },
-    { title: '姓名', dataIndex: 'name', key: 'name', width: 120 },
+    { title: 'ID', dataIndex: 'id', key: 'id', width: 80 },
+    {
+      title: '姓名',
+      dataIndex: 'name',
+      key: 'name',
+      width: 120,
+      sorter: (a, b) => a.name.localeCompare(b.name),
+    },
     {
       title: '年龄',
       dataIndex: 'age',
@@ -640,8 +646,23 @@ app.mount('#app')
       width: 80,
       sorter: (a, b) => a.age - b.age,
     },
-    { title: '地址', dataIndex: 'address', key: 'address', ellipsis: true },
-    { title: '状态', key: 'status', width: 80 },
+    {
+      title: '地址',
+      dataIndex: 'address',
+      key: 'address',
+      width: 100,
+      ellipsis: true,
+    },
+    {
+      title: '状态',
+      key: 'status',
+      width: 80,
+      filters: [
+        { text: '启用', value: '启用' },
+        { text: '禁用', value: '禁用' },
+      ],
+      onFilter: (value, record) => record.status === value,
+    },
     { title: '操作', key: 'action', width: 150, fixed: 'right' },
   ]
 
@@ -973,7 +994,7 @@ npm install eslint prettier eslint-plugin-vue eslint-config-prettier -D
 npx eslint --init   # 交互式初始化
 ```
 
-> 在 `package.json` 添加格式化脚本：
+> 在 `package.json` 添加格式化脚本：8080
 >
 > ```json
 > "lint": "eslint . --ext .vue,.js,.ts --fix",
